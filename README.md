@@ -30,6 +30,7 @@ See `research.md` for links and notes.
 - `docs/alpha-limits.html` — public alpha caveats and unstable areas.
 - `docs/glossary.html` — concept reference for font source and editor terms.
 - `docs/workflows.html` — task paths through the docs for early users and contributors.
+- `docs/source-map.html` — high-level map of the Runebender Xilem source tree.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
 - `docs/tracing.html` — background image and autotrace workflow.

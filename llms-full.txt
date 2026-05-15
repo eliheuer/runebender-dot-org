@@ -101,9 +101,46 @@ Inspect format behavior:
 Contribute:
 
 1. Read Development for contribution entry points.
-2. Use the current source repository as the source of truth.
+2. Use Source Map to find the relevant implementation area.
 3. Keep docs broad unless behavior has stabilized in code.
 4. Update `llms.txt` and `llms-full.txt` when documentation structure changes.
+
+## Source Map
+
+Entry points:
+
+- `README.md`: build instructions, status, usage, shortcuts, feature notes.
+- `src/main.rs`: application entry point.
+- `src/lib.rs`: library/module root.
+- `src/settings.rs`: application constants, including tracing-related settings.
+- `src/config.rs`: configuration loading, including QuiverAI key lookup.
+
+Editor UI:
+
+- `src/views/`: top-level views such as editor, glyph grid, and welcome view.
+- `src/components/`: panels, toolbars, preview widgets, coordinate UI, and editor canvas components.
+- `src/components/editor_canvas/`: canvas drawing, keyboard, pointer, painting, view, and text-buffer behavior.
+- `src/theme.rs`: theme constants for the app UI.
+
+Editing:
+
+- `src/tools/`: select, pen, hyper pen, knife, preview, shapes, text, measure tools.
+- `src/editing/`: background images, hit testing, mouse behavior, tracing, QuiverAI integration, viewport helpers.
+- `src/editing/session/`: session-level hit testing, path editing, and text-buffer behavior.
+- `src/components/editor_canvas/keyboard.rs`: current keyboard shortcut handling.
+
+Data and paths:
+
+- `src/data/`: editor data, file IO, grid, kerning.
+- `src/model/`: designspace, glyph rendering, workspace model.
+- `src/path/`: cubic, hyperbezier, quadratic, point, segment, and related path types.
+- `src/shaping/`: Arabic shaping and Unicode data support.
+
+Docs and examples:
+
+- `docs/hyperbezier-ufo-extension.md`: canonical hyperbezier UFO extension specification.
+- `assets/untitled.ufo`: example UFO source used by README commands.
+- `assets/hyper-matisse.ufo`: example UFO for hyperbezier experimentation.
 
 ## Install
 

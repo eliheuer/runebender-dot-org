@@ -10,6 +10,7 @@ paths="
 /docs/alpha-limits.html
 /docs/glossary.html
 /docs/workflows.html
+/docs/source-map.html
 /docs/install.html
 /docs/manual.html
 /docs/tracing.html
