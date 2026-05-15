@@ -52,6 +52,22 @@ The public docs follow a RoboFont-inspired model:
 
 Because Runebender is alpha, docs should avoid over-specifying changing behavior.
 
+## Glossary
+
+- UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.
+- GLIF: Glyph Interchange Format, the XML file format used for individual glyph data inside UFO sources.
+- Source-first: the current Runebender workflow, where users build and run from source rather than downloading a finished release app.
+- Round trip: opening, editing, saving, and reopening source data across tools without losing important information.
+- Contour: a path that describes part of a glyph outline.
+- On-curve point: a point that lies directly on the visible outline.
+- Off-curve point: a control point used by cubic bezier curves to shape a segment.
+- Hyperbezier: a Runebender-supported path style where smooth curves are defined by on-curve points and control points are computed automatically.
+- Cubic: a standard cubic bezier outline representation using explicit off-curve control points.
+- Tracing: converting a bitmap reference image into editable outline data.
+- img2bez: the local/offline bitmap-to-bezier tracing path used by Runebender.
+- QuiverAI: an optional cloud vectorization backend for tracing.
+- Alpha: useful for experimentation, but not a promise of stable UI, file behavior, or release packaging.
+
 ## Install
 
 Prerequisites:
