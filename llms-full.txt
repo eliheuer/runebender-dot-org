@@ -154,6 +154,32 @@ Open examples from the Runebender Xilem source root:
 - `cargo run -- assets/untitled.ufo`
 - `cargo run -- assets/hyper-matisse.ufo`
 
+## Troubleshooting
+
+Build or launch:
+
+- Confirm a current Rust toolchain. The source README currently lists MSRV 1.88.
+- Run commands from the root of `runebender-xilem`, not from the website repo.
+- Try `cargo run` before adding file paths or verbose flags.
+- Use `cargo run -- --verbose` when collecting issue details.
+
+Opening UFOs:
+
+- Use included examples first: `assets/untitled.ufo` or `assets/hyper-matisse.ufo`.
+- Keep real font sources in version control before testing alpha editing behavior.
+- Verify file paths relative to the source repo root.
+
+Tracing:
+
+- Import, align, and scale a bitmap before judging tracing output.
+- Use img2bez first when offline behavior or reproducibility matters.
+- QuiverAI requires network access, API credentials, and API credits.
+- Expect traced outlines to need manual review and metric adjustment.
+
+Reporting:
+
+- Include source checkout, launch command, UFO path, expected behavior, actual behavior, and whether the problem affects tracing, cubic outlines, or hyperbezier outlines.
+
 ## Glossary
 
 - UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.

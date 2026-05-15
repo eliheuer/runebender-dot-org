@@ -14,6 +14,7 @@ paths="
 /docs/tutorials.html
 /docs/how-tos.html
 /docs/examples.html
+/docs/troubleshooting.html
 /docs/source-map.html
 /docs/install.html
 /docs/manual.html

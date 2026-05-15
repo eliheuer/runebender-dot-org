@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender troubleshooting notes for alpha setup, files, tracing, and docs." />
+    <title>Troubleshooting / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Docs</a>
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="index.html">Docs map</a>
+          <a href="current-facts.html">Current facts</a>
+          <a href="alpha-limits.html">Alpha limits</a>
+          <a href="capabilities.html">Capabilities</a>
+          <a href="glossary.html">Glossary</a>
+          <a href="workflows.html">Workflows</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="how-tos.html">How-tos</a>
+          <a href="examples.html">Examples</a>
+          <a href="troubleshooting.html">Troubleshooting</a>
+          <a href="source-map.html">Source map</a>
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Troubleshooting</p>
+          <h1>Check the obvious first.</h1>
+          <p>
+            Runebender is alpha, so many failures should be treated as useful evidence rather than
+            user error. Start with the source checkout, command, UFO path, and exact behavior before
+            assuming the docs are current.
+          </p>
+          <table class="page-summary">
+            <tbody>
+              <tr><th>Status</th><td>Alpha diagnostic notes</td></tr>
+              <tr><th>Audience</th><td>Early users, testers, contributors, agents</td></tr>
+              <tr><th>Source</th><td>Website docs and Runebender Xilem README</td></tr>
+              <tr><th>Stability</th><td>Expected to change as packaging and UI mature</td></tr>
+            </tbody>
+          </table>
+        </header>
+
+        <section class="doc-section">
+          <h2>Build or launch</h2>
+          <div>
+            <table>
+              <caption>First checks</caption>
+              <tbody>
+                <tr><th>Rust</th><td>Confirm a current Rust toolchain. The source README currently lists MSRV 1.88.</td></tr>
+                <tr><th>Checkout</th><td>Run commands from the root of <code>runebender-xilem</code>, not from this website repo.</td></tr>
+                <tr><th>Command</th><td>Try <code>cargo run</code> before adding file paths or verbose flags.</td></tr>
+                <tr><th>Logs</th><td>Use <code>cargo run -- --verbose</code> when collecting detail for an issue.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Opening UFOs</h2>
+          <div>
+            <ul>
+              <li>Use an included example first: <code>assets/untitled.ufo</code> or <code>assets/hyper-matisse.ufo</code>.</li>
+              <li>Keep real font sources in version control before testing alpha editing behavior.</li>
+              <li>If a path fails, verify it relative to the source repo root.</li>
+              <li>Use <a href="examples.html">Examples</a> to choose which included UFO matches the behavior you are testing.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Tracing</h2>
+          <div>
+            <table>
+              <caption>Image-to-outline checks</caption>
+              <tbody>
+                <tr><th>Background image</th><td>Import, align, and scale the bitmap before judging tracing output.</td></tr>
+                <tr><th>Local tracing</th><td>Use img2bez first when offline behavior or reproducibility matters.</td></tr>
+                <tr><th>Cloud tracing</th><td>QuiverAI requires network access, API credentials, and API credits.</td></tr>
+                <tr><th>Cleanup</th><td>Expect traced outlines to need manual review and metric adjustment.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Format behavior</h2>
+          <div>
+            <ul>
+              <li>Use <a href="format.html">Format</a> for orientation, then verify exact behavior in the source repo.</li>
+              <li>Use the canonical hyperbezier UFO extension spec for storage details.</li>
+              <li>Use <code>assets/hyper-matisse.ufo</code> when testing hyperbezier-specific behavior.</li>
+              <li>Convert hyperbeziers to cubic outlines before relying on tools that do not understand Runebender extensions.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Reporting</h2>
+          <div>
+            <p>When a problem looks real, collect the smallest useful report.</p>
+            <ul>
+              <li>Source repository commit or checkout date.</li>
+              <li>Command used to launch the app.</li>
+              <li>UFO path or example file name.</li>
+              <li>Expected behavior and actual behavior.</li>
+              <li>Whether the problem affects local tracing, QuiverAI tracing, normal cubic outlines, or hyperbezier outlines.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
