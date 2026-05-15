@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://runebender.org/</loc></url>
   <url><loc>https://runebender.org/cloud/index.html</loc></url>
+  <url><loc>https://runebender.org/cloud/editor/index.html</loc></url>
   <url><loc>https://runebender.org/docs/index.html</loc></url>
   <url><loc>https://runebender.org/docs/current-facts.html</loc></url>
   <url><loc>https://runebender.org/docs/alpha-limits.html</loc></url>

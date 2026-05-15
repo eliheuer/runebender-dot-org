@@ -14,7 +14,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 ## Start Here
 
 - [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
-- [Cloud launch](https://runebender.org/cloud/index.html): temporary landing page for the ComfyUI/Vue browser path.
+- [Cloud editor](https://runebender.org/cloud/editor/index.html): static standalone Vue/WASM build from the ComfyUI/Vue browser path.
 - [Alpha limits](https://runebender.org/docs/alpha-limits.html): known instability and launch caveats.
 - [Capabilities](https://runebender.org/docs/capabilities.html): alpha matrix for running, editing, tracing, and format support.
 - [Roadmap](https://runebender.org/docs/roadmap.html): status lanes for documented, uncertain, future, and not-promised areas.

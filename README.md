@@ -25,7 +25,8 @@ See `research.md` for links and notes.
 ## Site structure
 
 - `index.html` — home page and documentation index.
-- `cloud/index.html` — temporary cloud-launch landing page for the Comfy/Vue path.
+- `cloud/index.html` — cloud-launch landing page for the Comfy/Vue path.
+- `cloud/editor/` — static standalone Vue/WASM build copied from `runebender-comfy/web`.
 - `docs/index.html` — documentation map inspired by RoboFont’s topics/tutorials/how-tos/reference split.
 - `docs/current-facts.html` — compact source of truth for humans and AI agents.
 - `docs/alpha-limits.html` — public alpha caveats and unstable areas.
@@ -53,6 +54,7 @@ See `research.md` for links and notes.
 - `AGENTS.md` — guidance for coding agents working in this repository.
 - `launch-checklist.md` — pre-publication checklist for GitHub Pages, DNS, content, and QA.
 - `scripts/check-local-links.sh` — simple local HTTP 200 check for key pages and assets.
+- `scripts/build-cloud-editor.sh` — builds the standalone Comfy/Vue editor into `cloud/editor`.
 - `scripts/sync-comfy-web.sh` — copies the local Comfy/Vue web folder into `cloud/runebender-comfy-web`.
 
 ## Run locally

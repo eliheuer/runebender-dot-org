@@ -19,7 +19,8 @@ Runebender Xilem is alpha software. Treat these notes as an orientation map, not
 - Runebender Xilem is a port of the earlier Druid-based Runebender.
 - The app is described as very alpha and actively under development.
 - The source workflow is currently source-first: clone the repository and run with Cargo.
-- The cloud-launch page is a temporary landing point for the ComfyUI/Vue browser path.
+- The cloud editor is a static standalone Vue/WASM build from the ComfyUI/Vue browser path.
+- `scripts/build-cloud-editor.sh` builds `../runebender-comfy/web` into `cloud/editor`.
 - `scripts/sync-comfy-web.sh` copies `../runebender-comfy/web` into `cloud/runebender-comfy-web`.
 - The README currently lists MSRV 1.88.
 - The app can run with a file picker or open a specific UFO path.

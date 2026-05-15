@@ -19,7 +19,7 @@
         <a href="../docs/install.html">Install</a>
         <a href="../docs/support.html">Support</a>
         <a href="https://github.com/eliheuer/runebender-comfy">Comfy source</a>
-        <a class="nav-action" href="../index.html">Home</a>
+        <a class="nav-action" href="editor/index.html">Launch editor</a>
       </nav>
     </header>
 
@@ -28,12 +28,12 @@
         <p class="eyebrow">Comfy / Vue / Cloud path / Alpha</p>
         <h1 id="cloud-title">Launch cloud.</h1>
         <p class="lede">
-          This is the landing point for the browser-based Runebender path. The current website can
-          copy in the Comfy/Vue web build from <code>~/GH/repos/runebender-comfy/web</code>; the
-          launch target can become a hosted app once that build is ready for public use.
+          This is the landing point for the browser-based Runebender path. The standalone editor is
+          built from <code>~/GH/repos/runebender-comfy/web</code> and published as static files
+          inside this site.
         </p>
         <div class="hero-actions" aria-label="Cloud launch links">
-          <a class="button primary" href="https://github.com/eliheuer/runebender-comfy">Comfy source</a>
+          <a class="button primary" href="editor/index.html">Launch editor</a>
           <a class="button secondary" href="https://github.com/eliheuer/runebender-comfy/archive/refs/heads/main.zip">Download local</a>
         </div>
       </section>
@@ -54,16 +54,16 @@
                 <td><code>~/GH/repos/runebender-comfy/web</code></td>
               </tr>
               <tr>
-                <th>Script</th>
-                <td><code>scripts/sync-comfy-web.sh</code></td>
+                <th>Build</th>
+                <td><code>scripts/build-cloud-editor.sh</code></td>
               </tr>
               <tr>
                 <th>Output</th>
-                <td><code>cloud/runebender-comfy-web</code></td>
+                <td><code>cloud/editor</code></td>
               </tr>
               <tr>
                 <th>Status</th>
-                <td>Alpha bridge. Replace with a real hosted build when the cloud app settles.</td>
+                <td>Alpha static build. Replace or automate when the cloud app settles.</td>
               </tr>
             </tbody>
           </table>
@@ -79,7 +79,7 @@
               </tr>
               <tr>
                 <th>Launch cloud</th>
-                <td>Reserves the public URL for the hosted browser version.</td>
+                <td>Opens the current standalone Vue/WASM build.</td>
               </tr>
               <tr>
                 <th>Docs</th>
