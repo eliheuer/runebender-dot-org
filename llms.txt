@@ -17,6 +17,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 - [Capabilities](https://runebender.org/docs/capabilities.html): alpha matrix for running, editing, tracing, and format support.
 - [Glossary](https://runebender.org/docs/glossary.html): definitions for UFO, GLIF, hyperbezier, tracing, and project terms.
 - [Workflows](https://runebender.org/docs/workflows.html): task paths for first run, editing, tracing, format inspection, and contributing.
+- [Tutorials](https://runebender.org/docs/tutorials.html): alpha learning paths for first run, editing, tracing, formats, and development.
 - [Source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.
 - [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
 - [Install](https://runebender.org/docs/install.html): build and run from source.

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender tutorial paths for early users." />
+    <title>Tutorials / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Docs</a>
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="index.html">Docs map</a>
+          <a href="current-facts.html">Current facts</a>
+          <a href="alpha-limits.html">Alpha limits</a>
+          <a href="capabilities.html">Capabilities</a>
+          <a href="glossary.html">Glossary</a>
+          <a href="workflows.html">Workflows</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="source-map.html">Source map</a>
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Tutorials</p>
+          <h1>Learn by path.</h1>
+          <p>
+            These are short learning sequences for the alpha app. They borrow the useful parts of
+            mature font-editor docs: start with one concrete task, keep the path visible, and send
+            readers to reference pages only when lookup detail is needed.
+          </p>
+          <table class="page-summary">
+            <tbody>
+              <tr><th>Status</th><td>Alpha tutorial index</td></tr>
+              <tr><th>Audience</th><td>First-time users, testers, contributors, agents</td></tr>
+              <tr><th>Source</th><td>Website docs and Runebender Xilem README</td></tr>
+              <tr><th>Stability</th><td>Learning goals are stable; command details may move</td></tr>
+            </tbody>
+          </table>
+        </header>
+
+        <section class="doc-section">
+          <h2>Get started</h2>
+          <div>
+            <p>Use this path when you want to see the editor running and open a real UFO source.</p>
+            <ol>
+              <li>Read <a href="current-facts.html">Current facts</a> and <a href="alpha-limits.html">Alpha limits</a>.</li>
+              <li>Follow <a href="install.html">Install and run</a>.</li>
+              <li>Open <code>assets/untitled.ufo</code> from the source repo.</li>
+              <li>Use <a href="reference.html">Reference</a> only for shortcuts you need immediately.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Draw and edit</h2>
+          <div>
+            <p>Use this path when you want to understand the editor surface without memorizing every command.</p>
+            <ol>
+              <li>Read <a href="manual.html#drawing">Drawing</a> for the tool names and contour model.</li>
+              <li>Try Select, Pen, Hyperbezier Pen, and Knife on a disposable UFO checkout.</li>
+              <li>Use preview, fit, and zoom while judging shape and spacing.</li>
+              <li>Check <a href="capabilities.html">Capabilities</a> for what is documented versus still moving.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Trace an image</h2>
+          <div>
+            <p>Use this path when you are testing bitmap-to-outline workflows.</p>
+            <ol>
+              <li>Read <a href="tracing.html">Tracing</a>.</li>
+              <li>Import a background image and align it to the glyph metrics.</li>
+              <li>Use local img2bez tracing first when offline reproducibility matters.</li>
+              <li>Use QuiverAI only when cloud tracing and API credentials are acceptable.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Understand the format</h2>
+          <div>
+            <p>Use this path when you need to reason about source files and compatibility.</p>
+            <ol>
+              <li>Read <a href="format.html">Format notes</a>.</li>
+              <li>Use <a href="glossary.html">Glossary</a> for terms like UFO, GLIF, cubic, and hyperbezier.</li>
+              <li>Use the source repository spec for exact hyperbezier storage details.</li>
+              <li>Treat website docs as orientation unless the linked source says otherwise.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Work on the app</h2>
+          <div>
+            <p>Use this path when you are an agent or contributor trying to locate code responsibly.</p>
+            <ol>
+              <li>Read <a href="development.html">Development</a> for the project model.</li>
+              <li>Use <a href="source-map.html">Source map</a> to find likely implementation areas.</li>
+              <li>Check <a href="workflows.html">Workflow paths</a> before changing user-facing docs.</li>
+              <li>Update <a href="../llms.txt">llms.txt</a> and <a href="../llms-full.txt">llms-full.txt</a> when the public docs map changes.</li>
+            </ol>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

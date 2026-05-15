@@ -81,6 +81,36 @@ The public docs follow a RoboFont-inspired model:
 
 Because Runebender is alpha, docs should avoid over-specifying changing behavior.
 
+## Tutorial Paths
+
+Get started:
+
+1. Read Current Facts and Alpha Limits.
+2. Follow Install to build and run from source.
+3. Open `assets/untitled.ufo`.
+4. Use Reference only for shortcuts needed immediately.
+
+Draw and edit:
+
+1. Read Manual > Drawing for tool names and contour concepts.
+2. Try Select, Pen, Hyperbezier Pen, and Knife on disposable source data.
+3. Use preview, fit, and zoom while judging shape and spacing.
+4. Check Capabilities for documented behavior versus moving alpha areas.
+
+Trace an image:
+
+1. Read Tracing.
+2. Import and align a background image.
+3. Use local img2bez tracing first when offline reproducibility matters.
+4. Use QuiverAI only when cloud tracing and API credentials are acceptable.
+
+Understand the format:
+
+1. Read Format notes.
+2. Use Glossary for UFO, GLIF, cubic, and hyperbezier terms.
+3. Use the source repository spec for exact hyperbezier storage details.
+4. Treat website docs as orientation unless the linked source says otherwise.
+
 ## Glossary
 
 - UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.
