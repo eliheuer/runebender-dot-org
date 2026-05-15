@@ -39,6 +39,7 @@ See `research.md` for links and notes.
 - `llms.txt` and `llms-full.txt` — AI-readable documentation maps.
 - `AGENTS.md` — guidance for coding agents working in this repository.
 - `launch-checklist.md` — pre-publication checklist for GitHub Pages, DNS, content, and QA.
+- `scripts/check-local-links.sh` — simple local HTTP 200 check for key pages and assets.
 
 ## Run locally
 
@@ -51,3 +52,11 @@ python3 -m http.server 5173
 ```
 
 Then visit `http://localhost:5173`.
+
+## Verify local preview
+
+With a local server running:
+
+```sh
+scripts/check-local-links.sh http://127.0.0.1:5173
+```

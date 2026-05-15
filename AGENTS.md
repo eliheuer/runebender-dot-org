@@ -61,6 +61,12 @@ Keep these files updated when documentation structure changes:
 - `sitemap.xml` — public URL map.
 - `robots.txt` — sitemap pointer.
 
+When a local preview server is available, run:
+
+```sh
+scripts/check-local-links.sh http://127.0.0.1:5173
+```
+
 ## Design constraints
 
 Preserve the current visual direction unless explicitly asked to change it:
