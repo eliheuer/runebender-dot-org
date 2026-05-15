@@ -142,6 +142,18 @@ Convert hyperbeziers:
 - Use `Cmd/Ctrl + Shift + H` when a downstream tool needs standard cubic outlines.
 - Read Format notes and the canonical hyperbezier UFO extension spec first.
 
+## Examples
+
+Example UFOs in the current local source checkout:
+
+- `assets/untitled.ufo`: Untitled Regular, useful for first run, navigation, broad glyph coverage, and ordinary UFO inspection. The current local checkout has 333 GLIF files.
+- `assets/hyper-matisse.ufo`: Hyper Matisse Regular, useful for hyperbezier editing, conversion, and format behavior. The current local checkout has 9 digit GLIF files, each with a hyperbezier contour.
+
+Open examples from the Runebender Xilem source root:
+
+- `cargo run -- assets/untitled.ufo`
+- `cargo run -- assets/hyper-matisse.ufo`
+
 ## Glossary
 
 - UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.

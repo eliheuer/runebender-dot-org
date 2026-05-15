@@ -19,6 +19,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 - [Workflows](https://runebender.org/docs/workflows.html): task paths for first run, editing, tracing, format inspection, and contributing.
 - [Tutorials](https://runebender.org/docs/tutorials.html): alpha learning paths for first run, editing, tracing, formats, and development.
 - [How-tos](https://runebender.org/docs/how-tos.html): short recipes for running with a file, logging, tracing, and format tasks.
+- [Examples](https://runebender.org/docs/examples.html): included UFO sources and what to inspect in each one.
 - [Source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.
 - [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
 - [Install](https://runebender.org/docs/install.html): build and run from source.
