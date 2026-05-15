@@ -35,6 +35,7 @@ See `research.md` for links and notes.
 - `docs/how-tos.html` — short task recipes for common alpha workflows.
 - `docs/examples.html` — included UFO examples and what to inspect in them.
 - `docs/troubleshooting.html` — alpha diagnostic checks for setup, files, tracing, and formats.
+- `docs/support.html` — support, community, issue, and contribution channel map.
 - `docs/source-map.html` — high-level map of the Runebender Xilem source tree.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.

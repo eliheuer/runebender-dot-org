@@ -180,6 +180,18 @@ Reporting:
 
 - Include source checkout, launch command, UFO path, expected behavior, actual behavior, and whether the problem affects tracing, cubic outlines, or hyperbezier outlines.
 
+## Support
+
+Primary channels:
+
+- Editor source: https://github.com/eliheuer/runebender-xilem
+- Editor issues: https://github.com/eliheuer/runebender-xilem/issues
+- Editor pull requests: https://github.com/eliheuer/runebender-xilem/pulls
+- Development discussion: https://xi.zulipchat.com/#narrow/channel/197075-runebender
+- Website source: https://github.com/eliheuer/runebender-dot-org
+
+Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems. Use website issues or patches for stale docs, broken links, unclear examples, and agent-readable context files. Use Zulip for early design discussion and questions that are not yet issue-shaped.
+
 ## Glossary
 
 - UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.
