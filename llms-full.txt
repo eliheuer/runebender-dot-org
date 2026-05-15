@@ -111,6 +111,37 @@ Understand the format:
 3. Use the source repository spec for exact hyperbezier storage details.
 4. Treat website docs as orientation unless the linked source says otherwise.
 
+## How-to Recipes
+
+Run with a file:
+
+- `cargo run -- assets/untitled.ufo`
+- Use Install for prerequisites.
+
+Run with logs:
+
+- `cargo run -- --verbose`
+- Include checkout, command, UFO path, and expected behavior when reporting bugs.
+
+Trace locally:
+
+1. Import a background image.
+2. Align and scale it against glyph metrics.
+3. Use local img2bez tracing.
+4. Clean up the resulting outlines manually.
+
+Trace with QuiverAI:
+
+1. Confirm cloud tracing is acceptable for the source image.
+2. Configure an API key through the supported config path or environment variable.
+3. Run the QuiverAI trace command from the app.
+4. Review and clean up the generated outlines.
+
+Convert hyperbeziers:
+
+- Use `Cmd/Ctrl + Shift + H` when a downstream tool needs standard cubic outlines.
+- Read Format notes and the canonical hyperbezier UFO extension spec first.
+
 ## Glossary
 
 - UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.

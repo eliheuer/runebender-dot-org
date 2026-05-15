@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender task recipes for alpha workflows." />
+    <title>How-tos / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Docs</a>
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="index.html">Docs map</a>
+          <a href="current-facts.html">Current facts</a>
+          <a href="alpha-limits.html">Alpha limits</a>
+          <a href="capabilities.html">Capabilities</a>
+          <a href="glossary.html">Glossary</a>
+          <a href="workflows.html">Workflows</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="how-tos.html">How-tos</a>
+          <a href="source-map.html">Source map</a>
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">How-tos</p>
+          <h1>Task recipes.</h1>
+          <p>
+            Short practical recipes for common alpha tasks. Each recipe points to the canonical
+            page for context and avoids detailed UI promises that may change before release.
+          </p>
+          <table class="page-summary">
+            <tbody>
+              <tr><th>Status</th><td>Alpha recipe index</td></tr>
+              <tr><th>Audience</th><td>Early users, testers, contributors, agents</td></tr>
+              <tr><th>Source</th><td>Website docs and Runebender Xilem README</td></tr>
+              <tr><th>Stability</th><td>Recipe goals are stable; exact UI behavior may move</td></tr>
+            </tbody>
+          </table>
+        </header>
+
+        <section class="doc-section">
+          <h2>Run with a file</h2>
+          <div>
+            <p>Use this when you want to open a specific UFO directly from the command line.</p>
+            <div class="command-list">
+              <code>cargo run -- assets/untitled.ufo</code>
+            </div>
+            <p>See <a href="install.html">Install</a> for prerequisites and first-run notes.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Run with logs</h2>
+          <div>
+            <p>Use verbose logging when testing alpha behavior or preparing a useful issue report.</p>
+            <div class="command-list">
+              <code>cargo run -- --verbose</code>
+            </div>
+            <p>Include the source checkout, command, UFO path, and expected behavior when reporting a bug.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Trace locally</h2>
+          <div>
+            <ol>
+              <li>Import a background image.</li>
+              <li>Align and scale it against the glyph metrics.</li>
+              <li>Use local img2bez tracing.</li>
+              <li>Clean up the resulting outlines manually.</li>
+            </ol>
+            <p>See <a href="tracing.html">Tracing</a> for the current tracing map.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Trace with QuiverAI</h2>
+          <div>
+            <ol>
+              <li>Confirm that cloud tracing is acceptable for the source image.</li>
+              <li>Configure an API key through the supported config path or environment variable.</li>
+              <li>Run the QuiverAI trace command from the app.</li>
+              <li>Review and clean up the generated outlines.</li>
+            </ol>
+            <p class="callout">QuiverAI requires network access, an API key, and API credits. Prefer local tracing when reproducibility or privacy matters.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Convert hyperbeziers</h2>
+          <div>
+            <p>Use conversion when a downstream tool needs standard cubic outlines rather than Runebender hyperbezier contours.</p>
+            <table>
+              <caption>Format command</caption>
+              <tbody>
+                <tr><th>Convert</th><td><code>Cmd/Ctrl + Shift + H</code></td></tr>
+                <tr><th>Read first</th><td><a href="format.html">Format notes</a></td></tr>
+                <tr><th>Exact spec</th><td><a href="https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md">Hyperbezier UFO extension</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Find implementation code</h2>
+          <div>
+            <ol>
+              <li>Start with <a href="source-map.html">Source map</a>.</li>
+              <li>Use the README and source tree as the source of truth.</li>
+              <li>Keep website edits broad unless implementation behavior is settled.</li>
+              <li>Update agent-readable files when a page is added or moved.</li>
+            </ol>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

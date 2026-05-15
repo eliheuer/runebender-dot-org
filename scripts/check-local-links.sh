@@ -12,6 +12,7 @@ paths="
 /docs/glossary.html
 /docs/workflows.html
 /docs/tutorials.html
+/docs/how-tos.html
 /docs/source-map.html
 /docs/install.html
 /docs/manual.html

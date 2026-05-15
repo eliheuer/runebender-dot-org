@@ -32,6 +32,7 @@ See `research.md` for links and notes.
 - `docs/glossary.html` — concept reference for font source and editor terms.
 - `docs/workflows.html` — task paths through the docs for early users and contributors.
 - `docs/tutorials.html` — learning paths for first run, editing, tracing, formats, and development.
+- `docs/how-tos.html` — short task recipes for common alpha workflows.
 - `docs/source-map.html` — high-level map of the Runebender Xilem source tree.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
