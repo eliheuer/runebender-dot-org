@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender UFO and hyperbezier format notes." />
+    <title>Format / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">UFO sources</p>
+          <h1>Format notes.</h1>
+          <p>
+            Runebender is organized around source fonts that can be inspected, versioned, and
+            moved between tools. The public docs should be explicit about what gets written.
+          </p>
+        </header>
+
+        <section class="doc-section">
+          <h2>UFO</h2>
+          <div>
+            <p>UFO is the current source workflow named in the Runebender Xilem README. The site should document supported UFO versions, file IO expectations, save behavior, and compatibility with other tools.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Hyperbezier</h2>
+          <div>
+            <p>Runebender Xilem supports on-curve hyperbezier paths, with control points computed by a spline solver. The source repository includes a hyperbezier UFO extension specification.</p>
+            <p class="callout">Before publishing, link this page to the canonical spec in the repo and summarize fallback behavior for tools that do not understand the extension.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Compatibility</h2>
+          <div>
+            <table>
+              <caption>Questions to answer before public docs</caption>
+              <tbody>
+                <tr><th>Read</th><td>Which UFO/GLIF structures are accepted?</td></tr>
+                <tr><th>Write</th><td>Which objects can Runebender modify without dropping data?</td></tr>
+                <tr><th>Fallback</th><td>How are hyperbeziers represented for other editors?</td></tr>
+                <tr><th>Export</th><td>Which export paths exist now, and which are future work?</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

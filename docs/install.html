@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Build and run Runebender Xilem from source." />
+    <title>Install / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Start here</p>
+          <h1>Install and run.</h1>
+          <p>
+            Runebender Xilem is very alpha software. The current public path is source-first:
+            install Rust, clone the repository, and run it locally.
+          </p>
+        </header>
+
+        <section class="doc-section">
+          <h2>Prerequisites</h2>
+          <div>
+            <ul>
+              <li>Rust installed from <a href="https://rust-lang.org/">rust-lang.org</a>.</li>
+              <li>A current checkout of <a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a>.</li>
+              <li>A UFO source to open, or the included example UFO from the repo.</li>
+            </ul>
+            <p class="callout">The Runebender Xilem README currently lists MSRV 1.88.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Build</h2>
+          <div class="command-list">
+            <code>git clone https://github.com/eliheuer/runebender-xilem.git</code>
+            <code>cd runebender-xilem</code>
+            <code>cargo run</code>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Open a UFO</h2>
+          <div class="command-list">
+            <code>cargo run                            # Opens a file picker</code>
+            <code>cargo run -- assets/untitled.ufo     # Opens a specific UFO</code>
+            <code>cargo run -- --verbose               # Runs with verbose logging</code>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Next</h2>
+          <div class="mini-index">
+            <a href="manual.html"><strong>Read the manual</strong><span>Tools, editing, preview, and workflow.</span></a>
+            <a href="reference.html"><strong>Shortcut reference</strong><span>Keyboard commands from the README.</span></a>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender background image and autotrace workflow." />
+    <title>Tracing / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Images to outlines</p>
+          <h1>Trace drawings.</h1>
+          <p>
+            Runebender can place bitmap references behind a glyph, then convert them to editable
+            cubic bezier contours through local or cloud-backed tracing.
+          </p>
+        </header>
+
+        <section class="doc-section">
+          <h2>Workflow</h2>
+          <div>
+            <ol>
+              <li>Import a reference image with <code>Cmd/Ctrl + I</code>.</li>
+              <li>Position and scale it against the glyph metrics.</li>
+              <li>Press <code>Cmd/Ctrl + T</code> for local img2bez tracing.</li>
+              <li>Use <code>Cmd/Ctrl + Shift + T</code> to refit existing outlines.</li>
+              <li>Undo if needed; the background image is preserved for comparison.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Backends</h2>
+          <div>
+            <table>
+              <caption>Tracing backends</caption>
+              <tbody>
+                <tr><th>img2bez</th><td>Local deterministic bitmap-to-bezier tracing. Works offline and is the recommended default.</td></tr>
+                <tr><th>QuiverAI</th><td>Optional cloud vectorization via <code>Cmd/Ctrl + Shift + Y</code>. Requires network access and an API key.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>QuiverAI</h2>
+          <div>
+            <p>Runebender can read QuiverAI credentials from <code>~/.config/runebender/config.toml</code> or the <code>QUIVERAI_API_KEY</code> environment variable.</p>
+            <div class="command-list">
+              <code>[quiver]</code>
+              <code>api_key = "your-quiverai-api-key-here"</code>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

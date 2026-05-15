@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender manual for basic editing workflows." />
+    <title>Manual / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Manual</p>
+          <h1>Use the editor.</h1>
+          <p>
+            This is a first public skeleton, not a finished handbook. It names the workflows that
+            need proper documentation before the site is published.
+          </p>
+        </header>
+
+        <section class="doc-section" id="drawing">
+          <h2>Drawing</h2>
+          <div>
+            <p>Runebender exposes a focused set of editing tools for glyph construction.</p>
+            <ul>
+              <li><strong>Select tool:</strong> select points, contours, and editable objects.</li>
+              <li><strong>Pen tool:</strong> draw cubic bezier contours.</li>
+              <li><strong>Hyperbezier pen:</strong> draw smooth paths defined by on-curve points.</li>
+              <li><strong>Knife tool:</strong> cut contours during outline editing.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Editing</h2>
+          <div>
+            <p>Current README-level operations include deletion, nudging, point type conversion, reverse direction, copy/paste, duplicate, flip, and rotate.</p>
+            <p class="callout">This section should become the place for exact tool behavior, selection states, undo expectations, and contour compatibility notes.</p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="preview">
+          <h2>Preview</h2>
+          <div>
+            <p>Hold <code>Space</code> for temporary preview mode. Use zoom and fit commands while checking glyph drawing and spacing.</p>
+            <table>
+              <caption>Viewing</caption>
+              <tbody>
+                <tr><th>Zoom in</th><td><code>Cmd/Ctrl + +</code> or <code>Cmd/Ctrl + =</code></td></tr>
+                <tr><th>Zoom out</th><td><code>Cmd/Ctrl + -</code></td></tr>
+                <tr><th>Fit</th><td><code>Cmd/Ctrl + 0</code></td></tr>
+                <tr><th>Panels</th><td><code>Tab</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Next</h2>
+          <div class="mini-index">
+            <a href="tracing.html"><strong>Trace images</strong><span>Background image workflow and autotrace backends.</span></a>
+            <a href="format.html"><strong>Format notes</strong><span>UFO, hyperbeziers, and compatibility.</span></a>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

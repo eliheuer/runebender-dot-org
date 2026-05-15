@@ -7,8 +7,16 @@
       name="description"
       content="Runebender is an experimental Rust font editor and documentation hub for UFO-based type design workflows."
     />
+    <meta property="og:title" content="Runebender" />
+    <meta
+      property="og:description"
+      content="Experimental Rust font editor and documentation hub for UFO-based type design workflows."
+    />
+    <meta property="og:image" content="https://runebender.org/assets/og-image.svg" />
+    <meta property="og:type" content="website" />
     <title>Runebender</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <header class="site-header">
@@ -17,10 +25,10 @@
         <span>Runebender</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#manual">Manual</a>
-        <a href="#reference">Reference</a>
-        <a href="#research">Research</a>
-        <a href="#resources">Links</a>
+        <a href="docs/install.html">Install</a>
+        <a href="docs/manual.html">Manual</a>
+        <a href="docs/reference.html">Reference</a>
+        <a href="docs/format.html">Format</a>
         <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
       </nav>
     </header>
@@ -36,7 +44,7 @@
           </p>
           <div class="hero-actions" aria-label="Project links">
             <a class="button primary" href="https://github.com/eliheuer/runebender-xilem">Source</a>
-            <a class="button secondary" href="#manual">Read the manual</a>
+            <a class="button secondary" href="docs/manual.html">Read the manual</a>
           </div>
         </div>
 
@@ -85,32 +93,32 @@
         <div class="doc-index">
           <article>
             <span>Start</span>
-            <h3>Build and open a UFO</h3>
-            <p>Install Rust, clone the repo, run the app, open `assets/untitled.ufo`, save safely.</p>
+            <h3><a href="docs/install.html">Build and open a UFO</a></h3>
+            <p>Install Rust, clone the repo, run the app, open <code>assets/untitled.ufo</code>, save safely.</p>
           </article>
           <article>
             <span>Edit</span>
-            <h3>Draw glyphs</h3>
+            <h3><a href="docs/manual.html#drawing">Draw glyphs</a></h3>
             <p>Select, pen, hyperbezier pen, knife, point type conversion, contour direction.</p>
           </article>
           <article>
             <span>Trace</span>
-            <h3>Bitmap to outline</h3>
+            <h3><a href="docs/tracing.html">Bitmap to outline</a></h3>
             <p>Import a drawing, scale it to metrics, trace locally with img2bez or cloud trace.</p>
           </article>
           <article>
             <span>Format</span>
-            <h3>UFO extensions</h3>
+            <h3><a href="docs/format.html">UFO extensions</a></h3>
             <p>Explain what data Runebender writes, including hyperbezier storage and fallbacks.</p>
           </article>
           <article>
             <span>Proof</span>
-            <h3>Preview and spacing</h3>
+            <h3><a href="docs/manual.html#preview">Preview and spacing</a></h3>
             <p>Document text preview, fitting, zoom behavior, metrics, and repeated proof strings.</p>
           </article>
           <article>
             <span>Develop</span>
-            <h3>Architecture notes</h3>
+            <h3><a href="docs/development.html">Architecture notes</a></h3>
             <p>Xilem UI model, file IO, font object model, settings, tools, and contributor paths.</p>
           </article>
         </div>
@@ -232,6 +240,10 @@
             <strong>Runebender Xilem</strong>
             <span>Current Rust/Xilem editor source, screenshots, shortcuts, features.</span>
           </a>
+          <a href="docs/install.html">
+            <strong>Local docs</strong>
+            <span>Install, manual, shortcuts, tracing, format notes, and development notes.</span>
+          </a>
           <a href="https://github.com/linebender/runebender">
             <strong>Original Runebender</strong>
             <span>Earlier Druid implementation in the Linebender organization.</span>
@@ -250,7 +262,7 @@
 
     <footer class="site-footer">
       <span>Runebender / runebender.org draft</span>
-      <span>Local static site. No remote configured.</span>
+      <span>Static documentation site. Prepared for GitHub Pages.</span>
     </footer>
   </body>
 </html>

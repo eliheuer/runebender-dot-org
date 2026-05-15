@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender development notes and contribution entry points." />
+    <title>Development / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Development</p>
+          <h1>Build the tool.</h1>
+          <p>
+            Runebender Xilem is a port of the earlier Druid-based Runebender to Xilem, a Rust UI
+            framework from the Linebender ecosystem.
+          </p>
+        </header>
+
+        <section class="doc-section">
+          <h2>Current status</h2>
+          <div>
+            <p>The project README describes the editor as very alpha and actively under development. Public docs should preserve that bluntness.</p>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Contribution paths</h2>
+          <div>
+            <ul>
+              <li>File issues and pull requests in <a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a>.</li>
+              <li>Use the Linebender Zulip channel for development discussion.</li>
+              <li>Keep format and architecture notes close to code until behavior stabilizes.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Docs backlog</h2>
+          <div>
+            <table>
+              <caption>Before public launch</caption>
+              <tbody>
+                <tr><th>Architecture</th><td>Document UI model, font object model, tool state, and file IO boundaries.</td></tr>
+                <tr><th>Tests</th><td>Explain what is covered and how contributors should verify changes.</td></tr>
+                <tr><th>Roadmap</th><td>Separate implemented behavior from planned editor work.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
