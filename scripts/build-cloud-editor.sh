@@ -13,4 +13,4 @@ if [ ! -d "$COMFY_WEB/node_modules" ]; then
   exit 1
 fi
 
-pnpm --dir "$COMFY_WEB" exec vite build --config ../../runebender-dot-org/scripts/vite.comfy-standalone.config.mjs
+VITE_RUNEBENDER_LOAD_TEST_FONT=1 pnpm --dir "$COMFY_WEB" exec vite build --config ../../runebender-dot-org/scripts/vite.comfy-standalone.config.mjs
