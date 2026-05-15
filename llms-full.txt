@@ -68,6 +68,43 @@ Because Runebender is alpha, docs should avoid over-specifying changing behavior
 - QuiverAI: an optional cloud vectorization backend for tracing.
 - Alpha: useful for experimentation, but not a promise of stable UI, file behavior, or release packaging.
 
+## Workflow Paths
+
+First run:
+
+1. Read Current Facts.
+2. Follow Install to clone and run the app from source.
+3. Open a UFO such as `assets/untitled.ufo`.
+4. Use Reference for the current shortcut map.
+
+Edit a glyph:
+
+1. Use Manual > Drawing to understand the available tools.
+2. Use Select, Pen, Hyperbezier Pen, or Knife depending on the contour work.
+3. Use preview and zoom commands while checking shape and spacing.
+4. Keep real UFO sources under version control while testing alpha behavior.
+
+Trace a drawing:
+
+1. Read Tracing for the image import and autotrace workflow.
+2. Use img2bez for local/offline tracing.
+3. Use QuiverAI only when network access, API key, and API credits are acceptable.
+4. Expect traced outlines to need cleanup and metric adjustment.
+
+Inspect format behavior:
+
+1. Read Format notes for the conservative UFO and hyperbezier map.
+2. Use the canonical hyperbezier spec in the source repo for exact details.
+3. Use Glossary for terms like GLIF, contour, on-curve, and cubic.
+4. Prefer source links over copied specs when documenting behavior that may change.
+
+Contribute:
+
+1. Read Development for contribution entry points.
+2. Use the current source repository as the source of truth.
+3. Keep docs broad unless behavior has stabilized in code.
+4. Update `llms.txt` and `llms-full.txt` when documentation structure changes.
+
 ## Install
 
 Prerequisites:

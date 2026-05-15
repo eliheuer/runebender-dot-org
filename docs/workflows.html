@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Runebender workflow paths for early users and contributors." />
+    <title>Workflows / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Docs</a>
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a href="format.html">Format</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="index.html">Docs map</a>
+          <a href="current-facts.html">Current facts</a>
+          <a href="alpha-limits.html">Alpha limits</a>
+          <a href="glossary.html">Glossary</a>
+          <a href="workflows.html">Workflows</a>
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">How-tos</p>
+          <h1>Workflow paths.</h1>
+          <p>
+            Short paths through the alpha documentation. These are intentionally broad: they help
+            people find the right page without pretending the UI is finished.
+          </p>
+          <table class="page-summary">
+            <tbody>
+              <tr><th>Status</th><td>Task map</td></tr>
+              <tr><th>Audience</th><td>Early users, contributors, agents</td></tr>
+              <tr><th>Source</th><td>Runebender Xilem README and website docs</td></tr>
+              <tr><th>Stability</th><td>Paths are stable; exact UI details may move</td></tr>
+            </tbody>
+          </table>
+        </header>
+
+        <section class="doc-section">
+          <h2>First run</h2>
+          <div>
+            <ol>
+              <li>Read <a href="current-facts.html">Current facts</a> so the alpha status is clear.</li>
+              <li>Follow <a href="install.html">Install</a> to clone and run the app from source.</li>
+              <li>Open a UFO such as <code>assets/untitled.ufo</code>.</li>
+              <li>Use <a href="reference.html">Reference</a> for the current shortcut map.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Edit a glyph</h2>
+          <div>
+            <ol>
+              <li>Use <a href="manual.html#drawing">Drawing</a> to understand the available tools.</li>
+              <li>Use Select, Pen, Hyperbezier Pen, or Knife depending on the contour work.</li>
+              <li>Use preview and zoom commands while checking shape and spacing.</li>
+              <li>Keep real UFO sources under version control while testing alpha behavior.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Trace a drawing</h2>
+          <div>
+            <ol>
+              <li>Read <a href="tracing.html">Tracing</a> for the image import and autotrace workflow.</li>
+              <li>Use img2bez for local/offline tracing.</li>
+              <li>Use QuiverAI only when network access, API key, and API credits are acceptable.</li>
+              <li>Expect traced outlines to need cleanup and metric adjustment.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Inspect format behavior</h2>
+          <div>
+            <ol>
+              <li>Read <a href="format.html">Format notes</a> for the conservative UFO and hyperbezier map.</li>
+              <li>Use the canonical hyperbezier spec in the source repo for exact details.</li>
+              <li>Use <a href="glossary.html">Glossary</a> for terms like GLIF, contour, on-curve, and cubic.</li>
+              <li>Prefer source links over copied specs when documenting behavior that may change.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Contribute</h2>
+          <div>
+            <ol>
+              <li>Read <a href="development.html">Development</a> for contribution entry points.</li>
+              <li>Use the current source repository as the source of truth.</li>
+              <li>Keep docs broad unless behavior has stabilized in code.</li>
+              <li>Update <a href="../llms.txt">llms.txt</a> and <a href="../llms-full.txt">llms-full.txt</a> when documentation structure changes.</li>
+            </ol>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
