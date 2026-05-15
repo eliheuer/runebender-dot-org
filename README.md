@@ -26,6 +26,7 @@ See `research.md` for links and notes.
 
 - `index.html` — home page and documentation index.
 - `docs/index.html` — documentation map inspired by RoboFont’s topics/tutorials/how-tos/reference split.
+- `docs/current-facts.html` — compact source of truth for humans and AI agents.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
 - `docs/tracing.html` — background image and autotrace workflow.
@@ -34,6 +35,8 @@ See `research.md` for links and notes.
 - `docs/development.html` — contributor and architecture notes.
 - `CNAME` — GitHub Pages custom domain placeholder for `runebender.org`.
 - `robots.txt` and `sitemap.xml` — basic search-engine metadata.
+- `llms.txt` and `llms-full.txt` — AI-readable documentation maps.
+- `AGENTS.md` — guidance for coding agents working in this repository.
 
 ## Run locally
 

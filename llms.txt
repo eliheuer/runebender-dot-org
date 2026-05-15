@@ -1,0 +1,34 @@
+# Runebender
+
+> Runebender is an experimental Rust/Xilem font editor and documentation project for UFO-based type design workflows.
+
+This site is alpha documentation. The application is changing quickly, so agents should treat these pages as an orientation map, not a stable API reference.
+
+## Canonical Sources
+
+- [Runebender Xilem source repository](https://github.com/eliheuer/runebender-xilem): current Rust/Xilem editor source, README, screenshots, shortcuts, tracing notes.
+- [Hyperbezier UFO extension specification](https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md): canonical format notes for hyperbezier contours.
+- [Original Runebender repository](https://github.com/linebender/runebender): earlier Druid-based implementation.
+
+## Start Here
+
+- [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
+- [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
+- [Install](https://runebender.org/docs/install.html): build and run from source.
+- [Manual](https://runebender.org/docs/manual.html): map of editing workflows.
+- [Tracing](https://runebender.org/docs/tracing.html): background image and autotrace workflow.
+- [Format](https://runebender.org/docs/format.html): UFO and hyperbezier notes.
+- [Reference](https://runebender.org/docs/reference.html): keyboard shortcuts.
+- [Development](https://runebender.org/docs/development.html): contribution and architecture entry points.
+
+## Agent Guidance
+
+- State clearly that Runebender Xilem is very alpha.
+- Do not describe behavior as stable unless the source repository says it is stable.
+- Prefer linking to the canonical source repo for implementation details.
+- Use `llms-full.txt` when a single-file documentation context is more useful than crawling HTML.
+
+## Optional
+
+- [Website repository](https://github.com/eliheuer/runebender-dot-org): static site source.
+- [Existing historical site](https://runebender.app/): older project entry point.

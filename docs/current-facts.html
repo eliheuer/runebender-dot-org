@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Current Runebender facts for humans and AI agents." />
+    <title>Current Facts / Runebender</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Docs</a>
+        <a href="install.html">Install</a>
+        <a href="manual.html">Manual</a>
+        <a href="reference.html">Reference</a>
+        <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="doc-layout">
+      <aside class="doc-sidebar">
+        <nav aria-label="Documentation navigation">
+          <a href="index.html">Docs map</a>
+          <a href="current-facts.html">Current facts</a>
+          <a href="install.html">Install</a>
+          <a href="manual.html">Manual</a>
+          <a href="tracing.html">Tracing</a>
+          <a href="format.html">Format</a>
+          <a href="reference.html">Reference</a>
+          <a href="development.html">Development</a>
+        </nav>
+      </aside>
+      <article class="doc-page">
+        <header class="doc-hero">
+          <p class="eyebrow">Agent-readable orientation</p>
+          <h1>Current facts.</h1>
+          <p>
+            A compact source of truth for humans and AI agents. These facts are intentionally
+            conservative because Runebender Xilem is alpha software.
+          </p>
+        </header>
+
+        <section class="doc-section">
+          <h2>Status</h2>
+          <div>
+            <ul>
+              <li>Runebender Xilem is very alpha and actively under development.</li>
+              <li>The public docs are an orientation map, not a stable API contract.</li>
+              <li>Implementation details should be verified against the source repository.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Project</h2>
+          <div>
+            <table>
+              <caption>Canonical links</caption>
+              <tbody>
+                <tr><th>Current editor</th><td><a href="https://github.com/eliheuer/runebender-xilem">github.com/eliheuer/runebender-xilem</a></td></tr>
+                <tr><th>Original editor</th><td><a href="https://github.com/linebender/runebender">github.com/linebender/runebender</a></td></tr>
+                <tr><th>Website source</th><td><a href="https://github.com/eliheuer/runebender-dot-org">github.com/eliheuer/runebender-dot-org</a></td></tr>
+                <tr><th>Full AI context</th><td><a href="../llms-full.txt">llms-full.txt</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Durable map</h2>
+          <div>
+            <ul>
+              <li>Runebender Xilem is a Rust/Xilem font editor.</li>
+              <li>It is a port of the earlier Druid-based Runebender.</li>
+              <li>The current workflow is source-first: clone the repo and run with Cargo.</li>
+              <li>UFO is the current source-font workflow named by the project.</li>
+              <li>Background image tracing exists through img2bez and optional QuiverAI.</li>
+              <li>Hyperbezier contours are marked in GLIF with <code>identifier="hyperbezier"</code>.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

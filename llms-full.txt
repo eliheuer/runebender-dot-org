@@ -1,0 +1,188 @@
+# Runebender Documentation Context
+
+This file is a compact, AI-readable bundle of the public Runebender website documentation.
+
+Runebender Xilem is alpha software. Treat these notes as an orientation map, not a stable API contract.
+
+## Canonical Sources
+
+- Current application source: https://github.com/eliheuer/runebender-xilem
+- Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
+- Earlier Runebender source: https://github.com/linebender/runebender
+- Website source: https://github.com/eliheuer/runebender-dot-org
+
+## Current Facts
+
+- Runebender Xilem is a font editor built with Rust and Xilem.
+- Xilem is a Rust UI framework from the Linebender ecosystem.
+- Runebender Xilem is a port of the earlier Druid-based Runebender.
+- The app is described as very alpha and actively under development.
+- The source workflow is currently source-first: clone the repository and run with Cargo.
+- The README currently lists MSRV 1.88.
+- The app can run with a file picker or open a specific UFO path.
+- UFO is the source-font workflow named in the project README.
+- Runebender supports background image import and autotrace workflows.
+- img2bez is the local/offline tracing path.
+- QuiverAI is an optional cloud tracing path requiring network access, API key, and API credits.
+- QuiverAI configuration can come from `~/.config/runebender/config.toml` or `QUIVERAI_API_KEY`.
+- Hyperbezier paths are smooth paths represented by on-curve points, with off-curve control points computed by a spline solver.
+- Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
+- The canonical hyperbezier spec lives in the Runebender Xilem source repository.
+
+## Documentation Model
+
+The public docs follow a RoboFont-inspired model:
+
+- Topics: concepts and orientation.
+- Tutorials: first learning paths.
+- How-tos: task-oriented workflows.
+- Reference: lookup tables and current commands.
+
+Because Runebender is alpha, docs should avoid over-specifying changing behavior.
+
+## Install
+
+Prerequisites:
+
+- Rust installed from https://rust-lang.org/
+- A checkout of https://github.com/eliheuer/runebender-xilem
+- A UFO source to open, or the included example UFO from the repository.
+
+Commands:
+
+```sh
+git clone https://github.com/eliheuer/runebender-xilem.git
+cd runebender-xilem
+cargo run
+```
+
+Usage:
+
+```sh
+cargo run                            # Opens a file picker
+cargo run -- assets/untitled.ufo     # Opens a specific UFO
+cargo run -- --verbose               # Runs with verbose logging
+```
+
+## Manual Map
+
+The manual is intentionally broad. It names editor areas without promising stable UI behavior.
+
+Drawing tools:
+
+- Select tool
+- Pen tool
+- Hyperbezier pen tool
+- Knife tool
+
+Editing areas:
+
+- Delete selected points or background image
+- Nudge selection
+- Toggle point type
+- Reverse contour direction
+- Copy/paste contours
+- Duplicate selection
+- Flip selection horizontally or vertically
+- Rotate selection
+- Convert hyperbezier paths to cubic
+
+Preview and view:
+
+- Hold `Space` for temporary preview mode.
+- `Cmd/Ctrl + +` or `Cmd/Ctrl + =` zooms in.
+- `Cmd/Ctrl + -` zooms out.
+- `Cmd/Ctrl + 0` fits glyph to window.
+- `Tab` toggles side panels.
+
+## Tracing
+
+Runebender can import bitmap reference images and place them behind a glyph.
+
+Workflow:
+
+1. Import a reference image with `Cmd/Ctrl + I`.
+2. Position and scale it against glyph metrics.
+3. Press `Cmd/Ctrl + T` for local img2bez tracing.
+4. Use `Cmd/Ctrl + Shift + T` to refit existing outlines to the image.
+5. Undo if needed; the background image is preserved for comparison.
+
+Backends:
+
+- img2bez: local bitmap-to-bezier tracing, works offline, recommended default path.
+- QuiverAI: optional cloud vectorization via `Cmd/Ctrl + Shift + Y`, requires network access, API key, and API credits.
+
+QuiverAI config example:
+
+```toml
+[quiver]
+api_key = "your-quiverai-api-key-here"
+```
+
+## Format
+
+Runebender is organized around source fonts that can be inspected, versioned, and moved between tools.
+
+UFO:
+
+- UFO is the current source workflow named in the README.
+- Public docs should keep read/write expectations conservative while the editor is alpha.
+
+Hyperbezier:
+
+- Hyperbezier paths are represented by on-curve points.
+- Off-curve control points are computed automatically by a spline solver.
+- Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
+- The canonical spec is in `runebender-xilem/docs/hyperbezier-ufo-extension.md`.
+
+Compatibility:
+
+- Non-supporting editors may ignore the hyperbezier identifier.
+- Non-supporting editors may treat points as ordinary curve/line points.
+- Use backups or version control when round-tripping alpha data through other tools.
+
+## Shortcut Reference
+
+General:
+
+- `Cmd/Ctrl + S`: Save
+- `Cmd/Ctrl + Z`: Undo
+- `Cmd/Ctrl + Shift + Z`: Redo
+- `Tab`: Toggle side panels
+- `Space`: Temporary preview mode
+
+Tools:
+
+- `V`: Select tool
+- `P`: Pen tool
+- `H`: Hyperbezier pen tool
+- `K`: Knife tool
+- `T`: Toggle point type
+- `R`: Reverse contour direction
+
+Images:
+
+- `Cmd/Ctrl + I`: Import background image
+- `Cmd/Ctrl + T`: Autotrace background image into bezier paths
+- `Cmd/Ctrl + Shift + T`: Refit existing outlines to match background image
+- `Cmd/Ctrl + L`: Toggle background image lock
+- `Cmd/Ctrl + Shift + Y`: Trace with QuiverAI
+
+## Development
+
+Runebender Xilem is very alpha and actively under development.
+
+Contribution entry points:
+
+- File issues and pull requests in https://github.com/eliheuer/runebender-xilem
+- Use the Linebender Zulip channel for development discussion.
+- Keep architecture and format notes close to code until behavior stabilizes.
+
+Docs backlog:
+
+- Map the UI model.
+- Map the font object model.
+- Map tool state.
+- Map file IO boundaries.
+- Explain verification conventions once they settle.
+- Separate implemented behavior from planned editor work.
