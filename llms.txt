@@ -7,12 +7,14 @@ This site is alpha documentation. The application is changing quickly, so agents
 ## Canonical Sources
 
 - [Runebender Xilem source repository](https://github.com/eliheuer/runebender-xilem): current Rust/Xilem editor source, README, screenshots, shortcuts, tracing notes.
+- [Runebender Comfy source repository](https://github.com/eliheuer/runebender-comfy): ComfyUI/Vue path used by the cloud-launch placeholder.
 - [Hyperbezier UFO extension specification](https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md): canonical format notes for hyperbezier contours.
 - [Original Runebender repository](https://github.com/linebender/runebender): earlier Druid-based implementation.
 
 ## Start Here
 
 - [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
+- [Cloud launch](https://runebender.org/cloud/index.html): temporary landing page for the ComfyUI/Vue browser path.
 - [Alpha limits](https://runebender.org/docs/alpha-limits.html): known instability and launch caveats.
 - [Capabilities](https://runebender.org/docs/capabilities.html): alpha matrix for running, editing, tracing, and format support.
 - [Roadmap](https://runebender.org/docs/roadmap.html): status lanes for documented, uncertain, future, and not-promised areas.
@@ -25,6 +27,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 - [Support](https://runebender.org/docs/support.html): support, community, issue, and contribution channel map.
 - [Source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.
 - [Architecture](https://runebender.org/docs/architecture.html): app flow, state model, editing layers, data, and geometry boundaries.
+- [Verification](https://runebender.org/docs/verification.html): website checks, source checks, manual checks, and current coverage limits.
 - [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
 - [Install](https://runebender.org/docs/install.html): build and run from source.
 - [Manual](https://runebender.org/docs/manual.html): map of editing workflows.

@@ -25,6 +25,7 @@ See `research.md` for links and notes.
 ## Site structure
 
 - `index.html` — home page and documentation index.
+- `cloud/index.html` — temporary cloud-launch landing page for the Comfy/Vue path.
 - `docs/index.html` — documentation map inspired by RoboFont’s topics/tutorials/how-tos/reference split.
 - `docs/current-facts.html` — compact source of truth for humans and AI agents.
 - `docs/alpha-limits.html` — public alpha caveats and unstable areas.
@@ -39,6 +40,7 @@ See `research.md` for links and notes.
 - `docs/support.html` — support, community, issue, and contribution channel map.
 - `docs/source-map.html` — high-level map of the Runebender Xilem source tree.
 - `docs/architecture.html` — contributor-level architecture map for app flow, state, editing, and data.
+- `docs/verification.html` — current website and source verification checks.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
 - `docs/tracing.html` — background image and autotrace workflow.
@@ -51,6 +53,7 @@ See `research.md` for links and notes.
 - `AGENTS.md` — guidance for coding agents working in this repository.
 - `launch-checklist.md` — pre-publication checklist for GitHub Pages, DNS, content, and QA.
 - `scripts/check-local-links.sh` — simple local HTTP 200 check for key pages and assets.
+- `scripts/sync-comfy-web.sh` — copies the local Comfy/Vue web folder into `cloud/runebender-comfy-web`.
 
 ## Run locally
 

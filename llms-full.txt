@@ -7,6 +7,7 @@ Runebender Xilem is alpha software. Treat these notes as an orientation map, not
 ## Canonical Sources
 
 - Current application source: https://github.com/eliheuer/runebender-xilem
+- Comfy/Vue application source: https://github.com/eliheuer/runebender-comfy
 - Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
 - Earlier Runebender source: https://github.com/linebender/runebender
 - Website source: https://github.com/eliheuer/runebender-dot-org
@@ -18,6 +19,8 @@ Runebender Xilem is alpha software. Treat these notes as an orientation map, not
 - Runebender Xilem is a port of the earlier Druid-based Runebender.
 - The app is described as very alpha and actively under development.
 - The source workflow is currently source-first: clone the repository and run with Cargo.
+- The cloud-launch page is a temporary landing point for the ComfyUI/Vue browser path.
+- `scripts/sync-comfy-web.sh` copies `../runebender-comfy/web` into `cloud/runebender-comfy-web`.
 - The README currently lists MSRV 1.88.
 - The app can run with a file picker or open a specific UFO path.
 - UFO is the source-font workflow named in the project README.
@@ -251,6 +254,32 @@ Data and geometry:
 - `src/model/`: workspace, designspace, and glyph rendering concepts.
 - `src/path/`: cubic, hyperbezier, quadratic, point, point-list, segment, and quadrant path data.
 - `src/shaping/`: Arabic shaping and Unicode data support.
+
+## Verification
+
+Website checks:
+
+- Serve the static site locally with `python3 -m http.server 5173`.
+- Run `scripts/check-local-links.sh http://127.0.0.1:5173`.
+- Update `sitemap.xml` when adding a public page.
+- Update `scripts/check-local-links.sh` so new public pages are checked.
+- Update `llms.txt` and `llms-full.txt` when the docs structure changes.
+
+Source checks from the Runebender Xilem repository root:
+
+- `cargo run` starts the source-first app path.
+- `cargo run -- assets/untitled.ufo` checks opening the broad example UFO.
+- `cargo run -- assets/hyper-matisse.ufo` checks the hyperbezier-focused example.
+- `cargo run -- --verbose` gives more detail for bug reports.
+- The current source manifest lists Rust 1.88.
+
+Not currently covered by this site:
+
+- Cross-platform release packaging.
+- Long-term shortcut stability.
+- Round-trip compatibility across all UFO editors.
+- Complete visual regression coverage for the app UI.
+- Published-site checks after DNS and GitHub Pages are enabled.
 
 ## Glossary
 

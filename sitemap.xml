@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://runebender.org/</loc></url>
+  <url><loc>https://runebender.org/cloud/index.html</loc></url>
   <url><loc>https://runebender.org/docs/index.html</loc></url>
   <url><loc>https://runebender.org/docs/current-facts.html</loc></url>
   <url><loc>https://runebender.org/docs/alpha-limits.html</loc></url>
@@ -15,6 +16,7 @@
   <url><loc>https://runebender.org/docs/support.html</loc></url>
   <url><loc>https://runebender.org/docs/source-map.html</loc></url>
   <url><loc>https://runebender.org/docs/architecture.html</loc></url>
+  <url><loc>https://runebender.org/docs/verification.html</loc></url>
   <url><loc>https://runebender.org/docs/install.html</loc></url>
   <url><loc>https://runebender.org/docs/manual.html</loc></url>
   <url><loc>https://runebender.org/docs/tracing.html</loc></url>

@@ -5,6 +5,7 @@ BASE_URL="${1:-http://127.0.0.1:5173}"
 
 paths="
 /
+/cloud/index.html
 /docs/index.html
 /docs/current-facts.html
 /docs/alpha-limits.html
@@ -19,6 +20,7 @@ paths="
 /docs/support.html
 /docs/source-map.html
 /docs/architecture.html
+/docs/verification.html
 /docs/install.html
 /docs/manual.html
 /docs/tracing.html
