@@ -27,6 +27,7 @@ See `research.md` for links and notes.
 - `index.html` — home page and documentation index.
 - `docs/index.html` — documentation map inspired by RoboFont’s topics/tutorials/how-tos/reference split.
 - `docs/current-facts.html` — compact source of truth for humans and AI agents.
+- `docs/alpha-limits.html` — public alpha caveats and unstable areas.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
 - `docs/tracing.html` — background image and autotrace workflow.
@@ -37,6 +38,7 @@ See `research.md` for links and notes.
 - `robots.txt` and `sitemap.xml` — basic search-engine metadata.
 - `llms.txt` and `llms-full.txt` — AI-readable documentation maps.
 - `AGENTS.md` — guidance for coding agents working in this repository.
+- `launch-checklist.md` — pre-publication checklist for GitHub Pages, DNS, content, and QA.
 
 ## Run locally
 

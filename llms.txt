@@ -13,6 +13,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 ## Start Here
 
 - [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
+- [Alpha limits](https://runebender.org/docs/alpha-limits.html): known instability and launch caveats.
 - [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
 - [Install](https://runebender.org/docs/install.html): build and run from source.
 - [Manual](https://runebender.org/docs/manual.html): map of editing workflows.

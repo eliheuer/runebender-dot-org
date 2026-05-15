@@ -29,6 +29,18 @@ Runebender Xilem is alpha software. Treat these notes as an orientation map, not
 - Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
 - The canonical hyperbezier spec lives in the Runebender Xilem source repository.
 
+## Known Alpha Limits
+
+- Tool behavior and keyboard shortcuts may change.
+- Docs describe the shape of workflows rather than every UI state.
+- Screenshots show current development state, not a final product surface.
+- Use version control or backups when testing real UFO sources.
+- Format behavior should be verified against the current source repository.
+- Hyperbezier behavior is documented by the canonical source-repo specification.
+- QuiverAI is optional and requires network access, an API key, and API credits.
+- Traced outlines may need cleanup and metric adjustment.
+- These docs should help people and agents find the right source files, commands, and concepts without freezing details that are still in flux.
+
 ## Documentation Model
 
 The public docs follow a RoboFont-inspired model:

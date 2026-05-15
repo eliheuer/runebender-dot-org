@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Runebender development notes and contribution entry points." />
-    <title>Development / Runebender</title>
+    <meta name="description" content="Known alpha limits for Runebender Xilem." />
+    <title>Alpha Limits / Runebender</title>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   </head>
@@ -16,7 +16,6 @@
         <a href="install.html">Install</a>
         <a href="manual.html">Manual</a>
         <a href="reference.html">Reference</a>
-        <a href="format.html">Format</a>
         <a class="nav-action" href="https://github.com/eliheuer/runebender-xilem">GitHub</a>
       </nav>
     </header>
@@ -37,43 +36,54 @@
       </aside>
       <article class="doc-page">
         <header class="doc-hero">
-          <p class="eyebrow">Development</p>
-          <h1>Build the tool.</h1>
+          <p class="eyebrow">Known limits</p>
+          <h1>Alpha means moving.</h1>
           <p>
-            Runebender Xilem is a port of the earlier Druid-based Runebender to Xilem, a Rust UI
-            framework from the Linebender ecosystem. This page points contributors at the moving parts.
+            Runebender Xilem is useful as an experiment and development surface, but it should not
+            be presented as stable production software. These limits are part of the public docs.
           </p>
         </header>
 
         <section class="doc-section">
-          <h2>Current status</h2>
-          <div>
-            <p>The project README describes the editor as very alpha and actively under development. Public docs should preserve that bluntness and avoid over-specifying unstable behavior.</p>
-          </div>
-        </section>
-
-        <section class="doc-section">
-          <h2>Contribution paths</h2>
+          <h2>Interface</h2>
           <div>
             <ul>
-              <li>File issues and pull requests in <a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a>.</li>
-              <li>Use the Linebender Zulip channel for development discussion.</li>
-              <li>Keep format and architecture notes close to code until behavior stabilizes.</li>
+              <li>Tool behavior and keyboard shortcuts may change.</li>
+              <li>Docs describe the shape of workflows rather than every UI state.</li>
+              <li>Screenshots show current development state, not a final product surface.</li>
             </ul>
           </div>
         </section>
 
         <section class="doc-section">
-          <h2>Docs backlog</h2>
+          <h2>Files</h2>
           <div>
-            <table>
-              <caption>Before public launch</caption>
-              <tbody>
-                <tr><th>Architecture</th><td>Map the UI model, font object model, tool state, and file IO boundaries.</td></tr>
-                <tr><th>Tests</th><td>Explain how contributors should verify changes once conventions settle.</td></tr>
-                <tr><th>Roadmap</th><td>Separate implemented behavior from planned editor work.</td></tr>
-              </tbody>
-            </table>
+            <ul>
+              <li>Use version control or backups when testing real UFO sources.</li>
+              <li>Format behavior should be verified against the current source repository.</li>
+              <li>Hyperbezier behavior is documented by the canonical source-repo specification.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Tracing</h2>
+          <div>
+            <ul>
+              <li>img2bez is the local tracing path.</li>
+              <li>QuiverAI is optional and requires network access, an API key, and API credits.</li>
+              <li>Traced outlines may need cleanup and metric adjustment.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Docs</h2>
+          <div>
+            <p>
+              These docs are intentionally broad. They should help people and agents find the right
+              source files, commands, and concepts without freezing details that are still in flux.
+            </p>
           </div>
         </section>
       </article>
