@@ -16,6 +16,8 @@
 
 html {
   scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -26,10 +28,12 @@ body {
     "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   line-height: 1.35;
+  overflow-x: hidden;
 }
 
 a {
   color: inherit;
+  overflow-wrap: anywhere;
   text-decoration: none;
 }
 
@@ -126,7 +130,7 @@ nav a:hover,
   display: grid;
   gap: 0;
   grid-template-columns: minmax(360px, 0.88fr) minmax(0, 1.12fr);
-  min-height: calc(100vh - 56px);
+  min-height: min(calc(100vh - 56px), 1080px);
   overflow: hidden;
 }
 
@@ -156,6 +160,7 @@ h3,
 p,
 figure {
   margin-top: 0;
+  overflow-wrap: anywhere;
 }
 
 h1 {
@@ -308,6 +313,18 @@ h3 {
 
 .manual-section {
   background: var(--panel);
+}
+
+.trust-section {
+  border-bottom: 2px solid var(--line);
+  display: grid;
+  gap: 44px;
+  grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
+}
+
+.trust-grid {
+  display: grid;
+  gap: 28px;
 }
 
 .doc-index {
@@ -478,6 +495,7 @@ h3 {
 
 table {
   border-collapse: collapse;
+  max-width: 100%;
   table-layout: fixed;
   width: 100%;
 }
@@ -593,6 +611,7 @@ th {
   .section-heading,
   .split-section,
   .resource-section,
+  .trust-section,
   .doc-layout,
   .doc-section {
     grid-template-columns: 1fr;
@@ -674,6 +693,11 @@ th {
 }
 
 @media (max-width: 620px) {
+  main {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
   .brand,
   nav a {
     min-height: 48px;
@@ -700,7 +724,7 @@ th {
   }
 
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   h2 {
@@ -721,7 +745,34 @@ th {
 
   .lede,
   .manifesto p {
-    font-size: 1.15rem;
+    font-size: 1.08rem;
+  }
+
+  .hero {
+    display: block;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .hero-copy {
+    max-width: 100vw;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .lede {
+    max-width: calc(100vw - 44px);
+    overflow-wrap: anywhere;
+  }
+
+  .screenshot-block {
+    max-width: 100vw;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .screenshot-block img {
+    max-width: 100%;
   }
 
   .button,
