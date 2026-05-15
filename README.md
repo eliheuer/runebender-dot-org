@@ -29,6 +29,7 @@ See `research.md` for links and notes.
 - `docs/current-facts.html` — compact source of truth for humans and AI agents.
 - `docs/alpha-limits.html` — public alpha caveats and unstable areas.
 - `docs/capabilities.html` — alpha capability matrix.
+- `docs/roadmap.html` — alpha roadmap lanes without dates or release promises.
 - `docs/glossary.html` — concept reference for font source and editor terms.
 - `docs/workflows.html` — task paths through the docs for early users and contributors.
 - `docs/tutorials.html` — learning paths for first run, editing, tracing, formats, and development.

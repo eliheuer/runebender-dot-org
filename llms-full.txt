@@ -70,6 +70,34 @@ Formats:
 - README lists `Cmd/Ctrl + Shift + H` to convert hyperbezier paths to cubic.
 - Example sources include `assets/untitled.ufo` and `assets/hyper-matisse.ufo`.
 
+## Roadmap
+
+This site uses status lanes instead of dated release promises.
+
+Documented now:
+
+- Source-first Cargo workflow, file picker launch, open a UFO path, verbose logging.
+- Select, Pen, Hyperbezier Pen, Knife, preview, zoom, transforms, and current shortcut lookup.
+- Background image import, local img2bez tracing, refit, optional QuiverAI tracing.
+- UFO orientation, GLIF concepts, hyperbezier identifier, cubic conversion path.
+- Included UFO sources for first-run testing and hyperbezier inspection.
+
+Needs verification before deeper public docs:
+
+- Exact selection states, tool modes, and editing edge cases.
+- Save behavior, round-tripping expectations, and compatibility with other UFO editors.
+- Tracing parameters, image placement details, and backend-specific failure modes.
+- Contributor test commands and expected verification workflow.
+- Packaging, downloads, releases, and platform support.
+
+Not promised:
+
+- Finished binary downloads.
+- Stable production file behavior.
+- Complete handbook coverage of every interface state.
+- Long-term shortcut stability.
+- Compatibility guarantees for every downstream UFO editor.
+
 ## Documentation Model
 
 The public docs follow a RoboFont-inspired model:

@@ -9,6 +9,7 @@ paths="
 /docs/current-facts.html
 /docs/alpha-limits.html
 /docs/capabilities.html
+/docs/roadmap.html
 /docs/glossary.html
 /docs/workflows.html
 /docs/tutorials.html
