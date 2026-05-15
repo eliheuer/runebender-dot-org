@@ -18,6 +18,7 @@ paths="
 /docs/troubleshooting.html
 /docs/support.html
 /docs/source-map.html
+/docs/architecture.html
 /docs/install.html
 /docs/manual.html
 /docs/tracing.html

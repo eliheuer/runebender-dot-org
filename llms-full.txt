@@ -220,6 +220,38 @@ Primary channels:
 
 Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems. Use website issues or patches for stale docs, broken links, unclear examples, and agent-readable context files. Use Zulip for early design discussion and questions that are not yet issue-shaped.
 
+## Architecture
+
+Application flow:
+
+- `src/main.rs` creates the Xilem event loop.
+- `src/lib.rs` initializes logging, config, initial state, command-line loading, and the Xilem app.
+- `AppState` drives the reactive UI and owns loaded workspace state, selection, active editor session, grid state, clipboard, and file-watch flags.
+- When a font is loaded, the app presents glyph grid and editor tabs. Without a loaded font, it shows the welcome view.
+- The tabbed view is wrapped with a file watcher that can reload workspace data after external UFO changes.
+
+State model:
+
+- `src/data/mod.rs` describes `AppState` as central application state.
+- `workspace` holds direct UFO workspace state.
+- `designspace` is reserved for designspace project state.
+- `editor_session` and `welcome_session` hold active editing contexts.
+- `active_tab`, selected glyph data, grid scroll state, and category filters drive navigation.
+
+Editing layers:
+
+- `src/editing/` contains local interaction modules for background images, hit testing, mouse behavior, tracing, QuiverAI, viewport helpers, and edit sessions.
+- Shared editing concepts from `runebender-core` are re-exported through `crate::editing`.
+- `src/tools/` contains tool implementations for Select, Pen, HyperPen, Knife, Measure, Shapes, Text, and Preview.
+- `ToolBox` wraps the active tool and delegates mouse, paint, and edit-type behavior.
+
+Data and geometry:
+
+- `src/data/`: editor data, file IO, grid behavior, and kerning.
+- `src/model/`: workspace, designspace, and glyph rendering concepts.
+- `src/path/`: cubic, hyperbezier, quadratic, point, point-list, segment, and quadrant path data.
+- `src/shaping/`: Arabic shaping and Unicode data support.
+
 ## Glossary
 
 - UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.

@@ -24,6 +24,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 - [Troubleshooting](https://runebender.org/docs/troubleshooting.html): setup, UFO, tracing, format, and reporting checks.
 - [Support](https://runebender.org/docs/support.html): support, community, issue, and contribution channel map.
 - [Source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.
+- [Architecture](https://runebender.org/docs/architecture.html): app flow, state model, editing layers, data, and geometry boundaries.
 - [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
 - [Install](https://runebender.org/docs/install.html): build and run from source.
 - [Manual](https://runebender.org/docs/manual.html): map of editing workflows.

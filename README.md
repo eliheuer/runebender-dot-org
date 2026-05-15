@@ -38,6 +38,7 @@ See `research.md` for links and notes.
 - `docs/troubleshooting.html` — alpha diagnostic checks for setup, files, tracing, and formats.
 - `docs/support.html` — support, community, issue, and contribution channel map.
 - `docs/source-map.html` — high-level map of the Runebender Xilem source tree.
+- `docs/architecture.html` — contributor-level architecture map for app flow, state, editing, and data.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
 - `docs/tracing.html` — background image and autotrace workflow.
