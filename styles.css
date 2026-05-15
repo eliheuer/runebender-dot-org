@@ -126,45 +126,6 @@ nav a:hover,
   border-left: 1px solid var(--line);
 }
 
-.launch-strip {
-  align-items: center;
-  background: #221726;
-  border-bottom: 2px solid var(--line);
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  padding: 24px 34px;
-}
-
-.launch-pill {
-  align-items: center;
-  border: 2px solid #efff42;
-  border-radius: 999px;
-  color: #efff42;
-  display: inline-flex;
-  font-size: clamp(1rem, 2.9vw, 1.9rem);
-  font-weight: 760;
-  justify-content: center;
-  line-height: 1;
-  min-height: 82px;
-  min-width: min(42vw, 405px);
-  padding: 0 48px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.launch-pill.fill {
-  background: #efff42;
-  color: #221726;
-}
-
-.launch-pill:hover,
-.launch-pill:focus-visible {
-  background: var(--paper);
-  border-color: var(--paper);
-  color: var(--ink);
-}
-
 .hero {
   display: grid;
   gap: 0;
@@ -723,16 +684,6 @@ th {
     border-right: 0;
   }
 
-  .launch-strip {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .launch-pill {
-    min-width: 0;
-    width: 100%;
-  }
-
   .doc-sidebar {
     border-bottom: 2px solid var(--line);
     border-right: 0;
@@ -851,17 +802,6 @@ th {
   .button,
   .hero-actions {
     width: 100%;
-  }
-
-  .launch-strip {
-    padding: 18px 22px;
-  }
-
-  .launch-pill {
-    border-radius: 28px;
-    font-size: 1.2rem;
-    min-height: 64px;
-    padding: 0 22px;
   }
 
   .button + .button {
