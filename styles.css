@@ -12,6 +12,29 @@
 
 * {
   box-sizing: border-box;
+  scrollbar-color: var(--line-soft) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-soft);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 html {
