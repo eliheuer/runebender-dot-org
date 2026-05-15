@@ -47,6 +47,7 @@ RoboFont is a better model for a tool aimed at people who script, extend, and un
 
 - Home page gives product status, download/buy, docs, technical specs, extensions, education.
 - Documentation is divided into Topics, Tutorials, How-Tos, Reference, Extensions, Mechanic, Extension Store, Education, Discord.
+- RoboFont explicitly maps docs by intent: tutorials are learning-oriented, how-tos are problem-oriented practical steps, topics are understanding-oriented, and reference is information-oriented lookup.
 - Scripting is core positioning, not an advanced appendix.
 - Getting Started covers new font, drawing, spacing, features, extensions/scripts, exporting, troubleshooting.
 - Technical specs are direct: macOS requirement, UFO3 native format, Python version.
@@ -57,6 +58,7 @@ Strong idea for Runebender:
 - Keep build instructions and source workflow explicit.
 - Use raw tables for shortcuts, commands, supported formats, and status.
 - Add architecture notes and format notes early, because the audience is likely technical.
+- For alpha software, keep docs at map-level unless behavior is stable. Prefer “what area exists” and “where to look” over long promises.
 
 ## Runebender positioning
 
@@ -71,6 +73,7 @@ Runebender should not look like a finished paid Mac product. It should look like
 ## Proposed information architecture
 
 - Home: title, real editor screenshot, build/source links.
+- Docs map: topics, tutorials, how-tos, reference.
 - Manual: install, first run, open UFO, save, draw, trace, proof.
 - Reference: commands, shortcuts, file formats, settings, known limitations.
 - Formats: UFO, GLIF, hyperbezier extension, export behavior.

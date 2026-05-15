@@ -12,6 +12,7 @@
     <header class="site-header">
       <a class="brand" href="../index.html"><span class="brand-mark">RB</span><span>Runebender</span></a>
       <nav aria-label="Primary navigation">
+        <a href="index.html">Docs</a>
         <a href="install.html">Install</a>
         <a href="manual.html">Manual</a>
         <a href="reference.html">Reference</a>
@@ -23,6 +24,7 @@
     <main class="doc-layout">
       <aside class="doc-sidebar">
         <nav aria-label="Documentation navigation">
+          <a href="index.html">Docs map</a>
           <a href="install.html">Install</a>
           <a href="manual.html">Manual</a>
           <a href="tracing.html">Tracing</a>
@@ -37,7 +39,8 @@
           <h1>Trace drawings.</h1>
           <p>
             Runebender can place bitmap references behind a glyph, then convert them to editable
-            cubic bezier contours through local or cloud-backed tracing.
+            cubic bezier contours through local or cloud-backed tracing. This page describes the
+            shape of the workflow, not every current parameter.
           </p>
         </header>
 
@@ -60,8 +63,8 @@
             <table>
               <caption>Tracing backends</caption>
               <tbody>
-                <tr><th>img2bez</th><td>Local deterministic bitmap-to-bezier tracing. Works offline and is the recommended default.</td></tr>
-                <tr><th>QuiverAI</th><td>Optional cloud vectorization via <code>Cmd/Ctrl + Shift + Y</code>. Requires network access and an API key.</td></tr>
+                <tr><th>img2bez</th><td>Local bitmap-to-bezier tracing. Works offline and is the recommended default path.</td></tr>
+                <tr><th>QuiverAI</th><td>Optional cloud vectorization via <code>Cmd/Ctrl + Shift + Y</code>. Requires network access, an API key, and API credits.</td></tr>
               </tbody>
             </table>
           </div>

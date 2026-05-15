@@ -25,6 +25,7 @@ See `research.md` for links and notes.
 ## Site structure
 
 - `index.html` — home page and documentation index.
+- `docs/index.html` — documentation map inspired by RoboFont’s topics/tutorials/how-tos/reference split.
 - `docs/install.html` — build and first-run notes.
 - `docs/manual.html` — early user manual structure.
 - `docs/tracing.html` — background image and autotrace workflow.
