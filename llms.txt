@@ -14,6 +14,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 
 - [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
 - [Alpha limits](https://runebender.org/docs/alpha-limits.html): known instability and launch caveats.
+- [Capabilities](https://runebender.org/docs/capabilities.html): alpha matrix for running, editing, tracing, and format support.
 - [Glossary](https://runebender.org/docs/glossary.html): definitions for UFO, GLIF, hyperbezier, tracing, and project terms.
 - [Workflows](https://runebender.org/docs/workflows.html): task paths for first run, editing, tracing, format inspection, and contributing.
 - [Source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.

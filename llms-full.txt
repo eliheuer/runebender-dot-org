@@ -41,6 +41,35 @@ Runebender Xilem is alpha software. Treat these notes as an orientation map, not
 - Traced outlines may need cleanup and metric adjustment.
 - These docs should help people and agents find the right source files, commands, and concepts without freezing details that are still in flux.
 
+## Capabilities
+
+Run:
+
+- Build from source by cloning the repository and running Cargo.
+- `cargo run` opens a file picker according to the README.
+- `cargo run -- assets/untitled.ufo` opens a specific UFO.
+- `cargo run -- --verbose` runs with verbose logging.
+
+Edit:
+
+- Select, Pen, Hyperbezier Pen, and Knife tools are listed in the README shortcut map.
+- README shortcuts include duplicate, flip, rotate, nudge, copy, paste, reverse direction, and point type toggle.
+
+Trace:
+
+- Background image import is exposed through `Cmd/Ctrl + I`.
+- Local img2bez tracing is exposed through `Cmd/Ctrl + T`.
+- Refit existing outlines to a background image with `Cmd/Ctrl + Shift + T`.
+- Optional QuiverAI tracing is exposed through `Cmd/Ctrl + Shift + Y`.
+- Background image lock toggle is listed as `Cmd/Ctrl + L`.
+
+Formats:
+
+- UFO is the current source-font workflow named by the README.
+- Hyperbezier on-curve path support is documented in the source repository.
+- README lists `Cmd/Ctrl + Shift + H` to convert hyperbezier paths to cubic.
+- Example sources include `assets/untitled.ufo` and `assets/hyper-matisse.ufo`.
+
 ## Documentation Model
 
 The public docs follow a RoboFont-inspired model:

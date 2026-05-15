@@ -8,6 +8,7 @@ paths="
 /docs/index.html
 /docs/current-facts.html
 /docs/alpha-limits.html
+/docs/capabilities.html
 /docs/glossary.html
 /docs/workflows.html
 /docs/source-map.html
