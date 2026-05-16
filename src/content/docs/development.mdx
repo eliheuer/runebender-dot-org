@@ -1,11 +1,11 @@
 ---
-title: "Build the tool."
+title: "Develop Runebender."
 navLabel: "Development"
 eyebrow: "Development"
-lede: "Runebender Xilem is a port of the earlier Druid-based Runebender to Xilem, a Rust UI framework from the Linebender ecosystem. This page points contributors at the moving parts."
+lede: "Runebender development now spans shared Core code, the Xilem native editor, the ComfyUI front-end, and historical Druid context. This page points contributors at the moving parts."
 status: "Contributor orientation"
 audience: "Developers and documentation agents"
-source: "Runebender Xilem repository"
+source: "Runebender Core, Xilem, Comfy, and Druid repositories"
 stability: "Architecture notes are intentionally high-level"
 order: 20
 description: "Runebender development notes and contribution entry points."
@@ -15,13 +15,15 @@ import DocSection from "../../components/DocSection.astro";
 
 <DocSection title="Current status">
 
-The project README describes the editor as very alpha and actively under development. Public docs should preserve that bluntness and avoid over-specifying unstable behavior.
+The project family is very alpha and actively under development. Public docs should preserve that bluntness and avoid over-specifying unstable behavior.
 
 </DocSection>
 
 <DocSection title="Contribution paths">
 
-- File issues and pull requests in [eliheuer/runebender-xilem](https://github.com/eliheuer/runebender-xilem).
+- Use [eliheuer/runebender-core](https://github.com/eliheuer/runebender-core) for shared editing state and data model work.
+- Use [eliheuer/runebender-xilem](https://github.com/eliheuer/runebender-xilem) for the native editor front-end.
+- Use [eliheuer/runebender-comfy](https://github.com/eliheuer/runebender-comfy) for ComfyUI nodes, Vue/WASM editor work, and graph workflows.
 - Use the [Support](/docs/support.html) page to choose the right channel for issues, pull requests, and discussion.
 - Keep format and architecture notes close to code until behavior stabilizes.
 
@@ -32,7 +34,8 @@ The project README describes the editor as very alpha and actively under develop
 <table>
   <caption>Before public launch</caption>
   <tbody>
-    <tr><th>Architecture</th><td>Use <a href="/docs/architecture.html">Architecture</a> for the current subsystem map.</td></tr>
+    <tr><th>Project map</th><td>Use <a href="/docs/project-map.html">Project map</a> for the current family structure.</td></tr>
+    <tr><th>Xilem architecture</th><td>Use <a href="/docs/architecture.html">Xilem architecture</a> for the current native editor subsystem map.</td></tr>
     <tr><th>Tests</th><td>Use <a href="/docs/verification.html">Verification</a> for current website and source checks.</td></tr>
     <tr><th>Roadmap</th><td>Use <a href="/docs/roadmap.html">Roadmap</a> to separate documented behavior from future-facing work.</td></tr>
   </tbody>

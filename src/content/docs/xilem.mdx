@@ -1,0 +1,51 @@
+---
+title: "Runebender Xilem."
+navLabel: "Xilem"
+eyebrow: "Native front-end"
+lede: "Runebender Xilem is the native Rust/Xilem desktop editor front-end. Most current manual, shortcut, tracing, and source workflow docs describe this path."
+status: "Very alpha native editor"
+audience: "Early users, contributors, documentation agents"
+source: "runebender-xilem README"
+stability: "Actively changing"
+order: 4.7
+description: "Runebender Xilem overview and docs entry point."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+<DocSection title="Use this when">
+
+- You want to run the native editor with Cargo.
+- You want the current glyph editing, tracing, shortcut, and UFO workflow docs.
+- You are inspecting the Xilem UI, app state, source map, or architecture.
+
+</DocSection>
+
+<DocSection title="Xilem docs">
+
+<MiniIndex
+  items={[
+    { href: "/docs/install.html", title: "Xilem install", description: "Build and run the native editor from source." },
+    { href: "/docs/manual.html", title: "Xilem manual", description: "Current editing surface and workflow map." },
+    { href: "/docs/tracing.html", title: "Xilem tracing", description: "Background image and autotrace workflow." },
+    { href: "/docs/reference.html", title: "Xilem shortcuts", description: "Keyboard commands from the current README." },
+    { href: "/docs/source-map.html", title: "Xilem source map", description: "Where to look in the native editor repository." },
+    { href: "/docs/architecture.html", title: "Xilem architecture", description: "Contributor-level map of the native app shape." },
+  ]}
+/>
+
+</DocSection>
+
+<DocSection title="Source">
+
+<table>
+  <caption>Xilem repository</caption>
+  <tbody>
+    <tr><th>Repo</th><td><a href="https://github.com/eliheuer/runebender-xilem">github.com/eliheuer/runebender-xilem</a></td></tr>
+    <tr><th>Run</th><td><code>cargo run -- assets/untitled.ufo</code></td></tr>
+    <tr><th>Status</th><td>Very alpha and actively under development.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>

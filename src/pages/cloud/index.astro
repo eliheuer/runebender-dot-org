@@ -4,35 +4,35 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Cloud / Runebender"
-  description="Runebender cloud launch placeholder for the ComfyUI/Vue version."
+  description="Runebender browser editor entry point."
 >
   <main>
     <section class="cloud-hero" aria-labelledby="cloud-title">
-      <p class="eyebrow">Comfy / Vue / Cloud path / Alpha</p>
-      <h1 id="cloud-title">Launch cloud.</h1>
+      <p class="eyebrow">Browser editor / Static build / Alpha</p>
+      <h1 id="cloud-title">Cloud editor.</h1>
       <p class="lede">
-        This is the landing point for the browser-based Runebender path. The standalone editor is
-        built from <code>~/GH/repos/runebender-comfy/web</code> and published as static files
-        inside this site.
+        A static browser build is available for quick experiments with the ComfyUI/Vue front-end.
+        Runebender Xilem, Runebender Comfy, and future front-ends should be understood as related
+        hosts around shared Runebender editing work.
       </p>
       <div class="hero-actions" aria-label="Cloud launch links">
         <a class="button primary" href="/cloud/editor/index.html">Launch editor</a>
-        <a class="button secondary" href="https://github.com/eliheuer/runebender-comfy/archive/refs/heads/main.zip">Download local</a>
+        <a class="button secondary" href="/docs/current-facts.html">Current facts</a>
       </div>
     </section>
 
     <section class="section split-section" aria-labelledby="cloud-next-title">
       <div>
-        <div class="section-kicker">Current wiring</div>
-        <h2 id="cloud-next-title">Temporary, useful.</h2>
+        <div class="section-kicker">Current status</div>
+        <h2 id="cloud-next-title">Useful, not the whole project.</h2>
       </div>
       <div class="reference-stack">
         <table>
-          <caption>Local sync</caption>
+          <caption>Static artifact</caption>
           <tbody>
             <tr>
-              <th>Source</th>
-              <td><code>~/GH/repos/runebender-comfy/web</code></td>
+              <th>Launch</th>
+              <td><a href="/cloud/editor/index.html">/cloud/editor/index.html</a></td>
             </tr>
             <tr>
               <th>Build</th>
@@ -44,25 +44,25 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             </tr>
             <tr>
               <th>Status</th>
-              <td>Alpha static build. Replace or automate when the cloud app settles.</td>
+              <td>Alpha static build. Treat behavior as experimental.</td>
             </tr>
           </tbody>
         </table>
 
         <table>
-          <caption>Intent</caption>
+          <caption>Use it for</caption>
           <tbody>
             <tr>
-              <th>Download local</th>
-              <td>Gets users to the Comfy source for local testing.</td>
+              <th>Quick checks</th>
+              <td>Open the browser editor without setting up the desktop source tree.</td>
             </tr>
             <tr>
-              <th>Launch cloud</th>
-              <td>Opens the current standalone Vue/WASM build.</td>
+              <th>Real work</th>
+              <td>Choose the front-end that matches the host you want, and keep UFO sources version-controlled.</td>
             </tr>
             <tr>
               <th>Docs</th>
-              <td>Keep exact setup details in the source repo until the workflow is stable.</td>
+              <td>Use the alpha docs for current status, limits, and canonical source links.</td>
             </tr>
           </tbody>
         </table>

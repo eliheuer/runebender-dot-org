@@ -2,28 +2,32 @@
 
 This file is a compact, AI-readable bundle of the public Runebender website documentation.
 
-Runebender Xilem is alpha software. Treat these notes as an orientation map, not a stable API contract.
+Runebender is a family of alpha font editor projects. Treat these notes as an orientation map, not a stable API contract.
 
 ## Canonical Sources
 
-- Current application source: https://github.com/eliheuer/runebender-xilem
-- Comfy/Vue application source: https://github.com/eliheuer/runebender-comfy
+- Shared core source: https://github.com/eliheuer/runebender-core
+- Native Xilem front-end source: https://github.com/eliheuer/runebender-xilem
+- ComfyUI/Vue/WASM front-end source: https://github.com/eliheuer/runebender-comfy
 - Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
 - Earlier Runebender source: https://github.com/linebender/runebender
 - Website source: https://github.com/eliheuer/runebender-dot-org
 
 ## Current Facts
 
-- Runebender Xilem is a font editor built with Rust and Xilem.
+- Runebender Core is the platform-independent Rust foundation shared by current front-ends.
+- Runebender Xilem is a native font editor front-end built with Rust and Xilem.
+- Runebender Comfy is a ComfyUI/Vue/WASM front-end and node path.
 - Xilem is a Rust UI framework from the Linebender ecosystem.
 - Runebender Xilem is a port of the earlier Druid-based Runebender.
-- The app is described as very alpha and actively under development.
-- The source workflow is currently source-first: clone the repository and run with Cargo.
-- The cloud editor is a static standalone Vue/WASM build from the ComfyUI/Vue browser path.
+- The project family is described as very alpha and actively under development.
+- Future Runebender front-ends may be added as the shared core grows.
+- The Xilem source workflow is currently source-first: clone the repository and run with Cargo.
+- The cloud editor is an experimental static standalone browser build from the Comfy path.
 - `scripts/build-cloud-editor.sh` builds `../runebender-comfy/web` into `public/cloud/editor`.
 - `scripts/sync-comfy-web.sh` copies `../runebender-comfy/web` into `public/cloud/runebender-comfy-web`.
-- The README currently lists MSRV 1.88.
-- The app can run with a file picker or open a specific UFO path.
+- The Xilem README currently lists MSRV 1.88.
+- The Xilem app can run with a file picker or open a specific UFO path.
 - UFO is the source-font workflow named in the project README.
 - Runebender supports background image import and autotrace workflows.
 - img2bez is the local/offline tracing path.
@@ -45,21 +49,21 @@ Runebender Xilem is alpha software. Treat these notes as an orientation map, not
 - Traced outlines may need cleanup and metric adjustment.
 - These docs should help people and agents find the right source files, commands, and concepts without freezing details that are still in flux.
 
-## Capabilities
+## Xilem Capabilities
 
-Run:
+Runebender Xilem run path:
 
 - Build from source by cloning the repository and running Cargo.
 - `cargo run` opens a file picker according to the README.
 - `cargo run -- assets/untitled.ufo` opens a specific UFO.
 - `cargo run -- --verbose` runs with verbose logging.
 
-Edit:
+Runebender Xilem editing:
 
 - Select, Pen, Hyperbezier Pen, and Knife tools are listed in the README shortcut map.
 - README shortcuts include duplicate, flip, rotate, nudge, copy, paste, reverse direction, and point type toggle.
 
-Trace:
+Runebender Xilem tracing:
 
 - Background image import is exposed through `Cmd/Ctrl + I`.
 - Local img2bez tracing is exposed through `Cmd/Ctrl + T`.
@@ -104,12 +108,12 @@ Not promised:
 
 ## Documentation Model
 
-The public docs follow a RoboFont-inspired model:
+The public docs use a mature font-editor documentation model:
 
-- Topics: concepts and orientation.
-- Tutorials: first learning paths.
-- How-tos: task-oriented workflows.
-- Reference: lookup tables and current commands.
+- Start here: project family, current facts, alpha limits, roadmap.
+- Shared concepts: glossary, UFO/GLIF/hyperbezier format notes, support, troubleshooting.
+- Editor-specific docs: Xilem install/manual/tracing/shortcuts/source map, and Comfy/Core landing pages.
+- Task paths: tutorials, workflows, and how-tos that currently lean Xilem-heavy where detailed docs exist.
 
 Because Runebender is alpha, docs should avoid over-specifying changing behavior.
 
@@ -502,11 +506,13 @@ Images:
 
 ## Development
 
-Runebender Xilem is very alpha and actively under development.
+Runebender Core, Xilem, and Comfy are very alpha and actively under development.
 
 Contribution entry points:
 
+- Use https://github.com/eliheuer/runebender-core for shared framework-independent editing and data model work.
 - File issues and pull requests in https://github.com/eliheuer/runebender-xilem
+- Use https://github.com/eliheuer/runebender-comfy for ComfyUI/Vue/WASM front-end and node work.
 - Use the Linebender Zulip channel for development discussion.
 - Keep architecture and format notes close to code until behavior stabilizes.
 

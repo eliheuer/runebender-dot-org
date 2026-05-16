@@ -11,14 +11,18 @@ This checklist is for publishing `runebender.org`.
 
 ## Site Content
 
-- [ ] Homepage clearly links to `eliheuer/runebender-xilem`.
-- [ ] Homepage clearly distinguishes current Xilem editor from original Druid Runebender.
-- [ ] Docs describe Runebender Xilem as very alpha.
+- [ ] Homepage presents Runebender as a project family, not one app.
+- [ ] Homepage clearly distinguishes Core, Xilem, Comfy, future front-ends, and historical Druid.
+- [ ] Docs home separates shared concepts from editor-specific docs.
+- [ ] Xilem-specific pages are labeled as Xilem-specific.
+- [ ] Comfy and Core landing pages exist even if detailed docs are still thin.
+- [ ] Docs describe the Runebender project family as very alpha.
 - [ ] Current Facts page is accurate.
 - [ ] Alpha Limits page is accurate.
 - [ ] Hyperbezier page links to the canonical source-repo spec.
 - [ ] QuiverAI notes mention network/API key/API credits.
 - [ ] Screenshots are local assets and reflect the current app well enough.
+- [ ] `llms.txt` and `llms-full.txt` explain the project family and do not collapse all front-ends into Xilem.
 
 ## Technical
 

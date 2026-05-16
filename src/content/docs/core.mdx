@@ -1,0 +1,47 @@
+---
+title: "Runebender Core."
+navLabel: "Core"
+eyebrow: "Shared foundation"
+lede: "Runebender Core is the platform-independent Rust foundation for editing state and font data work shared by current and future front-ends."
+status: "Early shared crate"
+audience: "Contributors, tool builders, documentation agents"
+source: "runebender-core README"
+stability: "Early; module boundaries may move"
+order: 4.6
+description: "Runebender Core overview and shared foundation notes."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Role">
+
+Runebender Core exists so front-ends do not each need to invent their own editing state and data model. The current crate holds framework-independent pieces such as edit types, selections, undo state, entity IDs, and UFO-spec kerning lookup.
+
+</DocSection>
+
+<DocSection title="Current limits">
+
+Geometry-heavy modules are not all centralized yet. The local README notes that some path, viewport, mouse, hit-test, workspace, and rendering pieces remain duplicated while the Xilem and Comfy stacks depend on different `kurbo` versions.
+
+</DocSection>
+
+<DocSection title="Use this when">
+
+- You are working on shared model or editing behavior.
+- A behavior should be consistent across Xilem, Comfy, and future front-ends.
+- You need to understand which parts are independent from a host UI framework.
+
+</DocSection>
+
+<DocSection title="Source">
+
+<table>
+  <caption>Core repository</caption>
+  <tbody>
+    <tr><th>Repo</th><td><a href="https://github.com/eliheuer/runebender-core">github.com/eliheuer/runebender-core</a></td></tr>
+    <tr><th>Status</th><td>Early shared crate.</td></tr>
+    <tr><th>License</th><td>Apache-2.0 in the local README.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>

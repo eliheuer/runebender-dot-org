@@ -134,6 +134,8 @@ nav a {
 
 nav a:hover,
 .button:hover,
+.tool-strip a:hover,
+.family-card:hover,
 .resource-links a:hover,
 .doc-index article:hover {
   background: var(--ink);
@@ -141,8 +143,16 @@ nav a:hover,
 }
 
 .doc-index article:hover p,
+.tool-strip a:hover span,
+.family-card:hover p,
+.family-card:hover span,
 .resource-links a:hover span {
   color: var(--reverse);
+}
+
+nav a[aria-current="page"] {
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .nav-action {
@@ -310,11 +320,44 @@ h3 {
 
 .status-grid p,
 .doc-index p,
+.tool-strip span,
 .section-heading p,
 .research-grid p,
 .manifesto p,
 .resource-links span {
   color: var(--muted);
+}
+
+.tool-strip {
+  background: var(--panel);
+  border-bottom: 2px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.tool-strip a {
+  aspect-ratio: 1.15;
+  border-right: 2px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 142px;
+  padding: 16px;
+}
+
+.tool-strip a:last-child {
+  border-right: 0;
+}
+
+.tool-strip span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tool-strip strong {
+  font-size: 1.05rem;
+  text-transform: uppercase;
 }
 
 .section {
@@ -336,6 +379,50 @@ h3 {
 
 .manual-section {
   background: var(--panel);
+}
+
+.family-section {
+  border-bottom: 2px solid var(--line);
+}
+
+.family-grid {
+  border-top: 2px solid var(--line);
+  display: grid;
+  grid-template-columns: 1.12fr repeat(2, 1fr);
+  margin-top: 46px;
+}
+
+.family-card {
+  border-bottom: 2px solid var(--line);
+  border-right: 2px solid var(--line);
+  min-height: 260px;
+  padding: 18px;
+}
+
+.family-card:nth-child(3n) {
+  border-right: 0;
+}
+
+.family-card span {
+  color: var(--muted);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 58px;
+  text-transform: uppercase;
+}
+
+.family-card p {
+  color: var(--muted);
+}
+
+.core-card {
+  background: var(--panel);
+}
+
+.future-card {
+  border-right: 0;
+  grid-column: span 2;
 }
 
 .trust-section {
@@ -687,18 +774,28 @@ th {
   }
 
   .status-grid,
+  .tool-strip,
+  .family-grid,
   .doc-index,
   .research-grid {
     grid-template-columns: 1fr;
   }
 
   .status-grid div + div,
+  .tool-strip a,
+  .family-card,
+  .family-card:nth-child(3n),
   .research-grid article {
     border-left: 0;
     border-right: 0;
   }
 
-  .status-grid div + div {
+  .future-card {
+    grid-column: auto;
+  }
+
+  .status-grid div + div,
+  .tool-strip a + a {
     border-top: 2px solid var(--line);
   }
 

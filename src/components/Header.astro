@@ -3,19 +3,13 @@ type NavLink = { href: string; label: string; external?: boolean; action?: boole
 
 const links: NavLink[] = [
   { href: "/docs/index.html", label: "Docs" },
+  { href: "/docs/manual.html", label: "Manual" },
   { href: "/docs/install.html", label: "Install" },
   { href: "/docs/reference.html", label: "Reference" },
-  { href: "/docs/format.html", label: "Format" },
   { href: "/cloud/index.html", label: "Cloud" },
   {
-    href: "https://github.com/eliheuer/runebender-comfy/archive/refs/heads/main.zip",
-    label: "Download",
-    external: true,
-  },
-  {
-    href: "https://github.com/eliheuer/runebender-xilem",
-    label: "GitHub",
-    external: true,
+    href: "/#family",
+    label: "Versions",
     action: true,
   },
 ];

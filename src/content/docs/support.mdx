@@ -5,7 +5,7 @@ eyebrow: "Support"
 lede: "Runebender does not yet have a polished product support structure. For now, support means clear reports, source-first discussion, and careful separation between editor issues, website docs, and broader design questions."
 status: "Alpha support map"
 audience: "Users, contributors, documentation agents"
-source: "Runebender Xilem README and website links"
+source: "Runebender Core, Xilem, Comfy, Druid, and website links"
 stability: "Channels may change if the project moves to an organization"
 order: 11
 description: "Runebender support, community, and contribution channels."
@@ -20,16 +20,16 @@ import MiniIndex from "../../components/MiniIndex.astro";
   <caption>Channels</caption>
   <tbody>
     <tr>
-      <th>Editor source</th>
+      <th>Shared core</th>
+      <td><a href="https://github.com/eliheuer/runebender-core">eliheuer/runebender-core</a></td>
+    </tr>
+    <tr>
+      <th>Native editor</th>
       <td><a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a></td>
     </tr>
     <tr>
-      <th>Issues</th>
-      <td><a href="https://github.com/eliheuer/runebender-xilem/issues">Runebender Xilem issues</a></td>
-    </tr>
-    <tr>
-      <th>Pull requests</th>
-      <td><a href="https://github.com/eliheuer/runebender-xilem/pulls">Runebender Xilem pull requests</a></td>
+      <th>Comfy front-end</th>
+      <td><a href="https://github.com/eliheuer/runebender-comfy">eliheuer/runebender-comfy</a></td>
     </tr>
     <tr>
       <th>Discussion</th>
@@ -46,7 +46,9 @@ import MiniIndex from "../../components/MiniIndex.astro";
 
 <DocSection title="Choose the right report">
 
-- Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems.
+- Use Core issues for shared editing state, data model, undo, selection, and cross-front-end behavior.
+- Use Xilem issues for native editor build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems.
+- Use Comfy issues for ComfyUI nodes, Vue/WASM editor behavior, workspace-backed `FONT` wires, and graph workflows.
 - Use website issues or patches for stale docs, broken links, unclear examples, and agent-readable context files.
 - Use Zulip for early design discussion, contributor coordination, and questions that are not yet issue-shaped.
 - Use pull requests when you can make a small, reviewable code or docs change.
@@ -75,9 +77,10 @@ For alpha software, a small precise report is better than a broad complaint.
 <MiniIndex
   items={[
     { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "Setup, UFO, tracing, and format checks." },
-    { href: "/docs/examples.html", title: "Examples", description: "Use included UFOs to reproduce behavior." },
+    { href: "/docs/project-map.html", title: "Project map", description: "Choose Core, Xilem, Comfy, or Druid." },
+    { href: "/docs/examples.html", title: "Xilem examples", description: "Use included UFOs to reproduce native editor behavior." },
     { href: "/docs/alpha-limits.html", title: "Alpha limits", description: "Known instability and caveats." },
-    { href: "/docs/source-map.html", title: "Source map", description: "Find likely implementation areas." },
+    { href: "/docs/source-map.html", title: "Xilem source map", description: "Find likely native editor implementation areas." },
   ]}
 />
 

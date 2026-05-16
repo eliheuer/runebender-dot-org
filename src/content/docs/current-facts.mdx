@@ -2,10 +2,10 @@
 title: "Current facts."
 navLabel: "Current facts"
 eyebrow: "Agent-readable orientation"
-lede: "A compact source of truth for humans and AI agents. These facts are intentionally conservative because Runebender Xilem is alpha software."
+lede: "A compact source of truth for humans and AI agents. These facts are intentionally conservative because the Runebender project family is alpha software."
 status: "Current orientation facts"
 audience: "Humans, crawlers, coding agents"
-source: "Runebender Xilem README and source docs"
+source: "Runebender Core, Xilem, Comfy, and Druid READMEs"
 stability: "Conservative, but still alpha"
 order: 1
 description: "Current Runebender facts for humans and AI agents."
@@ -15,10 +15,10 @@ import DocSection from "../../components/DocSection.astro";
 
 <DocSection title="Status">
 
-- Runebender Xilem is very alpha and actively under development.
+- Runebender is a family of very alpha font editor projects.
 - The public docs are an orientation map, not a stable API contract.
 - The known alpha limits are documented at [Alpha limits](/docs/alpha-limits.html).
-- Implementation details should be verified against the source repository.
+- Implementation details should be verified against the relevant source repository.
 
 </DocSection>
 
@@ -27,8 +27,10 @@ import DocSection from "../../components/DocSection.astro";
 <table>
   <caption>Canonical links</caption>
   <tbody>
-    <tr><th>Current editor</th><td><a href="https://github.com/eliheuer/runebender-xilem">github.com/eliheuer/runebender-xilem</a></td></tr>
-    <tr><th>Original editor</th><td><a href="https://github.com/linebender/runebender">github.com/linebender/runebender</a></td></tr>
+    <tr><th>Shared core</th><td><a href="https://github.com/eliheuer/runebender-core">github.com/eliheuer/runebender-core</a></td></tr>
+    <tr><th>Native front-end</th><td><a href="https://github.com/eliheuer/runebender-xilem">github.com/eliheuer/runebender-xilem</a></td></tr>
+    <tr><th>ComfyUI front-end</th><td><a href="https://github.com/eliheuer/runebender-comfy">github.com/eliheuer/runebender-comfy</a></td></tr>
+    <tr><th>Historical front-end</th><td><a href="https://github.com/linebender/runebender">github.com/linebender/runebender</a></td></tr>
     <tr><th>Website source</th><td><a href="https://github.com/eliheuer/runebender-dot-org">github.com/eliheuer/runebender-dot-org</a></td></tr>
     <tr><th>Full AI context</th><td><a href="/llms-full.txt">llms-full.txt</a></td></tr>
   </tbody>
@@ -38,9 +40,12 @@ import DocSection from "../../components/DocSection.astro";
 
 <DocSection title="Durable map">
 
-- Runebender Xilem is a Rust/Xilem font editor.
-- It is a port of the earlier Druid-based Runebender.
-- The current workflow is source-first: clone the repo and run with Cargo.
+- Runebender Core is the platform-independent Rust foundation shared by current front-ends.
+- Runebender Xilem is the native Rust/Xilem editor front-end.
+- Runebender Comfy is the ComfyUI/Vue/WASM front-end and node path.
+- Runebender Druid is the earlier Druid-based implementation.
+- Future Runebender front-ends may be added as the shared core grows.
+- The current Xilem workflow is source-first: clone the repo and run with Cargo.
 - UFO is the current source-font workflow named by the project.
 - Background image tracing exists through img2bez and optional QuiverAI.
 - Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.

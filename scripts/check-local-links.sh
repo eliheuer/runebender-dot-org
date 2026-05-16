@@ -8,10 +8,15 @@ paths="
 /cloud/index.html
 /cloud/editor/index.html
 /docs/index.html
+/docs/project-map.html
 /docs/current-facts.html
 /docs/alpha-limits.html
 /docs/capabilities.html
 /docs/roadmap.html
+/docs/core.html
+/docs/xilem.html
+/docs/comfy.html
+/docs/druid.html
 /docs/glossary.html
 /docs/workflows.html
 /docs/tutorials.html
