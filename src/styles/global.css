@@ -469,18 +469,37 @@ h3 {
 
 .doc-sidebar nav {
   display: grid;
-  gap: 0;
+  gap: 22px;
   justify-content: stretch;
+}
+
+.doc-nav-group {
+  display: grid;
+  gap: 0;
+}
+
+.doc-nav-group h2 {
+  border: 2px solid var(--line);
+  border-bottom: 0;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+  padding: 10px 12px;
+  text-transform: uppercase;
 }
 
 .doc-sidebar nav a {
   border: 2px solid var(--line);
   border-bottom: 0;
+  font-size: 0.78rem;
   min-height: 0;
   padding: 12px;
 }
 
-.doc-sidebar nav a:last-child {
+.doc-nav-group a:last-child {
   border-bottom: 2px solid var(--line);
 }
 
@@ -811,19 +830,19 @@ th {
   }
 
   .doc-sidebar nav {
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
+    align-items: stretch;
+    display: flex;
+    gap: 14px;
     overflow-x: auto;
   }
 
-  .doc-sidebar nav a {
-    border-bottom: 2px solid var(--line);
-    border-right: 0;
-    white-space: nowrap;
+  .doc-nav-group {
+    flex: 0 0 auto;
+    min-width: 180px;
   }
 
-  .doc-sidebar nav a + a {
-    border-left: 0;
+  .doc-sidebar nav a {
+    white-space: nowrap;
   }
 
   .doc-hero h1 {

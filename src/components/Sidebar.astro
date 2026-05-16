@@ -6,25 +6,91 @@ interface Props {
 }
 const { currentSlug } = Astro.props;
 
-const entries = (await getCollection("docs")).sort((a, b) => a.data.order - b.data.order);
+const entries = await getCollection("docs");
+const bySlug = new Map(entries.map((entry) => [entry.id, entry]));
 
-const links = [
-  { slug: "index", label: "Docs map", href: "/docs/index.html" },
-  ...entries.map((entry) => ({
-    slug: entry.id,
-    label: entry.data.navLabel ?? entry.data.title,
-    href: `/docs/${entry.id}.html`,
-  })),
+const groups = [
+  {
+    label: "Start",
+    links: [
+      { slug: "index", label: "Docs map", href: "/docs/index.html" },
+      { slug: "project-map" },
+      { slug: "current-facts" },
+      { slug: "alpha-limits" },
+      { slug: "roadmap" },
+    ],
+  },
+  {
+    label: "Shared",
+    links: [
+      { slug: "glossary" },
+      { slug: "format" },
+      { slug: "workflows" },
+      { slug: "tutorials" },
+      { slug: "how-tos" },
+      { slug: "troubleshooting" },
+      { slug: "support" },
+      { slug: "verification" },
+      { slug: "development" },
+    ],
+  },
+  {
+    label: "Core",
+    links: [{ slug: "core" }],
+  },
+  {
+    label: "Xilem",
+    links: [
+      { slug: "xilem" },
+      { slug: "install" },
+      { slug: "manual" },
+      { slug: "tracing" },
+      { slug: "reference" },
+      { slug: "capabilities" },
+      { slug: "examples" },
+      { slug: "source-map" },
+      { slug: "architecture" },
+    ],
+  },
+  {
+    label: "Comfy",
+    links: [{ slug: "comfy" }],
+  },
+  {
+    label: "Druid",
+    links: [{ slug: "druid" }],
+  },
 ];
+
+const resolveLink = (link: { slug: string; label?: string; href?: string }) => {
+  if (link.href && link.label) return link;
+  const entry = bySlug.get(link.slug);
+  if (!entry) return null;
+  return {
+    slug: link.slug,
+    label: link.label ?? entry.data.navLabel ?? entry.data.title,
+    href: link.href ?? `/docs/${link.slug}.html`,
+  };
+};
 ---
 
 <aside class="doc-sidebar">
   <nav aria-label="Documentation navigation">
     {
-      links.map(({ slug, label, href }) => (
-        <a href={href} aria-current={slug === currentSlug ? "page" : undefined}>
-          {label}
-        </a>
+      groups.map((group) => (
+        <section class="doc-nav-group" aria-labelledby={`doc-nav-${group.label.toLowerCase()}`}>
+          <h2 id={`doc-nav-${group.label.toLowerCase()}`}>{group.label}</h2>
+          {group.links.map((link) => {
+            const resolved = resolveLink(link);
+            if (!resolved) return null;
+            const { slug, label, href } = resolved;
+            return (
+              <a href={href} aria-current={slug === currentSlug ? "page" : undefined}>
+                {label}
+              </a>
+            );
+          })}
+        </section>
       ))
     }
   </nav>

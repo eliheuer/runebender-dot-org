@@ -14,11 +14,11 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
         <p class="eyebrow">Core / Xilem / Comfy / UFO / Very alpha</p>
         <h1 id="hero-title">Runebender</h1>
         <p class="lede">
-          A family of experimental font editor projects for drawing, tracing, inspecting, and
-          saving UFO font sources with shared Rust code.
+          Experimental font editor work organized as shared Rust core code, native and graph-hosted
+          front-ends, and conservative docs for UFO-based type design.
         </p>
         <div class="hero-actions" aria-label="Project links">
-          <a class="button primary" href="#family">Choose a version</a>
+          <a class="button primary" href="#family">Choose a path</a>
           <a class="button secondary" href="/docs/index.html">Read the docs</a>
         </div>
       </div>
@@ -57,25 +57,25 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
     </section>
 
     <section class="tool-strip" aria-label="Primary documentation paths">
-      <a href="/docs/install.html">
-        <span>RUN</span>
-        <strong>Install</strong>
+      <a href="/docs/project-map.html">
+        <span>MAP</span>
+        <strong>Project</strong>
       </a>
-      <a href="/docs/manual.html">
-        <span>EDIT</span>
-        <strong>Manual</strong>
+      <a href="/docs/core.html">
+        <span>SHARED</span>
+        <strong>Core</strong>
       </a>
-      <a href="/docs/tracing.html">
-        <span>TRACE</span>
-        <strong>Images</strong>
+      <a href="/docs/xilem.html">
+        <span>NATIVE</span>
+        <strong>Xilem</strong>
       </a>
-      <a href="/docs/format.html">
-        <span>UFO</span>
-        <strong>Format</strong>
+      <a href="/docs/comfy.html">
+        <span>GRAPH</span>
+        <strong>Comfy</strong>
       </a>
-      <a href="/docs/reference.html">
-        <span>KEYS</span>
-        <strong>Reference</strong>
+      <a href="/docs/druid.html">
+        <span>PAST</span>
+        <strong>Druid</strong>
       </a>
       <a href="/docs/support.html">
         <span>HELP</span>
@@ -86,18 +86,18 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
     <section class="section family-section" id="family" aria-labelledby="family-title">
       <div class="section-kicker">Project family</div>
       <div class="section-heading">
-        <h2 id="family-title">One editor line, several front-ends.</h2>
+        <h2 id="family-title">Choose the right Runebender.</h2>
         <p>
-          Runebender is not only one app. It is a set of experiments around shared Rust editing
-          code, open font sources, and different host interfaces. The names matter because each
-          repository has a different role.
+          Runebender is a project family. Core is the shared foundation, Xilem is the native
+          editor, Comfy is the graph-hosted front-end, and Druid is the earlier implementation.
+          Future front-ends should fit this map instead of replacing it.
         </p>
       </div>
 
       <div class="family-grid">
         <article class="family-card core-card">
           <span>Foundation</span>
-          <h3><a href="https://github.com/eliheuer/runebender-core">Runebender Core</a></h3>
+          <h3><a href="/docs/core.html">Runebender Core</a></h3>
           <p>
             Platform-independent Rust types for editing state, undo, selections, entity IDs, and
             UFO-oriented data models shared by front-ends.
@@ -105,7 +105,7 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
         </article>
         <article class="family-card">
           <span>Native front-end</span>
-          <h3><a href="https://github.com/eliheuer/runebender-xilem">Runebender Xilem</a></h3>
+          <h3><a href="/docs/xilem.html">Runebender Xilem</a></h3>
           <p>
             The desktop Rust/Xilem editor path. Build from source with Cargo, open UFO sources,
             and test current glyph editing and tracing behavior.
@@ -113,7 +113,7 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
         </article>
         <article class="family-card">
           <span>ComfyUI front-end</span>
-          <h3><a href="https://github.com/eliheuer/runebender-comfy">Runebender Comfy</a></h3>
+          <h3><a href="/docs/comfy.html">Runebender Comfy</a></h3>
           <p>
             ComfyUI custom nodes and a Vue/WASM editor surface for graph-based font workflows,
             specimen rendering, workspace-backed FONT wires, and browser-hosted experiments.
@@ -121,7 +121,7 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
         </article>
         <article class="family-card">
           <span>Historical front-end</span>
-          <h3><a href="https://github.com/linebender/runebender">Runebender Druid</a></h3>
+          <h3><a href="/docs/druid.html">Runebender Druid</a></h3>
           <p>
             The earlier Druid-based Runebender implementation. It anchors the project lineage but
             is not the current front-end direction.
@@ -139,46 +139,46 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
     </section>
 
     <section class="section manual-section" id="manual" aria-labelledby="manual-title">
-      <div class="section-kicker">Manual structure</div>
+      <div class="section-kicker">Documentation structure</div>
       <div class="section-heading">
-        <h2 id="manual-title">A manual before a release page.</h2>
+        <h2 id="manual-title">Shared concepts, editor-specific manuals.</h2>
         <p>
-          Runebender does not yet need a polished release funnel. It needs a clear map for people
-          choosing between the native editor, the ComfyUI graph path, shared core code, and older
-          project history.
+          The public docs keep common vocabulary and format notes in one place, while Xilem, Comfy,
+          Core, and Druid get separate entry points. That keeps current behavior clear without
+          pretending alpha details belong in one finished product manual.
         </p>
       </div>
 
       <div class="doc-index">
         <article>
           <span>Start</span>
-          <h3><a href="/docs/install.html">Build and open a UFO</a></h3>
-          <p>Start with Xilem when you want the native editor, or Comfy when you want graph-hosted tools.</p>
+          <h3><a href="/docs/project-map.html">Understand the family</a></h3>
+          <p>Core, Xilem, Comfy, Druid, and future front-ends each have a defined role.</p>
         </article>
         <article>
-          <span>Edit</span>
-          <h3><a href="/docs/manual.html#drawing">Draw glyphs</a></h3>
-          <p>Select, pen, hyperbezier pen, knife, point type conversion, contour direction.</p>
+          <span>Native</span>
+          <h3><a href="/docs/xilem.html">Use Xilem</a></h3>
+          <p>Build the desktop editor, open UFO sources, draw glyphs, trace images, and use shortcuts.</p>
         </article>
         <article>
-          <span>Trace</span>
-          <h3><a href="/docs/tracing.html">Bitmap to outline</a></h3>
-          <p>Import a drawing, scale it to metrics, trace locally with img2bez or cloud trace.</p>
+          <span>Graph</span>
+          <h3><a href="/docs/comfy.html">Use Comfy</a></h3>
+          <p>Follow the ComfyUI/Vue/WASM path for node-based font work and browser-hosted experiments.</p>
         </article>
         <article>
-          <span>Format</span>
+          <span>Foundation</span>
+          <h3><a href="/docs/core.html">Develop Core</a></h3>
+          <p>Work on shared editing state, data model types, undo, selections, and cross-front-end behavior.</p>
+        </article>
+        <article>
+          <span>Shared</span>
           <h3><a href="/docs/format.html">UFO extensions</a></h3>
           <p>Explain what data Runebender writes, including hyperbezier storage and fallbacks.</p>
         </article>
         <article>
-          <span>Proof</span>
-          <h3><a href="/docs/manual.html#preview">Preview and spacing</a></h3>
-          <p>Document text preview, fitting, zoom behavior, metrics, and repeated proof strings.</p>
-        </article>
-        <article>
-          <span>Develop</span>
-          <h3><a href="/docs/development.html">Architecture notes</a></h3>
-          <p>Core model, Xilem UI, ComfyUI nodes, file IO, tools, and contributor paths.</p>
+          <span>Support</span>
+          <h3><a href="/docs/support.html">Choose a channel</a></h3>
+          <p>Report issues to the right repository and keep alpha behavior tied to reproducible evidence.</p>
         </article>
       </div>
     </section>
@@ -212,7 +212,7 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
         </table>
 
         <table>
-          <caption>Shortcuts worth documenting first</caption>
+          <caption>Xilem shortcuts worth documenting first</caption>
           <tbody>
             <tr>
               <th>V / P / H / K</th>
@@ -240,36 +240,36 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
       <h2 id="research-title">Find the right page quickly.</h2>
       <div class="research-grid">
         <article>
-          <h3>Topics</h3>
+          <h3>Start</h3>
           <p>
-            Start with the project status, alpha limits, capabilities, roadmap, glossary, and
-            source map before treating any detail as stable.
+            Project map, current facts, alpha limits, and roadmap explain what Runebender means
+            before the reader chooses a front-end.
           </p>
           <a href="/docs/index.html">Open docs map</a>
         </article>
         <article>
-          <h3>Tutorials</h3>
+          <h3>Shared</h3>
           <p>
-            Follow short learning paths for first run, drawing, tracing, format inspection, and
-            contributor orientation.
+            Glossary, format notes, support, troubleshooting, and verification stay independent
+            from any one editor interface.
           </p>
-          <a href="/docs/tutorials.html">Read tutorials</a>
+          <a href="/docs/format.html">Read format notes</a>
         </article>
         <article>
-          <h3>How-tos</h3>
+          <h3>Xilem</h3>
           <p>
-            Use task recipes for running with a file, collecting logs, tracing images, configuring
-            cloud tracing, and converting hyperbeziers.
+            The detailed current manual, install path, shortcut reference, tracing notes, and
+            source map are native-editor docs.
           </p>
-          <a href="/docs/how-tos.html">Open recipes</a>
+          <a href="/docs/xilem.html">Open Xilem docs</a>
         </article>
         <article>
-          <h3>Reference</h3>
+          <h3>Comfy and Core</h3>
           <p>
-            Keep shortcut lookup, format notes, source links, and troubleshooting separate from
-            narrative documentation.
+            The Comfy and Core pages are intentionally lighter today, but they reserve clear homes
+            for graph workflows and shared library work.
           </p>
-          <a href="/docs/reference.html">Use shortcuts</a>
+          <a href="/docs/comfy.html">Open Comfy docs</a>
         </article>
       </div>
     </section>
