@@ -1,0 +1,19 @@
+---
+type Item = { href: string; title: string; description: string };
+
+interface Props {
+  items: Item[];
+}
+const { items } = Astro.props;
+---
+
+<div class="mini-index">
+  {
+    items.map(({ href, title, description }) => (
+      <a href={href}>
+        <strong>{title}</strong>
+        <span>{description}</span>
+      </a>
+    ))
+  }
+</div>

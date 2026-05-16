@@ -1,0 +1,84 @@
+---
+title: "Use the source channels."
+navLabel: "Support"
+eyebrow: "Support"
+lede: "Runebender does not yet have a polished product support structure. For now, support means clear reports, source-first discussion, and careful separation between editor issues, website docs, and broader design questions."
+status: "Alpha support map"
+audience: "Users, contributors, documentation agents"
+source: "Runebender Xilem README and website links"
+stability: "Channels may change if the project moves to an organization"
+order: 11
+description: "Runebender support, community, and contribution channels."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+<DocSection title="Where to go">
+
+<table>
+  <caption>Channels</caption>
+  <tbody>
+    <tr>
+      <th>Editor source</th>
+      <td><a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a></td>
+    </tr>
+    <tr>
+      <th>Issues</th>
+      <td><a href="https://github.com/eliheuer/runebender-xilem/issues">Runebender Xilem issues</a></td>
+    </tr>
+    <tr>
+      <th>Pull requests</th>
+      <td><a href="https://github.com/eliheuer/runebender-xilem/pulls">Runebender Xilem pull requests</a></td>
+    </tr>
+    <tr>
+      <th>Discussion</th>
+      <td><a href="https://xi.zulipchat.com/#narrow/channel/197075-runebender">Linebender Zulip Runebender channel</a></td>
+    </tr>
+    <tr>
+      <th>Website source</th>
+      <td><a href="https://github.com/eliheuer/runebender-dot-org">runebender-dot-org</a></td>
+    </tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Choose the right report">
+
+- Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems.
+- Use website issues or patches for stale docs, broken links, unclear examples, and agent-readable context files.
+- Use Zulip for early design discussion, contributor coordination, and questions that are not yet issue-shaped.
+- Use pull requests when you can make a small, reviewable code or docs change.
+
+</DocSection>
+
+<DocSection title="Useful report shape">
+
+For alpha software, a small precise report is better than a broad complaint.
+
+<table>
+  <caption>Include</caption>
+  <tbody>
+    <tr><th>Context</th><td>Source checkout or commit, operating system, Rust version if build-related.</td></tr>
+    <tr><th>Command</th><td>The exact <code>cargo run</code> command or app action.</td></tr>
+    <tr><th>Data</th><td>Example UFO path, glyph name, image input, or hyperbezier file if relevant.</td></tr>
+    <tr><th>Behavior</th><td>Expected result, actual result, and whether undo or reopening changed anything.</td></tr>
+    <tr><th>Scope</th><td>Whether it affects local tracing, QuiverAI, normal cubic outlines, hyperbeziers, or docs.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Before asking">
+
+<MiniIndex
+  items={[
+    { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "Setup, UFO, tracing, and format checks." },
+    { href: "/docs/examples.html", title: "Examples", description: "Use included UFOs to reproduce behavior." },
+    { href: "/docs/alpha-limits.html", title: "Alpha limits", description: "Known instability and caveats." },
+    { href: "/docs/source-map.html", title: "Source map", description: "Find likely implementation areas." },
+  ]}
+/>
+
+</DocSection>

@@ -6,7 +6,7 @@ const { defineConfig } = require("vite");
 const vue = require("@vitejs/plugin-vue");
 
 const webRoot = fileURLToPath(new URL("../../runebender-comfy/web/", import.meta.url));
-const outputDir = fileURLToPath(new URL("../cloud/editor/", import.meta.url));
+const outputDir = fileURLToPath(new URL("../public/cloud/editor/", import.meta.url));
 
 export default defineConfig({
   root: webRoot,

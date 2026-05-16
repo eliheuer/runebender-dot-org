@@ -1,0 +1,68 @@
+---
+title: "Status without dates."
+navLabel: "Roadmap"
+eyebrow: "Roadmap"
+lede: "Runebender is changing too quickly for a dated release plan on this site. This page separates documented alpha behavior from areas that need more code, design, or public documentation before they should be treated as stable."
+status: "Alpha roadmap lanes"
+audience: "Users, contributors, agents"
+source: "Website docs plus Runebender Xilem README"
+stability: "No dates or release promises"
+order: 4
+description: "Runebender alpha roadmap and status lanes."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Documented now">
+
+<table>
+  <caption>Current alpha surface</caption>
+  <tbody>
+    <tr><th>Build</th><td>Source-first Cargo workflow, file picker launch, open a UFO path, verbose logging.</td></tr>
+    <tr><th>Edit</th><td>Select, Pen, Hyperbezier Pen, Knife, preview, zoom, transforms, and current shortcut lookup.</td></tr>
+    <tr><th>Trace</th><td>Background image import, local img2bez tracing, refit, optional QuiverAI tracing.</td></tr>
+    <tr><th>Formats</th><td>UFO orientation, GLIF concepts, hyperbezier identifier, cubic conversion path.</td></tr>
+    <tr><th>Examples</th><td>Included UFO sources for first-run testing and hyperbezier inspection.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Needs verification">
+
+These areas should be checked against the current source before they become more detailed public docs.
+
+- Exact selection states, tool modes, and editing edge cases.
+- Save behavior, round-tripping expectations, and compatibility with other UFO editors.
+- Tracing parameters, image placement details, and backend-specific failure modes.
+- Contributor test commands and expected verification workflow.
+- Packaging, downloads, releases, and platform support.
+
+</DocSection>
+
+<DocSection title="Documentation next">
+
+<table>
+  <caption>Docs work</caption>
+  <tbody>
+    <tr><th>Architecture</th><td>Keep <a href="/docs/architecture.html">Architecture</a> aligned with UI model, font object model, tool state, file IO, tracing, and settings boundaries.</td></tr>
+    <tr><th>Manual</th><td>Expand stable editing concepts without locking in unstable UI states.</td></tr>
+    <tr><th>Reference</th><td>Keep shortcuts and commands synchronized with the source README and <a href="/docs/verification.html">Verification</a>.</td></tr>
+    <tr><th>Examples</th><td>Add screenshots or extracted details only when the examples are stable enough to teach from.</td></tr>
+    <tr><th>Launch</th><td>Finish public GitHub Pages, DNS, external link, and responsive review.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Not promised">
+
+Until the source project says otherwise, do not present these as available release features.
+
+- Finished binary downloads.
+- Stable production file behavior.
+- Complete handbook coverage of every interface state.
+- Long-term shortcut stability.
+- Compatibility guarantees for every downstream UFO editor.
+
+</DocSection>

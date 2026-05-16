@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+  currentSlug?: string;
+}
+const { currentSlug } = Astro.props;
+
+const entries = (await getCollection("docs")).sort((a, b) => a.data.order - b.data.order);
+
+const links = [
+  { slug: "index", label: "Docs map", href: "/docs/index.html" },
+  ...entries.map((entry) => ({
+    slug: entry.id,
+    label: entry.data.navLabel ?? entry.data.title,
+    href: `/docs/${entry.id}.html`,
+  })),
+];
+---
+
+<aside class="doc-sidebar">
+  <nav aria-label="Documentation navigation">
+    {
+      links.map(({ slug, label, href }) => (
+        <a href={href} aria-current={slug === currentSlug ? "page" : undefined}>
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+</aside>

@@ -1,0 +1,45 @@
+---
+title: "Trace drawings."
+navLabel: "Tracing"
+eyebrow: "Images to outlines"
+lede: "Runebender can place bitmap references behind a glyph, then convert them to editable cubic bezier contours through local or cloud-backed tracing. This page describes the shape of the workflow, not every current parameter."
+status: "How-to overview"
+audience: "Users testing image-to-outline workflows"
+source: "Runebender Xilem README and config notes"
+stability: "Backends exist; parameters may change"
+order: 17
+description: "Runebender background image and autotrace workflow."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="Workflow">
+
+1. Import a reference image with `Cmd/Ctrl + I`.
+2. Position and scale it against the glyph metrics.
+3. Press `Cmd/Ctrl + T` for local img2bez tracing.
+4. Use `Cmd/Ctrl + Shift + T` to refit existing outlines.
+5. Undo if needed; the background image is preserved for comparison.
+
+</DocSection>
+
+<DocSection title="Backends">
+
+<table>
+  <caption>Tracing backends</caption>
+  <tbody>
+    <tr><th>img2bez</th><td>Local bitmap-to-bezier tracing. Works offline and is the recommended default path.</td></tr>
+    <tr><th>QuiverAI</th><td>Optional cloud vectorization via <code>Cmd/Ctrl + Shift + Y</code>. Requires network access, an API key, and API credits.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="QuiverAI">
+
+Runebender can read QuiverAI credentials from `~/.config/runebender/config.toml` or the `QUIVERAI_API_KEY` environment variable.
+
+<CommandList commands={["[quiver]", 'api_key = "your-quiverai-api-key-here"']} />
+
+</DocSection>

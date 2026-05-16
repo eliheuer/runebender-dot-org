@@ -1,0 +1,78 @@
+---
+title: "Capabilities."
+navLabel: "Capabilities"
+eyebrow: "Alpha matrix"
+lede: "A conservative map of what the current docs and README say Runebender Xilem can do. This is not a release checklist or stability guarantee."
+status: "Alpha capability matrix"
+audience: "Prospective users, contributors, agents"
+source: "Runebender Xilem README and source docs"
+stability: "Capabilities exist in alpha form; details may change"
+order: 3
+description: "Runebender Xilem alpha capability matrix."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Run">
+
+<table>
+  <caption>Build and launch</caption>
+  <tbody>
+    <tr><th>Build from source</th><td>Current path. Clone the repo and run with Cargo.</td></tr>
+    <tr><th>Open picker</th><td><code>cargo run</code> opens a file picker according to the README.</td></tr>
+    <tr><th>Open UFO path</th><td><code>cargo run -- assets/untitled.ufo</code> opens a specific UFO.</td></tr>
+    <tr><th>Verbose logging</th><td><code>cargo run -- --verbose</code> runs with verbose logging.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Edit">
+
+<table>
+  <caption>Glyph editing</caption>
+  <tbody>
+    <tr><th>Select</th><td>Select tool is listed in the README shortcut map.</td></tr>
+    <tr><th>Pen</th><td>Pen tool is listed for drawing cubic bezier contours.</td></tr>
+    <tr><th>Hyperbezier pen</th><td>Hyperbezier pen is listed for on-curve smooth path drawing.</td></tr>
+    <tr><th>Knife</th><td>Knife tool is listed for outline editing.</td></tr>
+    <tr><th>Transforms</th><td>Duplicate, flip, rotate, nudge, copy, paste, reverse, point type toggle are listed in README shortcuts.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Trace">
+
+<table>
+  <caption>Image workflows</caption>
+  <tbody>
+    <tr><th>Import image</th><td>Background image import is exposed through <code>Cmd/Ctrl + I</code>.</td></tr>
+    <tr><th>Local trace</th><td>img2bez tracing is exposed through <code>Cmd/Ctrl + T</code>.</td></tr>
+    <tr><th>Refit</th><td>Refit existing outlines to the background image with <code>Cmd/Ctrl + Shift + T</code>.</td></tr>
+    <tr><th>Cloud trace</th><td>Optional QuiverAI tracing is exposed through <code>Cmd/Ctrl + Shift + Y</code>.</td></tr>
+    <tr><th>Lock image</th><td>Background image lock toggle is listed as <code>Cmd/Ctrl + L</code>.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Formats">
+
+<table>
+  <caption>Source and path formats</caption>
+  <tbody>
+    <tr><th>UFO</th><td>Current source-font workflow named by the README.</td></tr>
+    <tr><th>Hyperbezier</th><td>On-curve path support documented in the source repository.</td></tr>
+    <tr><th>Cubic conversion</th><td>README lists <code>Cmd/Ctrl + Shift + H</code> to convert hyperbezier paths to cubic.</td></tr>
+    <tr><th>Examples</th><td><code>assets/untitled.ufo</code> and <code>assets/hyper-matisse.ufo</code> are source examples.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Limits">
+
+This matrix intentionally avoids claiming production readiness. See [Alpha limits](/docs/alpha-limits.html) for what may change and [Roadmap](/docs/roadmap.html) for status lanes and [Source map](/docs/source-map.html) for where to verify implementation details.
+
+</DocSection>

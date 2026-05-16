@@ -2,7 +2,7 @@
 set -eu
 
 SRC="${1:-../runebender-comfy/web}"
-DEST="${2:-cloud/runebender-comfy-web}"
+DEST="${2:-public/cloud/runebender-comfy-web}"
 
 if [ ! -d "$SRC" ]; then
   printf 'Missing source web directory: %s\n' "$SRC" >&2

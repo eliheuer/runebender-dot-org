@@ -1,0 +1,75 @@
+---
+title: "Open real sources."
+navLabel: "Examples"
+eyebrow: "Examples"
+lede: "The source repository includes small UFOs that are useful for testing the editor and understanding Runebender-specific format behavior. Use copies when experimenting with alpha builds."
+status: "Example source map"
+audience: "First-time users, contributors, agents"
+source: "runebender-xilem/assets"
+stability: "Example names may change with the source repo"
+order: 9
+description: "Runebender example UFO sources and what to inspect in them."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import CommandList from "../../components/CommandList.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+<DocSection title="Included UFOs">
+
+<table>
+  <caption>Example sources</caption>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Use it for</th>
+      <th>Observed contents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>assets/untitled.ufo</code></td>
+      <td>First run, navigation, broad glyph coverage, ordinary UFO inspection.</td>
+      <td>Untitled Regular, 333 GLIF files in the current local checkout.</td>
+    </tr>
+    <tr>
+      <td><code>assets/hyper-matisse.ufo</code></td>
+      <td>Hyperbezier editing, conversion, and format behavior.</td>
+      <td>Hyper Matisse Regular, 9 digit GLIF files, each with a hyperbezier contour.</td>
+    </tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Open">
+
+Run from the root of the Runebender Xilem source checkout.
+
+<CommandList commands={["cargo run -- assets/untitled.ufo", "cargo run -- assets/hyper-matisse.ufo"]} />
+
+</DocSection>
+
+<DocSection title="Inspect">
+
+Use the examples as source data, not as polished release samples.
+
+- Use `untitled.ufo` to check basic opening, glyph browsing, preview, and ordinary editing paths.
+- Use `hyper-matisse.ufo` when documenting hyperbezier behavior or testing conversion to cubic outlines.
+- Compare website notes with the current source repository before making exact claims.
+- Keep local changes in a copy if you are testing destructive or unclear alpha behavior.
+
+</DocSection>
+
+<DocSection title="Related docs">
+
+<MiniIndex
+  items={[
+    { href: "/docs/install.html", title: "Install", description: "Build the editor and open a UFO." },
+    { href: "/docs/format.html", title: "Format", description: "UFO and hyperbezier notes." },
+    { href: "/docs/how-tos.html", title: "How-tos", description: "Run with a file and convert hyperbeziers." },
+    { href: "/docs/reference.html", title: "Reference", description: "Current shortcut lookup." },
+  ]}
+/>
+
+</DocSection>

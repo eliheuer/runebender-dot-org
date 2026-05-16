@@ -1,78 +1,60 @@
 # runebender-dot-org
 
-Local draft website for `runebender.org`.
+Website and documentation source for `runebender.org`.
 
-This is intentionally dependency-free for now: `index.html`, `docs/*.html`, and `styles.css` can be opened directly in a browser or published as a static site.
-
-## Research direction
-
-The first pass is based on current public sites for major font editor projects:
-
-- Glyphs: product tiers, direct downloads, feature areas, tutorials, handbook, forum, resources.
-- RoboFont: documentation-first structure, scripting, tutorials, how-tos, reference, extensions, community.
-- FontLab: product catalog, prices, video/product media, detailed feature positioning.
-- FontForge: open-source framing, download/docs/development links, community help.
-- Fontra: minimal landing page with docs, GitHub, release downloads, and social/community links.
-- Runebender Xilem/current site/repo: early-stage Rust font editor, source-first, build locally, screenshots, Zulip for development discussion.
-
-See `research.md` for links and notes.
-
-## Assets
-
-- `assets/runebender-xilem-screenshot.png` is downloaded from the Runebender Xilem GitHub README attachments so the site does not depend on a GitHub user-attachment hotlink.
-- `assets/favicon.svg` and `assets/og-image.svg` are simple launch placeholders.
-
-## Site structure
-
-- `index.html` — home page and documentation index.
-- `cloud/index.html` — cloud-launch landing page for the Comfy/Vue path.
-- `cloud/editor/` — static standalone Vue/WASM build copied from `runebender-comfy/web`.
-- `docs/index.html` — documentation map inspired by RoboFont’s topics/tutorials/how-tos/reference split.
-- `docs/current-facts.html` — compact source of truth for humans and AI agents.
-- `docs/alpha-limits.html` — public alpha caveats and unstable areas.
-- `docs/capabilities.html` — alpha capability matrix.
-- `docs/roadmap.html` — alpha roadmap lanes without dates or release promises.
-- `docs/glossary.html` — concept reference for font source and editor terms.
-- `docs/workflows.html` — task paths through the docs for early users and contributors.
-- `docs/tutorials.html` — learning paths for first run, editing, tracing, formats, and development.
-- `docs/how-tos.html` — short task recipes for common alpha workflows.
-- `docs/examples.html` — included UFO examples and what to inspect in them.
-- `docs/troubleshooting.html` — alpha diagnostic checks for setup, files, tracing, and formats.
-- `docs/support.html` — support, community, issue, and contribution channel map.
-- `docs/source-map.html` — high-level map of the Runebender Xilem source tree.
-- `docs/architecture.html` — contributor-level architecture map for app flow, state, editing, and data.
-- `docs/verification.html` — current website and source verification checks.
-- `docs/install.html` — build and first-run notes.
-- `docs/manual.html` — early user manual structure.
-- `docs/tracing.html` — background image and autotrace workflow.
-- `docs/format.html` — UFO and hyperbezier format notes.
-- `docs/reference.html` — keyboard shortcut reference.
-- `docs/development.html` — contributor and architecture notes.
-- `CNAME` — GitHub Pages custom domain placeholder for `runebender.org`.
-- `robots.txt` and `sitemap.xml` — basic search-engine metadata.
-- `llms.txt` and `llms-full.txt` — AI-readable documentation maps.
-- `AGENTS.md` — guidance for coding agents working in this repository.
-- `launch-checklist.md` — pre-publication checklist for GitHub Pages, DNS, content, and QA.
-- `scripts/check-local-links.sh` — simple local HTTP 200 check for key pages and assets.
-- `scripts/build-cloud-editor.sh` — builds the standalone Comfy/Vue editor into `cloud/editor`.
-- `scripts/sync-comfy-web.sh` — copies the local Comfy/Vue web folder into `cloud/runebender-comfy-web`.
+Built with [Astro](https://astro.build/). Pages are written as `.astro` route files or as `.mdx` docs in the content collection. The build output is plain static HTML, deployed to GitHub Pages via `.github/workflows/deploy.yml`.
 
 ## Run locally
 
-Open `index.html` in a browser.
-
-Or serve the folder:
-
 ```sh
-python3 -m http.server 5173
+pnpm install
+pnpm run dev       # http://127.0.0.1:4321
+pnpm run build     # outputs dist/
+pnpm run preview   # serves the built dist/
 ```
 
-Then visit `http://localhost:5173`.
-
-## Verify local preview
-
-With a local server running:
+After running `pnpm run dev`, link-check the site:
 
 ```sh
-scripts/check-local-links.sh http://127.0.0.1:5173
+scripts/check-local-links.sh http://127.0.0.1:4321
 ```
+
+## Project layout
+
+```
+src/
+  layouts/        BaseLayout, DocLayout
+  components/     Header, Footer, Sidebar, DocSection, MiniIndex, Callout, CommandList
+  content/docs/   Docs collection (one .mdx per page). The sidebar regenerates from this.
+  content.config.ts
+  pages/          Route entries: index.astro, docs/index.astro, docs/[slug].astro, cloud/index.astro
+  styles/         global.css
+  assets/         Source images processed by Astro <Image>
+public/           Raw static files copied verbatim into the build:
+                    favicon, og-image, CNAME, .nojekyll,
+                    robots.txt, llms.txt, llms-full.txt,
+                    cloud/editor/ (Vite build artifact, see below)
+scripts/
+  check-local-links.sh         HTTP 200 sweep against the dev server
+  build-cloud-editor.sh        Builds the standalone Comfy/Vue editor into public/cloud/editor/
+  vite.comfy-standalone.config.mjs
+  sync-comfy-web.sh            Local-only mirror of ~/GH/repos/runebender-comfy/web
+.github/workflows/deploy.yml   Build and deploy to GitHub Pages
+AGENTS.md                      Agent guidance for editing this repo
+launch-checklist.md            Pre-publication checklist
+```
+
+## Adding a docs page
+
+1. Create `src/content/docs/<slug>.mdx` with frontmatter (`title`, `navLabel`, `eyebrow`, `lede`, `status`, `audience`, `source`, `stability`, `order`).
+2. Use the shared components for repeated patterns: `DocSection`, `MiniIndex`, `Callout`, `CommandList`.
+3. The sidebar regenerates automatically from the collection sorted by `order`. No nav edits needed.
+4. If the public docs map changes, also update `public/llms.txt` and `public/llms-full.txt`.
+
+## Deployment
+
+GitHub Pages must be configured to deploy from "GitHub Actions" rather than from a branch. The workflow in `.github/workflows/deploy.yml` builds `dist/` and uploads it as the Pages artifact. `CNAME` (in `public/`) keeps `runebender.org` as the custom domain.
+
+## Cloud editor
+
+The standalone Vue/WASM editor at `/cloud/editor/` is built from `~/GH/repos/runebender-comfy/web` by `scripts/build-cloud-editor.sh`. The output lands in `public/cloud/editor/` so the Astro build picks it up unchanged.

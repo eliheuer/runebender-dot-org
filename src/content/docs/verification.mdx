@@ -1,0 +1,69 @@
+---
+title: "Check what can be checked."
+navLabel: "Verification"
+eyebrow: "Verification"
+lede: "A practical verification map for this alpha documentation site and the Runebender Xilem source checkout. It records current checks without pretending that the project has a finished release QA process."
+status: "Alpha verification map"
+audience: "Contributors, maintainers, documentation agents"
+source: "Website repo, local source checkout, launch checklist"
+stability: "Expected to change when CI and release packaging settle"
+order: 14
+description: "Runebender verification checks for website docs and alpha source behavior."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="Website checks">
+
+Use these checks after adding, moving, or renaming public pages.
+
+<CommandList commands={["pnpm run dev", "scripts/check-local-links.sh http://127.0.0.1:4321"]} />
+
+- Pages are generated from the docs content collection, so adding a new page only requires a new file in `src/content/docs/`.
+- Update `scripts/check-local-links.sh` so the new page is checked locally.
+- Update `public/llms.txt` and `public/llms-full.txt` when the docs structure changes.
+- Review the page in the local browser for table overflow, sidebar wrapping, and code block width.
+
+</DocSection>
+
+<DocSection title="Source checks">
+
+Run source checks from the root of the Runebender Xilem repository, not from this website repository.
+
+<table>
+  <caption>Current source-level checks</caption>
+  <tbody>
+    <tr><th>Build/run</th><td><code>cargo run</code> starts the source-first app path.</td></tr>
+    <tr><th>Open example</th><td><code>cargo run -- assets/untitled.ufo</code> checks opening the broad example UFO.</td></tr>
+    <tr><th>Hyperbezier example</th><td><code>cargo run -- assets/hyper-matisse.ufo</code> checks the hyperbezier-focused example.</td></tr>
+    <tr><th>Verbose logs</th><td><code>cargo run -- --verbose</code> gives more detail for bug reports.</td></tr>
+    <tr><th>Rust version</th><td>The current source manifest lists Rust 1.88.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Manual checks">
+
+These are behavior checks, not automated promises.
+
+- Open `assets/untitled.ufo` and confirm glyph grid and editor navigation still match the docs.
+- Open `assets/hyper-matisse.ufo` before editing hyperbezier docs.
+- Check background image import and local tracing before editing tracing docs.
+- Check QuiverAI notes against the README before changing cloud tracing documentation.
+- Use [Troubleshooting](/docs/troubleshooting.html) and [Support](/docs/support.html) to shape useful reports.
+
+</DocSection>
+
+<DocSection title="Not covered yet">
+
+Do not treat these as verified unless a future source workflow or CI job covers them.
+
+- Cross-platform release packaging.
+- Long-term shortcut stability.
+- Round-trip compatibility across all UFO editors.
+- Complete visual regression coverage for the app UI.
+- Published-site checks after DNS and GitHub Pages are enabled.
+
+</DocSection>

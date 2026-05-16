@@ -1,0 +1,20 @@
+---
+type Command = string | { cmd: string; comment?: string };
+
+interface Props {
+  commands: Command[];
+}
+const { commands } = Astro.props;
+---
+
+<div class="command-list">
+  {
+    commands.map((c) =>
+      typeof c === "string" ? (
+        <code>{c}</code>
+      ) : (
+        <code>{c.cmd}{c.comment ? ` # ${c.comment}` : ""}</code>
+      )
+    )
+  }
+</div>

@@ -1,0 +1,59 @@
+---
+title: "Workflow paths."
+navLabel: "Workflows"
+eyebrow: "How-tos"
+lede: "Short paths through the alpha documentation. These are intentionally broad: they help people find the right page without pretending the UI is finished."
+status: "Task map"
+audience: "Early users, contributors, agents"
+source: "Runebender Xilem README and website docs"
+stability: "Paths are stable; exact UI details may move"
+order: 6
+description: "Runebender workflow paths for early users and contributors."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="First run">
+
+1. Read [Current facts](/docs/current-facts.html) so the alpha status is clear.
+2. Follow [Install](/docs/install.html) to clone and run the app from source.
+3. Open a UFO such as `assets/untitled.ufo`.
+4. Use [Reference](/docs/reference.html) for the current shortcut map.
+
+</DocSection>
+
+<DocSection title="Edit a glyph">
+
+1. Use [Drawing](/docs/manual.html#drawing) to understand the available tools.
+2. Use Select, Pen, Hyperbezier Pen, or Knife depending on the contour work.
+3. Use preview and zoom commands while checking shape and spacing.
+4. Keep real UFO sources under version control while testing alpha behavior.
+
+</DocSection>
+
+<DocSection title="Trace a drawing">
+
+1. Read [Tracing](/docs/tracing.html) for the image import and autotrace workflow.
+2. Use img2bez for local/offline tracing.
+3. Use QuiverAI only when network access, API key, and API credits are acceptable.
+4. Expect traced outlines to need cleanup and metric adjustment.
+
+</DocSection>
+
+<DocSection title="Inspect format behavior">
+
+1. Read [Format notes](/docs/format.html) for the conservative UFO and hyperbezier map.
+2. Use the canonical hyperbezier spec in the source repo for exact details.
+3. Use [Glossary](/docs/glossary.html) for terms like GLIF, contour, on-curve, and cubic.
+4. Prefer source links over copied specs when documenting behavior that may change.
+
+</DocSection>
+
+<DocSection title="Contribute">
+
+1. Read [Development](/docs/development.html) for contribution entry points.
+2. Use [Source map](/docs/source-map.html) to find the relevant implementation area.
+3. Keep docs broad unless behavior has stabilized in code.
+4. Update [llms.txt](/llms.txt) and [llms-full.txt](/llms-full.txt) when documentation structure changes.
+
+</DocSection>

@@ -1,0 +1,69 @@
+---
+title: "Learn by path."
+navLabel: "Tutorials"
+eyebrow: "Tutorials"
+lede: "These are short learning sequences for the alpha app. They borrow the useful parts of mature font-editor docs: start with one concrete task, keep the path visible, and send readers to reference pages only when lookup detail is needed."
+status: "Alpha tutorial index"
+audience: "First-time users, testers, contributors, agents"
+source: "Website docs and Runebender Xilem README"
+stability: "Learning goals are stable; command details may move"
+order: 7
+description: "Runebender tutorial paths for early users."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Get started">
+
+Use this path when you want to see the editor running and open a real UFO source.
+
+1. Read [Current facts](/docs/current-facts.html) and [Alpha limits](/docs/alpha-limits.html).
+2. Follow [Install and run](/docs/install.html).
+3. Open `assets/untitled.ufo` from the source repo.
+4. Use [Reference](/docs/reference.html) only for shortcuts you need immediately.
+
+</DocSection>
+
+<DocSection title="Draw and edit">
+
+Use this path when you want to understand the editor surface without memorizing every command.
+
+1. Read [Drawing](/docs/manual.html#drawing) for the tool names and contour model.
+2. Try Select, Pen, Hyperbezier Pen, and Knife on a disposable UFO checkout.
+3. Use preview, fit, and zoom while judging shape and spacing.
+4. Check [Capabilities](/docs/capabilities.html) for what is documented versus still moving.
+
+</DocSection>
+
+<DocSection title="Trace an image">
+
+Use this path when you are testing bitmap-to-outline workflows.
+
+1. Read [Tracing](/docs/tracing.html).
+2. Import a background image and align it to the glyph metrics.
+3. Use local img2bez tracing first when offline reproducibility matters.
+4. Use QuiverAI only when cloud tracing and API credentials are acceptable.
+
+</DocSection>
+
+<DocSection title="Understand the format">
+
+Use this path when you need to reason about source files and compatibility.
+
+1. Read [Format notes](/docs/format.html).
+2. Use [Glossary](/docs/glossary.html) for terms like UFO, GLIF, cubic, and hyperbezier.
+3. Use the source repository spec for exact hyperbezier storage details.
+4. Treat website docs as orientation unless the linked source says otherwise.
+
+</DocSection>
+
+<DocSection title="Work on the app">
+
+Use this path when you are an agent or contributor trying to locate code responsibly.
+
+1. Read [Development](/docs/development.html) for the project model.
+2. Use [Source map](/docs/source-map.html) to find likely implementation areas.
+3. Check [Workflow paths](/docs/workflows.html) before changing user-facing docs.
+4. Update [llms.txt](/llms.txt) and [llms-full.txt](/llms-full.txt) when the public docs map changes.
+
+</DocSection>

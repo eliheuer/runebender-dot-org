@@ -1,0 +1,56 @@
+---
+title: "Install and run."
+navLabel: "Install"
+eyebrow: "Start here"
+lede: "Runebender Xilem is very alpha software. For now, the public path is source-first: install Rust, clone the repository, and run it locally. Expect commands and behavior to move as the editor changes."
+status: "Source-first install notes"
+audience: "Developers and early testers"
+source: "Runebender Xilem README"
+stability: "Commands may change with the project"
+order: 15
+description: "Build and run Runebender Xilem from source."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import CommandList from "../../components/CommandList.astro";
+import Callout from "../../components/Callout.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+<DocSection title="Prerequisites">
+
+- Rust installed from [rust-lang.org](https://rust-lang.org/).
+- A current checkout of [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
+- A UFO source to open, or the included example UFO from the repo.
+
+<Callout>The Runebender Xilem README currently lists MSRV 1.88. Treat that as a moving project requirement, not a long-term compatibility promise.</Callout>
+
+</DocSection>
+
+<DocSection title="Build">
+
+<CommandList commands={["git clone https://github.com/eliheuer/runebender-xilem.git", "cd runebender-xilem", "cargo run"]} />
+
+</DocSection>
+
+<DocSection title="Open a UFO">
+
+<CommandList
+  commands={[
+    { cmd: "cargo run", comment: "Opens a file picker" },
+    { cmd: "cargo run -- assets/untitled.ufo", comment: "Opens a specific UFO" },
+    { cmd: "cargo run -- --verbose", comment: "Runs with verbose logging" },
+  ]}
+/>
+
+</DocSection>
+
+<DocSection title="Map">
+
+<MiniIndex
+  items={[
+    { href: "/docs/manual.html", title: "Read the manual", description: "Tools, editing, preview, and workflow." },
+    { href: "/docs/reference.html", title: "Shortcut reference", description: "Keyboard commands from the README." },
+  ]}
+/>
+
+</DocSection>

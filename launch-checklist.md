@@ -24,8 +24,8 @@ This checklist is for publishing `runebender.org`.
 
 - [ ] `CNAME` contains `runebender.org`.
 - [ ] `.nojekyll` is present.
-- [ ] `robots.txt` points to `sitemap.xml`.
-- [ ] `sitemap.xml` lists all public pages.
+- [ ] `robots.txt` points to `sitemap-index.xml`.
+- [ ] `sitemap-index.xml` and `sitemap-0.xml` list all public pages.
 - [ ] `llms.txt` and `llms-full.txt` serve as plain text.
 - [ ] Favicon loads.
 - [ ] Open Graph image path is correct after publish.

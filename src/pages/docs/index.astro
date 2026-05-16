@@ -1,0 +1,70 @@
+---
+import DocLayout from "../../layouts/DocLayout.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+const topics = [
+  { href: "/docs/current-facts.html", title: "Current facts", description: "Compact source of truth for humans and agents." },
+  { href: "/docs/alpha-limits.html", title: "Alpha limits", description: "What is intentionally unstable before launch." },
+  { href: "/docs/capabilities.html", title: "Capabilities", description: "Alpha matrix for running, editing, tracing, and formats." },
+  { href: "/docs/roadmap.html", title: "Roadmap", description: "Status lanes for documented, uncertain, future, and not-promised areas." },
+  { href: "/docs/glossary.html", title: "Glossary", description: "UFO, GLIF, hyperbeziers, tracing, and project terms." },
+  { href: "/docs/workflows.html", title: "Workflow paths", description: "First run, editing, tracing, format inspection, contributing." },
+  { href: "/docs/examples.html", title: "Examples", description: "Included UFO sources and what to inspect in each one." },
+  { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "Alpha setup, UFO, tracing, and format checks." },
+  { href: "/docs/support.html", title: "Support", description: "Where to file issues, discuss work, and send patches." },
+  { href: "/docs/source-map.html", title: "Source map", description: "Where to look in the Runebender Xilem repository." },
+  { href: "/docs/architecture.html", title: "Architecture", description: "Application flow, state model, tools, data, and geometry boundaries." },
+  { href: "/docs/verification.html", title: "Verification", description: "Website checks, source checks, and current coverage limits." },
+  { href: "/docs/format.html", title: "Format notes", description: "UFO, GLIF, hyperbeziers, and compatibility." },
+  { href: "/docs/development.html", title: "Development notes", description: "Xilem, source workflow, and contribution entry points." },
+];
+
+const tutorials = [
+  { href: "/docs/tutorials.html", title: "Tutorial paths", description: "First run, editing, tracing, format, and contributor learning paths." },
+  { href: "/docs/install.html", title: "Build and run", description: "Clone the source and open a UFO." },
+  { href: "/docs/manual.html", title: "Basic editing", description: "Tools, preview, selection, drawing, and transforms." },
+];
+
+const howtos = [
+  { href: "/docs/how-tos.html", title: "Task recipes", description: "Run with a file, trace locally, configure cloud trace, and inspect formats." },
+  { href: "/docs/workflows.html", title: "Choose a path", description: "Start with a task and follow the shortest doc route." },
+  { href: "/docs/tracing.html", title: "Trace a drawing", description: "Import a bitmap, place it, trace or refit." },
+  { href: "/docs/reference.html", title: "Use shortcuts", description: "Keyboard commands grouped for lookup." },
+];
+---
+
+<DocLayout
+  title="Alpha docs."
+  eyebrow="Documentation map"
+  lede="This documentation follows the useful shape of the RoboFont docs: explain concepts, show paths through the app, give task recipes, and keep lookup tables separate. The content stays intentionally broad because Runebender is still changing quickly."
+  status="Alpha documentation map"
+  audience="Font tool users, contributors, agents"
+  source="Website docs plus Runebender Xilem repository"
+  stability="Structure is intentional; details may move"
+  currentSlug="index"
+  description="Runebender documentation map."
+>
+  <section class="doc-section">
+    <h2>Topics</h2>
+    <div>
+      <p>Orientation pages for understanding the project: what Runebender is, how it relates to UFO sources, what hyperbeziers are, and which parts are experimental.</p>
+      <MiniIndex items={topics} />
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Tutorials</h2>
+    <div>
+      <p>Learning paths for first contact with the editor. These should stay short until the interface settles.</p>
+      <MiniIndex items={tutorials} />
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>How-tos</h2>
+    <div>
+      <p>Task-oriented pages for workflows that already have a recognizable shape.</p>
+      <MiniIndex items={howtos} />
+    </div>
+  </section>
+</DocLayout>

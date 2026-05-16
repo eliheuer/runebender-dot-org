@@ -1,0 +1,62 @@
+---
+title: "Use the editor."
+navLabel: "Manual"
+eyebrow: "Manual"
+lede: "This is a map of the editor, not a finished handbook. It names the areas that matter now and leaves room for the interaction details to change."
+status: "Workflow map"
+audience: "Early users and tool builders"
+source: "Runebender Xilem README and current UI concepts"
+stability: "Interaction details are alpha"
+order: 16
+description: "Runebender manual for basic editing workflows."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+<DocSection title="Drawing" id="drawing">
+
+Runebender exposes a focused set of editing tools for glyph construction.
+
+- **Select tool:** select points, contours, and editable objects.
+- **Pen tool:** draw cubic bezier contours.
+- **Hyperbezier pen:** draw smooth paths defined by on-curve points.
+- **Knife tool:** cut contours during outline editing.
+
+</DocSection>
+
+<DocSection title="Editing">
+
+Current README-level operations include deletion, nudging, point type conversion, reverse direction, copy/paste, duplicate, flip, and rotate.
+
+<Callout>Because the app is alpha, this page avoids promising exact selection states or long-term tool behavior. Use the shortcut reference for the current command map.</Callout>
+
+</DocSection>
+
+<DocSection title="Preview" id="preview">
+
+Hold `Space` for temporary preview mode. Use zoom and fit commands while checking glyph drawing and spacing.
+
+<table>
+  <caption>Viewing</caption>
+  <tbody>
+    <tr><th>Zoom in</th><td><code>Cmd/Ctrl + +</code> or <code>Cmd/Ctrl + =</code></td></tr>
+    <tr><th>Zoom out</th><td><code>Cmd/Ctrl + -</code></td></tr>
+    <tr><th>Fit</th><td><code>Cmd/Ctrl + 0</code></td></tr>
+    <tr><th>Panels</th><td><code>Tab</code></td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Next">
+
+<MiniIndex
+  items={[
+    { href: "/docs/tracing.html", title: "Trace images", description: "Background image workflow and autotrace backends." },
+    { href: "/docs/format.html", title: "Format notes", description: "UFO, hyperbeziers, and compatibility." },
+  ]}
+/>
+
+</DocSection>

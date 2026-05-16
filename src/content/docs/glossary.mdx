@@ -1,0 +1,71 @@
+---
+title: "Glossary."
+navLabel: "Glossary"
+eyebrow: "Concept reference"
+lede: "A compact vocabulary map for Runebender, font source workflows, and terms used across these alpha docs."
+status: "Concept reference"
+audience: "New users, contributors, agents"
+source: "Runebender docs and common font tooling terms"
+stability: "Definitions are broad; implementation details may move"
+order: 5
+description: "Runebender glossary for font editor and source workflow terms."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Sources">
+
+<table>
+  <caption>Source formats and files</caption>
+  <tbody>
+    <tr><th>UFO</th><td>Unified Font Object. A source font format made of directories and files that can be inspected and versioned.</td></tr>
+    <tr><th>GLIF</th><td>Glyph Interchange Format. The XML file format used for individual glyph data inside UFO sources.</td></tr>
+    <tr><th>Source-first</th><td>The current Runebender workflow: build and run from source rather than downloading a finished release app.</td></tr>
+    <tr><th>Round trip</th><td>Opening, editing, saving, and reopening source data across tools without losing important information.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Drawing">
+
+<table>
+  <caption>Glyph drawing terms</caption>
+  <tbody>
+    <tr><th>Contour</th><td>A path that describes part of a glyph outline.</td></tr>
+    <tr><th>On-curve point</th><td>A point that lies directly on the visible outline.</td></tr>
+    <tr><th>Off-curve point</th><td>A control point used by cubic bezier curves to shape the segment between on-curve points.</td></tr>
+    <tr><th>Hyperbezier</th><td>A Runebender-supported path style where smooth curves are defined by on-curve points and control points are computed automatically.</td></tr>
+    <tr><th>Cubic</th><td>A standard cubic bezier outline representation using explicit off-curve control points.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Workflows">
+
+<table>
+  <caption>Editor workflows</caption>
+  <tbody>
+    <tr><th>Tracing</th><td>Converting a bitmap reference image into editable outline data.</td></tr>
+    <tr><th>img2bez</th><td>The local/offline bitmap-to-bezier tracing path used by Runebender.</td></tr>
+    <tr><th>QuiverAI</th><td>An optional cloud vectorization backend for tracing. It requires network access, an API key, and API credits.</td></tr>
+    <tr><th>Preview mode</th><td>A temporary view for inspecting glyph drawing without normal editing handles.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Project">
+
+<table>
+  <caption>Project terms</caption>
+  <tbody>
+    <tr><th>Runebender Xilem</th><td>The current Rust/Xilem editor source at <a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a>.</td></tr>
+    <tr><th>Runebender Druid</th><td>The earlier Druid-based editor implementation at <a href="https://github.com/linebender/runebender">linebender/runebender</a>.</td></tr>
+    <tr><th>Linebender</th><td>The broader Rust UI ecosystem around Xilem and related projects.</td></tr>
+    <tr><th>Alpha</th><td>Useful for experimentation, but not a promise of stable UI, file behavior, or release packaging.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>

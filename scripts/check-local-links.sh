@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-BASE_URL="${1:-http://127.0.0.1:5173}"
+BASE_URL="${1:-http://127.0.0.1:4321}"
 
 paths="
 /
@@ -31,10 +31,9 @@ paths="
 /llms.txt
 /llms-full.txt
 /robots.txt
-/sitemap.xml
+/sitemap-index.xml
 /assets/favicon.svg
 /assets/og-image.svg
-/assets/runebender-xilem-screenshot.png
 "
 
 for path in $paths; do

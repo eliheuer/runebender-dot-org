@@ -1,0 +1,287 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import screenshot from "../assets/runebender-xilem-screenshot.png";
+---
+
+<BaseLayout
+  title="Runebender"
+  description="Experimental Rust font editor and documentation hub for UFO-based type design workflows."
+>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Rust / Xilem / UFO / Very alpha</p>
+        <h1 id="hero-title">Runebender</h1>
+        <p class="lede">
+          A font editor and field manual for building, inspecting, tracing, and editing font
+          sources with open formats.
+        </p>
+        <div class="hero-actions" aria-label="Project links">
+          <a class="button primary" href="https://github.com/eliheuer/runebender-xilem">Source</a>
+          <a class="button secondary" href="/docs/index.html">Read the docs</a>
+        </div>
+      </div>
+
+      <figure class="screenshot-block">
+        <Image
+          src={screenshot}
+          alt="Runebender Xilem editor screenshot showing a glyph editing workspace"
+          widths={[640, 960, 1280, 1920]}
+          sizes="(max-width: 1060px) 100vw, 60vw"
+          loading="eager"
+        />
+        <figcaption>
+          Screenshot from the Runebender Xilem repository. This replaces the synthetic preview so
+          the site is anchored to the actual editor.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="status-grid" aria-label="Project status">
+      <div>
+        <span>01</span>
+        <strong>Build first</strong>
+        <p>Until releases exist, the honest call to action is source, build notes, and examples.</p>
+      </div>
+      <div>
+        <span>02</span>
+        <strong>Document the work</strong>
+        <p>Glyphs and RoboFont both succeed because users can learn workflows, not just features.</p>
+      </div>
+      <div>
+        <span>03</span>
+        <strong>Expose the system</strong>
+        <p>Formats, shortcuts, tracing, hyperbeziers, and architecture should be readable.</p>
+      </div>
+    </section>
+
+    <section class="section trust-section" id="trust" aria-labelledby="trust-title">
+      <div>
+        <div class="section-kicker">Before you start</div>
+        <h2 id="trust-title">What this is.</h2>
+      </div>
+      <div class="trust-grid">
+        <table>
+          <caption>Project identity</caption>
+          <tbody>
+            <tr>
+              <th>Current app</th>
+              <td><a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a></td>
+            </tr>
+            <tr>
+              <th>Original app</th>
+              <td><a href="https://github.com/linebender/runebender">linebender/runebender</a></td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>Very alpha, source-first, actively changing.</td>
+            </tr>
+            <tr>
+              <th>Docs</th>
+              <td>Orientation map, not a stable API contract.</td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <caption>What this is not</caption>
+          <tbody>
+            <tr>
+              <th>Not a release page</th>
+              <td>There are no finished binary downloads presented here yet.</td>
+            </tr>
+            <tr>
+              <th>Not final docs</th>
+              <td>Tool behavior, shortcuts, and file handling may change.</td>
+            </tr>
+            <tr>
+              <th>Not the source repo</th>
+              <td>This repo is the static website for runebender.org.</td>
+            </tr>
+            <tr>
+              <th>Use backups</th>
+              <td>Version-control real UFO sources when testing alpha behavior.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section manual-section" id="manual" aria-labelledby="manual-title">
+      <div class="section-kicker">Manual structure</div>
+      <div class="section-heading">
+        <h2 id="manual-title">Documentation as the product surface.</h2>
+        <p>
+          The site should behave less like a pitch deck and more like a working index. RoboFont
+          foregrounds docs, topics, tutorials, how-tos, reference, extensions, and education.
+          Glyphs pairs a polished product page with a deep Learn section, handbook, forum, and
+          plug-in resources. Runebender can take the open-source version of that pattern.
+        </p>
+      </div>
+
+      <div class="doc-index">
+        <article>
+          <span>Start</span>
+          <h3><a href="/docs/install.html">Build and open a UFO</a></h3>
+          <p>Install Rust, clone the repo, run the app, open <code>assets/untitled.ufo</code>, save safely.</p>
+        </article>
+        <article>
+          <span>Edit</span>
+          <h3><a href="/docs/manual.html#drawing">Draw glyphs</a></h3>
+          <p>Select, pen, hyperbezier pen, knife, point type conversion, contour direction.</p>
+        </article>
+        <article>
+          <span>Trace</span>
+          <h3><a href="/docs/tracing.html">Bitmap to outline</a></h3>
+          <p>Import a drawing, scale it to metrics, trace locally with img2bez or cloud trace.</p>
+        </article>
+        <article>
+          <span>Format</span>
+          <h3><a href="/docs/format.html">UFO extensions</a></h3>
+          <p>Explain what data Runebender writes, including hyperbezier storage and fallbacks.</p>
+        </article>
+        <article>
+          <span>Proof</span>
+          <h3><a href="/docs/manual.html#preview">Preview and spacing</a></h3>
+          <p>Document text preview, fitting, zoom behavior, metrics, and repeated proof strings.</p>
+        </article>
+        <article>
+          <span>Develop</span>
+          <h3><a href="/docs/development.html">Architecture notes</a></h3>
+          <p>Xilem UI model, file IO, font object model, settings, tools, and contributor paths.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split-section" id="reference" aria-labelledby="reference-title">
+      <div>
+        <div class="section-kicker">Reference</div>
+        <h2 id="reference-title">Keep the raw tables.</h2>
+      </div>
+      <div class="reference-stack">
+        <table>
+          <caption>Current source workflow</caption>
+          <tbody>
+            <tr>
+              <th>Clone</th>
+              <td><code>git clone https://github.com/eliheuer/runebender-xilem.git</code></td>
+            </tr>
+            <tr>
+              <th>Run</th>
+              <td><code>cargo run -- assets/untitled.ufo</code></td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>Very alpha, actively under development.</td>
+            </tr>
+            <tr>
+              <th>Format</th>
+              <td>UFO sources, with documented extensions where needed.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>Shortcuts worth documenting first</caption>
+          <tbody>
+            <tr>
+              <th>V / P / H / K</th>
+              <td>Select, pen, hyperbezier pen, knife.</td>
+            </tr>
+            <tr>
+              <th>Space</th>
+              <td>Hold for temporary preview mode.</td>
+            </tr>
+            <tr>
+              <th>Cmd/Ctrl + I</th>
+              <td>Import background image.</td>
+            </tr>
+            <tr>
+              <th>Cmd/Ctrl + T</th>
+              <td>Trace background image into bezier paths.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section research-section" id="research" aria-labelledby="research-title">
+      <div class="section-kicker">Reference sites</div>
+      <h2 id="research-title">What to borrow, what to reject.</h2>
+      <div class="research-grid">
+        <article>
+          <h3>Glyphs</h3>
+          <p>
+            Product hierarchy is clear: Glyphs 3, Glyphs Mini, tools, features, learn, forum,
+            resources, news. The useful idea is the loop between marketing, tutorials, handbook,
+            plug-ins, and community.
+          </p>
+          <a href="https://glyphsapp.com/">glyphsapp.com</a>
+        </article>
+        <article>
+          <h3>Glyphs Handbook</h3>
+          <p>
+            The handbook is a parallel product: create, settings, edit view, palette, font view,
+            font info, import/export, spacing, kerning. Runebender needs this level of naming.
+          </p>
+          <a href="https://handbook.glyphsapp.com/">handbook.glyphsapp.com</a>
+        </article>
+        <article>
+          <h3>RoboFont</h3>
+          <p>
+            RoboFont treats scripting and extensions as core identity. Its docs split into
+            topics, tutorials, how-tos, reference, extensions, Mechanic, education, and Discord.
+          </p>
+          <a href="https://robofont.com/documentation/">robofont.com/documentation</a>
+        </article>
+        <article>
+          <h3>Runebender</h3>
+          <p>
+            The site should not imitate a finished commercial app. The stronger move is direct,
+            source-first, documentation-heavy, and visually uncompromising.
+          </p>
+          <a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section manifesto" aria-labelledby="manifesto-title">
+      <div class="section-kicker">Design position</div>
+      <h2 id="manifesto-title">Web brutalist, but engineered.</h2>
+      <p>
+        No generic cards. No product gradients. No fake app chrome. Use HTML elements that mean
+        something: tables, ordered lists, figures, captions, code, indexes. The visual language is
+        gray paper, dark text, dense alignment, hard borders, large type, and deliberate friction.
+      </p>
+    </section>
+
+    <section class="section resource-section" id="resources" aria-labelledby="resources-title">
+      <div>
+        <div class="section-kicker">Links</div>
+        <h2 id="resources-title">Follow the work.</h2>
+      </div>
+      <div class="resource-links">
+        <a href="https://github.com/eliheuer/runebender-xilem">
+          <strong>Runebender Xilem</strong>
+          <span>Current Rust/Xilem editor source, screenshots, shortcuts, features.</span>
+        </a>
+        <a href="/docs/install.html">
+          <strong>Local docs</strong>
+          <span>Install, manual, shortcuts, tracing, format notes, and development notes.</span>
+        </a>
+        <a href="https://github.com/linebender/runebender">
+          <strong>Original Runebender</strong>
+          <span>Earlier Druid implementation in the Linebender organization.</span>
+        </a>
+        <a href="https://xi.zulipchat.com/#narrow/channel/197075-runebender">
+          <strong>Zulip</strong>
+          <span>Development discussion in the Linebender chat.</span>
+        </a>
+        <a href="https://runebender.app/">
+          <strong>Existing site</strong>
+          <span>Historical project entry point.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

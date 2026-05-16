@@ -1,0 +1,82 @@
+---
+title: "Task recipes."
+navLabel: "How-tos"
+eyebrow: "How-tos"
+lede: "Short practical recipes for common alpha tasks. Each recipe points to the canonical page for context and avoids detailed UI promises that may change before release."
+status: "Alpha recipe index"
+audience: "Early users, testers, contributors, agents"
+source: "Website docs and Runebender Xilem README"
+stability: "Recipe goals are stable; exact UI behavior may move"
+order: 8
+description: "Runebender task recipes for alpha workflows."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import CommandList from "../../components/CommandList.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Run with a file">
+
+Use this when you want to open a specific UFO directly from the command line.
+
+<CommandList commands={["cargo run -- assets/untitled.ufo"]} />
+
+See [Install](/docs/install.html) for prerequisites and first-run notes.
+
+</DocSection>
+
+<DocSection title="Run with logs">
+
+Use verbose logging when testing alpha behavior or preparing a useful issue report.
+
+<CommandList commands={["cargo run -- --verbose"]} />
+
+Include the source checkout, command, UFO path, and expected behavior when reporting a bug.
+
+</DocSection>
+
+<DocSection title="Trace locally">
+
+1. Import a background image.
+2. Align and scale it against the glyph metrics.
+3. Use local img2bez tracing.
+4. Clean up the resulting outlines manually.
+
+See [Tracing](/docs/tracing.html) for the current tracing map.
+
+</DocSection>
+
+<DocSection title="Trace with QuiverAI">
+
+1. Confirm that cloud tracing is acceptable for the source image.
+2. Configure an API key through the supported config path or environment variable.
+3. Run the QuiverAI trace command from the app.
+4. Review and clean up the generated outlines.
+
+<Callout>QuiverAI requires network access, an API key, and API credits. Prefer local tracing when reproducibility or privacy matters.</Callout>
+
+</DocSection>
+
+<DocSection title="Convert hyperbeziers">
+
+Use conversion when a downstream tool needs standard cubic outlines rather than Runebender hyperbezier contours.
+
+<table>
+  <caption>Format command</caption>
+  <tbody>
+    <tr><th>Convert</th><td><code>Cmd/Ctrl + Shift + H</code></td></tr>
+    <tr><th>Read first</th><td><a href="/docs/format.html">Format notes</a></td></tr>
+    <tr><th>Exact spec</th><td><a href="https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md">Hyperbezier UFO extension</a></td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Find implementation code">
+
+1. Start with [Source map](/docs/source-map.html).
+2. Use the README and source tree as the source of truth.
+3. Keep website edits broad unless implementation behavior is settled.
+4. Update agent-readable files when a page is added or moved.
+
+</DocSection>

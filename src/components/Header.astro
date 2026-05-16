@@ -1,0 +1,49 @@
+---
+type NavLink = { href: string; label: string; external?: boolean; action?: boolean };
+
+const links: NavLink[] = [
+  { href: "/docs/index.html", label: "Docs" },
+  { href: "/docs/install.html", label: "Install" },
+  { href: "/docs/reference.html", label: "Reference" },
+  { href: "/docs/format.html", label: "Format" },
+  { href: "/cloud/index.html", label: "Cloud" },
+  {
+    href: "https://github.com/eliheuer/runebender-comfy/archive/refs/heads/main.zip",
+    label: "Download",
+    external: true,
+  },
+  {
+    href: "https://github.com/eliheuer/runebender-xilem",
+    label: "GitHub",
+    external: true,
+    action: true,
+  },
+];
+
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isCurrent = (href: string) => {
+  if (href.startsWith("http")) return false;
+  const target = href.replace(/\/$/, "") || "/";
+  return target === current;
+};
+---
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Runebender home">
+    <span class="brand-mark">RB</span>
+    <span>Runebender</span>
+  </a>
+  <nav aria-label="Primary navigation">
+    {
+      links.map(({ href, label, action }) => (
+        <a
+          href={href}
+          class={action ? "nav-action" : undefined}
+          aria-current={isCurrent(href) ? "page" : undefined}
+        >
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

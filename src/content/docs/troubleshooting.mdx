@@ -1,0 +1,72 @@
+---
+title: "Check the obvious first."
+navLabel: "Troubleshooting"
+eyebrow: "Troubleshooting"
+lede: "Runebender is alpha, so many failures should be treated as useful evidence rather than user error. Start with the source checkout, command, UFO path, and exact behavior before assuming the docs are current."
+status: "Alpha diagnostic notes"
+audience: "Early users, testers, contributors, agents"
+source: "Website docs and Runebender Xilem README"
+stability: "Expected to change as packaging and UI mature"
+order: 10
+description: "Runebender troubleshooting notes for alpha setup, files, tracing, and docs."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Build or launch">
+
+<table>
+  <caption>First checks</caption>
+  <tbody>
+    <tr><th>Rust</th><td>Confirm a current Rust toolchain. The source README currently lists MSRV 1.88.</td></tr>
+    <tr><th>Checkout</th><td>Run commands from the root of <code>runebender-xilem</code>, not from this website repo.</td></tr>
+    <tr><th>Command</th><td>Try <code>cargo run</code> before adding file paths or verbose flags.</td></tr>
+    <tr><th>Logs</th><td>Use <code>cargo run -- --verbose</code> when collecting detail for an issue.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Opening UFOs">
+
+- Use an included example first: `assets/untitled.ufo` or `assets/hyper-matisse.ufo`.
+- Keep real font sources in version control before testing alpha editing behavior.
+- If a path fails, verify it relative to the source repo root.
+- Use [Examples](/docs/examples.html) to choose which included UFO matches the behavior you are testing.
+
+</DocSection>
+
+<DocSection title="Tracing">
+
+<table>
+  <caption>Image-to-outline checks</caption>
+  <tbody>
+    <tr><th>Background image</th><td>Import, align, and scale the bitmap before judging tracing output.</td></tr>
+    <tr><th>Local tracing</th><td>Use img2bez first when offline behavior or reproducibility matters.</td></tr>
+    <tr><th>Cloud tracing</th><td>QuiverAI requires network access, API credentials, and API credits.</td></tr>
+    <tr><th>Cleanup</th><td>Expect traced outlines to need manual review and metric adjustment.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Format behavior">
+
+- Use [Format](/docs/format.html) for orientation, then verify exact behavior in the source repo.
+- Use the canonical hyperbezier UFO extension spec for storage details.
+- Use `assets/hyper-matisse.ufo` when testing hyperbezier-specific behavior.
+- Convert hyperbeziers to cubic outlines before relying on tools that do not understand Runebender extensions.
+
+</DocSection>
+
+<DocSection title="Reporting">
+
+When a problem looks real, collect the smallest useful report.
+
+- Source repository commit or checkout date.
+- Command used to launch the app.
+- UFO path or example file name.
+- Expected behavior and actual behavior.
+- Whether the problem affects local tracing, QuiverAI tracing, normal cubic outlines, or hyperbezier outlines.
+
+</DocSection>

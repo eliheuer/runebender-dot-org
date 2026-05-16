@@ -1,0 +1,43 @@
+---
+title: "Format notes."
+navLabel: "Format"
+eyebrow: "UFO sources"
+lede: "Runebender is organized around source fonts that can be inspected, versioned, and moved between tools. These notes map the format surface without pretending the whole compatibility story is settled."
+status: "Format orientation"
+audience: "Font developers and tool authors"
+source: "Runebender Xilem hyperbezier spec"
+stability: "Verify against source before relying on details"
+order: 18
+description: "Runebender UFO and hyperbezier format notes."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="UFO">
+
+UFO is the current source workflow named in the Runebender Xilem README. Public docs should keep read/write expectations clear and conservative while the editor is alpha.
+
+</DocSection>
+
+<DocSection title="Hyperbezier">
+
+Runebender Xilem supports on-curve hyperbezier paths, with off-curve control points computed by a spline solver. Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
+
+<Callout>The canonical spec lives in the source repo at <a href="https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md">docs/hyperbezier-ufo-extension.md</a>. This site should summarize it, not fork it.</Callout>
+
+</DocSection>
+
+<DocSection title="Compatibility">
+
+<table>
+  <caption>Questions to answer before public docs</caption>
+  <tbody>
+    <tr><th>Read</th><td>Document which UFO/GLIF structures are accepted as the editor matures.</td></tr>
+    <tr><th>Write</th><td>Keep save behavior conservative and version-control friendly.</td></tr>
+    <tr><th>Fallback</th><td>Non-supporting editors may ignore the hyperbezier identifier or treat points as ordinary curve/line points.</td></tr>
+    <tr><th>Export</th><td>Keep release docs clear about what exists now versus future work.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>

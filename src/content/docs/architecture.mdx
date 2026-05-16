@@ -1,0 +1,83 @@
+---
+title: "How the app is shaped."
+navLabel: "Architecture"
+eyebrow: "Architecture"
+lede: "A contributor-level map of the Runebender Xilem source architecture. This page is intentionally structural: it explains where responsibilities live without turning internal modules into a stable API contract."
+status: "Alpha architecture map"
+audience: "Contributors, maintainers, documentation agents"
+source: "Current local Runebender Xilem source tree"
+stability: "Architecture names may move while the app is alpha"
+order: 13
+description: "Runebender Xilem architecture map for contributors and documentation agents."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Application flow">
+
+The app starts in `src/main.rs`, calls into `runebender::run`, builds Xilem state, then switches between welcome, glyph grid, and editor surfaces depending on loaded font state.
+
+<table>
+  <caption>Runtime outline</caption>
+  <tbody>
+    <tr><th>Entry</th><td><code>src/main.rs</code> creates the Xilem event loop.</td></tr>
+    <tr><th>Run</th><td><code>src/lib.rs</code> initializes logging, config, initial state, command-line loading, and the Xilem app.</td></tr>
+    <tr><th>State</th><td><code>AppState</code> drives the reactive UI and owns loaded workspace state, selection, active editor session, grid state, clipboard, and file-watch flags.</td></tr>
+    <tr><th>Views</th><td>When a font is loaded, the app presents glyph grid and editor tabs. Without a loaded font, it shows the welcome view.</td></tr>
+    <tr><th>Reload</th><td>The tabbed view is wrapped with a file watcher that can reload workspace data after external UFO changes.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="State model">
+
+`src/data/mod.rs` describes `AppState` as the central application state that drives the Xilem reactive UI.
+
+- `workspace` holds the loaded UFO workspace when opening a direct source.
+- `designspace` is reserved for designspace project state.
+- `editor_session` and `welcome_session` hold active editing contexts.
+- `active_tab`, selected glyph data, grid scroll state, and category filters drive navigation.
+- `clipboard`, `save_in_progress`, and `glyph_images_dir` support editing, file watching, and image workflows.
+
+</DocSection>
+
+<DocSection title="Editing layers">
+
+<table>
+  <caption>Interaction model</caption>
+  <tbody>
+    <tr><th><code>src/editing/</code></th><td>Local interaction modules for background images, hit testing, mouse behavior, tracing, QuiverAI, viewport helpers, and edit sessions.</td></tr>
+    <tr><th><code>runebender-core</code></th><td>Shared editing types for selection, undo, and edit type concepts are re-exported through <code>crate::editing</code>.</td></tr>
+    <tr><th><code>src/tools/</code></th><td>Tool implementations handle pointer and paint behavior for Select, Pen, HyperPen, Knife, Measure, Shapes, Text, and Preview.</td></tr>
+    <tr><th><code>ToolBox</code></th><td>Wraps the active tool and delegates mouse, paint, and edit-type behavior.</td></tr>
+    <tr><th><code>EditSession</code></th><td>Holds the active editor interaction context used by tools and canvas event handling.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Data and geometry">
+
+<table>
+  <caption>Source data</caption>
+  <tbody>
+    <tr><th><code>src/data/</code></th><td>Application-facing editor data, file IO, grid behavior, and kerning.</td></tr>
+    <tr><th><code>src/model/</code></th><td>Workspace, designspace, and glyph rendering concepts.</td></tr>
+    <tr><th><code>src/path/</code></th><td>Cubic, hyperbezier, quadratic, point, point-list, segment, and quadrant path data.</td></tr>
+    <tr><th><code>src/shaping/</code></th><td>Arabic shaping and Unicode data support.</td></tr>
+    <tr><th><code>src/sort/</code></th><td>Buffer, cursor, and data modules for text or glyph ordering behavior.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Use this page">
+
+- Use [Source map](/docs/source-map.html) for file-level orientation.
+- Use this page for subsystem boundaries and responsibility flow.
+- Use [Verification](/docs/verification.html) before turning source behavior into public docs.
+- Use the source repository for exact behavior before making implementation claims.
+- Update this page when source modules move or when the public architecture becomes stable enough for deeper docs.
+
+</DocSection>

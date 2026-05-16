@@ -1,0 +1,53 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Sidebar from "../components/Sidebar.astro";
+
+interface Props {
+  title: string;
+  eyebrow: string;
+  lede: string;
+  status: string;
+  audience: string;
+  source: string;
+  stability: string;
+  currentSlug?: string;
+  description?: string;
+}
+
+const {
+  title,
+  eyebrow,
+  lede,
+  status,
+  audience,
+  source,
+  stability,
+  currentSlug,
+  description,
+} = Astro.props;
+
+const pageTitle = `${title.replace(/\.$/, "")} / Runebender`;
+const metaDescription = description ?? lede;
+---
+
+<BaseLayout title={pageTitle} description={metaDescription}>
+  <main class="doc-layout">
+    <Sidebar currentSlug={currentSlug} />
+    <article class="doc-page">
+      <header class="doc-hero">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+        <p>{lede}</p>
+        <table class="page-summary">
+          <tbody>
+            <tr><th>Status</th><td>{status}</td></tr>
+            <tr><th>Audience</th><td>{audience}</td></tr>
+            <tr><th>Source</th><td>{source}</td></tr>
+            <tr><th>Stability</th><td>{stability}</td></tr>
+          </tbody>
+        </table>
+      </header>
+      <slot />
+    </article>
+  </main>
+</BaseLayout>

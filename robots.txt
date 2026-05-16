@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://runebender.org/sitemap.xml
-Sitemap: https://runebender.org/llms.txt
