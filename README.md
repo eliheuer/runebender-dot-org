@@ -36,6 +36,7 @@ public/           Raw static files copied verbatim into the build:
                     cloud/editor/ (Vite build artifact, see below)
 scripts/
   check-local-links.sh         HTTP 200 sweep against built preview output
+  check-external-links.sh      HTTP sweep for public off-site links
   build-cloud-editor.sh        Builds the standalone Comfy/Vue editor into public/cloud/editor/
   vite.comfy-standalone.config.mjs
   sync-comfy-web.sh            Local-only mirror of ~/GH/repos/runebender-comfy/web

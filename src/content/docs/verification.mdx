@@ -28,6 +28,16 @@ Use these checks after adding, moving, or renaming public pages.
 
 </DocSection>
 
+<DocSection title="External links">
+
+Use this check before public launch and after changing source, support, or historical-site links.
+
+<CommandList commands={["pnpm run check-external-links"]} />
+
+The external-link check intentionally excludes `runebender.org` until GitHub Pages and DNS are live. Published-site URLs are covered by the GitHub Pages and DNS checks below.
+
+</DocSection>
+
 <DocSection title="Source checks">
 
 Run source checks from the root of the Runebender Xilem repository, not from this website repository.
