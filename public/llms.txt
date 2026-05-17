@@ -6,7 +6,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 
 ## Canonical Sources
 
-- [Runebender Core source repository](https://github.com/eliheuer/runebender-core): shared Rust editing state and data model code used by current front-ends.
+- [Runebender Core source repository](https://github.com/eliheuer/runebender-core): headless Rust crate and CLI direction for non-UI font operations.
 - [Runebender Xilem source repository](https://github.com/eliheuer/runebender-xilem): native Rust/Xilem editor source, README, screenshots, shortcuts, tracing notes.
 - [Runebender Comfy source repository](https://github.com/eliheuer/runebender-comfy): ComfyUI/Vue/WASM front-end, nodes, and browser editor path.
 - [Hyperbezier UFO extension specification](https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md): canonical format notes for hyperbezier contours.
@@ -16,7 +16,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 
 - [Project map](https://runebender.org/docs/project-map.html): Core, Xilem, Comfy, Druid, and future front-ends.
 - [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
-- [Runebender Core](https://runebender.org/docs/core.html): shared editing and data model foundation.
+- [Runebender Core](https://runebender.org/docs/core.html): headless Rust crate and CLI path.
 - [Runebender Xilem](https://runebender.org/docs/xilem.html): native desktop editor path.
 - [Runebender Comfy](https://runebender.org/docs/comfy.html): ComfyUI graph and browser-hosted path.
 - [Runebender Druid](https://runebender.org/docs/druid.html): historical implementation.

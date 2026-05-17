@@ -16,7 +16,7 @@ Runebender is a family of alpha font editor projects. Treat these notes as an or
 
 ## Current Facts
 
-- Runebender Core is the platform-independent Rust foundation shared by current front-ends.
+- Runebender Core is the headless Rust crate and CLI direction for non-UI font operations.
 - Runebender Xilem is a native font editor front-end built with Rust and Xilem.
 - Runebender Comfy is a ComfyUI/Vue/WASM front-end and node path.
 - Xilem is a Rust UI framework from the Linebender ecosystem.
@@ -113,7 +113,7 @@ The public docs use a mature font-editor documentation model:
 
 - Start here: project family, current facts, alpha limits, roadmap.
 - Shared concepts: glossary, UFO/GLIF/hyperbezier format notes, support, troubleshooting.
-- Editor-specific docs: Xilem install/manual/tracing/shortcuts/source map, and Comfy/Core landing pages.
+- Editor-specific docs: Xilem install/manual/tracing/shortcuts/source map, plus Comfy and headless Core landing pages.
 - Task paths: tutorials, workflows, and how-tos that currently lean Xilem-heavy where detailed docs exist.
 
 Because Runebender is alpha, docs should avoid over-specifying changing behavior.
@@ -515,7 +515,7 @@ Runebender Core, Xilem, and Comfy are very alpha and actively under development.
 
 Contribution entry points:
 
-- Use https://github.com/eliheuer/runebender-core for shared framework-independent editing and data model work.
+- Use https://github.com/eliheuer/runebender-core for headless CLI work, shared framework-independent editing, and data model work.
 - File issues and pull requests in https://github.com/eliheuer/runebender-xilem
 - Use https://github.com/eliheuer/runebender-comfy for ComfyUI/Vue/WASM front-end and node work.
 - Use the Linebender Zulip channel for development discussion.

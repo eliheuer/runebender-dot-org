@@ -2,7 +2,7 @@
 title: "Project map."
 navLabel: "Project map"
 eyebrow: "Runebender family"
-lede: "Runebender is an umbrella for shared font-editor work, not one finished application. This page separates the core library, current front-ends, historical implementation, and future front-end space."
+lede: "Runebender is an umbrella for font-editor work, not one finished application. This page separates the headless Core path, current front-ends, historical implementation, and future front-end space."
 status: "Alpha project map"
 audience: "Users, contributors, documentation agents"
 source: "Runebender Core, Xilem, Comfy, and Druid READMEs"
@@ -19,7 +19,7 @@ import MiniIndex from "../../components/MiniIndex.astro";
 <table>
   <caption>Repository roles</caption>
   <tbody>
-    <tr><th>Core</th><td><a href="https://github.com/eliheuer/runebender-core">runebender-core</a> is the shared Rust foundation for framework-independent editing state and data model work.</td></tr>
+    <tr><th>Core</th><td><a href="https://github.com/eliheuer/runebender-core">runebender-core</a> is the headless Rust crate and CLI direction for non-UI font operations.</td></tr>
     <tr><th>Xilem</th><td><a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a> is the native Rust/Xilem desktop editor front-end.</td></tr>
     <tr><th>Comfy</th><td><a href="https://github.com/eliheuer/runebender-comfy">runebender-comfy</a> is the ComfyUI/Vue/WASM front-end and node path.</td></tr>
     <tr><th>Druid</th><td><a href="https://github.com/linebender/runebender">linebender/runebender</a> is the earlier Druid-based implementation.</td></tr>
@@ -33,7 +33,7 @@ import MiniIndex from "../../components/MiniIndex.astro";
 
 <MiniIndex
   items={[
-    { href: "/docs/core.html", title: "Runebender Core", description: "Shared editing and data model foundation." },
+    { href: "/docs/core.html", title: "Runebender Core", description: "Headless Rust crate and CLI path." },
     { href: "/docs/xilem.html", title: "Runebender Xilem", description: "Native desktop editor path." },
     { href: "/docs/comfy.html", title: "Runebender Comfy", description: "ComfyUI graph and browser-hosted path." },
     { href: "/docs/druid.html", title: "Runebender Druid", description: "Historical implementation and project lineage." },
@@ -47,7 +47,7 @@ import MiniIndex from "../../components/MiniIndex.astro";
 - Shared concepts belong in umbrella docs.
 - Native desktop behavior belongs in Xilem docs.
 - ComfyUI nodes, FONT wires, browser editor behavior, and graph workflows belong in Comfy docs.
-- Shared Rust editing state and data model work belongs in Core docs.
+- Headless CLI behavior, scripted workflows, and shared Rust editing state belong in Core docs.
 - Druid should be treated as history unless a page is explicitly about lineage.
 
 </DocSection>

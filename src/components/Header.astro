@@ -2,14 +2,13 @@
 type NavLink = { href: string; label: string; external?: boolean; action?: boolean };
 
 const links: NavLink[] = [
+  { href: "/#family", label: "Family" },
   { href: "/docs/index.html", label: "Docs" },
-  { href: "/docs/manual.html", label: "Manual" },
-  { href: "/docs/install.html", label: "Install" },
-  { href: "/docs/reference.html", label: "Reference" },
   { href: "/cloud/index.html", label: "Cloud" },
+  { href: "/docs/support.html", label: "Support" },
   {
-    href: "/#family",
-    label: "Family",
+    href: "/#resources",
+    label: "Source",
     action: true,
   },
 ];
@@ -29,11 +28,13 @@ const isCurrent = (href: string) => {
   </a>
   <nav aria-label="Primary navigation">
     {
-      links.map(({ href, label, action }) => (
+      links.map(({ href, label, action, external }) => (
         <a
           href={href}
           class={action ? "nav-action" : undefined}
           aria-current={isCurrent(href) ? "page" : undefined}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noreferrer" : undefined}
         >
           {label}
         </a>

@@ -30,7 +30,7 @@ const xilem = [
 ];
 
 const otherPaths = [
-  { href: "/docs/core.html", title: "Runebender Core", description: "Shared editing and data model foundation." },
+  { href: "/docs/core.html", title: "Runebender Core", description: "Headless Rust crate and CLI path." },
   { href: "/docs/comfy.html", title: "Runebender Comfy", description: "ComfyUI graph and browser-hosted front-end path." },
   { href: "/docs/druid.html", title: "Runebender Druid", description: "Historical implementation and project lineage." },
   { href: "/docs/development.html", title: "Develop Runebender", description: "Contribution entry points across the project family." },
@@ -46,7 +46,7 @@ const taskPaths = [
 <DocLayout
   title="Alpha docs."
   eyebrow="Documentation map"
-  lede="This documentation separates shared Runebender concepts from editor-specific behavior. Start with the project map, then choose Core, Xilem, Comfy, or historical Druid depending on the work in front of you."
+  lede="This documentation separates shared Runebender concepts from editor-specific behavior. Start with the project map, then choose Core for headless work, Xilem for the native editor, Comfy for graph workflows, or historical Druid for project lineage."
   status="Alpha documentation map"
   audience="Font tool users, contributors, agents"
   source="Website docs plus Runebender Core, Xilem, Comfy, and Druid repositories"
@@ -81,7 +81,7 @@ const taskPaths = [
   <section class="doc-section">
     <h2>Core, Comfy, Druid</h2>
     <div>
-      <p>These pages reserve clear homes for the shared library, the ComfyUI front-end, project history, and contributor orientation.</p>
+      <p>These pages reserve clear homes for the headless Core path, the ComfyUI front-end, project history, and contributor orientation.</p>
       <MiniIndex items={otherPaths} />
     </div>
   </section>

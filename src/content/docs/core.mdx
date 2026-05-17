@@ -1,21 +1,36 @@
 ---
 title: "Runebender Core."
 navLabel: "Core"
-eyebrow: "Shared foundation"
-lede: "Runebender Core is the platform-independent Rust foundation for editing state and font data work shared by current and future front-ends."
-status: "Early shared crate"
+eyebrow: "Headless foundation"
+lede: "Runebender Core is the headless Rust crate and command-line path for font operations that should work without opening a desktop or browser editor."
+status: "Early headless crate and CLI direction"
 audience: "Contributors, tool builders, documentation agents"
 source: "runebender-core README"
-stability: "Early; module boundaries may move"
+stability: "Early; command surface and module boundaries may move"
 order: 4.6
-description: "Runebender Core overview and shared foundation notes."
+description: "Runebender Core overview for the headless Rust crate and CLI path."
 ---
 
 import DocSection from "../../components/DocSection.astro";
 
 <DocSection title="Role">
 
-Runebender Core exists so front-ends do not each need to invent their own editing state and data model. The current crate holds framework-independent pieces such as edit types, selections, undo state, entity IDs, and UFO-spec kerning lookup.
+Runebender Core is the non-UI Runebender path. It should be useful as a Rust crate and as a command-line tool for scripted font operations, batch workflows, tests, and automation that do not need the Xilem desktop editor or the ComfyUI graph editor.
+
+The current crate holds framework-independent pieces such as edit types, selections, undo state, entity IDs, and UFO-spec kerning lookup. The docs treat those pieces as the beginning of a headless tool surface, not only as internals for the graphical front-ends.
+
+</DocSection>
+
+<DocSection title="Command-line shape">
+
+Core should be the place to look when a task sounds like it belongs in a terminal, script, or CI job:
+
+- inspect or validate font sources,
+- run repeatable format conversions or checks,
+- exercise shared editing behavior without launching a UI,
+- provide the same underlying behavior to Xilem, Comfy, and future front-ends.
+
+The public site should not invent exact commands before they exist. It should, however, present Core as the headless application path so users understand that Runebender is not limited to graphical editors.
 
 </DocSection>
 
@@ -27,6 +42,8 @@ Geometry-heavy modules are not all centralized yet. The local README notes that 
 
 <DocSection title="Use this when">
 
+- You want a headless Runebender workflow.
+- You are working on command-line, scripted, or CI-friendly font operations.
 - You are working on shared model or editing behavior.
 - A behavior should be consistent across Xilem, Comfy, and future front-ends.
 - You need to understand which parts are independent from a host UI framework.
@@ -39,7 +56,7 @@ Geometry-heavy modules are not all centralized yet. The local README notes that 
   <caption>Core repository</caption>
   <tbody>
     <tr><th>Repo</th><td><a href="https://github.com/eliheuer/runebender-core">github.com/eliheuer/runebender-core</a></td></tr>
-    <tr><th>Status</th><td>Early shared crate.</td></tr>
+    <tr><th>Status</th><td>Early headless crate and CLI direction.</td></tr>
     <tr><th>License</th><td>Apache-2.0 in the local README.</td></tr>
   </tbody>
 </table>
