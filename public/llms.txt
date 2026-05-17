@@ -52,5 +52,4 @@ This site is alpha documentation. The application is changing quickly, so agents
 
 ## Optional
 
-- [Website repository](https://github.com/eliheuer/runebender-dot-org): static site source.
 - [Existing historical site](https://runebender.app/): older project entry point.

@@ -11,7 +11,7 @@ Runebender is a family of alpha font editor projects. Treat these notes as an or
 - ComfyUI/Vue/WASM front-end source: https://github.com/eliheuer/runebender-comfy
 - Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
 - Earlier Runebender source: https://github.com/linebender/runebender
-- Website source: https://github.com/eliheuer/runebender-dot-org
+- Website source: not public yet.
 
 ## Current Facts
 
@@ -224,9 +224,9 @@ Primary channels:
 - Editor issues: https://github.com/eliheuer/runebender-xilem/issues
 - Editor pull requests: https://github.com/eliheuer/runebender-xilem/pulls
 - Development discussion: https://xi.zulipchat.com/#narrow/channel/197075-runebender
-- Website source: https://github.com/eliheuer/runebender-dot-org
+- Website source: not public yet.
 
-Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems. Use website issues or patches for stale docs, broken links, unclear examples, and agent-readable context files. Use Zulip for early design discussion and questions that are not yet issue-shaped.
+Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems. Use Zulip for stale docs, broken links, unclear examples, agent-readable context files, early design discussion, and questions that are not yet issue-shaped.
 
 ## Architecture
 

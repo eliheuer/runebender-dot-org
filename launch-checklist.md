@@ -21,7 +21,7 @@ This checklist is for publishing `runebender.org`.
 - [x] Alpha Limits page is accurate.
 - [x] Hyperbezier page links to the canonical source-repo spec.
 - [x] QuiverAI notes mention network/API key/API credits.
-- [ ] Screenshots are local assets and reflect the current app well enough.
+- [x] Screenshots are local assets and reflect the current app well enough.
 - [x] `llms.txt` and `llms-full.txt` explain the project family and do not collapse all front-ends into Xilem.
 
 ## Technical
@@ -52,10 +52,10 @@ This checklist is for publishing `runebender.org`.
 
 ## Final Review
 
-- [ ] Desktop layout pass.
-- [ ] Tablet layout pass.
-- [ ] Mobile layout pass.
-- [ ] Check long tables and code blocks.
-- [ ] Check all internal links.
-- [ ] Check external links.
+- [x] Desktop layout pass.
+- [x] Tablet layout pass.
+- [x] Mobile layout pass.
+- [x] Check long tables and code blocks.
+- [x] Check all internal links.
+- [x] Check external links.
 - [ ] Decide what happens to `runebender.app`: leave historical, redirect, or cross-link.
