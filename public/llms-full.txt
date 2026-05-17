@@ -264,8 +264,10 @@ Data and geometry:
 
 Website checks:
 
-- Run the Astro dev server with `pnpm run dev`.
-- Run `scripts/check-local-links.sh http://127.0.0.1:4321`.
+- Run `pnpm run check`.
+- Run `pnpm run build`.
+- Run the built preview with `pnpm run preview -- --host 127.0.0.1 --port 4322`.
+- Run `pnpm run check-links`.
 - Astro generates `sitemap-index.xml` and `sitemap-0.xml`; update `robots.txt` only if the sitemap URL changes.
 - Update `scripts/check-local-links.sh` so new public pages are checked.
 - Update `llms.txt` and `llms-full.txt` when the docs structure changes.

@@ -18,12 +18,13 @@ import CommandList from "../../components/CommandList.astro";
 
 Use these checks after adding, moving, or renaming public pages.
 
-<CommandList commands={["pnpm run dev", "scripts/check-local-links.sh http://127.0.0.1:4321"]} />
+<CommandList commands={["pnpm run check", "pnpm run build", "pnpm run preview -- --host 127.0.0.1 --port 4322", "pnpm run check-links"]} />
 
-- Pages are generated from the docs content collection, so adding a new page only requires a new file in `src/content/docs/`.
+- Pages are generated from the docs content collection, so adding a new public docs route starts with a new file in `src/content/docs/`.
+- The visible docs sidebar is grouped manually in `src/components/Sidebar.astro`; add new public docs pages there when they belong in navigation.
 - Update `scripts/check-local-links.sh` so the new page is checked locally.
 - Update `public/llms.txt` and `public/llms-full.txt` when the docs structure changes.
-- Review the page in the local browser for table overflow, sidebar wrapping, and code block width.
+- Review the built preview in the local browser for table overflow, sidebar wrapping, code block width, and the static cloud editor path.
 
 </DocSection>
 

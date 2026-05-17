@@ -29,13 +29,13 @@ The earlier Druid-based Runebender source is:
 pnpm install
 pnpm run dev       # http://127.0.0.1:4321
 pnpm run build     # outputs dist/
-pnpm run preview   # serves dist/ for verification
+pnpm run preview -- --host 127.0.0.1 --port 4322
 ```
 
-After running `pnpm run dev`, link-check the site:
+After building and starting preview, link-check the generated site:
 
 ```sh
-scripts/check-local-links.sh http://127.0.0.1:4321
+pnpm run check-links
 ```
 
 ## Adding or editing a docs page
@@ -43,8 +43,8 @@ scripts/check-local-links.sh http://127.0.0.1:4321
 1. Create or edit `src/content/docs/<slug>.mdx`.
 2. Set the frontmatter: `title`, `navLabel`, `eyebrow`, `lede`, `status`, `audience`, `source`, `stability`, `order`, optional `description`.
 3. Use the components in `src/components/` for repeated patterns: `DocSection`, `MiniIndex`, `Callout`, `CommandList`.
-4. The sidebar regenerates from the collection sorted by `order`; no manual nav edits needed.
-5. Update `public/llms.txt` and `public/llms-full.txt` when the public docs map changes.
+4. The docs route regenerates from the collection; the sidebar uses explicit grouped navigation in `src/components/Sidebar.astro`, so add the page there if it should appear in the nav.
+5. Update `scripts/check-local-links.sh`, `public/llms.txt`, and `public/llms-full.txt` when the public docs map changes.
 
 ## Documentation stance
 

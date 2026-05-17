@@ -6,37 +6,37 @@ This checklist is for publishing `runebender.org`.
 
 - [ ] Decide whether `eliheuer/runebender-dot-org` should become public.
 - [ ] Confirm repo description and topics on GitHub.
-- [ ] Confirm README says this is the website, not the editor source.
-- [ ] Confirm `AGENTS.md`, `llms.txt`, and `llms-full.txt` are current.
+- [x] Confirm README says this is the website, not the editor source.
+- [x] Confirm `AGENTS.md`, `llms.txt`, and `llms-full.txt` are current.
 
 ## Site Content
 
-- [ ] Homepage presents Runebender as a project family, not one app.
-- [ ] Homepage clearly distinguishes Core, Xilem, Comfy, future front-ends, and historical Druid.
-- [ ] Docs home separates shared concepts from editor-specific docs.
-- [ ] Xilem-specific pages are labeled as Xilem-specific.
-- [ ] Comfy and Core landing pages exist even if detailed docs are still thin.
-- [ ] Docs describe the Runebender project family as very alpha.
-- [ ] Current Facts page is accurate.
-- [ ] Alpha Limits page is accurate.
-- [ ] Hyperbezier page links to the canonical source-repo spec.
-- [ ] QuiverAI notes mention network/API key/API credits.
+- [x] Homepage presents Runebender as a project family, not one app.
+- [x] Homepage clearly distinguishes Core, Xilem, Comfy, future front-ends, and historical Druid.
+- [x] Docs home separates shared concepts from editor-specific docs.
+- [x] Xilem-specific pages are labeled as Xilem-specific.
+- [x] Comfy and Core landing pages exist even if detailed docs are still thin.
+- [x] Docs describe the Runebender project family as very alpha.
+- [x] Current Facts page is accurate.
+- [x] Alpha Limits page is accurate.
+- [x] Hyperbezier page links to the canonical source-repo spec.
+- [x] QuiverAI notes mention network/API key/API credits.
 - [ ] Screenshots are local assets and reflect the current app well enough.
-- [ ] `llms.txt` and `llms-full.txt` explain the project family and do not collapse all front-ends into Xilem.
+- [x] `llms.txt` and `llms-full.txt` explain the project family and do not collapse all front-ends into Xilem.
 
 ## Technical
 
-- [ ] `CNAME` contains `runebender.org`.
-- [ ] `.nojekyll` is present.
-- [ ] `robots.txt` points to `sitemap-index.xml`.
-- [ ] `sitemap-index.xml` and `sitemap-0.xml` list all public pages.
-- [ ] `llms.txt` and `llms-full.txt` serve as plain text.
-- [ ] Favicon loads.
-- [ ] Open Graph image path is correct after publish.
+- [x] `CNAME` contains `runebender.org`.
+- [x] `.nojekyll` is present.
+- [x] `robots.txt` points to `sitemap-index.xml`.
+- [x] `sitemap-index.xml` and `sitemap-0.xml` list all public pages.
+- [x] `llms.txt` and `llms-full.txt` serve as plain text.
+- [x] Favicon loads.
+- [x] Open Graph image path is correct after publish.
 
 ## GitHub Pages
 
-- [ ] Enable GitHub Pages from `main` branch, repository root.
+- [ ] Enable GitHub Pages from GitHub Actions.
 - [ ] Confirm Pages build succeeds.
 - [ ] Confirm `https://runebender.org/` returns 200.
 - [ ] Confirm `https://runebender.org/docs/index.html` returns 200.

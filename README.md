@@ -10,13 +10,13 @@ Built with [Astro](https://astro.build/). Pages are written as `.astro` route fi
 pnpm install
 pnpm run dev       # http://127.0.0.1:4321
 pnpm run build     # outputs dist/
-pnpm run preview   # serves the built dist/
+pnpm run preview -- --host 127.0.0.1 --port 4322
 ```
 
-After running `pnpm run dev`, link-check the site:
+After building and starting preview, link-check the generated site:
 
 ```sh
-scripts/check-local-links.sh http://127.0.0.1:4321
+pnpm run check-links
 ```
 
 ## Project layout
@@ -35,7 +35,7 @@ public/           Raw static files copied verbatim into the build:
                     robots.txt, llms.txt, llms-full.txt,
                     cloud/editor/ (Vite build artifact, see below)
 scripts/
-  check-local-links.sh         HTTP 200 sweep against the dev server
+  check-local-links.sh         HTTP 200 sweep against built preview output
   build-cloud-editor.sh        Builds the standalone Comfy/Vue editor into public/cloud/editor/
   vite.comfy-standalone.config.mjs
   sync-comfy-web.sh            Local-only mirror of ~/GH/repos/runebender-comfy/web
@@ -48,8 +48,8 @@ launch-checklist.md            Pre-publication checklist
 
 1. Create `src/content/docs/<slug>.mdx` with frontmatter (`title`, `navLabel`, `eyebrow`, `lede`, `status`, `audience`, `source`, `stability`, `order`).
 2. Use the shared components for repeated patterns: `DocSection`, `MiniIndex`, `Callout`, `CommandList`.
-3. The sidebar regenerates automatically from the collection sorted by `order`. No nav edits needed.
-4. If the public docs map changes, also update `public/llms.txt` and `public/llms-full.txt`.
+3. The docs route is generated from the collection. If the new page belongs in the visible sidebar, add it to the grouped nav in `src/components/Sidebar.astro`.
+4. If the public docs map changes, also update `scripts/check-local-links.sh`, `public/llms.txt`, and `public/llms-full.txt`.
 
 ## Deployment
 

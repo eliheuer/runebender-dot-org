@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "check-links": "scripts/check-local-links.sh http://127.0.0.1:4321"
+    "check-links": "scripts/check-local-links.sh http://127.0.0.1:4322"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
