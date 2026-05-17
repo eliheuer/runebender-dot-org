@@ -12,6 +12,7 @@ Runebender is a family of alpha font editor projects. Treat these notes as an or
 - Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
 - Earlier Runebender source: https://github.com/linebender/runebender
 - Website source: not public yet.
+- Historical site: https://runebender.app/ remains a historical project entry point while runebender.org becomes the current docs home.
 
 ## Current Facts
 

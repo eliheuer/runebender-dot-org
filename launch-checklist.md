@@ -5,7 +5,7 @@ This checklist is for publishing `runebender.org`.
 ## Repository
 
 - [ ] Decide whether `eliheuer/runebender-dot-org` should become public.
-- [ ] Confirm repo description and topics on GitHub.
+- [ ] Confirm repo description and topics on GitHub. Suggested description: `Website and alpha documentation for the Runebender font editor project family.` Suggested topics: `runebender`, `font-editor`, `type-design`, `ufo`, `astro`, `documentation`.
 - [x] Confirm README says this is the website, not the editor source.
 - [x] Confirm `AGENTS.md`, `llms.txt`, and `llms-full.txt` are current.
 
@@ -58,4 +58,4 @@ This checklist is for publishing `runebender.org`.
 - [x] Check long tables and code blocks.
 - [x] Check all internal links.
 - [x] Check external links.
-- [ ] Decide what happens to `runebender.app`: leave historical, redirect, or cross-link.
+- [x] Decide what happens to `runebender.app`: keep it historical and cross-link it from runebender.org.
