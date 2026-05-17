@@ -25,7 +25,7 @@ pnpm run check-links
 src/
   layouts/        BaseLayout, DocLayout
   components/     Header, Footer, Sidebar, DocSection, MiniIndex, Callout, CommandList
-  content/docs/   Docs collection (one .mdx per page). The sidebar regenerates from this.
+  content/docs/   Docs collection (one .mdx per page). The docs routes generate from this.
   content.config.ts
   pages/          Route entries: index.astro, docs/index.astro, docs/[slug].astro, cloud/index.astro
   styles/         global.css
@@ -54,6 +54,26 @@ launch-checklist.md            Pre-publication checklist
 ## Deployment
 
 GitHub Pages must be configured to deploy from "GitHub Actions" rather than from a branch. The workflow in `.github/workflows/deploy.yml` builds `dist/` and uploads it as the Pages artifact. `CNAME` (in `public/`) keeps `runebender.org` as the custom domain.
+
+The deploy workflow is intentionally manual-only until launch. To publish:
+
+1. Push the latest `main`.
+2. Decide whether the repository should be public. If the account cannot serve private Pages, make `eliheuer/runebender-dot-org` public before enabling Pages.
+3. Set the repository description to `Website and alpha documentation for the Runebender font editor project family.`
+4. Add repository topics: `runebender`, `font-editor`, `type-design`, `ufo`, `astro`, `documentation`.
+5. In GitHub Settings -> Pages, set the source to "GitHub Actions".
+6. Run the `Deploy site to GitHub Pages` workflow manually.
+7. Point the apex domain at GitHub Pages:
+   - `A 185.199.108.153`
+   - `A 185.199.109.153`
+   - `A 185.199.110.153`
+   - `A 185.199.111.153`
+   - `AAAA 2606:50c0:8000::153`
+   - `AAAA 2606:50c0:8001::153`
+   - `AAAA 2606:50c0:8002::153`
+   - `AAAA 2606:50c0:8003::153`
+8. If `www.runebender.org` should resolve, add `CNAME www eliheuer.github.io`.
+9. After DNS settles, verify `https://runebender.org/`, `/docs/index.html`, and `/llms.txt`, then enable HTTPS enforcement in Pages settings.
 
 ## Cloud editor
 

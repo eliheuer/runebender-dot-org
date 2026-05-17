@@ -9,6 +9,8 @@ This checklist is for publishing `runebender.org`.
 - [x] Confirm README says this is the website, not the editor source.
 - [x] Confirm `AGENTS.md`, `llms.txt`, and `llms-full.txt` are current.
 
+Current remote state: `eliheuer/runebender-dot-org` is private, has an empty description, and has no topics.
+
 ## Site Content
 
 - [x] Homepage presents Runebender as a project family, not one app.
@@ -43,12 +45,22 @@ This checklist is for publishing `runebender.org`.
 - [ ] Confirm `https://runebender.org/llms.txt` returns 200.
 - [ ] Confirm HTTPS is enforced after DNS settles.
 
+Current Pages state: the repository does not have a Pages site configured yet. The workflow is present but manual-only via `workflow_dispatch`.
+
 ## DNS
 
 - [ ] Add GitHub Pages apex records for `runebender.org`.
 - [ ] Decide whether `www.runebender.org` should redirect or resolve.
 - [ ] Verify DNS with `dig runebender.org`.
 - [ ] Confirm GitHub Pages custom domain check passes.
+
+Current DNS state: `runebender.org` points to `192.64.119.38`, and `www.runebender.org` points to `parkingpage.namecheap.com.`.
+
+Target DNS for GitHub Pages:
+
+- Apex `A`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+- Apex `AAAA`: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+- `www` CNAME, if used: `eliheuer.github.io`
 
 ## Final Review
 
