@@ -30,7 +30,7 @@ Runebender is a family of alpha font editor projects. Treat these notes as an or
 - The Xilem README currently lists MSRV 1.88.
 - The Xilem app can run with a file picker or open a specific UFO path.
 - UFO is the source-font workflow named in the project README.
-- Runebender supports background image import and autotrace workflows.
+- Runebender Xilem supports background image import and autotrace workflows.
 - img2bez is the local/offline tracing path.
 - QuiverAI is an optional cloud tracing path requiring network access, API key, and API credits.
 - QuiverAI configuration can come from `~/.config/runebender/config.toml` or `QUIVERAI_API_KEY`.
@@ -303,7 +303,7 @@ Not currently covered by this site:
 - Hyperbezier: a Runebender-supported path style where smooth curves are defined by on-curve points and control points are computed automatically.
 - Cubic: a standard cubic bezier outline representation using explicit off-curve control points.
 - Tracing: converting a bitmap reference image into editable outline data.
-- img2bez: the local/offline bitmap-to-bezier tracing path used by Runebender.
+- img2bez: the local/offline bitmap-to-bezier tracing path documented for Runebender Xilem.
 - QuiverAI: an optional cloud vectorization backend for tracing.
 - Alpha: useful for experimentation, but not a promise of stable UI, file behavior, or release packaging.
 
@@ -438,7 +438,7 @@ Preview and view:
 
 ## Tracing
 
-Runebender can import bitmap reference images and place them behind a glyph.
+Runebender Xilem can import bitmap reference images and place them behind a glyph.
 
 Workflow:
 

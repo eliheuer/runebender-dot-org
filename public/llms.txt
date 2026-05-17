@@ -1,6 +1,6 @@
 # Runebender
 
-> Runebender is a family of experimental font editor projects built around shared Rust core code, multiple front-ends, and UFO-based type design workflows.
+> Runebender is a family of experimental font editor projects: headless Core work, native Xilem editing, ComfyUI graph workflows, historical Druid work, and UFO-based type design workflows.
 
 This site is alpha documentation. The application is changing quickly, so agents should treat these pages as an orientation map, not a stable API reference.
 
