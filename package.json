@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "check-links": "scripts/check-local-links.sh http://127.0.0.1:4322",
-    "check-external-links": "scripts/check-external-links.sh"
+    "check-external-links": "scripts/check-external-links.sh",
+    "check-published-site": "scripts/check-published-site.sh"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

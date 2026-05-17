@@ -38,6 +38,16 @@ The external-link check intentionally excludes `runebender.org` until GitHub Pag
 
 </DocSection>
 
+<DocSection title="Published site">
+
+After GitHub Pages and DNS are active, verify the live site directly.
+
+<CommandList commands={["pnpm run check-published-site"]} />
+
+This check should pass before marking published-site checklist items complete or enabling HTTPS enforcement.
+
+</DocSection>
+
 <DocSection title="Source checks">
 
 Run source checks from the root of the Runebender Xilem repository, not from this website repository.

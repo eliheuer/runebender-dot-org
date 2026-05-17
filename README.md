@@ -37,6 +37,7 @@ public/           Raw static files copied verbatim into the build:
 scripts/
   check-local-links.sh         HTTP 200 sweep against built preview output
   check-external-links.sh      HTTP sweep for public off-site links
+  check-published-site.sh      HTTP sweep for live runebender.org after deploy
   build-cloud-editor.sh        Builds the standalone Comfy/Vue editor into public/cloud/editor/
   vite.comfy-standalone.config.mjs
   sync-comfy-web.sh            Local-only mirror of ~/GH/repos/runebender-comfy/web
@@ -74,7 +75,7 @@ The deploy workflow is intentionally manual-only until launch. To publish:
    - `AAAA 2606:50c0:8002::153`
    - `AAAA 2606:50c0:8003::153`
 8. If `www.runebender.org` should resolve, add `CNAME www eliheuer.github.io`.
-9. After DNS settles, verify `https://runebender.org/`, `/docs/index.html`, and `/llms.txt`, then enable HTTPS enforcement in Pages settings.
+9. After DNS settles, run `pnpm run check-published-site`, then enable HTTPS enforcement in Pages settings.
 
 ## Cloud editor
 
