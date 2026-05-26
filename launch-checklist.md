@@ -36,6 +36,14 @@ Current remote state: `eliheuer/runebender-dot-org` is private, has an empty des
 - [x] Favicon loads.
 - [x] Open Graph image path is correct after publish.
 
+## Cloud Editor
+
+- [ ] Rebuild `public/cloud/editor/` from the exact `../runebender-comfy/web` checkout intended for launch with `pnpm run build-cloud-editor`.
+- [ ] Confirm `Open App` points to `/cloud/editor/index.html`.
+- [ ] Confirm `/cloud/editor/index.html` loads in the built Astro preview.
+- [ ] Confirm the public copy describes the browser editor as an alpha static build, not the whole Runebender application architecture.
+- [ ] Defer editor package extraction until after the website launch.
+
 ## GitHub Pages
 
 - [ ] Enable GitHub Pages from GitHub Actions.

@@ -6,9 +6,10 @@ Guidance for coding agents working on this repository.
 
 This repository is the website and documentation source for `runebender.org`.
 
-It is not the Runebender application source. The current application source is:
+It is not the main Runebender application source. Current application source lives in the sibling repos:
 
-- https://github.com/eliheuer/runebender-xilem
+- https://github.com/eliheuer/runebender-xilem — native Rust/Xilem editor
+- https://github.com/eliheuer/runebender-comfy — ComfyUI/Vue/WASM editor and standalone browser build source
 
 The earlier Druid-based Runebender source is:
 
@@ -22,6 +23,7 @@ The earlier Druid-based Runebender source is:
 - Global CSS in `src/styles/global.css`. The Swiss/brutalist visual direction is preserved.
 - Build output goes to `dist/`. URLs preserve the legacy `.html` suffix via `build.format: "preserve"` so existing external links continue to work.
 - `public/` holds raw static files copied verbatim into the build (favicon, og-image, CNAME, `.nojekyll`, robots.txt, llms.txt, llms-full.txt, and the cloud editor build artifact at `public/cloud/editor/`).
+- `/cloud/editor/index.html` is a checked-in static artifact built from `../runebender-comfy/web` by `scripts/build-cloud-editor.sh`; Astro should treat it as opaque release output, not source to refactor during website work.
 
 ## Local workflow
 
@@ -37,6 +39,14 @@ After building and starting preview, link-check the generated site:
 ```sh
 pnpm run check-links
 ```
+
+Before a website release that should include the latest browser editor, rebuild the editor artifact first:
+
+```sh
+pnpm run build-cloud-editor
+```
+
+Keep the website launch on this static artifact path. Editor package extraction or monorepo work belongs after launch, once the website needs real host-specific behavior beyond linking to `/cloud/editor/index.html`.
 
 ## Adding or editing a docs page
 

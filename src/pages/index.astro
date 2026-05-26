@@ -9,17 +9,15 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
   description="Runebender is a family of experimental font editor projects: Core, Xilem, Comfy, historical Druid, and future front-end work."
 >
   <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero" aria-label="Runebender web editor">
       <div class="hero-copy">
-        <p class="eyebrow">Core / Xilem / Comfy / Druid / Very alpha</p>
-        <h1 id="hero-title">Runebender</h1>
         <p class="lede">
-          A family of experimental font editor projects: shared Rust core code, a native Xilem
-          editor, a ComfyUI editor path, and documentation that keeps each role distinct.
+          Open the browser build with its bundled demo font, then use the docs below to understand
+          how the native editor, ComfyUI front-end, headless Core path, and older Druid work fit
+          together.
         </p>
-        <div class="hero-actions" aria-label="Project links">
-          <a class="button primary" href="#family">Map the family</a>
-          <a class="button secondary" href="/docs/index.html">Read the docs</a>
+        <div class="hero-actions" aria-label="Open Runebender app">
+          <a class="button primary" href="/cloud/editor/index.html">Open App</a>
         </div>
       </div>
 
@@ -32,8 +30,8 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
           loading="eager"
         />
         <figcaption>
-          Runebender Xilem is the native editor path. Comfy, Core, and future editors should be
-          understood as related parts of the same project family, not aliases for one app.
+          Runebender Xilem is the native editor. Core, Comfy, and future editors sit beside it in
+          the same project family.
         </figcaption>
       </figure>
     </section>
@@ -42,7 +40,7 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
       <div>
         <span>01</span>
         <strong>Headless core</strong>
-        <p><code>runebender-core</code> is the Rust library and CLI-shaped path for non-UI font work.</p>
+        <p><code>runebender-core</code> is the Rust and CLI-shaped path for non-UI font work.</p>
       </div>
       <div>
         <span>02</span>
@@ -52,7 +50,7 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
       <div>
         <span>03</span>
         <strong>Room to grow</strong>
-        <p>Druid remains project history; future front-ends can join without flattening the map.</p>
+        <p>Druid remains history; future front-ends can join without flattening the map.</p>
       </div>
     </section>
 
@@ -88,10 +86,9 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
       <div class="section-heading">
         <h2 id="family-title">One name, several editor paths.</h2>
         <p>
-          Runebender is not one finished application. Core is the headless Rust and CLI path, Xilem
-          is the native editor, Comfy is the graph-hosted editor path, and Druid is the earlier
-          implementation. The site should make that structure clear before asking anyone to install
-          or read a manual.
+          Runebender is not one finished application. Core is the headless path, Xilem is the
+          native editor, Comfy is graph-hosted, and Druid is the earlier implementation. The site
+          should make that structure clear before asking anyone to install or read a manual.
         </p>
       </div>
 
@@ -100,24 +97,24 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
           <span>Headless tool</span>
           <h3><a href="/docs/core.html">Runebender Core</a></h3>
           <p>
-            The Rust library and intended command-line interface for font operations that should
-            work without a desktop or browser editor.
+            Rust library and intended command-line interface for font operations that should run
+            without a desktop or browser editor.
           </p>
         </article>
         <article class="family-card">
           <span>Native front-end</span>
           <h3><a href="/docs/xilem.html">Runebender Xilem</a></h3>
           <p>
-            The native desktop editor. This is where the current detailed manual, install notes,
-            shortcuts, tracing workflow, and source map belong.
+            Native desktop editor. This is where the current detailed manual, install notes,
+            shortcuts, tracing workflow, and source map live.
           </p>
         </article>
         <article class="family-card">
           <span>ComfyUI front-end</span>
           <h3><a href="/docs/comfy.html">Runebender Comfy</a></h3>
           <p>
-            The graph-hosted editor path: ComfyUI custom nodes, Vue/WASM surfaces, browser-hosted
-            experiments, FONT wires, and node-based font workflows.
+            Graph-hosted editor work: ComfyUI custom nodes, Vue/WASM surfaces, browser experiments,
+            FONT wires, and node-based font workflows.
           </p>
         </article>
         <article class="family-card">
@@ -125,15 +122,15 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
           <h3><a href="/docs/druid.html">Runebender Druid</a></h3>
           <p>
             The earlier Druid-based Runebender implementation. It anchors the project lineage but
-            should not be presented as the current front-end direction.
+            is not the current front-end direction.
           </p>
         </article>
         <article class="family-card future-card">
           <span>Future front-ends</span>
           <h3>More hosts later</h3>
           <p>
-            The family model leaves space for more editors later. New front-ends should get their
-            own docs instead of inheriting Xilem-specific behavior by default.
+            New front-ends should get their own docs instead of inheriting Xilem-specific behavior
+            by default.
           </p>
         </article>
       </div>

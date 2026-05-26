@@ -37,7 +37,7 @@ paths="
 /llms-full.txt
 /robots.txt
 /sitemap-index.xml
-/assets/favicon.svg
+/assets/favicon.png
 /assets/og-image.svg
 "
 

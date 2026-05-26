@@ -79,4 +79,20 @@ The deploy workflow is intentionally manual-only until launch. To publish:
 
 ## Cloud editor
 
-The standalone Vue/WASM editor at `/cloud/editor/` is built from `~/GH/repos/runebender-comfy/web` by `scripts/build-cloud-editor.sh`. The output lands in `public/cloud/editor/` so the Astro build picks it up unchanged.
+The standalone Vue/WASM editor at `/cloud/editor/` is a checked-in static artifact built from `~/GH/repos/runebender-comfy/web`. This keeps the website launch simple: Astro does not import the editor source, it only copies `public/cloud/editor/` into `dist/`.
+
+Rebuild the artifact before a site release, from the exact `runebender-comfy` checkout intended for launch:
+
+```sh
+pnpm run build-cloud-editor
+```
+
+Then verify the website normally:
+
+```sh
+pnpm run build
+pnpm run preview -- --host 127.0.0.1 --port 4322
+pnpm run check-links
+```
+
+Do not split the editor into a package or workspace as part of the website launch. The current architecture decision is: ship the site with the static artifact pipeline, then refactor the editor/host boundary in `runebender-comfy` after launch.
