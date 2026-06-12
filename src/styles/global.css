@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Virtua Grotesk";
+  src: url("/fonts/VirtuaGroteskVF.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   --ink: #1f1f1f;
@@ -51,8 +59,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family:
-    "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+    "Virtua Grotesk", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.35;
   overflow-x: hidden;
 }
