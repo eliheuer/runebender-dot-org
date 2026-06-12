@@ -1,13 +1,8 @@
 name: Deploy site to GitHub Pages
 
-# Deploy is parked: the push trigger is intentionally disabled until the site is
-# ready to go live. Re-enable it by adding back:
-#   push:
-#     branches: [main]
-# under `on:` below, and flip the repo's Pages source to "GitHub Actions" in
-# Settings → Pages.
-
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
