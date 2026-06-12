@@ -40,7 +40,6 @@ scripts/
   check-published-site.sh      HTTP sweep for live runebender.org after deploy
   build-cloud-editor.sh        Builds the standalone Comfy/Vue editor into public/cloud/editor/
   vite.comfy-standalone.config.mjs
-  sync-comfy-web.sh            Local-only mirror of ~/GH/repos/runebender-comfy/web
 .github/workflows/deploy.yml   Build and deploy to GitHub Pages
 AGENTS.md                      Agent guidance for editing this repo
 launch-checklist.md            Pre-publication checklist
