@@ -26,11 +26,19 @@ if [ ! -d "$WEB/node_modules" ]; then
   exit 1
 fi
 
-RUNEBENDER_BASE=/cloud/editor/ pnpm --dir "$WEB" exec vite build
+# Build into a throwaway dir, not the editor's own dist/. The cloud
+# build uses base=/cloud/editor/, so writing it to $WEB/dist would
+# leave a sub-path build there and break local dev (run-app.sh serves
+# dist/ at the root, where /cloud/editor/ assets 404). vite needs
+# --emptyOutDir to write to a dir outside its project root.
+TMP_OUT="$(mktemp -d)"
+trap 'rm -rf "$TMP_OUT"' EXIT
+RUNEBENDER_BASE=/cloud/editor/ pnpm --dir "$WEB" exec vite build \
+  --outDir "$TMP_OUT" --emptyOutDir
 
 rm -rf "$DEST"
 mkdir -p "$DEST"
-cp -R "$WEB/dist/." "$DEST"
+cp -R "$TMP_OUT/." "$DEST"
 
 echo "Embedded editor refreshed at public/cloud/editor/"
 echo "Review with: git status public/cloud/editor"
