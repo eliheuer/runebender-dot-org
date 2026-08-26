@@ -7,18 +7,24 @@ interface Props {
   title: string;
   description?: string;
   ogTitle?: string;
+  /** Register the cross-origin-isolation service worker (root
+   * scope) so the page can embed the wasm editor. First visit
+   * reloads once. */
+  isolate?: boolean;
 }
 
 const {
   title,
   description = "Runebender is a family of experimental font editor projects built around shared Rust core code and UFO-based type design workflows.",
   ogTitle = "Runebender",
+  isolate = false,
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    {isolate && <script src="/coi-serviceworker.min.js" is:inline />}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
