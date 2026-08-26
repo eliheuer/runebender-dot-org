@@ -40,14 +40,10 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
         <h2 id="install-title">Run It Natively.</h2>
       </div>
       <div class="install-steps">
-        <p>Install the default editor with cargo, then open a font from anywhere.</p>
-        <pre><code>cargo install --locked --git https://github.com/eliheuer/runebender-gpui
-runebender-gpui path/to/Font.designspace</code></pre>
-        <p>
-          Use <code>--locked</code>: several dependencies track a git branch, and the committed
-          lockfile holds the revisions the editor is known to build against. The repository pins
-          the stable Rust toolchain.
-        </p>
+        <p>Install the default editor with cargo.</p>
+        <pre><code>cargo install --git https://github.com/eliheuer/runebender-gpui</code></pre>
+        <p>Then open a font from anywhere.</p>
+        <pre><code>runebender-gpui path/to/Font.designspace</code></pre>
       </div>
     </section>
 
