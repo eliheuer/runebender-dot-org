@@ -1,0 +1,122 @@
+---
+title: "Shortcuts."
+navLabel: "Shortcuts"
+eyebrow: "Reference"
+lede: "Every keyboard command in the editor, grouped by the menu it belongs to. On Windows and Linux, read Cmd as Ctrl."
+status: "Complete for the current build"
+audience: "Everyone"
+source: "The key bindings in the editor source"
+stability: "New commands are added; existing ones rarely move"
+order: 11
+description: "Keyboard shortcuts for the Runebender font editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="File">
+
+<table>
+  <caption>File</caption>
+  <tbody>
+    <tr><th><code>Cmd+N</code></th><td>New font</td></tr>
+    <tr><th><code>Cmd+O</code></th><td>Open</td></tr>
+    <tr><th><code>Cmd+S</code></th><td>Save</td></tr>
+    <tr><th><code>Cmd+Shift+S</code></th><td>Save as</td></tr>
+    <tr><th><code>Cmd+E</code></th><td>Export</td></tr>
+    <tr><th><code>Cmd+Q</code></th><td>Quit</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Edit">
+
+<table>
+  <caption>Edit</caption>
+  <tbody>
+    <tr><th><code>Cmd+Z</code></th><td>Undo</td></tr>
+    <tr><th><code>Cmd+Shift+Z</code></th><td>Redo</td></tr>
+    <tr><th><code>Cmd+C</code></th><td>Copy</td></tr>
+    <tr><th><code>Cmd+V</code></th><td>Paste</td></tr>
+    <tr><th><code>Cmd+A</code></th><td>Select all points</td></tr>
+    <tr><th><code>Cmd+Alt+A</code></th><td>Deselect all points</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Glyph">
+
+<table>
+  <caption>Glyph</caption>
+  <tbody>
+    <tr><th><code>Cmd+Alt+Shift+N</code></th><td>New glyph</td></tr>
+    <tr><th><code>Cmd+Shift+D</code></th><td>Decompose components</td></tr>
+    <tr><th><code>Cmd+Ctrl+M</code></th><td>Update metrics</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Path">
+
+<table>
+  <caption>Path</caption>
+  <tbody>
+    <tr><th><code>Cmd+Shift+T</code></th><td>Tidy up paths</td></tr>
+    <tr><th><code>Cmd+Shift+O</code></th><td>Remove overlap</td></tr>
+    <tr><th><code>Cmd+Shift+R</code></th><td>Correct path direction</td></tr>
+    <tr><th><code>Cmd+Alt+Shift+R</code></th><td>Reverse contours</td></tr>
+    <tr><th><code>Cmd+Shift+H</code></th><td>Flip horizontal</td></tr>
+    <tr><th><code>Cmd+Shift+V</code></th><td>Flip vertical</td></tr>
+    <tr><th><code>Cmd+D</code></th><td>Duplicate selection</td></tr>
+    <tr><th><code>Cmd+Alt+Shift+T</code></th><td>Duplicate and repeat</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="View">
+
+<table>
+  <caption>View</caption>
+  <tbody>
+    <tr><th><code>Cmd+0</code></th><td>Zoom to fit</td></tr>
+  </tbody>
+</table>
+
+The rest of the View menu has no key: show all masters, sort glyphs by
+name, sort glyphs by Unicode, next master, previous master, and next
+sample string.
+
+</DocSection>
+
+<DocSection title="Text Mode">
+
+<table>
+  <caption>Caret</caption>
+  <tbody>
+    <tr><th>Left, Right</th><td>Move the caret visually, not by storage order.</td></tr>
+    <tr><th>Up, Down</th><td>Move a line.</td></tr>
+    <tr><th>Home, End</th><td>Go to the visual edges of the line.</td></tr>
+    <tr><th>Backspace, Delete</th><td>Delete, re-shaping Arabic around the caret.</td></tr>
+    <tr><th>Enter</th><td>Line break.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Menus Without Shortcuts">
+
+<Callout>
+  Everything in the menus works whether or not it has a key. The Path
+  and Filter menus hold many operations that do not: booleans,
+  extremes, rounding, harmonize, balance, optimize, curve conversion,
+  offset, extrude, roughen, round corners, and slant.
+</Callout>
+
+In the browser build, in-window menu items do not activate yet. Use
+the keyboard commands there.
+
+</DocSection>

@@ -1,532 +1,953 @@
-# Runebender Documentation Context
+# Runebender Documentation
 
-This file is a compact, AI-readable bundle of the public Runebender website documentation.
+A plain-text bundle of the Runebender documentation at
+https://runebender.org/docs, generated from the same pages.
 
-Runebender is a family of alpha font editor projects. Treat these notes as an orientation map, not a stable API contract.
+Runebender is a free, open-source font editor for UFO and designspace
+sources, built on the Linebender ecosystem of Rust crates. A headless
+core does the font work, and a GPUI front-end runs both in the browser
+as WebAssembly and as a native application from the same code.
 
-## Canonical Sources
+It is alpha software. Treat this as an orientation map, not a stable
+API contract, and verify behaviour against the source.
 
-- Shared core source: https://github.com/eliheuer/runebender-core
-- Current GPUI front-end source (browser + native): https://github.com/eliheuer/runebender-gpui
-- Native Xilem front-end source: https://github.com/eliheuer/runebender-xilem
-- ComfyUI/Vue/WASM front-end source: https://github.com/eliheuer/runebender-comfy
-- Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
-- Earlier Runebender source: https://github.com/linebender/runebender
-- Website source: not public yet.
-- Historical site: https://runebender.app/ remains a historical project entry point while runebender.org becomes the current docs home.
+Source: https://github.com/eliheuer/runebender-gpui
+Shared core: https://github.com/eliheuer/runebender-core
+License: Apache-2.0 or MIT
 
-## Current Facts
-
-- Runebender Core is the headless Rust crate and CLI direction for non-UI font operations.
-- Runebender Xilem is a native font editor front-end built with Rust and Xilem.
-- Runebender Comfy is a ComfyUI/Vue/WASM front-end and node path.
-- Xilem is a Rust UI framework from the Linebender ecosystem.
-- Runebender Xilem is a port of the earlier Druid-based Runebender.
-- The project family is described as very alpha and actively under development.
-- Future Runebender front-ends may be added as the shared core grows.
-- The Xilem source workflow is currently source-first: clone the repository and run with Cargo.
-- The cloud editor is an experimental static standalone browser build from the Comfy path.
-- `scripts/build-cloud-editor.sh` builds `../runebender-comfy/web` into `public/cloud/editor`.
-- `scripts/sync-comfy-web.sh` copies `../runebender-comfy/web` into `public/cloud/runebender-comfy-web`.
-- The Xilem README currently lists MSRV 1.88.
-- The Xilem app can run with a file picker or open a specific UFO path.
-- UFO is the source-font workflow named in the project README.
-- Runebender Xilem supports background image import and autotrace workflows.
-- img2bez is the local/offline tracing path.
-- QuiverAI is an optional cloud tracing path requiring network access, API key, and API credits.
-- QuiverAI configuration can come from `~/.config/runebender/config.toml` or `QUIVERAI_API_KEY`.
-- Hyperbezier paths are smooth paths represented by on-curve points, with off-curve control points computed by a spline solver.
-- Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
-- The canonical hyperbezier spec lives in the Runebender Xilem source repository.
-
-## Known Alpha Limits
-
-- Tool behavior and keyboard shortcuts may change.
-- Docs describe the shape of workflows rather than every UI state.
-- Screenshots show current development state, not a final product surface.
-- Use version control or backups when testing real UFO sources.
-- Format behavior should be verified against the current source repository.
-- Hyperbezier behavior is documented by the canonical source-repo specification.
-- QuiverAI is optional and requires network access, an API key, and API credits.
-- Traced outlines may need cleanup and metric adjustment.
-- These docs should help people and agents find the right source files, commands, and concepts without freezing details that are still in flux.
-
-## Xilem Capabilities
-
-Runebender Xilem run path:
-
-- Build from source by cloning the repository and running Cargo.
-- `cargo run` opens a file picker according to the README.
-- `cargo run -- assets/untitled.ufo` opens a specific UFO.
-- `cargo run -- --verbose` runs with verbose logging.
-
-Runebender Xilem editing:
-
-- Select, Pen, Hyperbezier Pen, and Knife tools are listed in the README shortcut map.
-- README shortcuts include duplicate, flip, rotate, nudge, copy, paste, reverse direction, and point type toggle.
-
-Runebender Xilem tracing:
-
-- Background image import is exposed through `Cmd/Ctrl + I`.
-- Local img2bez tracing is exposed through `Cmd/Ctrl + T`.
-- Refit existing outlines to a background image with `Cmd/Ctrl + Shift + T`.
-- Optional QuiverAI tracing is exposed through `Cmd/Ctrl + Shift + Y`.
-- Background image lock toggle is listed as `Cmd/Ctrl + L`.
-
-Formats:
-
-- UFO is the current source-font workflow named by the README.
-- Hyperbezier on-curve path support is documented in the source repository.
-- README lists `Cmd/Ctrl + Shift + H` to convert hyperbezier paths to cubic.
-- Example sources include `assets/untitled.ufo` and `assets/hyper-matisse.ufo`.
-
-## Roadmap
-
-This site uses status lanes instead of dated release promises.
-
-Documented now:
-
-- Source-first Cargo workflow, file picker launch, open a UFO path, verbose logging.
-- Select, Pen, Hyperbezier Pen, Knife, preview, zoom, transforms, and current shortcut lookup.
-- Background image import, local img2bez tracing, refit, optional QuiverAI tracing.
-- UFO orientation, GLIF concepts, hyperbezier identifier, cubic conversion path.
-- Included UFO sources for first-run testing and hyperbezier inspection.
-
-Needs verification before deeper public docs:
-
-- Exact selection states, tool modes, and editing edge cases.
-- Save behavior, round-tripping expectations, and compatibility with other UFO editors.
-- Tracing parameters, image placement details, and backend-specific failure modes.
-- Contributor test commands and expected verification workflow.
-- Packaging, downloads, releases, and platform support.
-
-Not promised:
-
-- Finished binary downloads.
-- Stable production file behavior.
-- Complete handbook coverage of every interface state.
-- Long-term shortcut stability.
-- Compatibility guarantees for every downstream UFO editor.
-
-## Documentation Model
-
-The public docs use a mature font-editor documentation model:
-
-- Start here: project family, current facts, alpha limits, roadmap.
-- Shared concepts: glossary, UFO/GLIF/hyperbezier format notes, support, troubleshooting.
-- Editor-specific docs: Xilem install/manual/tracing/shortcuts/source map, plus Comfy and headless Core landing pages.
-- Task paths: tutorials, workflows, and how-tos that currently lean Xilem-heavy where detailed docs exist.
-
-Because Runebender is alpha, docs should avoid over-specifying changing behavior.
-
-## Tutorial Paths
-
-Get started:
-
-1. Read Current Facts and Alpha Limits.
-2. Follow Install to build and run from source.
-3. Open `assets/untitled.ufo`.
-4. Use Reference only for shortcuts needed immediately.
-
-Draw and edit:
-
-1. Read Manual > Drawing for tool names and contour concepts.
-2. Try Select, Pen, Hyperbezier Pen, and Knife on disposable source data.
-3. Use preview, fit, and zoom while judging shape and spacing.
-4. Check Capabilities for documented behavior versus moving alpha areas.
-
-Trace an image:
-
-1. Read Tracing.
-2. Import and align a background image.
-3. Use local img2bez tracing first when offline reproducibility matters.
-4. Use QuiverAI only when cloud tracing and API credentials are acceptable.
-
-Understand the format:
-
-1. Read Format notes.
-2. Use Glossary for UFO, GLIF, cubic, and hyperbezier terms.
-3. Use the source repository spec for exact hyperbezier storage details.
-4. Treat website docs as orientation unless the linked source says otherwise.
-
-## How-to Recipes
-
-Run with a file:
-
-- `cargo run -- assets/untitled.ufo`
-- Use Install for prerequisites.
-
-Run with logs:
-
-- `cargo run -- --verbose`
-- Include checkout, command, UFO path, and expected behavior when reporting bugs.
-
-Trace locally:
-
-1. Import a background image.
-2. Align and scale it against glyph metrics.
-3. Use local img2bez tracing.
-4. Clean up the resulting outlines manually.
-
-Trace with QuiverAI:
-
-1. Confirm cloud tracing is acceptable for the source image.
-2. Configure an API key through the supported config path or environment variable.
-3. Run the QuiverAI trace command from the app.
-4. Review and clean up the generated outlines.
-
-Convert hyperbeziers:
-
-- Use `Cmd/Ctrl + Shift + H` when a downstream tool needs standard cubic outlines.
-- Read Format notes and the canonical hyperbezier UFO extension spec first.
-
-## Examples
-
-Example UFOs in the current local source checkout:
-
-- `assets/untitled.ufo`: Untitled Regular, useful for first run, navigation, broad glyph coverage, and ordinary UFO inspection. The current local checkout has 333 GLIF files.
-- `assets/hyper-matisse.ufo`: Hyper Matisse Regular, useful for hyperbezier editing, conversion, and format behavior. The current local checkout has 9 digit GLIF files, each with a hyperbezier contour.
-
-Open examples from the Runebender Xilem source root:
-
-- `cargo run -- assets/untitled.ufo`
-- `cargo run -- assets/hyper-matisse.ufo`
-
-## Troubleshooting
-
-Build or launch:
-
-- Confirm a current Rust toolchain. The source README currently lists MSRV 1.88.
-- Run commands from the root of `runebender-xilem`, not from the website repo.
-- Try `cargo run` before adding file paths or verbose flags.
-- Use `cargo run -- --verbose` when collecting issue details.
-
-Opening UFOs:
-
-- Use included examples first: `assets/untitled.ufo` or `assets/hyper-matisse.ufo`.
-- Keep real font sources in version control before testing alpha editing behavior.
-- Verify file paths relative to the source repo root.
-
-Tracing:
-
-- Import, align, and scale a bitmap before judging tracing output.
-- Use img2bez first when offline behavior or reproducibility matters.
-- QuiverAI requires network access, API credentials, and API credits.
-- Expect traced outlines to need manual review and metric adjustment.
-
-Reporting:
-
-- Include source checkout, launch command, UFO path, expected behavior, actual behavior, and whether the problem affects tracing, cubic outlines, or hyperbezier outlines.
-
-## Support
-
-Primary channels:
-
-- Editor source: https://github.com/eliheuer/runebender-xilem
-- Editor issues: https://github.com/eliheuer/runebender-xilem/issues
-- Editor pull requests: https://github.com/eliheuer/runebender-xilem/pulls
-- Development discussion: https://xi.zulipchat.com/#narrow/channel/197075-runebender
-- Website source: not public yet.
-
-Use editor issues for build failures, crashes, UFO behavior, tracing behavior, tools, shortcuts, and format problems. Use Zulip for stale docs, broken links, unclear examples, agent-readable context files, early design discussion, and questions that are not yet issue-shaped.
-
-## Architecture
-
-Application flow:
-
-- `src/main.rs` creates the Xilem event loop.
-- `src/lib.rs` initializes logging, config, initial state, command-line loading, and the Xilem app.
-- `AppState` drives the reactive UI and owns loaded workspace state, selection, active editor session, grid state, clipboard, and file-watch flags.
-- When a font is loaded, the app presents glyph grid and editor tabs. Without a loaded font, it shows the welcome view.
-- The tabbed view is wrapped with a file watcher that can reload workspace data after external UFO changes.
-
-State model:
-
-- `src/data/mod.rs` describes `AppState` as central application state.
-- `workspace` holds direct UFO workspace state.
-- `designspace` is reserved for designspace project state.
-- `editor_session` and `welcome_session` hold active editing contexts.
-- `active_tab`, selected glyph data, grid scroll state, and category filters drive navigation.
-
-Editing layers:
-
-- `src/editing/` contains local interaction modules for background images, hit testing, mouse behavior, tracing, QuiverAI, viewport helpers, and edit sessions.
-- Shared editing concepts from `runebender-core` are re-exported through `crate::editing`.
-- `src/tools/` contains tool implementations for Select, Pen, HyperPen, Knife, Measure, Shapes, Text, and Preview.
-- `ToolBox` wraps the active tool and delegates mouse, paint, and edit-type behavior.
-
-Data and geometry:
-
-- `src/data/`: editor data, file IO, grid behavior, and kerning.
-- `src/model/`: workspace, designspace, and glyph rendering concepts.
-- `src/path/`: cubic, hyperbezier, quadratic, point, point-list, segment, and quadrant path data.
-- `src/shaping/`: Arabic shaping and Unicode data support.
-
-## Verification
-
-Website checks:
-
-- Run `pnpm run check`.
-- Run `pnpm run build`.
-- Run the built preview with `pnpm run preview -- --host 127.0.0.1 --port 4322`.
-- Run `pnpm run check-links`.
-- Run `pnpm run check-external-links`.
-- After GitHub Pages and DNS are active, run `pnpm run check-published-site`.
-- Astro generates `sitemap-index.xml` and `sitemap-0.xml`; update `robots.txt` only if the sitemap URL changes.
-- Update `scripts/check-local-links.sh` so new public pages are checked.
-- Update `llms.txt` and `llms-full.txt` when the docs structure changes.
-
-Source checks from the Runebender Xilem repository root:
-
-- `cargo run` starts the source-first app path.
-- `cargo run -- assets/untitled.ufo` checks opening the broad example UFO.
-- `cargo run -- assets/hyper-matisse.ufo` checks the hyperbezier-focused example.
-- `cargo run -- --verbose` gives more detail for bug reports.
-- The current source manifest lists Rust 1.88.
-
-Not currently covered by this site:
-
-- Cross-platform release packaging.
-- Long-term shortcut stability.
-- Round-trip compatibility across all UFO editors.
-- Complete visual regression coverage for the app UI.
-- Published-site checks after DNS and GitHub Pages are enabled.
-
-## Glossary
-
-- UFO: Unified Font Object, a source font format made of directories and files that can be inspected and versioned.
-- GLIF: Glyph Interchange Format, the XML file format used for individual glyph data inside UFO sources.
-- Source-first: the current Runebender workflow, where users build and run from source rather than downloading a finished release app.
-- Round trip: opening, editing, saving, and reopening source data across tools without losing important information.
-- Contour: a path that describes part of a glyph outline.
-- On-curve point: a point that lies directly on the visible outline.
-- Off-curve point: a control point used by cubic bezier curves to shape a segment.
-- Hyperbezier: a Runebender-supported path style where smooth curves are defined by on-curve points and control points are computed automatically.
-- Cubic: a standard cubic bezier outline representation using explicit off-curve control points.
-- Tracing: converting a bitmap reference image into editable outline data.
-- img2bez: the local/offline bitmap-to-bezier tracing path documented for Runebender Xilem.
-- QuiverAI: an optional cloud vectorization backend for tracing.
-- Alpha: useful for experimentation, but not a promise of stable UI, file behavior, or release packaging.
-
-## Workflow Paths
-
-First run:
-
-1. Read Current Facts.
-2. Follow Install to clone and run the app from source.
-3. Open a UFO such as `assets/untitled.ufo`.
-4. Use Reference for the current shortcut map.
-
-Edit a glyph:
-
-1. Use Manual > Drawing to understand the available tools.
-2. Use Select, Pen, Hyperbezier Pen, or Knife depending on the contour work.
-3. Use preview and zoom commands while checking shape and spacing.
-4. Keep real UFO sources under version control while testing alpha behavior.
-
-Trace a drawing:
-
-1. Read Tracing for the image import and autotrace workflow.
-2. Use img2bez for local/offline tracing.
-3. Use QuiverAI only when network access, API key, and API credits are acceptable.
-4. Expect traced outlines to need cleanup and metric adjustment.
-
-Inspect format behavior:
-
-1. Read Format notes for the conservative UFO and hyperbezier map.
-2. Use the canonical hyperbezier spec in the source repo for exact details.
-3. Use Glossary for terms like GLIF, contour, on-curve, and cubic.
-4. Prefer source links over copied specs when documenting behavior that may change.
-
-Contribute:
-
-1. Read Development for contribution entry points.
-2. Use Source Map to find the relevant implementation area.
-3. Keep docs broad unless behavior has stabilized in code.
-4. Update `llms.txt` and `llms-full.txt` when documentation structure changes.
-
-## Source Map
-
-Entry points:
-
-- `README.md`: build instructions, status, usage, shortcuts, feature notes.
-- `src/main.rs`: application entry point.
-- `src/lib.rs`: library/module root.
-- `src/settings.rs`: application constants, including tracing-related settings.
-- `src/config.rs`: configuration loading, including QuiverAI key lookup.
-
-Editor UI:
-
-- `src/views/`: top-level views such as editor, glyph grid, and welcome view.
-- `src/components/`: panels, toolbars, preview widgets, coordinate UI, and editor canvas components.
-- `src/components/editor_canvas/`: canvas drawing, keyboard, pointer, painting, view, and text-buffer behavior.
-- `src/theme.rs`: theme constants for the app UI.
-
-Editing:
-
-- `src/tools/`: select, pen, hyper pen, knife, preview, shapes, text, measure tools.
-- `src/editing/`: background images, hit testing, mouse behavior, tracing, QuiverAI integration, viewport helpers.
-- `src/editing/session/`: session-level hit testing, path editing, and text-buffer behavior.
-- `src/components/editor_canvas/keyboard.rs`: current keyboard shortcut handling.
-
-Data and paths:
-
-- `src/data/`: editor data, file IO, grid, kerning.
-- `src/model/`: designspace, glyph rendering, workspace model.
-- `src/path/`: cubic, hyperbezier, quadratic, point, segment, and related path types.
-- `src/shaping/`: Arabic shaping and Unicode data support.
-
-Docs and examples:
-
-- `docs/hyperbezier-ufo-extension.md`: canonical hyperbezier UFO extension specification.
-- `assets/untitled.ufo`: example UFO source used by README commands.
-- `assets/hyper-matisse.ufo`: example UFO for hyperbezier experimentation.
 
 ## Install
+https://runebender.org/docs/install.html
 
-Prerequisites:
+Runebender runs in a browser with nothing to install. To open fonts from your own disk, build the native application with cargo.
 
-- Rust installed from https://rust-lang.org/
-- A checkout of https://github.com/eliheuer/runebender-xilem
-- A UFO source to open, or the included example UFO from the repository.
+### In the Browser
 
-Commands:
+Open [runebender.org/gpui](/gpui/index.html). The editor loads as
+WebAssembly and runs on WebGPU. Nothing is installed and nothing is
+uploaded.
 
-```sh
-git clone https://github.com/eliheuer/runebender-xilem.git
-cd runebender-xilem
-cargo run
-```
+The browser build is experimental. Some parts do not work there yet:
+text fields outside the glyph search box cannot take focus, in-window
+menu items do not activate, and paste is unavailable. Use the native
+application for real work.
 
-Usage:
+### Native
 
-```sh
-cargo run                            # Opens a file picker
-cargo run -- assets/untitled.ufo     # Opens a specific UFO
-cargo run -- --verbose               # Runs with verbose logging
-```
+You need a Rust toolchain. Install one from
+[rustup.rs](https://rustup.rs) if you do not have it.
 
-## Manual Map
+Install the editor.
 
-The manual is intentionally broad. It names editor areas without promising stable UI behavior.
+    cargo install --locked --git https://github.com/eliheuer/runebender-gpui
 
-Drawing tools:
+Then open a font.
 
-- Select tool
-- Pen tool
-- Hyperbezier pen tool
-- Knife tool
+    runebender-gpui path/to/Font.designspace
 
-Editing areas:
+Runebender opens .designspace files, .ufo directories, and a
+directory that holds them. Start it without a path to get an empty
+window, then use File, Open.
 
-- Delete selected points or background image
-- Nudge selection
-- Toggle point type
-- Reverse contour direction
-- Copy/paste contours
-- Duplicate selection
-- Flip selection horizontally or vertically
-- Rotate selection
-- Convert hyperbezier paths to cubic
+Use --locked. Several dependencies track a git branch, and the
+committed lockfile holds the revisions the editor is known to build
+against. Without it, cargo resolves those dependencies to whatever
+the branch tip is today.
 
-Preview and view:
+### Toolchain Notes
 
-- Hold `Space` for temporary preview mode.
-- `Cmd/Ctrl + +` or `Cmd/Ctrl + =` zooms in.
-- `Cmd/Ctrl + -` zooms out.
-- `Cmd/Ctrl + 0` fits glyph to window.
-- `Tab` toggles side panels.
+The repository pins a stable Rust toolchain in rust-toolchain.toml,
+and cargo respects that pin automatically. Do not force a nightly
+toolchain: a GPUI dependency, pathfinder_simd, does not compile on
+current nightlies.
 
-## Tracing
+Every dependency comes from crates.io or a public git repository, so a
+plain clone builds with no extra setup.
 
-Runebender Xilem can import bitmap reference images and place them behind a glyph.
+### A New Font
 
-Workflow:
+Press Cmd+N to start a new font. Runebender creates an
+untitled UFO with Google Fonts metrics and the Latin Core glyph set as
+empty encoded glyphs, then asks where to save it.
 
-1. Import a reference image with `Cmd/Ctrl + I`.
-2. Position and scale it against glyph metrics.
-3. Press `Cmd/Ctrl + T` for local img2bez tracing.
-4. Use `Cmd/Ctrl + Shift + T` to refit existing outlines to the image.
-5. Undo if needed; the background image is preserved for comparison.
 
-Backends:
+## First Steps
+https://runebender.org/docs/first-steps.html
 
-- img2bez: local bitmap-to-bezier tracing, works offline, recommended default path.
-- QuiverAI: optional cloud vectorization via `Cmd/Ctrl + Shift + Y`, requires network access, API key, and API credits.
+Open a font, find a glyph, draw something, and save it. This page is the shortest path from a fresh install to a changed file on disk.
 
-QuiverAI config example:
+### Open a Font
 
-```toml
-[quiver]
-api_key = "your-quiverai-api-key-here"
-```
+Work on a copy. Runebender writes to your source files in place.
 
-## Format
+1. Start the editor with a path, or use File, Open.
+2. Point it at a .designspace file, a .ufo directory, or a folder
+that holds them.
+3. The glyph grid fills the window.
 
-Runebender is organized around source fonts that can be inspected, versioned, and moved between tools.
+A designspace opens every master it names. A single UFO opens as one
+master.
 
-UFO:
+### Find a Glyph
 
-- UFO is the current source workflow named in the README.
-- Public docs should keep read/write expectations conservative while the editor is alpha.
+The left panel lists categories, languages, and saved filters. Type in
+the search box to narrow the grid by name or by Unicode value. The
+buttons beside the box switch the search between name, Unicode, and
+everything, and turn on regular expressions or case matching.
 
-Hyperbezier:
+Double-click a cell to open that glyph.
 
-- Hyperbezier paths are represented by on-curve points.
-- Off-curve control points are computed automatically by a spline solver.
-- Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
-- The canonical spec is in `runebender-xilem/docs/hyperbezier-ufo-extension.md`.
+### Draw
 
-Compatibility:
+Press the pen tool in the toolbar. Click to place corner points. Click
+and drag to place a point and pull its outgoing handle. Click the
+first point again to close the contour.
 
-- Non-supporting editors may ignore the hyperbezier identifier.
-- Non-supporting editors may treat points as ordinary curve/line points.
-- Use backups or version control when round-tripping alpha data through other tools.
+Switch to the select tool to move points. Drag a point to move it,
+drag a handle to reshape the curve, and drag a marquee to select
+several points at once.
 
-## Shortcut Reference
+Press Cmd+Z to undo. Every edit session keeps its own
+undo stack.
 
-General:
+### See It in Text
 
-- `Cmd/Ctrl + S`: Save
-- `Cmd/Ctrl + Z`: Undo
-- `Cmd/Ctrl + Shift + Z`: Redo
-- `Tab`: Toggle side panels
-- `Space`: Temporary preview mode
+Press the text tool. Type, and the glyphs of the current font lay out
+in a line with real kerning. Click a glyph in that line to edit it in
+place, with its neighbours still visible around it.
 
-Tools:
+### Save
 
-- `V`: Select tool
-- `P`: Pen tool
-- `H`: Hyperbezier pen tool
-- `K`: Knife tool
-- `T`: Toggle point type
-- `R`: Reverse contour direction
+Press Cmd+S. Runebender writes the open UFO or
+designspace back to disk and shows the time in the header.
 
-Images:
+### Next
 
-- `Cmd/Ctrl + I`: Import background image
-- `Cmd/Ctrl + T`: Autotrace background image into bezier paths
-- `Cmd/Ctrl + Shift + T`: Refit existing outlines to match background image
-- `Cmd/Ctrl + L`: Toggle background image lock
-- `Cmd/Ctrl + Shift + Y`: Trace with QuiverAI
+- The Interface: What every panel and bar does.
+- Tools: The other six edit modes.
+- Masters: Work across a designspace.
+
+
+## The Interface
+https://runebender.org/docs/interface.html
+
+Runebender has two views: a grid of every glyph in the font, and an editor for one glyph in context. The panels around them stay the same in both.
+
+### Two Views
+
+The **grid** shows every glyph in the font as a cell. It is where you
+browse, search, filter, select several glyphs at once, and apply marks.
+
+The **editor** shows one glyph with its points, handles, and metrics.
+Its neighbours are drawn around it, so you always see the glyph in
+context rather than alone on a page.
+
+Double-click a cell to enter the editor. The tab strip above the
+canvas holds several edit sessions at once. Press the plus to open
+another session on the current glyph. Each session keeps its own
+buffer, tool, selection, viewport, and undo stack, and follows a glyph
+by name across renames and master switches.
+
+### Left Panel
+
+Left panel:
+- Search: Filter by name or Unicode value. The buttons beside the box set the scope and turn on regular expressions and case matching.
+- Categories: Unicode categories: letters, marks, numbers, punctuation, symbols.
+- Languages: Language and script rows with Google Fonts coverage. A row missing glyphs shows a plus that adds them, named and encoded, to every master.
+- Filters: Saved filters. A filter you build from the search controls can be kept and reused; they are stored in the font.
+- Sort: Order the grid by name or by Unicode value.
+
+### Right Panel
+
+The right panel changes with what is selected and which tool is
+active. Sections appear and disappear rather than greying out.
+
+Right panel sections:
+- Preview: The current glyph drawn large, with an anatomy view: outline, handle lines, points, and a metric frame.
+- Glyph: Name, Unicode value, and left and right kerning groups. Editing the name updates components in other glyphs, group membership, kerning pairs, and the open text session.
+- Selection: Coordinates for what is selected, a nine-point reference picker, and numeric move and scale fields. Works on points, a component, or an anchor.
+- Masters: One row per master, each showing the current glyph as that master draws it. Axis sliders sit above.
+- Background: Show, send, swap, or clear the background layer, and name a reference glyph to ghost behind the drawing.
+- Measure: Appears with the measure tool. Toggles for outline colouring, handle and segment lengths, stems and counters, side bearings, and sums.
+- Curves: Curvature comb and continuity display.
+- Transformations: Flip, rotate, and duplicate tiles.
+
+### Bottom Bar
+
+The bottom bar carries the metrics of the current glyph: advance
+width, left and right side bearings, and the current master. Editing a
+field moves the outline or the sidebearing directly.
+
+In the grid, the bottom bar shows the current selection and offers to
+copy it as text.
+
+### Header
+
+The header shows the path of the open font and the state of the file.
+After a save it reads the time, so you can tell at a glance whether
+what is on screen is on disk.
+
+
+## Tools
+https://runebender.org/docs/tools.html
+
+Eight edit modes. Select and pen cover most work; the rest are for cutting, measuring, previewing, and typing.
+
+### Select
+
+Drag a point to move it. Drag a handle to reshape the curve. Drag on
+empty canvas for a marquee. Shift extends the selection.
+
+Arrow keys nudge the selection. Hold a modifier for the larger steps.
+
+Drag the sidebearing edges to change spacing without touching the
+outline. Drag a component to move it, and double-click it to open the
+glyph it points at.
+
+Cmd+A selects every point, Cmd+Alt+A deselects.
+
+### Pen
+
+Click to place a corner point. Click and drag to place a point and
+pull its outgoing handle out of it. Click the first point of the
+contour to close it.
+
+### Hyperbezier Pen
+
+Draws hyperbezier contours: curves defined by the points you place
+rather than by handles you position. Use Path, Hyperbezier to Cubic to
+convert a hyperbezier contour into ordinary cubic segments. With
+nothing selected, that command converts every hyperbezier contour in
+the glyph.
+
+### Shapes
+
+Drag a rectangle or an ellipse. Hold shift to constrain it to a square
+or a circle.
+
+### Knife
+
+Drag a line across the outline to cut it. Hold shift to lock the cut
+to an axis.
+
+### Measure
+
+Drag a line to measure across the glyph. Hold shift to lock it to an
+axis. The Measure section in the right panel turns on outline
+colouring, handle lengths, segment lengths, stems and counters, side
+bearings, and running sums.
+
+### Text
+
+Type, and the font lays out as real text with kerning applied. Click a
+glyph in the line to edit it in place. Editing changes propagate to
+the line as you work.
+
+Text handles bidirectional scripts. Arrow keys move the caret
+visually, not by storage order, so left means left on screen in Arabic
+and Hebrew. See [Text and Shaping](/docs/text.html).
+
+### Preview
+
+Hides points, handles, and metric guides so you see the shapes alone.
+
+### Shift
+
+Shift constrains the shapes, knife, and measure tools. It does not
+constrain point drags: there it extends the selection.
+
+
+## Glyphs
+https://runebender.org/docs/glyphs.html
+
+Add, rename, encode, group, and remove glyphs. Renaming is safe: Runebender follows the name everywhere it is used.
+
+### Add and Remove
+
+Glyph menu:
+- New Glyph: Cmd+Alt+Shift+N. Adds an empty glyph to every master.
+- Duplicate Glyph: Copies the current glyph under a new name.
+- Remove Glyph: Deletes it from every master.
+
+A language row in the left panel that is missing glyphs shows a plus.
+Pressing it adds every missing glyph for that language, named and
+encoded, to every master at once.
+
+### Name, Unicode, Groups
+
+The Glyph section of the right panel holds the name, the Unicode
+value, and the left and right kerning groups.
+
+Unicode values are accepted as 0041, U+0041, or 0x41.
+
+Renaming updates every place the old name was used: components in
+other glyphs, kerning group membership, kerning pairs, the open text
+session, and the current selection. Kerning group edits are written to
+groups.plist for every master, and clearing a field removes the
+membership.
+
+Renaming and Unicode editing need the native application. Text
+fields cannot take focus in the browser build yet.
+
+### Marks and Selection
+
+Cells in the grid take colour marks. Cmd-click toggles a cell,
+shift-click selects a range in the order shown, and a mark applies to
+the whole selection. The footer copies the selection as text.
+
+### Metrics
+
+Advance width and side bearings live in the bottom bar. Editing a
+field moves the outline or the sidebearing. Glyph, Update Metrics
+recalculates them, and Cmd+Ctrl+M does the same.
+
+### Images
+
+Image commands:
+- Place Image…: Puts a bitmap behind the glyph as a reference.
+- Trace Image…: Converts the placed bitmap into contours and replaces what the glyph holds. Undoable.
+- Remove Image: Takes the bitmap away.
+- Import SVG…: Brings an SVG outline in as contours.
+- Export Glyph as SVG: Writes the current glyph out as an SVG file.
+
+The Background section of the right panel is separate from a placed
+image. It shows, sends to, swaps with, or clears the UFO
+public.background layer, which is saved with the font. It can also
+ghost another glyph behind the drawing, named by hand.
+
+
+## Paths and Filters
+https://runebender.org/docs/paths.html
+
+Clean up outlines, combine them, transform them, and convert between curve types. Everything here works on the selection, or on the whole glyph when nothing is selected.
+
+### Clean Up
+
+Path menu, cleanup:
+- Tidy Up Paths: Cmd+Shift+T. Drops zero-length segments.
+- Add Extremes: Inserts points at the extremes of each curve.
+- Round Coordinates: Snaps every coordinate to whole units.
+- Correct Path Direction: Cmd+Shift+R. Sets outer contours counter-clockwise and holes clockwise, by containment depth.
+- Reverse Contours: Cmd+Alt+Shift+R. Flips direction by hand.
+- Set Start Point: Makes the selected point the first point of its contour.
+
+### Combine
+
+Boolean operations:
+- Remove Overlap: Cmd+Shift+O. Merges overlapping contours into one outline.
+- Union: Adds the selected contours together.
+- Subtract: Cuts the later contours out of the first.
+- Intersect: Keeps only the area they share.
+- Exclude: Keeps only the area they do not share.
+
+### Transform
+
+Transformations:
+- Flip Horizontal: Cmd+Shift+H
+- Flip Vertical: Cmd+Shift+V
+- Rotate: 90 degrees left, 90 degrees right, or 180 degrees.
+- Duplicate Selection: Cmd+D. Copies contours, components, and anchors.
+- Duplicate + Repeat: Cmd+Alt+Shift+T. Duplicates and re-applies the last flip or rotation.
+
+For an exact move or scale, use the Selection section of the right
+panel. Pick a reference point on the nine-point grid, then set X and Y
+to move the selection so the reference lands there, or W and H to
+scale about it.
+
+### Curve Quality
+
+Curve commands:
+- Harmonize: Makes the curvature continuous across an on-curve point.
+- Balance: Evens out the handles of a segment.
+- Optimize: Reduces the point count where the shape allows it.
+
+The Curves section of the right panel draws a curvature comb and a
+continuity display, so you can see the result rather than guess at it.
+
+### Convert
+
+Curve type:
+- Hyperbezier to Cubic: Converts hyperbezier contours to ordinary cubic segments.
+- Quadratic to Cubic: For sources that came from TrueType outlines.
+- Cubic to Quadratic: For output that needs them.
+
+### Filters
+
+Filters reshape an outline rather than clean it up.
+
+Filter menu:
+- Offset Curve: Grows or shrinks the outline by a distance.
+- Extrude: Pushes the shape out along a direction.
+- Roughen: Breaks smooth edges into a rougher line.
+- Round Corners: Fillets the selected corners. The size and handle ratio follow the corners already in the glyph.
+- Slanter: Slants the outline, for oblique work.
+
+### Context Menu
+
+Right-click on the canvas for the operations that apply to what is
+under the pointer: lock and unlock a component, decompose one or all,
+add a component, set the start point, reverse the contour, round
+corners, move a contour up or down in the order, and add or delete an
+anchor.
+
+
+## Components and Anchors
+https://runebender.org/docs/components.html
+
+Build accented and composite glyphs out of other glyphs. Anchors hold the pieces together, and marks follow their base as you edit it.
+
+### Components
+
+A component places another glyph inside this one. Edit the base glyph
+and every glyph using it follows.
+
+Add a component from the canvas context menu and type the base glyph
+name. Select and drag a component with the select tool, and
+double-click it to open the glyph it points at. Delete removes it.
+
+Component commands:
+- Decompose Components: Cmd+Shift+D. Replaces components with their outlines.
+- Decompose One: Context menu. Only the component under the pointer.
+- Lock / Unlock: Context menu, or the Lock and Free toggle in the Selection panel.
+
+### Anchors and Auto-Alignment
+
+An anchor is a named point that says where a mark attaches. Give the
+base glyph an anchor, give the mark a matching one, and the mark
+places itself.
+
+Composites align live. When you move the anchor on a base glyph, every
+accented glyph built from it follows immediately. A component that is
+locked to an anchor refuses to be dragged, because its position comes
+from the anchor rather than from you. Use the Lock and Free toggle in
+the Selection panel when you need to override that.
+
+A component added from the context menu arrives anchor-locked, so
+marks snap to their anchor without extra work.
+
+### Editing Anchors
+
+Add and delete anchors from the canvas context menu. Select one with
+the select tool and drag it, or set exact coordinates in the Selection
+panel: with an anchor selected, the X and Y fields address the anchor
+itself. Its name is a field in the same panel.
+
+### Joining Scripts
+
+Glyph, Check Joining reports whether the joining forms of a
+cursive script are present and correctly named. Use it on Arabic and
+other connected scripts before assuming a shaping problem is a
+shaping problem. See [Text and Shaping](/docs/text.html).
+
+
+## Masters and Interpolation
+https://runebender.org/docs/masters.html
+
+A designspace opens every master it names. Axis sliders move you through the space, and the editor draws what falls between.
+
+### Masters
+
+Open a .designspace file and Runebender opens every master it names.
+Open a single .ufo and you get one master.
+
+The Masters section of the right panel lists them. Each row draws the
+current glyph as that master draws it, so you can compare without
+switching. Click a row to switch to it. View, Next Master and View,
+Previous Master step through them from the keyboard.
+
+View, Show All Masters draws every master at once over the current
+glyph.
+
+### Axes
+
+Axis sliders sit above the master list. Moving one shows the
+interpolated result as a ghost over the drawing, so you can see what a
+weight between two masters looks like while you edit either one.
+
+### Reinterpolate
+
+Glyph, Reinterpolate replaces the current glyph with what the
+surrounding masters say it should be at this position. It is the way
+back when a glyph has drifted out of step with the rest of the
+designspace.
+
+Reinterpolate overwrites the glyph in the current master. Undo
+brings it back.
+
+### Compatibility
+
+Interpolation needs matching outlines: the same number of contours,
+the same number of points in each, in the same order, starting at the
+same place. When a glyph does not interpolate, that is almost always
+why.
+
+Path, Correct Path Direction and Path, Set Start Point fix the two
+most common causes. Tidy Up Paths removes zero-length segments, which
+can differ between masters without being visible.
+
+### Smart Components
+
+A smart component carries its own axes, so one component can hold a
+range of shapes rather than a single fixed one. Runebender reads and
+writes the glyphsLib keys for them, so sources that came out of Glyphs
+keep working.
+
+Interpolation across several axes uses a corner-delta model: the
+default shape plus the contribution of each axis corner. One axis
+interpolates linearly, and two axes with every corner present
+interpolate bilinearly.
+
+### Masks
+
+Glyph, Bake Masks resolves the intermediate layers of a glyph into
+ordinary outlines. Use it when a source needs to be read by a tool
+that does not understand them.
+
+
+## Text and Shaping
+https://runebender.org/docs/text.html
+
+Type with the font you are drawing. The text tool shapes real text, applies kerning, and handles bidirectional and connected scripts, so Arabic work is not an afterthought.
+
+### Typing
+
+Press the text tool and type. The glyphs of the open font lay out as a
+line of real text, shaped and kerned. Click a glyph in that line to
+edit it in place, with its neighbours around it.
+
+Edits show up in the line as you make them. The glyph you are editing
+uses its own live advance width, so spacing changes are visible in
+context immediately.
+
+View, Next Sample String cycles through sample strings.
+
+### Bidirectional Text
+
+The caret moves visually. Left means left on the screen and right
+means right, whichever direction the run is written in. Home and End
+go to the visual edges of the line.
+
+Arabic re-shapes around the caret as you type and as you delete, so
+joining forms stay correct while the text changes.
+
+### Connected Scripts
+
+Arabic and other cursive scripts need the joining forms of each
+letter: initial, medial, final, and isolated. Glyph, Check Joining
+reports which forms a glyph is missing and whether the names follow
+the expected convention.
+
+When a word does not join correctly, check the glyph names first.
+Shaping engines find joining forms by name, so a misnamed glyph
+looks to them like a missing one.
+
+### Kerning
+
+Kerning is edited by dragging. Put two glyphs next to each other in
+the text line and drag the space between them.
+
+Kerning groups let one value cover many pairs. Set the left and right
+group of a glyph in the Glyph section of the right panel. Groups are
+written to groups.plist for every master.
+
+### Script and Language
+
+Shaping can be run under a chosen script and language, rather than
+letting the engine guess from the characters. That matters where a
+language changes the expected forms, and it is how you check that a
+feature fires for the language it was written for.
+
+
+## Shortcuts
+https://runebender.org/docs/shortcuts.html
+
+Every keyboard command in the editor, grouped by the menu it belongs to. On Windows and Linux, read Cmd as Ctrl.
+
+### File
+
+File:
+- Cmd+N: New font
+- Cmd+O: Open
+- Cmd+S: Save
+- Cmd+Shift+S: Save as
+- Cmd+E: Export
+- Cmd+Q: Quit
+
+### Edit
+
+Edit:
+- Cmd+Z: Undo
+- Cmd+Shift+Z: Redo
+- Cmd+C: Copy
+- Cmd+V: Paste
+- Cmd+A: Select all points
+- Cmd+Alt+A: Deselect all points
+
+### Glyph
+
+Glyph:
+- Cmd+Alt+Shift+N: New glyph
+- Cmd+Shift+D: Decompose components
+- Cmd+Ctrl+M: Update metrics
+
+### Path
+
+Path:
+- Cmd+Shift+T: Tidy up paths
+- Cmd+Shift+O: Remove overlap
+- Cmd+Shift+R: Correct path direction
+- Cmd+Alt+Shift+R: Reverse contours
+- Cmd+Shift+H: Flip horizontal
+- Cmd+Shift+V: Flip vertical
+- Cmd+D: Duplicate selection
+- Cmd+Alt+Shift+T: Duplicate and repeat
+
+### View
+
+View:
+- Cmd+0: Zoom to fit
+
+The rest of the View menu has no key: show all masters, sort glyphs by
+name, sort glyphs by Unicode, next master, previous master, and next
+sample string.
+
+### Text Mode
+
+Caret:
+- Left, Right: Move the caret visually, not by storage order.
+- Up, Down: Move a line.
+- Home, End: Go to the visual edges of the line.
+- Backspace, Delete: Delete, re-shaping Arabic around the caret.
+- Enter: Line break.
+
+### Menus Without Shortcuts
+
+Everything in the menus works whether or not it has a key. The Path
+and Filter menus hold many operations that do not: booleans,
+extremes, rounding, harmonize, balance, optimize, curve conversion,
+offset, extrude, roughen, round corners, and slant.
+
+In the browser build, in-window menu items do not activate yet. Use
+the keyboard commands there.
+
+
+## File Format
+https://runebender.org/docs/format.html
+
+Runebender edits UFO and designspace sources in place. It writes standard data where a standard exists, and namespaced keys where one does not.
+
+### Sources
+
+Runebender opens .designspace files, .ufo directories, and folders
+that hold them. It saves in the same format, in place.
+
+UFO is a directory of files, so a font source works with version
+control. Commit your sources and you can see, review, and undo a day's
+drawing the way you would any other change.
+
+Runebender writes to your files. Keep them in version control and
+work on copies while the editor is alpha.
+
+### Standard Data
+
+Standard UFO data:
+- Outlines: GLIF contours, points, and components.
+- Anchors: Standard GLIF anchors.
+- Kerning: kerning.plist and groups.plist, per master.
+- public.kern: Group names follow the standard prefixes.
+- public.background: The background layer, saved with the font.
+- public.postscriptNames: Production names, used on export.
+
+### Glyphs Compatibility
+
+Sources that came out of Glyphs keep their smart component data.
+Runebender reads and writes the glyphsLib keys rather than inventing
+its own.
+
+glyphsLib keys:
+- com.schriftgestaltung.Glyphs.smartComponentAxes: The axes a smart component carries.
+- com.schriftgestaltung.Glyphs.componentsSmartComponentValues: Where a placed component sits in those axes.
+- com.schriftgestaltung.Glyphs.glyph.leftMetricsKey: Metric keys, left and right.
+
+### Runebender Keys
+
+Anything Runebender needs that UFO does not define lives under its own
+namespace. Another editor ignores these keys, and the rest of the
+source still reads correctly.
+
+com.runebender keys:
+- savedFilters: Filters saved in the left panel.
+- annotations: Notes left on a glyph.
+- masks: Intermediate mask layers.
+- hoiIntermediate: Higher-order interpolation intermediates.
+- partSelection: Which part of a smart component is in use.
+
+### Hyperbeziers
+
+A hyperbezier contour is defined by its on-curve points, with the
+control points solved rather than placed. Runebender marks these
+contours in GLIF with identifier="hyperbezier".
+
+An editor that does not know the identifier reads the points as
+ordinary curve points, so the file stays valid. Use Path, Hyperbezier
+to Cubic before handing a source to a tool that needs plain cubics.
+
+
+## Exporting
+https://runebender.org/docs/exporting.html
+
+Export builds a font file from your sources. If the project has a build script, Runebender runs that. Otherwise it compiles with fontc.
+
+### Export
+
+Press Cmd+E, or use File, Export. Unsaved masters are
+saved first, so what you export is what is on disk.
+
+### A Build Script Wins
+
+Runebender looks for build-fontc.sh or build.sh beside your
+source, then in each parent directory, stopping at the repository
+root. If it finds one, it runs that script and reports where the
+output landed.
+
+This is deliberate. A project that already builds a specific way
+should keep building that way, and the editor should not be a second
+opinion about how your font is made. Google Fonts projects usually
+have such a script already.
+
+The script runs with a repaired PATH, so a project .venv, cargo
+binaries, and Homebrew are all reachable even when the application was
+launched from the Dock.
+
+### Otherwise fontc
+
+With no build script, Runebender compiles the source with
+[fontc](https://github.com/googlefonts/fontc) and writes the result
+next to it.
+
+Install fontc if you do not have it.
+
+    cargo install fontc
+
+Runebender looks for fontc on your PATH, then in
+~/.cargo/bin. If neither has it, export stops and says so.
+
+### Production Names
+
+Names in public.postscriptNames are applied on export, so working
+names in your source do not have to be the names that ship.
+
+### Single Glyphs
+
+Glyph, Export Glyph as SVG writes the current glyph as an SVG file
+beside the source. It is for a drawing you want outside the font, not
+part of the font build.
+
+Export and SVG export are native only. The browser build cannot
+write to your disk.
+
+
+## Troubleshooting
+https://runebender.org/docs/troubleshooting.html
+
+What to check when the editor will not build, will not open a font, or does something you did not expect.
+
+### It Will Not Build
+
+If the build fails inside pathfinder_simd, you are on a nightly
+toolchain. The repository pins a stable one in rust-toolchain.toml.
+Remove any override and let the pin apply.
+
+If cargo cannot resolve dependencies, or the build fails in a
+dependency you did not change, you probably installed without
+--locked.
+
+    cargo install --locked --git https://github.com/eliheuer/runebender-gpui
+
+### A Font Will Not Open
+
+Runebender opens .designspace files, .ufo directories, and folders
+that hold them. It does not open compiled .ttf or .otf files.
+
+A designspace that names a master file which is not there will not
+open. Check the filename of each source in the designspace.
+
+### A Glyph Will Not Interpolate
+
+Interpolation needs matching outlines across masters: the same number
+of contours, the same number of points in each, in the same order,
+starting at the same point.
+
+1. Run Path, Correct Path Direction in each master.
+2. Use Path, Set Start Point so each contour starts in the same place.
+3. Run Path, Tidy Up Paths to remove zero-length segments, which
+differ between masters without being visible.
+4. Compare the point counts in the Masters section.
+
+### A Word Does Not Join
+
+Cursive scripts find their joining forms by glyph name. A misnamed
+glyph looks to a shaping engine like a missing one.
+
+Run Glyph, Check Joining. It reports which of the initial, medial,
+final, and isolated forms are present and whether the names follow
+the expected convention.
+
+### The Browser Build
+
+These limits are in the browser build only. The native application
+is unaffected. Use it for real work.
+
+Known browser limits:
+- Text fields: Cannot take focus, except the glyph search box. Metrics fields and the Glyph panel fields do not accept typing.
+- Menus: In-window menu items do not activate. Use the keyboard commands.
+- Paste: Reading the clipboard is not implemented.
+- Script icons: Show as empty boxes. The bundled interface font has no Arabic or Hebrew.
+- Export: Not available. The browser cannot write to your disk.
+
+The browser build also needs cross-origin isolation, because it uses
+shared memory. On runebender.org that is arranged by a service worker,
+since GitHub Pages cannot send the headers itself. A browser that
+blocks service workers will not load the editor.
+
+### Reporting a Problem
+
+Open an issue on
+[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+
+A useful report says what you did, what happened, and what you
+expected. Name the file you had open and whether you were in the
+browser or the native application. If the editor wrote something
+wrong into a source, the diff from version control is the best
+evidence there is.
+
 
 ## Development
+https://runebender.org/docs/development.html
 
-Runebender Core, Xilem, and Comfy are very alpha and actively under development.
+Build from source, work on the editor and the shared core together, and build the browser bundle.
 
-Contribution entry points:
+### Repositories
 
-- Use https://github.com/eliheuer/runebender-core for headless CLI work, shared framework-independent editing, and data model work.
-- File issues and pull requests in https://github.com/eliheuer/runebender-xilem
-- Use https://github.com/eliheuer/runebender-comfy for ComfyUI/Vue/WASM front-end and node work.
-- Use the Linebender Zulip channel for development discussion.
-- Keep architecture and format notes close to code until behavior stabilizes.
+Where the code lives:
+- runebender-gpui: The editor. Runs in the browser and as a native application from one codebase.
+- runebender-core: The shared library: editing model, shaping, measurement, curve analysis. No interface.
 
-Docs backlog:
+The core crate holds everything that does not need a window, so the
+same font logic serves any front-end put on top of it.
 
-- Map the UI model.
-- Map the font object model.
-- Map tool state.
-- Map file IO boundaries.
-- Explain verification conventions once they settle.
-- Separate implemented behavior from planned editor work.
+### Build and Run
+
+    git clone https://github.com/eliheuer/runebender-gpui
+    cd runebender-gpui
+    cargo run
+
+The repository pins a stable Rust toolchain in rust-toolchain.toml.
+Cargo applies it on its own.
+
+### Working on Core Too
+
+Clone the core crate beside the editor, then add a cargo paths
+override so the local copy replaces the published one.
+
+    git clone https://github.com/eliheuer/runebender-core
+
+toml
+# .cargo/config.toml, in the directory that holds both checkouts
+paths = ["runebender-core"]
+
+Put that file above the two repositories, not inside either one. The
+override is a local development setting, and committing it would
+break the build on every other machine.
+
+### The Browser Build
+
+The browser build needs a different toolchain from the native one.
+
+sh
+RUSTUP_TOOLCHAIN=nightly-2026-08-01 \
+CARGO_UNSTABLE_BUILD_STD="std,panic_abort" \
+trunk build --release --public-url /gpui/
+
+Two constraints decide that line. The web backend needs wasm atomics
+and shared memory, and the prebuilt wasm32-unknown-unknown standard
+library has neither, so std must be rebuilt. That is -Z build-std,
+which is nightly only. The nightly must also be newer than the pinned
+stable, because gpui uses library features that stable already has.
+
+Install rust-src and the wasm target for whichever nightly you use.
+
+To deploy, copy dist/ into this site's public/gpui/. Keep
+coi-serviceworker.min.js and its script tag at the top of :
+GitHub Pages cannot send the COOP and COEP headers that shared memory
+requires, so the worker sets them in the browser instead.
+
+### Dependencies
+
+Every dependency comes from crates.io or a public git repository, so a
+plain clone builds with no local paths.
+
+GPUI and gpui_platform come from the Zed git repository rather than
+crates.io, because the editor shell uses
+[gpui-component](https://github.com/longbridge/gpui-component), which
+tracks Zed main.
+
+### License
+
+Apache-2.0 or MIT.
+
+
+## Glossary
+https://runebender.org/docs/glossary.html
+
+Terms used across these pages, in the sense Runebender uses them.
+
+### Sources
+
+Files and formats:
+- UFO: Unified Font Object. A font source made of directories and files, so it works with version control.
+- GLIF: The XML file that holds one glyph inside a UFO.
+- Designspace: A file that names several masters and the axes between them.
+- Master: One drawn source at a fixed position in the designspace.
+- Axis: A dimension of variation, such as weight or width.
+
+### Drawing
+
+Outlines:
+- Contour: One closed or open path in a glyph.
+- On-curve point: A point the outline passes through.
+- Handle: An off-curve control point that shapes the segment beside it.
+- Cubic: A curve with two handles per segment. What UFO and PostScript use.
+- Quadratic: A curve with one handle per segment. What TrueType uses.
+- Hyperbezier: A curve defined by its on-curve points, with the handles solved rather than placed.
+- Extreme: The topmost, bottommost, leftmost, or rightmost point of a curve.
+- Path direction: Which way a contour is drawn. Outer contours and holes must run opposite ways.
+- Start point: The first point of a contour. Masters must agree on it to interpolate.
+
+### Building Glyphs
+
+Composites:
+- Component: Another glyph placed inside this one.
+- Composite: A glyph built from components rather than drawn.
+- Decompose: Replace components with copies of their outlines.
+- Anchor: A named point that says where a mark attaches.
+- Smart component: A component that carries its own axes, so one component holds a range of shapes.
+
+### Spacing and Text
+
+Metrics and shaping:
+- Advance width: How far the pen moves after drawing the glyph.
+- Sidebearing: The space between the outline and the edge of the advance, left or right.
+- Kerning: An adjustment applied to one pair of glyphs.
+- Kerning group: A set of glyphs that kern alike, so one value covers many pairs.
+- Shaping: Turning characters into positioned glyphs, applying the font's own rules.
+- Bidirectional: Text that mixes directions, such as Arabic with Latin inside it.
+- Joining form: The shape a cursive letter takes by position: initial, medial, final, or isolated.
+
+### Output
+
+Building a font:
+- Compile: Turn sources into a font file a system can install.
+- fontc: The Rust font compiler Runebender uses when a project has no build script.
+- Production name: The glyph name that ships, which can differ from the working name.
+- Variable font: One font file that holds a range along its axes rather than a single instance.

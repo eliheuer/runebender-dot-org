@@ -3,94 +3,68 @@ import DocLayout from "../../layouts/DocLayout.astro";
 import MiniIndex from "../../components/MiniIndex.astro";
 
 const start = [
-  { href: "/docs/project-map.html", title: "Project Map", description: "Core, Xilem, Comfy, Druid, and future front-ends." },
-  { href: "/docs/current-facts.html", title: "Current Facts", description: "Compact source of truth for humans and agents." },
-  { href: "/docs/alpha-limits.html", title: "Alpha Limits", description: "What is intentionally unstable before launch." },
-  { href: "/docs/roadmap.html", title: "Roadmap", description: "Status lanes for documented, uncertain, future, and not-promised areas." },
+  { href: "/docs/install.html", title: "Install", description: "Run it in the browser, or build the native application with cargo." },
+  { href: "/docs/first-steps.html", title: "First Steps", description: "Open a font, draw a shape, and save." },
+  { href: "/docs/interface.html", title: "The Interface", description: "What each panel and bar does." },
 ];
 
-const shared = [
-  { href: "/docs/glossary.html", title: "Glossary", description: "UFO, GLIF, hyperbeziers, tracing, and project terms." },
-  { href: "/docs/format.html", title: "Format Notes", description: "UFO, GLIF, hyperbeziers, and compatibility." },
-  { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "Alpha setup, UFO, tracing, and format checks." },
-  { href: "/docs/support.html", title: "Support", description: "Where to file issues, discuss work, and send patches." },
-  { href: "/docs/verification.html", title: "Verification", description: "Website checks, source checks, and current coverage limits." },
+const editing = [
+  { href: "/docs/tools.html", title: "Tools", description: "The eight edit modes and what each one does." },
+  { href: "/docs/glyphs.html", title: "Glyphs", description: "Add, rename, encode, group, and remove glyphs." },
+  { href: "/docs/paths.html", title: "Paths and Filters", description: "Clean up, combine, and transform outlines." },
+  { href: "/docs/components.html", title: "Components and Anchors", description: "Build composites that follow their base." },
+  { href: "/docs/masters.html", title: "Masters and Interpolation", description: "Work across a designspace." },
+  { href: "/docs/text.html", title: "Text and Shaping", description: "Type in context, including Arabic and other RTL scripts." },
 ];
 
-const xilem = [
-  { href: "/docs/xilem.html", title: "Xilem Overview", description: "Native desktop editor docs entry point." },
-  { href: "/docs/install.html", title: "Xilem Install", description: "Clone the source and open a UFO." },
-  { href: "/docs/manual.html", title: "Xilem Manual", description: "Tools, preview, selection, drawing, and transforms." },
-  { href: "/docs/tracing.html", title: "Xilem Tracing", description: "Import a bitmap, place it, trace or refit." },
-  { href: "/docs/reference.html", title: "Xilem Shortcuts", description: "Keyboard commands grouped for lookup." },
-  { href: "/docs/source-map.html", title: "Xilem Source Map", description: "Where to look in the Runebender Xilem repository." },
-  { href: "/docs/architecture.html", title: "Xilem Architecture", description: "Application flow, state model, tools, data, and geometry boundaries." },
-  { href: "/docs/capabilities.html", title: "Xilem Capabilities", description: "Alpha matrix for running, editing, tracing, and formats." },
-  { href: "/docs/examples.html", title: "Xilem Examples", description: "Included UFO sources and what to inspect in each one." },
-];
-
-const otherPaths = [
-  { href: "/docs/core.html", title: "Runebender Core", description: "Headless Rust crate and CLI path." },
-  { href: "/docs/comfy.html", title: "Runebender Comfy", description: "ComfyUI graph and browser-hosted front-end path." },
-  { href: "/docs/druid.html", title: "Runebender Druid", description: "Historical implementation and project lineage." },
-  { href: "/docs/development.html", title: "Develop Runebender", description: "Contribution entry points across the project family." },
-];
-
-const taskPaths = [
-  { href: "/docs/how-tos.html", title: "Task Recipes", description: "Run with a file, trace locally, configure cloud trace, and inspect formats." },
-  { href: "/docs/workflows.html", title: "Choose a Path", description: "Start with a task and follow the shortest doc route." },
-  { href: "/docs/tutorials.html", title: "Tutorial Paths", description: "First run, editing, tracing, format, and contributor learning paths." },
+const reference = [
+  { href: "/docs/shortcuts.html", title: "Shortcuts", description: "Every keyboard command and menu item." },
+  { href: "/docs/format.html", title: "File Format", description: "What Runebender writes into a UFO." },
+  { href: "/docs/exporting.html", title: "Exporting", description: "Build a font file from your sources." },
+  { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "What to check when something fails." },
+  { href: "/docs/development.html", title: "Development", description: "Build from source and find your way around the code." },
+  { href: "/docs/glossary.html", title: "Glossary", description: "Terms used across these pages." },
 ];
 ---
 
 <DocLayout
-  title="Alpha Docs."
-  eyebrow="Documentation Map"
-  lede="This documentation separates shared Runebender concepts from editor-specific behavior. Start with the project map, then choose Core for headless work, Xilem for the native editor, Comfy for graph workflows, or historical Druid for project lineage."
-  status="Alpha documentation map"
-  audience="Font tool users, contributors, agents"
-  source="Website docs plus Runebender Core, Xilem, Comfy, and Druid repositories"
-  stability="Structure is intentional; details may move"
+  title="Documentation."
+  eyebrow="Start Here"
+  lede="Runebender is a font editor for UFO and designspace sources. These pages cover what it does, how to install it, and how each part of the interface works."
+  status="Alpha documentation"
+  audience="Type designers, contributors, agents"
+  source="The runebender-gpui repository"
+  stability="The editor changes quickly; verify against the source"
   currentSlug="index"
-  description="Runebender documentation map."
+  description="Documentation map for the Runebender font editor."
 >
   <section class="doc-section">
-    <h2>Start here</h2>
+    <h2>Read This First</h2>
     <div>
-      <p>Use these pages to understand the project family before choosing a specific editor path.</p>
-      <MiniIndex items={start} />
+      <p>
+        Runebender is alpha software. Keep your font sources under version control
+        and work on copies. The editor writes UFO and designspace files in place,
+        and a bug can damage them.
+      </p>
+      <p class="callout">
+        Everything on this site describes one editor. Runebender runs in your
+        browser and as a native application from the same Rust code.
+      </p>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Shared concepts</h2>
-    <div>
-      <p>These pages are not owned by one front-end. They cover vocabulary, source formats, support, troubleshooting, and verification.</p>
-      <MiniIndex items={shared} />
-    </div>
+    <h2>Start</h2>
+    <div><MiniIndex items={start} /></div>
   </section>
 
   <section class="doc-section">
-    <h2>Runebender Xilem</h2>
-    <div>
-      <p>The detailed manual pages currently describe the native Rust/Xilem editor. They are labeled as Xilem-specific so Comfy and future front-ends have room to grow separately.</p>
-      <MiniIndex items={xilem} />
-    </div>
+    <h2>Editing</h2>
+    <div><MiniIndex items={editing} /></div>
   </section>
 
   <section class="doc-section">
-    <h2>Core, Comfy, Druid</h2>
-    <div>
-      <p>These pages reserve clear homes for the headless Core path, the ComfyUI front-end, project history, and contributor orientation.</p>
-      <MiniIndex items={otherPaths} />
-    </div>
-  </section>
-
-  <section class="doc-section">
-    <h2>Task paths</h2>
-    <div>
-      <p>Cross-document learning paths and recipes. These still lean Xilem-heavy where the detailed public docs are Xilem-specific, but the structure no longer assumes every front-end works the same way.</p>
-      <MiniIndex items={taskPaths} />
-    </div>
+    <h2>Reference</h2>
+    <div><MiniIndex items={reference} /></div>
   </section>
 </DocLayout>

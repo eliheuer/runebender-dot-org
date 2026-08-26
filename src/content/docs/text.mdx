@@ -1,0 +1,75 @@
+---
+title: "Text and Shaping."
+navLabel: "Text and Shaping"
+eyebrow: "Editing"
+lede: "Type with the font you are drawing. The text tool shapes real text, applies kerning, and handles bidirectional and connected scripts, so Arabic work is not an afterthought."
+status: "Implemented"
+audience: "Type designers, especially for complex scripts"
+source: "The current editor build"
+stability: "Stable"
+order: 10
+description: "Editing in text context, including Arabic and RTL, in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Typing">
+
+Press the text tool and type. The glyphs of the open font lay out as a
+line of real text, shaped and kerned. Click a glyph in that line to
+edit it in place, with its neighbours around it.
+
+Edits show up in the line as you make them. The glyph you are editing
+uses its own live advance width, so spacing changes are visible in
+context immediately.
+
+View, Next Sample String cycles through sample strings.
+
+</DocSection>
+
+<DocSection title="Bidirectional Text">
+
+The caret moves visually. Left means left on the screen and right
+means right, whichever direction the run is written in. Home and End
+go to the visual edges of the line.
+
+Arabic re-shapes around the caret as you type and as you delete, so
+joining forms stay correct while the text changes.
+
+</DocSection>
+
+<DocSection title="Connected Scripts">
+
+Arabic and other cursive scripts need the joining forms of each
+letter: initial, medial, final, and isolated. Glyph, Check Joining
+reports which forms a glyph is missing and whether the names follow
+the expected convention.
+
+<Callout>
+  When a word does not join correctly, check the glyph names first.
+  Shaping engines find joining forms by name, so a misnamed glyph
+  looks to them like a missing one.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Kerning">
+
+Kerning is edited by dragging. Put two glyphs next to each other in
+the text line and drag the space between them.
+
+Kerning groups let one value cover many pairs. Set the left and right
+group of a glyph in the Glyph section of the right panel. Groups are
+written to `groups.plist` for every master.
+
+</DocSection>
+
+<DocSection title="Script and Language">
+
+Shaping can be run under a chosen script and language, rather than
+letting the engine guess from the characters. That matters where a
+language changes the expected forms, and it is how you check that a
+feature fires for the language it was written for.
+
+</DocSection>

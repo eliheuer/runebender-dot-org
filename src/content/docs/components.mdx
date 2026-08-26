@@ -1,0 +1,69 @@
+---
+title: "Components and Anchors."
+navLabel: "Components and Anchors"
+eyebrow: "Editing"
+lede: "Build accented and composite glyphs out of other glyphs. Anchors hold the pieces together, and marks follow their base as you edit it."
+status: "Implemented"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Stable"
+order: 8
+description: "Components, composites, and anchors in the Runebender font editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Components">
+
+A component places another glyph inside this one. Edit the base glyph
+and every glyph using it follows.
+
+Add a component from the canvas context menu and type the base glyph
+name. Select and drag a component with the select tool, and
+double-click it to open the glyph it points at. Delete removes it.
+
+<table>
+  <caption>Component commands</caption>
+  <tbody>
+    <tr><th>Decompose Components</th><td><code>Cmd+Shift+D</code>. Replaces components with their outlines.</td></tr>
+    <tr><th>Decompose One</th><td>Context menu. Only the component under the pointer.</td></tr>
+    <tr><th>Lock / Unlock</th><td>Context menu, or the Lock and Free toggle in the Selection panel.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Anchors and Auto-Alignment">
+
+An anchor is a named point that says where a mark attaches. Give the
+base glyph an anchor, give the mark a matching one, and the mark
+places itself.
+
+Composites align live. When you move the anchor on a base glyph, every
+accented glyph built from it follows immediately. A component that is
+locked to an anchor refuses to be dragged, because its position comes
+from the anchor rather than from you. Use the Lock and Free toggle in
+the Selection panel when you need to override that.
+
+A component added from the context menu arrives anchor-locked, so
+marks snap to their anchor without extra work.
+
+</DocSection>
+
+<DocSection title="Editing Anchors">
+
+Add and delete anchors from the canvas context menu. Select one with
+the select tool and drag it, or set exact coordinates in the Selection
+panel: with an anchor selected, the X and Y fields address the anchor
+itself. Its name is a field in the same panel.
+
+</DocSection>
+
+<DocSection title="Joining Scripts">
+
+Glyph, Check Joining reports whether the joining forms of a
+cursive script are present and correctly named. Use it on Arabic and
+other connected scripts before assuming a shaping problem is a
+shaping problem. See [Text and Shaping](/docs/text.html).
+
+</DocSection>

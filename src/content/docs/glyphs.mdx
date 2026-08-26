@@ -1,0 +1,88 @@
+---
+title: "Glyphs."
+navLabel: "Glyphs"
+eyebrow: "Editing"
+lede: "Add, rename, encode, group, and remove glyphs. Renaming is safe: Runebender follows the name everywhere it is used."
+status: "Implemented"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Stable"
+order: 6
+description: "Managing glyphs in the Runebender font editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Add and Remove">
+
+<table>
+  <caption>Glyph menu</caption>
+  <tbody>
+    <tr><th>New Glyph</th><td><code>Cmd+Alt+Shift+N</code>. Adds an empty glyph to every master.</td></tr>
+    <tr><th>Duplicate Glyph</th><td>Copies the current glyph under a new name.</td></tr>
+    <tr><th>Remove Glyph</th><td>Deletes it from every master.</td></tr>
+  </tbody>
+</table>
+
+A language row in the left panel that is missing glyphs shows a plus.
+Pressing it adds every missing glyph for that language, named and
+encoded, to every master at once.
+
+</DocSection>
+
+<DocSection title="Name, Unicode, Groups">
+
+The Glyph section of the right panel holds the name, the Unicode
+value, and the left and right kerning groups.
+
+Unicode values are accepted as `0041`, `U+0041`, or `0x41`.
+
+Renaming updates every place the old name was used: components in
+other glyphs, kerning group membership, kerning pairs, the open text
+session, and the current selection. Kerning group edits are written to
+`groups.plist` for every master, and clearing a field removes the
+membership.
+
+<Callout>
+  Renaming and Unicode editing need the native application. Text
+  fields cannot take focus in the browser build yet.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Marks and Selection">
+
+Cells in the grid take colour marks. Cmd-click toggles a cell,
+shift-click selects a range in the order shown, and a mark applies to
+the whole selection. The footer copies the selection as text.
+
+</DocSection>
+
+<DocSection title="Metrics">
+
+Advance width and side bearings live in the bottom bar. Editing a
+field moves the outline or the sidebearing. Glyph, Update Metrics
+recalculates them, and <code>Cmd+Ctrl+M</code> does the same.
+
+</DocSection>
+
+<DocSection title="Images">
+
+<table>
+  <caption>Image commands</caption>
+  <tbody>
+    <tr><th>Place Image…</th><td>Puts a bitmap behind the glyph as a reference.</td></tr>
+    <tr><th>Trace Image…</th><td>Converts the placed bitmap into contours and replaces what the glyph holds. Undoable.</td></tr>
+    <tr><th>Remove Image</th><td>Takes the bitmap away.</td></tr>
+    <tr><th>Import SVG…</th><td>Brings an SVG outline in as contours.</td></tr>
+    <tr><th>Export Glyph as SVG</th><td>Writes the current glyph out as an SVG file.</td></tr>
+  </tbody>
+</table>
+
+The Background section of the right panel is separate from a placed
+image. It shows, sends to, swaps with, or clears the UFO
+`public.background` layer, which is saved with the font. It can also
+ghost another glyph behind the drawing, named by hand.
+
+</DocSection>

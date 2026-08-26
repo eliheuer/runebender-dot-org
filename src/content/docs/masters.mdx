@@ -1,0 +1,87 @@
+---
+title: "Masters and Interpolation."
+navLabel: "Masters and Interpolation"
+eyebrow: "Editing"
+lede: "A designspace opens every master it names. Axis sliders move you through the space, and the editor draws what falls between."
+status: "Implemented"
+audience: "Type designers working on variable fonts"
+source: "The current editor build"
+stability: "Stable"
+order: 9
+description: "Working with masters and interpolation in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Masters">
+
+Open a `.designspace` file and Runebender opens every master it names.
+Open a single `.ufo` and you get one master.
+
+The Masters section of the right panel lists them. Each row draws the
+current glyph as that master draws it, so you can compare without
+switching. Click a row to switch to it. View, Next Master and View,
+Previous Master step through them from the keyboard.
+
+View, Show All Masters draws every master at once over the current
+glyph.
+
+</DocSection>
+
+<DocSection title="Axes">
+
+Axis sliders sit above the master list. Moving one shows the
+interpolated result as a ghost over the drawing, so you can see what a
+weight between two masters looks like while you edit either one.
+
+</DocSection>
+
+<DocSection title="Reinterpolate">
+
+Glyph, Reinterpolate replaces the current glyph with what the
+surrounding masters say it should be at this position. It is the way
+back when a glyph has drifted out of step with the rest of the
+designspace.
+
+<Callout>
+  Reinterpolate overwrites the glyph in the current master. Undo
+  brings it back.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Compatibility">
+
+Interpolation needs matching outlines: the same number of contours,
+the same number of points in each, in the same order, starting at the
+same place. When a glyph does not interpolate, that is almost always
+why.
+
+Path, Correct Path Direction and Path, Set Start Point fix the two
+most common causes. Tidy Up Paths removes zero-length segments, which
+can differ between masters without being visible.
+
+</DocSection>
+
+<DocSection title="Smart Components">
+
+A smart component carries its own axes, so one component can hold a
+range of shapes rather than a single fixed one. Runebender reads and
+writes the glyphsLib keys for them, so sources that came out of Glyphs
+keep working.
+
+Interpolation across several axes uses a corner-delta model: the
+default shape plus the contribution of each axis corner. One axis
+interpolates linearly, and two axes with every corner present
+interpolate bilinearly.
+
+</DocSection>
+
+<DocSection title="Masks">
+
+Glyph, Bake Masks resolves the intermediate layers of a glyph into
+ordinary outlines. Use it when a source needs to be read by a tool
+that does not understand them.
+
+</DocSection>

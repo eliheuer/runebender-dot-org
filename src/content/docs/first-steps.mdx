@@ -1,0 +1,83 @@
+---
+title: "First Steps."
+navLabel: "First Steps"
+eyebrow: "Getting Started"
+lede: "Open a font, find a glyph, draw something, and save it. This page is the shortest path from a fresh install to a changed file on disk."
+status: "Introductory walkthrough"
+audience: "New users"
+source: "The current editor build"
+stability: "The steps are stable; panel details move"
+order: 3
+description: "A short walkthrough of the Runebender font editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import MiniIndex from "../../components/MiniIndex.astro";
+
+<DocSection title="Open a Font">
+
+<Callout>
+  Work on a copy. Runebender writes to your source files in place.
+</Callout>
+
+1. Start the editor with a path, or use File, Open.
+2. Point it at a `.designspace` file, a `.ufo` directory, or a folder
+   that holds them.
+3. The glyph grid fills the window.
+
+A designspace opens every master it names. A single UFO opens as one
+master.
+
+</DocSection>
+
+<DocSection title="Find a Glyph">
+
+The left panel lists categories, languages, and saved filters. Type in
+the search box to narrow the grid by name or by Unicode value. The
+buttons beside the box switch the search between name, Unicode, and
+everything, and turn on regular expressions or case matching.
+
+Double-click a cell to open that glyph.
+
+</DocSection>
+
+<DocSection title="Draw">
+
+Press the pen tool in the toolbar. Click to place corner points. Click
+and drag to place a point and pull its outgoing handle. Click the
+first point again to close the contour.
+
+Switch to the select tool to move points. Drag a point to move it,
+drag a handle to reshape the curve, and drag a marquee to select
+several points at once.
+
+Press <code>Cmd+Z</code> to undo. Every edit session keeps its own
+undo stack.
+
+</DocSection>
+
+<DocSection title="See It in Text">
+
+Press the text tool. Type, and the glyphs of the current font lay out
+in a line with real kerning. Click a glyph in that line to edit it in
+place, with its neighbours still visible around it.
+
+</DocSection>
+
+<DocSection title="Save">
+
+Press <code>Cmd+S</code>. Runebender writes the open UFO or
+designspace back to disk and shows the time in the header.
+
+</DocSection>
+
+<DocSection title="Next">
+
+<MiniIndex items={[
+  { href: "/docs/interface.html", title: "The Interface", description: "What every panel and bar does." },
+  { href: "/docs/tools.html", title: "Tools", description: "The other six edit modes." },
+  { href: "/docs/masters.html", title: "Masters", description: "Work across a designspace." },
+]} />
+
+</DocSection>

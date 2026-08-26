@@ -1,56 +1,79 @@
 ---
-title: "Install Runebender."
+title: "Install."
 navLabel: "Install"
-eyebrow: "Start Here"
-lede: "Runebender Xilem is the native desktop front-end. For now, its public path is source-first: install Rust, clone the repository, and run it locally. Expect commands and behavior to move as the editor changes."
-status: "Source-first install notes"
-audience: "Developers and early testers"
-source: "Runebender Xilem README"
-stability: "Commands may change with the project"
-order: 15
-description: "Build and run the current Runebender editor from source."
+eyebrow: "Getting Started"
+lede: "Runebender runs in a browser with nothing to install. To open fonts from your own disk, build the native application with cargo."
+status: "Source-first; no packaged release yet"
+audience: "Anyone who wants to run the editor"
+source: "The runebender-gpui README"
+stability: "The install command is stable; the browser build is experimental"
+order: 2
+description: "Install and run the Runebender font editor."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import CommandList from "../../components/CommandList.astro";
 import Callout from "../../components/Callout.astro";
-import MiniIndex from "../../components/MiniIndex.astro";
+import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Prerequisites">
+<DocSection title="In the Browser">
 
-- Rust installed from [rust-lang.org](https://rust-lang.org/).
-- A current checkout of [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
-- A UFO source to open, or the included example UFO from the repo.
+Open [runebender.org/gpui](/gpui/index.html). The editor loads as
+WebAssembly and runs on WebGPU. Nothing is installed and nothing is
+uploaded.
 
-<Callout>The Runebender Xilem README currently lists MSRV 1.88. Treat that as a moving project requirement, not a long-term compatibility promise.</Callout>
-
-</DocSection>
-
-<DocSection title="Build">
-
-<CommandList commands={["git clone https://github.com/eliheuer/runebender-xilem.git", "cd runebender-xilem", "cargo run"]} />
+The browser build is experimental. Some parts do not work there yet:
+text fields outside the glyph search box cannot take focus, in-window
+menu items do not activate, and paste is unavailable. Use the native
+application for real work.
 
 </DocSection>
 
-<DocSection title="Open a UFO">
+<DocSection title="Native">
 
-<CommandList
-  commands={[
-    { cmd: "cargo run", comment: "Opens a file picker" },
-    { cmd: "cargo run -- assets/untitled.ufo", comment: "Opens a specific UFO" },
-    { cmd: "cargo run -- --verbose", comment: "Runs with verbose logging" },
-  ]}
-/>
+You need a Rust toolchain. Install one from
+[rustup.rs](https://rustup.rs) if you do not have it.
+
+Install the editor.
+
+<CommandList commands={[
+  "cargo install --locked --git https://github.com/eliheuer/runebender-gpui",
+]} />
+
+Then open a font.
+
+<CommandList commands={[
+  "runebender-gpui path/to/Font.designspace",
+]} />
+
+Runebender opens `.designspace` files, `.ufo` directories, and a
+directory that holds them. Start it without a path to get an empty
+window, then use File, Open.
+
+<Callout>
+  Use `--locked`. Several dependencies track a git branch, and the
+  committed lockfile holds the revisions the editor is known to build
+  against. Without it, cargo resolves those dependencies to whatever
+  the branch tip is today.
+</Callout>
 
 </DocSection>
 
-<DocSection title="Map">
+<DocSection title="Toolchain Notes">
 
-<MiniIndex
-  items={[
-    { href: "/docs/manual.html", title: "Read the Manual", description: "Tools, editing, preview, and workflow." },
-    { href: "/docs/reference.html", title: "Shortcut Reference", description: "Keyboard commands from the README." },
-  ]}
-/>
+The repository pins a stable Rust toolchain in `rust-toolchain.toml`,
+and cargo respects that pin automatically. Do not force a nightly
+toolchain: a GPUI dependency, `pathfinder_simd`, does not compile on
+current nightlies.
+
+Every dependency comes from crates.io or a public git repository, so a
+plain clone builds with no extra setup.
+
+</DocSection>
+
+<DocSection title="A New Font">
+
+Press <code>Cmd+N</code> to start a new font. Runebender creates an
+untitled UFO with Google Fonts metrics and the Latin Core glyph set as
+empty encoded glyphs, then asks where to save it.
 
 </DocSection>

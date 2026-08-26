@@ -1,14 +1,14 @@
 ---
 title: "Glossary."
 navLabel: "Glossary"
-eyebrow: "Concept Reference"
-lede: "A compact vocabulary map for Runebender, font source workflows, and terms used across these alpha docs."
-status: "Concept reference"
-audience: "New users, contributors, agents"
-source: "Runebender docs and common font tooling terms"
-stability: "Definitions are broad; implementation details may move"
-order: 5
-description: "Runebender glossary for font editor and source workflow terms."
+eyebrow: "Reference"
+lede: "Terms used across these pages, in the sense Runebender uses them."
+status: "Reference"
+audience: "New users, contributors"
+source: "Common font tooling terms"
+stability: "Definitions are broad"
+order: 16
+description: "Glossary of terms used in the Runebender documentation."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -16,12 +16,13 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="Sources">
 
 <table>
-  <caption>Source formats and files</caption>
+  <caption>Files and formats</caption>
   <tbody>
-    <tr><th>UFO</th><td>Unified Font Object. A source font format made of directories and files that can be inspected and versioned.</td></tr>
-    <tr><th>GLIF</th><td>Glyph Interchange Format. The XML file format used for individual glyph data inside UFO sources.</td></tr>
-    <tr><th>Source-first</th><td>The current Runebender workflow: build and run from source rather than downloading a finished release app.</td></tr>
-    <tr><th>Round trip</th><td>Opening, editing, saving, and reopening source data across tools without losing important information.</td></tr>
+    <tr><th>UFO</th><td>Unified Font Object. A font source made of directories and files, so it works with version control.</td></tr>
+    <tr><th>GLIF</th><td>The XML file that holds one glyph inside a UFO.</td></tr>
+    <tr><th>Designspace</th><td>A file that names several masters and the axes between them.</td></tr>
+    <tr><th>Master</th><td>One drawn source at a fixed position in the designspace.</td></tr>
+    <tr><th>Axis</th><td>A dimension of variation, such as weight or width.</td></tr>
   </tbody>
 </table>
 
@@ -30,45 +31,63 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="Drawing">
 
 <table>
-  <caption>Glyph drawing terms</caption>
+  <caption>Outlines</caption>
   <tbody>
-    <tr><th>Contour</th><td>A path that describes part of a glyph outline.</td></tr>
-    <tr><th>On-curve point</th><td>A point that lies directly on the visible outline.</td></tr>
-    <tr><th>Off-curve point</th><td>A control point used by cubic bezier curves to shape the segment between on-curve points.</td></tr>
-    <tr><th>Hyperbezier</th><td>A Runebender-supported path style where smooth curves are defined by on-curve points and control points are computed automatically.</td></tr>
-    <tr><th>Cubic</th><td>A standard cubic bezier outline representation using explicit off-curve control points.</td></tr>
+    <tr><th>Contour</th><td>One closed or open path in a glyph.</td></tr>
+    <tr><th>On-curve point</th><td>A point the outline passes through.</td></tr>
+    <tr><th>Handle</th><td>An off-curve control point that shapes the segment beside it.</td></tr>
+    <tr><th>Cubic</th><td>A curve with two handles per segment. What UFO and PostScript use.</td></tr>
+    <tr><th>Quadratic</th><td>A curve with one handle per segment. What TrueType uses.</td></tr>
+    <tr><th>Hyperbezier</th><td>A curve defined by its on-curve points, with the handles solved rather than placed.</td></tr>
+    <tr><th>Extreme</th><td>The topmost, bottommost, leftmost, or rightmost point of a curve.</td></tr>
+    <tr><th>Path direction</th><td>Which way a contour is drawn. Outer contours and holes must run opposite ways.</td></tr>
+    <tr><th>Start point</th><td>The first point of a contour. Masters must agree on it to interpolate.</td></tr>
   </tbody>
 </table>
 
 </DocSection>
 
-<DocSection title="Workflows">
+<DocSection title="Building Glyphs">
 
 <table>
-  <caption>Editor workflows</caption>
+  <caption>Composites</caption>
   <tbody>
-    <tr><th>Tracing</th><td>Converting a bitmap reference image into editable outline data.</td></tr>
-    <tr><th>img2bez</th><td>The local/offline bitmap-to-bezier tracing path documented for Runebender Xilem.</td></tr>
-    <tr><th>QuiverAI</th><td>An optional cloud vectorization backend for tracing. It requires network access, an API key, and API credits.</td></tr>
-    <tr><th>Preview mode</th><td>A temporary view for inspecting glyph drawing without normal editing handles.</td></tr>
+    <tr><th>Component</th><td>Another glyph placed inside this one.</td></tr>
+    <tr><th>Composite</th><td>A glyph built from components rather than drawn.</td></tr>
+    <tr><th>Decompose</th><td>Replace components with copies of their outlines.</td></tr>
+    <tr><th>Anchor</th><td>A named point that says where a mark attaches.</td></tr>
+    <tr><th>Smart component</th><td>A component that carries its own axes, so one component holds a range of shapes.</td></tr>
   </tbody>
 </table>
 
 </DocSection>
 
-<DocSection title="Project">
+<DocSection title="Spacing and Text">
 
 <table>
-  <caption>Project terms</caption>
+  <caption>Metrics and shaping</caption>
   <tbody>
-    <tr><th>Runebender Core</th><td>The headless Rust crate and CLI direction for non-UI font operations, shared editing state, and data types at <a href="https://github.com/eliheuer/runebender-core">eliheuer/runebender-core</a>.</td></tr>
-    <tr><th>Runebender Xilem</th><td>The native Rust/Xilem editor front-end at <a href="https://github.com/eliheuer/runebender-xilem">eliheuer/runebender-xilem</a>.</td></tr>
-    <tr><th>Runebender Web</th><td>The browser editor (Vue/WASM) at <a href="https://github.com/eliheuer/runebender-web">eliheuer/runebender-web</a> — the source of the cloud editor on this site.</td></tr>
-    <tr><th>Runebender Comfy</th><td>The ComfyUI node path at <a href="https://github.com/eliheuer/runebender-comfy">eliheuer/runebender-comfy</a>; embeds the editor from runebender-web.</td></tr>
-    <tr><th>Runebender Druid</th><td>The earlier Druid-based editor implementation at <a href="https://github.com/linebender/runebender">linebender/runebender</a>.</td></tr>
-    <tr><th>Front-end</th><td>A host interface built around Runebender editing work. Xilem and Comfy are current examples; more may exist later.</td></tr>
-    <tr><th>Linebender</th><td>The broader Rust UI ecosystem around Xilem and related projects.</td></tr>
-    <tr><th>Alpha</th><td>Useful for experimentation, but not a promise of stable UI, file behavior, or release packaging.</td></tr>
+    <tr><th>Advance width</th><td>How far the pen moves after drawing the glyph.</td></tr>
+    <tr><th>Sidebearing</th><td>The space between the outline and the edge of the advance, left or right.</td></tr>
+    <tr><th>Kerning</th><td>An adjustment applied to one pair of glyphs.</td></tr>
+    <tr><th>Kerning group</th><td>A set of glyphs that kern alike, so one value covers many pairs.</td></tr>
+    <tr><th>Shaping</th><td>Turning characters into positioned glyphs, applying the font's own rules.</td></tr>
+    <tr><th>Bidirectional</th><td>Text that mixes directions, such as Arabic with Latin inside it.</td></tr>
+    <tr><th>Joining form</th><td>The shape a cursive letter takes by position: initial, medial, final, or isolated.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Output">
+
+<table>
+  <caption>Building a font</caption>
+  <tbody>
+    <tr><th>Compile</th><td>Turn sources into a font file a system can install.</td></tr>
+    <tr><th>fontc</th><td>The Rust font compiler Runebender uses when a project has no build script.</td></tr>
+    <tr><th>Production name</th><td>The glyph name that ships, which can differ from the working name.</td></tr>
+    <tr><th>Variable font</th><td>One font file that holds a range along its axes rather than a single instance.</td></tr>
   </tbody>
 </table>
 

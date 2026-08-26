@@ -1,0 +1,98 @@
+---
+title: "Tools."
+navLabel: "Tools"
+eyebrow: "Editing"
+lede: "Eight edit modes. Select and pen cover most work; the rest are for cutting, measuring, previewing, and typing."
+status: "All eight modes implemented"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Behaviour is settled; options are still being added"
+order: 5
+description: "The tools in the Runebender font editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Select">
+
+Drag a point to move it. Drag a handle to reshape the curve. Drag on
+empty canvas for a marquee. Shift extends the selection.
+
+Arrow keys nudge the selection. Hold a modifier for the larger steps.
+
+Drag the sidebearing edges to change spacing without touching the
+outline. Drag a component to move it, and double-click it to open the
+glyph it points at.
+
+<code>Cmd+A</code> selects every point, <code>Cmd+Alt+A</code> deselects.
+
+</DocSection>
+
+<DocSection title="Pen">
+
+Click to place a corner point. Click and drag to place a point and
+pull its outgoing handle out of it. Click the first point of the
+contour to close it.
+
+</DocSection>
+
+<DocSection title="Hyperbezier Pen">
+
+Draws hyperbezier contours: curves defined by the points you place
+rather than by handles you position. Use Path, Hyperbezier to Cubic to
+convert a hyperbezier contour into ordinary cubic segments. With
+nothing selected, that command converts every hyperbezier contour in
+the glyph.
+
+</DocSection>
+
+<DocSection title="Shapes">
+
+Drag a rectangle or an ellipse. Hold shift to constrain it to a square
+or a circle.
+
+</DocSection>
+
+<DocSection title="Knife">
+
+Drag a line across the outline to cut it. Hold shift to lock the cut
+to an axis.
+
+</DocSection>
+
+<DocSection title="Measure">
+
+Drag a line to measure across the glyph. Hold shift to lock it to an
+axis. The Measure section in the right panel turns on outline
+colouring, handle lengths, segment lengths, stems and counters, side
+bearings, and running sums.
+
+</DocSection>
+
+<DocSection title="Text">
+
+Type, and the font lays out as real text with kerning applied. Click a
+glyph in the line to edit it in place. Editing changes propagate to
+the line as you work.
+
+Text handles bidirectional scripts. Arrow keys move the caret
+visually, not by storage order, so left means left on screen in Arabic
+and Hebrew. See [Text and Shaping](/docs/text.html).
+
+</DocSection>
+
+<DocSection title="Preview">
+
+Hides points, handles, and metric guides so you see the shapes alone.
+
+</DocSection>
+
+<DocSection title="Shift">
+
+<Callout>
+  Shift constrains the shapes, knife, and measure tools. It does not
+  constrain point drags: there it extends the selection.
+</Callout>
+
+</DocSection>

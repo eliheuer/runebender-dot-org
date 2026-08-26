@@ -1,0 +1,86 @@
+---
+title: "The Interface."
+navLabel: "The Interface"
+eyebrow: "Orientation"
+lede: "Runebender has two views: a grid of every glyph in the font, and an editor for one glyph in context. The panels around them stay the same in both."
+status: "Interface map"
+audience: "New users"
+source: "The current editor build"
+stability: "Panel sections are added as features land"
+order: 4
+description: "A map of the Runebender editor interface."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Two Views">
+
+The **grid** shows every glyph in the font as a cell. It is where you
+browse, search, filter, select several glyphs at once, and apply marks.
+
+The **editor** shows one glyph with its points, handles, and metrics.
+Its neighbours are drawn around it, so you always see the glyph in
+context rather than alone on a page.
+
+Double-click a cell to enter the editor. The tab strip above the
+canvas holds several edit sessions at once. Press the plus to open
+another session on the current glyph. Each session keeps its own
+buffer, tool, selection, viewport, and undo stack, and follows a glyph
+by name across renames and master switches.
+
+</DocSection>
+
+<DocSection title="Left Panel">
+
+<table>
+  <caption>Left panel</caption>
+  <tbody>
+    <tr><th>Search</th><td>Filter by name or Unicode value. The buttons beside the box set the scope and turn on regular expressions and case matching.</td></tr>
+    <tr><th>Categories</th><td>Unicode categories: letters, marks, numbers, punctuation, symbols.</td></tr>
+    <tr><th>Languages</th><td>Language and script rows with Google Fonts coverage. A row missing glyphs shows a plus that adds them, named and encoded, to every master.</td></tr>
+    <tr><th>Filters</th><td>Saved filters. A filter you build from the search controls can be kept and reused; they are stored in the font.</td></tr>
+    <tr><th>Sort</th><td>Order the grid by name or by Unicode value.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Right Panel">
+
+The right panel changes with what is selected and which tool is
+active. Sections appear and disappear rather than greying out.
+
+<table>
+  <caption>Right panel sections</caption>
+  <tbody>
+    <tr><th>Preview</th><td>The current glyph drawn large, with an anatomy view: outline, handle lines, points, and a metric frame.</td></tr>
+    <tr><th>Glyph</th><td>Name, Unicode value, and left and right kerning groups. Editing the name updates components in other glyphs, group membership, kerning pairs, and the open text session.</td></tr>
+    <tr><th>Selection</th><td>Coordinates for what is selected, a nine-point reference picker, and numeric move and scale fields. Works on points, a component, or an anchor.</td></tr>
+    <tr><th>Masters</th><td>One row per master, each showing the current glyph as that master draws it. Axis sliders sit above.</td></tr>
+    <tr><th>Background</th><td>Show, send, swap, or clear the background layer, and name a reference glyph to ghost behind the drawing.</td></tr>
+    <tr><th>Measure</th><td>Appears with the measure tool. Toggles for outline colouring, handle and segment lengths, stems and counters, side bearings, and sums.</td></tr>
+    <tr><th>Curves</th><td>Curvature comb and continuity display.</td></tr>
+    <tr><th>Transformations</th><td>Flip, rotate, and duplicate tiles.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Bottom Bar">
+
+The bottom bar carries the metrics of the current glyph: advance
+width, left and right side bearings, and the current master. Editing a
+field moves the outline or the sidebearing directly.
+
+In the grid, the bottom bar shows the current selection and offers to
+copy it as text.
+
+</DocSection>
+
+<DocSection title="Header">
+
+The header shows the path of the open font and the state of the file.
+After a save it reads the time, so you can tell at a glance whether
+what is on screen is on disk.
+
+</DocSection>

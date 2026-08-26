@@ -1,72 +1,105 @@
 ---
-title: "Check the Obvious First."
+title: "Troubleshooting."
 navLabel: "Troubleshooting"
-eyebrow: "Troubleshooting"
-lede: "Runebender is alpha, so many failures should be treated as useful evidence rather than user error. Start with the source checkout, command, UFO path, and exact behavior before assuming the docs are current."
-status: "Alpha diagnostic notes"
-audience: "Early users, testers, contributors, agents"
-source: "Website docs and Runebender Xilem README"
-stability: "Expected to change as packaging and UI mature"
-order: 10
-description: "Runebender troubleshooting notes for alpha setup, files, tracing, and docs."
+eyebrow: "Reference"
+lede: "What to check when the editor will not build, will not open a font, or does something you did not expect."
+status: "Reference"
+audience: "Everyone"
+source: "Known limits of the current build"
+stability: "Browser limits are being worked through"
+order: 14
+description: "Troubleshooting the Runebender font editor."
 ---
 
 import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Build or Launch">
+<DocSection title="It Will Not Build">
+
+If the build fails inside `pathfinder_simd`, you are on a nightly
+toolchain. The repository pins a stable one in `rust-toolchain.toml`.
+Remove any override and let the pin apply.
+
+If cargo cannot resolve dependencies, or the build fails in a
+dependency you did not change, you probably installed without
+`--locked`.
+
+<CommandList commands={[
+  "cargo install --locked --git https://github.com/eliheuer/runebender-gpui",
+]} />
+
+</DocSection>
+
+<DocSection title="A Font Will Not Open">
+
+Runebender opens `.designspace` files, `.ufo` directories, and folders
+that hold them. It does not open compiled `.ttf` or `.otf` files.
+
+A designspace that names a master file which is not there will not
+open. Check the `filename` of each source in the designspace.
+
+</DocSection>
+
+<DocSection title="A Glyph Will Not Interpolate">
+
+Interpolation needs matching outlines across masters: the same number
+of contours, the same number of points in each, in the same order,
+starting at the same point.
+
+1. Run Path, Correct Path Direction in each master.
+2. Use Path, Set Start Point so each contour starts in the same place.
+3. Run Path, Tidy Up Paths to remove zero-length segments, which
+   differ between masters without being visible.
+4. Compare the point counts in the Masters section.
+
+</DocSection>
+
+<DocSection title="A Word Does Not Join">
+
+Cursive scripts find their joining forms by glyph name. A misnamed
+glyph looks to a shaping engine like a missing one.
+
+Run Glyph, Check Joining. It reports which of the initial, medial,
+final, and isolated forms are present and whether the names follow
+the expected convention.
+
+</DocSection>
+
+<DocSection title="The Browser Build">
+
+<Callout>
+  These limits are in the browser build only. The native application
+  is unaffected. Use it for real work.
+</Callout>
 
 <table>
-  <caption>First checks</caption>
+  <caption>Known browser limits</caption>
   <tbody>
-    <tr><th>Rust</th><td>Confirm a current Rust toolchain. The source README currently lists MSRV 1.88.</td></tr>
-    <tr><th>Checkout</th><td>Run commands from the root of <code>runebender-xilem</code>, not from this website repo.</td></tr>
-    <tr><th>Command</th><td>Try <code>cargo run</code> before adding file paths or verbose flags.</td></tr>
-    <tr><th>Logs</th><td>Use <code>cargo run -- --verbose</code> when collecting detail for an issue.</td></tr>
+    <tr><th>Text fields</th><td>Cannot take focus, except the glyph search box. Metrics fields and the Glyph panel fields do not accept typing.</td></tr>
+    <tr><th>Menus</th><td>In-window menu items do not activate. Use the keyboard commands.</td></tr>
+    <tr><th>Paste</th><td>Reading the clipboard is not implemented.</td></tr>
+    <tr><th>Script icons</th><td>Show as empty boxes. The bundled interface font has no Arabic or Hebrew.</td></tr>
+    <tr><th>Export</th><td>Not available. The browser cannot write to your disk.</td></tr>
   </tbody>
 </table>
 
-</DocSection>
-
-<DocSection title="Opening UFOs">
-
-- Use an included example first: `assets/untitled.ufo` or `assets/hyper-matisse.ufo`.
-- Keep real font sources in version control before testing alpha editing behavior.
-- If a path fails, verify it relative to the source repo root.
-- Use [Examples](/docs/examples.html) to choose which included UFO matches the behavior you are testing.
+The browser build also needs cross-origin isolation, because it uses
+shared memory. On runebender.org that is arranged by a service worker,
+since GitHub Pages cannot send the headers itself. A browser that
+blocks service workers will not load the editor.
 
 </DocSection>
 
-<DocSection title="Tracing">
+<DocSection title="Reporting a Problem">
 
-<table>
-  <caption>Image-to-outline checks</caption>
-  <tbody>
-    <tr><th>Background image</th><td>Import, align, and scale the bitmap before judging tracing output.</td></tr>
-    <tr><th>Local tracing</th><td>Use img2bez first when offline behavior or reproducibility matters.</td></tr>
-    <tr><th>Cloud tracing</th><td>QuiverAI requires network access, API credentials, and API credits.</td></tr>
-    <tr><th>Cleanup</th><td>Expect traced outlines to need manual review and metric adjustment.</td></tr>
-  </tbody>
-</table>
+Open an issue on
+[the repository](https://github.com/eliheuer/runebender-gpui/issues).
 
-</DocSection>
-
-<DocSection title="Format Behavior">
-
-- Use [Format](/docs/format.html) for orientation, then verify exact behavior in the source repo.
-- Use the canonical hyperbezier UFO extension spec for storage details.
-- Use `assets/hyper-matisse.ufo` when testing hyperbezier-specific behavior.
-- Convert hyperbeziers to cubic outlines before relying on tools that do not understand Runebender extensions.
-
-</DocSection>
-
-<DocSection title="Reporting">
-
-When a problem looks real, collect the smallest useful report.
-
-- Source repository commit or checkout date.
-- Command used to launch the app.
-- UFO path or example file name.
-- Expected behavior and actual behavior.
-- Whether the problem affects local tracing, QuiverAI tracing, normal cubic outlines, or hyperbezier outlines.
+A useful report says what you did, what happened, and what you
+expected. Name the file you had open and whether you were in the
+browser or the native application. If the editor wrote something
+wrong into a source, the diff from version control is the best
+evidence there is.
 
 </DocSection>

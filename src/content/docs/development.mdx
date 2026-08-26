@@ -1,45 +1,109 @@
 ---
-title: "Develop Runebender."
+title: "Development."
 navLabel: "Development"
-eyebrow: "Development"
-lede: "Runebender development now spans shared Core code, the Xilem native editor, the ComfyUI front-end, and historical Druid context. This page points contributors at the moving parts."
-status: "Contributor orientation"
-audience: "Developers and documentation agents"
-source: "Runebender Core, Xilem, Comfy, and Druid repositories"
-stability: "Architecture notes are intentionally high-level"
-order: 20
-description: "Runebender development notes and contribution entry points."
+eyebrow: "Reference"
+lede: "Build from source, work on the editor and the shared core together, and build the browser bundle."
+status: "Reference"
+audience: "Contributors"
+source: "The runebender-gpui README"
+stability: "The wasm toolchain pin moves"
+order: 15
+description: "Building and contributing to Runebender."
 ---
 
 import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Current Status">
-
-The project family is very alpha and actively under development. Public docs should preserve that bluntness and avoid over-specifying unstable behavior.
-
-</DocSection>
-
-<DocSection title="Contribution Paths">
-
-- Use [eliheuer/runebender-core](https://github.com/eliheuer/runebender-core) for headless CLI work, shared editing state, and data model work.
-- Use [eliheuer/runebender-xilem](https://github.com/eliheuer/runebender-xilem) for the native editor front-end.
-- Use [eliheuer/runebender-web](https://github.com/eliheuer/runebender-web) for the browser editor (Vue/WASM) — this is what the cloud editor on this site is built from.
-- Use [eliheuer/runebender-comfy](https://github.com/eliheuer/runebender-comfy) for ComfyUI nodes and graph workflows; it imports the editor from runebender-web.
-- Use the [Support](/docs/support.html) page to choose the right channel for issues, pull requests, and discussion.
-- Keep format and architecture notes close to code until behavior stabilizes.
-
-</DocSection>
-
-<DocSection title="Docs Backlog">
+<DocSection title="Repositories">
 
 <table>
-  <caption>Before public launch</caption>
+  <caption>Where the code lives</caption>
   <tbody>
-    <tr><th>Project map</th><td>Use <a href="/docs/project-map.html">Project map</a> for the current family structure.</td></tr>
-    <tr><th>Xilem architecture</th><td>Use <a href="/docs/architecture.html">Xilem architecture</a> for the current native editor subsystem map.</td></tr>
-    <tr><th>Tests</th><td>Use <a href="/docs/verification.html">Verification</a> for current website and source checks.</td></tr>
-    <tr><th>Roadmap</th><td>Use <a href="/docs/roadmap.html">Roadmap</a> to separate documented behavior from future-facing work.</td></tr>
+    <tr><th><a href="https://github.com/eliheuer/runebender-gpui">runebender-gpui</a></th><td>The editor. Runs in the browser and as a native application from one codebase.</td></tr>
+    <tr><th><a href="https://github.com/eliheuer/runebender-core">runebender-core</a></th><td>The shared library: editing model, shaping, measurement, curve analysis. No interface.</td></tr>
   </tbody>
 </table>
+
+The core crate holds everything that does not need a window, so the
+same font logic serves any front-end put on top of it.
+
+</DocSection>
+
+<DocSection title="Build and Run">
+
+<CommandList commands={[
+  "git clone https://github.com/eliheuer/runebender-gpui",
+  "cd runebender-gpui",
+  "cargo run",
+]} />
+
+The repository pins a stable Rust toolchain in `rust-toolchain.toml`.
+Cargo applies it on its own.
+
+</DocSection>
+
+<DocSection title="Working on Core Too">
+
+Clone the core crate beside the editor, then add a cargo `paths`
+override so the local copy replaces the published one.
+
+<CommandList commands={[
+  "git clone https://github.com/eliheuer/runebender-core",
+]} />
+
+```toml
+# .cargo/config.toml, in the directory that holds both checkouts
+paths = ["runebender-core"]
+```
+
+<Callout>
+  Put that file above the two repositories, not inside either one. The
+  override is a local development setting, and committing it would
+  break the build on every other machine.
+</Callout>
+
+</DocSection>
+
+<DocSection title="The Browser Build">
+
+The browser build needs a different toolchain from the native one.
+
+```sh
+RUSTUP_TOOLCHAIN=nightly-2026-08-01 \
+CARGO_UNSTABLE_BUILD_STD="std,panic_abort" \
+trunk build --release --public-url /gpui/
+```
+
+Two constraints decide that line. The web backend needs wasm atomics
+and shared memory, and the prebuilt `wasm32-unknown-unknown` standard
+library has neither, so std must be rebuilt. That is `-Z build-std`,
+which is nightly only. The nightly must also be newer than the pinned
+stable, because gpui uses library features that stable already has.
+
+Install `rust-src` and the wasm target for whichever nightly you use.
+
+To deploy, copy `dist/` into this site's `public/gpui/`. Keep
+`coi-serviceworker.min.js` and its script tag at the top of `<head>`:
+GitHub Pages cannot send the COOP and COEP headers that shared memory
+requires, so the worker sets them in the browser instead.
+
+</DocSection>
+
+<DocSection title="Dependencies">
+
+Every dependency comes from crates.io or a public git repository, so a
+plain clone builds with no local paths.
+
+GPUI and `gpui_platform` come from the Zed git repository rather than
+crates.io, because the editor shell uses
+[gpui-component](https://github.com/longbridge/gpui-component), which
+tracks Zed main.
+
+</DocSection>
+
+<DocSection title="License">
+
+Apache-2.0 or MIT.
 
 </DocSection>

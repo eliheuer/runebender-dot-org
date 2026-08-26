@@ -5,16 +5,30 @@ BASE_URL="${1:-https://runebender.org}"
 
 paths="
 /
-/docs
-/docs/project-map.html
-/docs/current-facts.html
 /cloud
 /cloud/editor/index.html
+/gpui/index.html
+/docs
+/docs/install.html
+/docs/first-steps.html
+/docs/interface.html
+/docs/tools.html
+/docs/glyphs.html
+/docs/paths.html
+/docs/components.html
+/docs/masters.html
+/docs/text.html
+/docs/shortcuts.html
+/docs/format.html
+/docs/exporting.html
+/docs/troubleshooting.html
+/docs/development.html
+/docs/glossary.html
 /llms.txt
 /llms-full.txt
 /robots.txt
 /sitemap-index.xml
-/assets/favicon.svg
+/assets/favicon.png
 /assets/og-image.svg
 "
 

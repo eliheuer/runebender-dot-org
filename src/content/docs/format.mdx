@@ -1,43 +1,95 @@
 ---
-title: "Format Notes."
-navLabel: "Format"
-eyebrow: "UFO Sources"
-lede: "Runebender is organized around source fonts that can be inspected, versioned, and moved between tools. These notes map the format surface without pretending the whole compatibility story is settled."
-status: "Format orientation"
-audience: "Font developers and tool authors"
-source: "Runebender Xilem hyperbezier spec"
-stability: "Verify against source before relying on details"
-order: 18
-description: "Runebender UFO and hyperbezier format notes."
+title: "File Format."
+navLabel: "File Format"
+eyebrow: "Reference"
+lede: "Runebender edits UFO and designspace sources in place. It writes standard data where a standard exists, and namespaced keys where one does not."
+status: "Reference"
+audience: "Type designers, tool builders"
+source: "The keys the editor reads and writes"
+stability: "Standard data is stable; the namespaced keys can still change"
+order: 12
+description: "The UFO data Runebender reads and writes."
 ---
 
 import DocSection from "../../components/DocSection.astro";
 import Callout from "../../components/Callout.astro";
 
-<DocSection title="UFO">
+<DocSection title="Sources">
 
-UFO is the current source workflow named in the Runebender Xilem README. Public docs should keep read/write expectations clear and conservative while the editor is alpha.
+Runebender opens `.designspace` files, `.ufo` directories, and folders
+that hold them. It saves in the same format, in place.
+
+UFO is a directory of files, so a font source works with version
+control. Commit your sources and you can see, review, and undo a day's
+drawing the way you would any other change.
+
+<Callout>
+  Runebender writes to your files. Keep them in version control and
+  work on copies while the editor is alpha.
+</Callout>
 
 </DocSection>
 
-<DocSection title="Hyperbezier">
-
-Runebender Xilem supports on-curve hyperbezier paths, with off-curve control points computed by a spline solver. Hyperbezier contours are marked in GLIF with `identifier="hyperbezier"`.
-
-<Callout>The canonical spec lives in the source repo at <a href="https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md">docs/hyperbezier-ufo-extension.md</a>. This site should summarize it, not fork it.</Callout>
-
-</DocSection>
-
-<DocSection title="Compatibility">
+<DocSection title="Standard Data">
 
 <table>
-  <caption>Questions to answer before public docs</caption>
+  <caption>Standard UFO data</caption>
   <tbody>
-    <tr><th>Read</th><td>Document which UFO/GLIF structures are accepted as each editor path matures.</td></tr>
-    <tr><th>Write</th><td>Keep save behavior conservative and version-control friendly.</td></tr>
-    <tr><th>Fallback</th><td>Non-supporting editors may ignore the hyperbezier identifier or treat points as ordinary curve/line points.</td></tr>
-    <tr><th>Export</th><td>Keep release docs clear about what exists now versus future work.</td></tr>
+    <tr><th>Outlines</th><td>GLIF contours, points, and components.</td></tr>
+    <tr><th>Anchors</th><td>Standard GLIF anchors.</td></tr>
+    <tr><th>Kerning</th><td><code>kerning.plist</code> and <code>groups.plist</code>, per master.</td></tr>
+    <tr><th><code>public.kern</code></th><td>Group names follow the standard prefixes.</td></tr>
+    <tr><th><code>public.background</code></th><td>The background layer, saved with the font.</td></tr>
+    <tr><th><code>public.postscriptNames</code></th><td>Production names, used on export.</td></tr>
   </tbody>
 </table>
+
+</DocSection>
+
+<DocSection title="Glyphs Compatibility">
+
+Sources that came out of Glyphs keep their smart component data.
+Runebender reads and writes the glyphsLib keys rather than inventing
+its own.
+
+<table>
+  <caption>glyphsLib keys</caption>
+  <tbody>
+    <tr><th><code>com.schriftgestaltung.Glyphs.smartComponentAxes</code></th><td>The axes a smart component carries.</td></tr>
+    <tr><th><code>com.schriftgestaltung.Glyphs.componentsSmartComponentValues</code></th><td>Where a placed component sits in those axes.</td></tr>
+    <tr><th><code>com.schriftgestaltung.Glyphs.glyph.leftMetricsKey</code></th><td>Metric keys, left and right.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Runebender Keys">
+
+Anything Runebender needs that UFO does not define lives under its own
+namespace. Another editor ignores these keys, and the rest of the
+source still reads correctly.
+
+<table>
+  <caption>com.runebender keys</caption>
+  <tbody>
+    <tr><th><code>savedFilters</code></th><td>Filters saved in the left panel.</td></tr>
+    <tr><th><code>annotations</code></th><td>Notes left on a glyph.</td></tr>
+    <tr><th><code>masks</code></th><td>Intermediate mask layers.</td></tr>
+    <tr><th><code>hoiIntermediate</code></th><td>Higher-order interpolation intermediates.</td></tr>
+    <tr><th><code>partSelection</code></th><td>Which part of a smart component is in use.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Hyperbeziers">
+
+A hyperbezier contour is defined by its on-curve points, with the
+control points solved rather than placed. Runebender marks these
+contours in GLIF with `identifier="hyperbezier"`.
+
+An editor that does not know the identifier reads the points as
+ordinary curve points, so the file stays valid. Use Path, Hyperbezier
+to Cubic before handing a source to a tool that needs plain cubics.
 
 </DocSection>

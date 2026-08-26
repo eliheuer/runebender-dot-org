@@ -1,57 +1,46 @@
 # Runebender
 
-> Runebender is a family of experimental font editor projects: headless Core work, native Xilem editing, ComfyUI graph workflows, historical Druid work, and UFO-based type design workflows.
+> Runebender is a free, open-source font editor for UFO and designspace sources, built on the Linebender ecosystem of Rust crates. A headless core does the font work, and a GPUI front-end runs both in the browser as WebAssembly and as a native application from the same code.
 
-This site is alpha documentation. The application is changing quickly, so agents should treat these pages as an orientation map, not a stable API reference.
+This site is alpha documentation. The editor changes quickly, so treat these pages as an orientation map rather than a stable API reference, and verify behaviour against the source repository.
 
 ## Canonical Sources
 
-- [Runebender Core source repository](https://github.com/eliheuer/runebender-core): headless Rust crate and CLI direction for non-UI font operations.
-- [Runebender GPUI source repository](https://github.com/eliheuer/runebender-gpui): current editor source (browser WebAssembly + native), Glyphs 4 parity checklist, Arabic/RTL notes.
-- [Runebender Xilem source repository](https://github.com/eliheuer/runebender-xilem): native Rust/Xilem editor source, README, screenshots, shortcuts, tracing notes.
-- [Runebender Comfy source repository](https://github.com/eliheuer/runebender-comfy): ComfyUI/Vue/WASM front-end, nodes, and browser editor path.
-- [Hyperbezier UFO extension specification](https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md): canonical format notes for hyperbezier contours.
-- [Original Runebender repository](https://github.com/linebender/runebender): earlier Druid-based implementation.
+- [runebender-gpui](https://github.com/eliheuer/runebender-gpui): the editor. Browser and native from one codebase.
+- [runebender-core](https://github.com/eliheuer/runebender-core): the shared headless library. Editing model, shaping, measurement, curve analysis.
+- [runebender-xilem](https://github.com/eliheuer/runebender-xilem): a second front-end on Xilem, kept to compare the two GUI stacks.
+- [runebender-comfy](https://github.com/eliheuer/runebender-comfy): node-based font work as ComfyUI custom nodes.
+- [linebender/runebender](https://github.com/linebender/runebender): the original Druid implementation, kept as project history.
 
 ## Start Here
 
-- [Project map](https://runebender.org/docs/project-map.html): Core, Xilem, Comfy, Druid, and future front-ends.
-- [Current facts](https://runebender.org/docs/current-facts.html): stable orientation facts for agents and humans.
-- [Runebender Core](https://runebender.org/docs/core.html): headless Rust crate and CLI path.
-- [Runebender GPUI](https://runebender.org/docs/gpui.html): current editor path, browser and native.
-- [Runebender Xilem](https://runebender.org/docs/xilem.html): native desktop editor path.
-- [Runebender Comfy](https://runebender.org/docs/comfy.html): ComfyUI graph and browser-hosted path.
-- [Runebender Druid](https://runebender.org/docs/druid.html): historical implementation.
-- [Cloud editor](https://runebender.org/cloud/editor/index.html): experimental static browser editor build from the Comfy path.
-- [Alpha limits](https://runebender.org/docs/alpha-limits.html): known instability and launch caveats.
-- [Xilem capabilities](https://runebender.org/docs/capabilities.html): alpha matrix for native editor running, editing, tracing, and format support.
-- [Roadmap](https://runebender.org/docs/roadmap.html): status lanes for documented, uncertain, future, and not-promised areas.
-- [Glossary](https://runebender.org/docs/glossary.html): definitions for UFO, GLIF, hyperbezier, tracing, and project terms.
-- [Workflows](https://runebender.org/docs/workflows.html): task paths for first run, editing, tracing, format inspection, and contributing.
-- [Tutorials](https://runebender.org/docs/tutorials.html): alpha learning paths for first run, editing, tracing, formats, and development.
-- [How-tos](https://runebender.org/docs/how-tos.html): short recipes for running with a file, logging, tracing, and format tasks.
-- [Examples](https://runebender.org/docs/examples.html): included UFO sources and what to inspect in each one.
-- [Troubleshooting](https://runebender.org/docs/troubleshooting.html): setup, UFO, tracing, format, and reporting checks.
-- [Support](https://runebender.org/docs/support.html): support, community, issue, and contribution channel map.
-- [Xilem source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.
-- [Xilem architecture](https://runebender.org/docs/architecture.html): native app flow, state model, editing layers, data, and geometry boundaries.
-- [Verification](https://runebender.org/docs/verification.html): website checks, source checks, manual checks, and current coverage limits.
-- [Documentation map](https://runebender.org/docs): topics, tutorials, how-tos, and reference.
-- [Xilem install](https://runebender.org/docs/install.html): build and run the native editor from source.
-- [Xilem manual](https://runebender.org/docs/manual.html): map of native editor workflows.
-- [Xilem tracing](https://runebender.org/docs/tracing.html): background image and autotrace workflow.
-- [Format](https://runebender.org/docs/format.html): UFO and hyperbezier notes.
-- [Xilem shortcuts](https://runebender.org/docs/reference.html): native editor keyboard shortcuts.
-- [Development](https://runebender.org/docs/development.html): contribution and architecture entry points.
+- [Documentation map](https://runebender.org/docs): every page, grouped.
+- [Install](https://runebender.org/docs/install.html): run it in the browser, or build the native application with cargo.
+- [First steps](https://runebender.org/docs/first-steps.html): open a font, draw, save.
+- [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.
+
+## Editing
+
+- [Tools](https://runebender.org/docs/tools.html): select, pen, hyperbezier pen, shapes, knife, measure, text, preview.
+- [Glyphs](https://runebender.org/docs/glyphs.html): add, rename, encode, group, remove; images and the background layer.
+- [Paths and filters](https://runebender.org/docs/paths.html): cleanup, booleans, transforms, curve quality, curve conversion, filters.
+- [Components and anchors](https://runebender.org/docs/components.html): composites, live auto-alignment, anchor editing.
+- [Masters and interpolation](https://runebender.org/docs/masters.html): designspace masters, axis sliders, reinterpolation, smart components.
+- [Text and shaping](https://runebender.org/docs/text.html): editing in text context, bidirectional carets, cursive joining, kerning.
+
+## Reference
+
+- [Shortcuts](https://runebender.org/docs/shortcuts.html): every keyboard command.
+- [File format](https://runebender.org/docs/format.html): the UFO data Runebender reads and writes, including its own namespaced keys.
+- [Exporting](https://runebender.org/docs/exporting.html): build scripts take precedence, otherwise fontc.
+- [Troubleshooting](https://runebender.org/docs/troubleshooting.html): build, open, interpolation, joining, and browser-build limits.
+- [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
+- [Glossary](https://runebender.org/docs/glossary.html): terms as Runebender uses them.
 
 ## Agent Guidance
 
-- State clearly that the Runebender project family is very alpha.
-- Do not collapse Runebender Core, Xilem, Comfy, future front-ends, and Druid into one app.
-- Do not describe behavior as stable unless the relevant source repository says it is stable.
-- Prefer linking to the relevant source repo for implementation details.
+- Runebender is alpha. Say so, and do not describe behaviour as stable unless the source says it is.
+- Describe Runebender as one editor. GPUI is the current front-end; the Xilem port and the earlier Druid and Comfy work are context, not separate products a user must choose between.
+- The browser build has known gaps: text fields cannot take focus, in-window menus do not activate, paste is unavailable, and export is not possible. Native is unaffected.
+- Prefer linking to the source repository for implementation details.
 - Use `llms-full.txt` when a single-file documentation context is more useful than crawling HTML.
-
-## Optional
-
-- [Historical site](https://runebender.app/): older project entry point kept as project history while runebender.org becomes the current docs home.
