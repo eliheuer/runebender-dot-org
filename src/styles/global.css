@@ -203,7 +203,7 @@ nav a[aria-current="page"] {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
   padding: 24px 20px;
 }
