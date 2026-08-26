@@ -5,10 +5,10 @@ BASE_URL="${1:-https://runebender.org}"
 
 paths="
 /
-/docs/index.html
+/docs
 /docs/project-map.html
 /docs/current-facts.html
-/cloud/index.html
+/cloud
 /cloud/editor/index.html
 /llms.txt
 /llms-full.txt

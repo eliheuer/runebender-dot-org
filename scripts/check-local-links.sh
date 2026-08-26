@@ -5,10 +5,10 @@ BASE_URL="${1:-http://127.0.0.1:4321}"
 
 paths="
 /
-/cloud/index.html
+/cloud
 /cloud/editor/index.html
 /gpui/index.html
-/docs/index.html
+/docs
 /docs/project-map.html
 /docs/current-facts.html
 /docs/alpha-limits.html

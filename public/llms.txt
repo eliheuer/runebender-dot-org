@@ -36,7 +36,7 @@ This site is alpha documentation. The application is changing quickly, so agents
 - [Xilem source map](https://runebender.org/docs/source-map.html): where to look in the Runebender Xilem source tree.
 - [Xilem architecture](https://runebender.org/docs/architecture.html): native app flow, state model, editing layers, data, and geometry boundaries.
 - [Verification](https://runebender.org/docs/verification.html): website checks, source checks, manual checks, and current coverage limits.
-- [Documentation map](https://runebender.org/docs/index.html): topics, tutorials, how-tos, and reference.
+- [Documentation map](https://runebender.org/docs): topics, tutorials, how-tos, and reference.
 - [Xilem install](https://runebender.org/docs/install.html): build and run the native editor from source.
 - [Xilem manual](https://runebender.org/docs/manual.html): map of native editor workflows.
 - [Xilem tracing](https://runebender.org/docs/tracing.html): background image and autotrace workflow.
