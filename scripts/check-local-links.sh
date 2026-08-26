@@ -7,6 +7,7 @@ paths="
 /
 /cloud/index.html
 /cloud/editor/index.html
+/gpui/index.html
 /docs/index.html
 /docs/project-map.html
 /docs/current-facts.html
@@ -14,6 +15,7 @@ paths="
 /docs/capabilities.html
 /docs/roadmap.html
 /docs/core.html
+/docs/gpui.html
 /docs/xilem.html
 /docs/comfy.html
 /docs/druid.html

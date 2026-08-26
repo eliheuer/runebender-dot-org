@@ -12,12 +12,13 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
     <section class="hero" aria-label="Runebender web editor">
       <div class="hero-copy">
         <p class="lede">
-          Open the browser build with its bundled demo font, then use the docs below to understand
-          how the native editor, ComfyUI front-end, headless Core path, and older Druid work fit
-          together.
+          Launch the GPUI editor in your browser with its bundled demo font, or pick another
+          version below. The docs explain how the GPUI editor, the headless Core path, and the
+          older front-ends fit together.
         </p>
-        <div class="hero-actions" aria-label="Open Runebender app">
-          <a class="button primary" href="/cloud/editor/index.html">Open App</a>
+        <div class="hero-actions" aria-label="Launch Runebender">
+          <a class="button primary" href="/gpui/index.html">Launch Editor</a>
+          <a class="button" href="#editors">All Versions</a>
         </div>
       </div>
 
@@ -34,6 +35,42 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
           the same project family.
         </figcaption>
       </figure>
+    </section>
+
+    <section class="section family-section" id="editors" aria-labelledby="editors-title">
+      <div class="section-kicker">Launch</div>
+      <div class="section-heading">
+        <h2 id="editors-title">Pick an editor version.</h2>
+        <p>
+          Every version runs from this site or from a local install. GPUI is the default and gets
+          the new work first.
+        </p>
+      </div>
+      <div class="family-grid">
+        <article class="family-card core-card">
+          <span>Default · browser</span>
+          <h3><a href="/gpui/index.html">Runebender GPUI</a></h3>
+          <p>
+            The current editor, compiled to WebAssembly. Variable fonts, Arabic and RTL shaping,
+            smart components, and export. Start here.
+          </p>
+        </article>
+        <article class="family-card">
+          <span>Classic · browser</span>
+          <h3><a href="/cloud/editor/index.html">Runebender Cloud</a></h3>
+          <p>
+            The earlier web editor. Stable and small; kept for comparison and for links that
+            already point at it.
+          </p>
+        </article>
+        <article class="family-card">
+          <span>Native · install</span>
+          <h3><a href="/docs/install.html">Runebender Xilem</a></h3>
+          <p>
+            The native desktop editor. Build it from source with the install guide.
+          </p>
+        </article>
+      </div>
     </section>
 
     <section class="status-grid" aria-label="Project status">
@@ -94,6 +131,14 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
 
       <div class="family-grid">
         <article class="family-card core-card">
+          <span>Current front-end</span>
+          <h3><a href="/docs/gpui.html">Runebender GPUI</a></h3>
+          <p>
+            The GPUI editor runs in the browser and as a native app from one Rust codebase. It is
+            the current front-end direction and the default launch target.
+          </p>
+        </article>
+        <article class="family-card">
           <span>Headless tool</span>
           <h3><a href="/docs/core.html">Runebender Core</a></h3>
           <p>
@@ -154,6 +199,11 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
           <p>Core, Xilem, Comfy, Druid, and future front-ends each have a defined role.</p>
         </article>
         <article>
+          <span>Current</span>
+          <h3><a href="/docs/gpui.html">Use GPUI</a></h3>
+          <p>Launch the browser build, open UFO or designspace sources, and export fonts.</p>
+        </article>
+        <article>
           <span>Native</span>
           <h3><a href="/docs/xilem.html">Use Xilem</a></h3>
           <p>Build the desktop editor, open UFO sources, draw glyphs, trace images, and use shortcuts.</p>
@@ -193,6 +243,10 @@ import screenshot from "../assets/runebender-xilem-screenshot.png";
             <tr>
               <th>Core</th>
               <td><a href="https://github.com/eliheuer/runebender-core">eliheuer/runebender-core</a></td>
+            </tr>
+            <tr>
+              <th>GPUI</th>
+              <td><a href="https://github.com/eliheuer/runebender-gpui">eliheuer/runebender-gpui</a></td>
             </tr>
             <tr>
               <th>Xilem</th>

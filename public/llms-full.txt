@@ -7,6 +7,7 @@ Runebender is a family of alpha font editor projects. Treat these notes as an or
 ## Canonical Sources
 
 - Shared core source: https://github.com/eliheuer/runebender-core
+- Current GPUI front-end source (browser + native): https://github.com/eliheuer/runebender-gpui
 - Native Xilem front-end source: https://github.com/eliheuer/runebender-xilem
 - ComfyUI/Vue/WASM front-end source: https://github.com/eliheuer/runebender-comfy
 - Canonical hyperbezier spec: https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
