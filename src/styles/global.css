@@ -779,7 +779,9 @@ th {
   border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(180px, 0.34fr) minmax(0, 0.66fr);
+  /* The name column is sized to the names, not to a share of the
+     row, so the description starts right after it. */
+  grid-template-columns: 210px minmax(0, 1fr);
   padding: 18px;
 }
 
