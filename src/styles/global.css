@@ -117,7 +117,7 @@ code {
 .brand,
 nav a {
   border-right: 2px solid var(--line);
-  min-height: 108px;
+  min-height: 52px;
 }
 
 .brand {
@@ -175,6 +175,7 @@ nav a[aria-current="page"] {
 }
 
 .hero {
+  border-bottom: 2px solid var(--line);
   display: grid;
   gap: 0;
   grid-template-columns: minmax(380px, 0.82fr) minmax(0, 1.18fr);
@@ -187,10 +188,10 @@ nav a[aria-current="page"] {
   border-right: 2px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 24px;
   justify-content: center;
   min-width: 0;
-  padding: 38px;
+  padding: 24px 20px;
 }
 
 .eyebrow,
@@ -278,7 +279,7 @@ h3 {
   align-self: center;
   margin: 0;
   min-width: 0;
-  padding: 38px;
+  padding: 24px 20px;
 }
 
 .screenshot-block img {
@@ -305,7 +306,7 @@ h3 {
 }
 
 .status-grid div {
-  min-height: 188px;
+  min-height: 140px;
   padding: 20px 22px;
 }
 
@@ -349,7 +350,7 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 124px;
+  min-height: 88px;
   padding: 16px;
 }
 
@@ -366,15 +367,18 @@ h3 {
   font-size: var(--text-base);
 }
 
+/* Section padding is the one inset in the system; grids that draw
+   rules bleed back out by the same 20px so every line meets the
+   window edge. */
 .section {
-  padding: 54px 38px 76px;
+  padding: 32px 20px 48px;
 }
 
 .section-heading {
   display: grid;
   gap: 44px;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.66fr);
-  margin-top: 30px;
+  margin-top: 12px;
 }
 
 .section-heading p,
@@ -394,8 +398,9 @@ h3 {
 .family-grid {
   border-top: 2px solid var(--line);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  margin-top: 52px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-inline: -20px;
+  margin-top: 24px;
 }
 
 .family-card {
@@ -403,11 +408,11 @@ h3 {
   border-right: 2px solid var(--line);
   display: flex;
   flex-direction: column;
-  min-height: 286px;
+  min-height: 220px;
   padding: 18px;
 }
 
-.family-card:nth-child(5n) {
+.family-card:nth-child(3n) {
   border-right: 0;
 }
 
@@ -420,7 +425,7 @@ h3 {
 }
 
 .family-card h3 {
-  margin-top: 64px;
+  margin-top: 32px;
 }
 
 .family-card p {
@@ -431,14 +436,12 @@ h3 {
   background: var(--panel);
 }
 
-.future-card {
-  border-right: 0;
-}
+
 
 .trust-section {
   border-bottom: 2px solid var(--line);
   display: grid;
-  gap: 44px;
+  gap: 24px;
   grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
 }
 
@@ -451,14 +454,21 @@ h3 {
   border-top: 2px solid var(--line);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 46px;
+  margin-inline: -20px;
+  margin-top: 24px;
 }
 
 .doc-index article {
   border-bottom: 2px solid var(--line);
   border-right: 2px solid var(--line);
-  min-height: 236px;
+  min-height: 180px;
   padding: 18px;
+}
+
+/* A lone card on the last row spans it, so no rule dead-ends. */
+.doc-index article:last-child:nth-child(3n + 1) {
+  border-right: 0;
+  grid-column: 1 / -1;
 }
 
 .doc-index article:nth-child(3n) {
@@ -512,13 +522,13 @@ h3 {
 }
 
 .doc-page {
-  padding: 34px;
+  padding: 20px;
 }
 
 .doc-hero {
   border-bottom: 2px solid var(--line);
-  margin: -34px -34px 34px;
-  padding: 34px;
+  margin: -20px -20px 20px;
+  padding: 20px;
 }
 
 .doc-hero h1 {
@@ -547,12 +557,14 @@ h3 {
   color: var(--muted);
 }
 
+/* Section rules bleed to the sidebar line and the window edge. */
 .doc-section {
   border-bottom: 2px solid var(--line);
   display: grid;
   gap: 32px;
   grid-template-columns: minmax(220px, 0.48fr) minmax(0, 1.52fr);
-  padding: 34px 0;
+  margin-inline: -20px;
+  padding: 24px 20px;
 }
 
 .doc-section h2 {
@@ -668,12 +680,13 @@ th {
   border-top: 2px solid var(--line);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 34px;
+  margin-inline: -20px;
+  margin-top: 24px;
 }
 
 .research-grid article {
   border-right: 2px solid var(--line);
-  min-height: 286px;
+  min-height: 200px;
   padding: 18px;
 }
 
@@ -713,7 +726,11 @@ th {
 
 .resource-links {
   border-top: 2px solid var(--line);
+  /* Left rail corners into the top rule and the last row's bottom
+     rule, so the row lines never dead-end at the column edge. */
+  border-left: 2px solid var(--line);
   display: grid;
+  margin-right: -20px;
 }
 
 .resource-links a {
@@ -721,7 +738,7 @@ th {
   display: grid;
   gap: 18px;
   grid-template-columns: minmax(180px, 0.34fr) minmax(0, 0.66fr);
-  padding: 18px 0;
+  padding: 18px;
 }
 
 .resource-links strong {
@@ -807,7 +824,7 @@ th {
   .status-grid div + div,
   .tool-strip a,
   .family-card,
-  .family-card:nth-child(5n),
+  .family-card:nth-child(3n),
   .research-grid article {
     border-left: 0;
     border-right: 0;
