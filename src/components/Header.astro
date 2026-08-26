@@ -3,13 +3,8 @@ type NavLink = { href: string; label: string; external?: boolean; action?: boole
 
 const links: NavLink[] = [
   { href: "/docs/index.html", label: "Documentation" },
-  { href: "/docs/install.html", label: "Install" },
+  { href: "/#resources", label: "Source Code" },
   { href: "/gpui/index.html", label: "Launch Editor" },
-  {
-    href: "/#resources",
-    label: "Source Code",
-    action: true,
-  },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";

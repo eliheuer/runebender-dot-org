@@ -59,6 +59,10 @@ html {
   overflow-x: hidden;
 }
 
+html {
+  background: var(--paper);
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -106,18 +110,42 @@ code {
   align-items: stretch;
   background: rgba(182, 182, 178, 0.94);
   border-bottom: 2px solid var(--line);
-  display: grid;
-  grid-template-columns: minmax(360px, 0.36fr) minmax(0, 1fr);
+  display: flex;
   position: sticky;
   top: 0;
   z-index: 10;
   backdrop-filter: blur(10px);
 }
 
+/* Every header cell: the word plus the same margin on all sides.
+   Cells size to their content; the nav sits at the far right. */
 .brand,
 nav a {
+  padding: 14px 16px;
+  position: relative;
+}
+
+/* When the page rubber-bands down, the cell dividers keep going
+   above the header instead of ending in space. */
+.brand::before,
+nav a::before {
+  border-right: inherit;
+  border-left: inherit;
+  bottom: 100%;
+  content: "";
+  height: 100vh;
+  left: -2px;
+  pointer-events: none;
+  position: absolute;
+  right: -2px;
+}
+
+.brand {
   border-right: 2px solid var(--line);
-  min-height: 52px;
+}
+
+nav a {
+  border-left: 2px solid var(--line);
 }
 
 .brand {
@@ -125,17 +153,15 @@ nav a {
   display: flex;
   font-size: var(--text-base);
   font-weight: 400;
-  gap: 14px;
   letter-spacing: 0;
-  padding: 0 24px;
 }
 
 
 nav {
   display: flex;
+  flex: 1;
   justify-content: flex-end;
   min-width: 0;
-  overflow-x: auto;
 }
 
 nav a {
@@ -143,7 +169,6 @@ nav a {
   display: inline-flex;
   font-size: var(--text-base);
   font-weight: 400;
-  padding: 0 24px;
   white-space: nowrap;
 }
 
@@ -170,9 +195,7 @@ nav a[aria-current="page"] {
   color: var(--paper);
 }
 
-.nav-action {
-  border-left: 0;
-}
+
 
 .hero {
   border-bottom: 2px solid var(--line);
