@@ -17,6 +17,9 @@ paths="
 /docs/paths.html
 /docs/components.html
 /docs/masters.html
+/docs/spacing.html
+/docs/features.html
+/docs/color.html
 /docs/text.html
 /docs/shortcuts.html
 /docs/format.html

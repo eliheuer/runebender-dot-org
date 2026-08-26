@@ -16,16 +16,31 @@ import Callout from "../../components/Callout.astro";
 
 <DocSection title="Select">
 
-Drag a point to move it. Drag a handle to reshape the curve. Drag on
-empty canvas for a marquee. Shift extends the selection.
+<table>
+  <caption>Selecting</caption>
+  <tbody>
+    <tr><th>Click</th><td>Select a point, a handle, a component, or an anchor.</td></tr>
+    <tr><th>Shift-click</th><td>Extend the selection.</td></tr>
+    <tr><th>Drag on empty canvas</th><td>Marquee.</td></tr>
+    <tr><th><code>Cmd+A</code> / <code>Cmd+Alt+A</code></th><td>Select or deselect every point.</td></tr>
+    <tr><th>Tab / Shift+Tab</th><td>Step the selection through the glyph's points in contour order.</td></tr>
+  </tbody>
+</table>
 
-Arrow keys nudge the selection. Hold a modifier for the larger steps.
+<table>
+  <caption>Moving</caption>
+  <tbody>
+    <tr><th>Drag a point</th><td>Move it. A handle on a smooth point travels with it.</td></tr>
+    <tr><th>Drag a handle</th><td>Reshape the segment.</td></tr>
+    <tr><th>Arrow keys</th><td>Nudge. Hold a modifier for the larger step.</td></tr>
+    <tr><th>Drag a sidebearing edge</th><td>Change spacing without touching the outline.</td></tr>
+    <tr><th>Double-click a component</th><td>Open the glyph it points at.</td></tr>
+  </tbody>
+</table>
 
-Drag the sidebearing edges to change spacing without touching the
-outline. Drag a component to move it, and double-click it to open the
-glyph it points at.
-
-<code>Cmd+A</code> selects every point, <code>Cmd+Alt+A</code> deselects.
+For an exact move or scale, use the Coordinates panel: pick a
+reference point on the nine-point grid, then set X and Y to move the
+selection so the reference lands there, or W and H to scale about it.
 
 </DocSection>
 
@@ -35,15 +50,23 @@ Click to place a corner point. Click and drag to place a point and
 pull its outgoing handle out of it. Click the first point of the
 contour to close it.
 
+Leave a contour open and it stays open. That is the starting point for
+the monoline workflow: draw open skeletons, then use Expand Stroke to
+turn them into letterforms. See
+[Paths and Filters](/docs/paths.html).
+
 </DocSection>
 
 <DocSection title="Hyperbezier Pen">
 
-Draws hyperbezier contours: curves defined by the points you place
-rather than by handles you position. Use Path, Hyperbezier to Cubic to
-convert a hyperbezier contour into ordinary cubic segments. With
-nothing selected, that command converts every hyperbezier contour in
-the glyph.
+Draws hyperbezier contours: curves defined by the points you place,
+with the control points solved rather than positioned by hand. Fewer
+things to hold, and the curvature stays continuous by construction.
+
+Path, Hyperbezier to Cubic converts a hyperbezier contour into
+ordinary cubic segments. With nothing selected it converts every
+hyperbezier contour in the glyph. Do that before handing a source to a
+tool that expects plain cubics.
 
 </DocSection>
 
@@ -64,31 +87,46 @@ to an axis.
 <DocSection title="Measure">
 
 Drag a line to measure across the glyph. Hold shift to lock it to an
-axis. The Measure section in the right panel turns on outline
-colouring, handle lengths, segment lengths, stems and counters, side
-bearings, and running sums.
+axis.
+
+The Measure section appears in the right panel while the tool is
+active.
+
+<table>
+  <caption>Measure options</caption>
+  <tbody>
+    <tr><th>Colorize outline</th><td>Tints the outline by thickness, so uneven weight is visible rather than inferred.</td></tr>
+    <tr><th>Handle lengths</th><td>Labels every handle.</td></tr>
+    <tr><th>Segment lengths</th><td>Labels every segment.</td></tr>
+    <tr><th>Stems and counters</th><td>Measures the black and the white.</td></tr>
+    <tr><th>Side bearings</th><td>Shows them on the canvas.</td></tr>
+    <tr><th>Sums</th><td>Running totals across the measure line.</td></tr>
+  </tbody>
+</table>
+
+Labels dodge each other rather than stacking, so a dense glyph stays
+readable.
 
 </DocSection>
 
 <DocSection title="Text">
 
 Type, and the font lays out as real text with kerning applied. Click a
-glyph in the line to edit it in place. Editing changes propagate to
-the line as you work.
+glyph in the line to edit it in place, with its neighbours around it.
 
 Text handles bidirectional scripts. Arrow keys move the caret
-visually, not by storage order, so left means left on screen in Arabic
-and Hebrew. See [Text and Shaping](/docs/text.html).
+visually, so left means left on screen in Arabic and Hebrew. See
+[Text and Shaping](/docs/text.html).
 
 </DocSection>
 
 <DocSection title="Preview">
 
-Hides points, handles, and metric guides so you see the shapes alone.
+Hides points, handles, and metric guides, so you see the shapes alone.
 
 </DocSection>
 
-<DocSection title="Shift">
+<DocSection title="Modifiers">
 
 <Callout>
   Shift constrains the shapes, knife, and measure tools. It does not

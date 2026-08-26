@@ -707,6 +707,21 @@ table {
   width: 100%;
 }
 
+/* A table sits in a run of prose, so it needs the same air a
+   paragraph has. Without this, the next sentence touches its last
+   row. */
+.doc-section table {
+  margin-block: 18px;
+}
+
+.doc-section table:first-child {
+  margin-top: 0;
+}
+
+.doc-section table:last-child {
+  margin-bottom: 0;
+}
+
 caption {
   border: 2px solid var(--g-25);
   border-bottom: 0;

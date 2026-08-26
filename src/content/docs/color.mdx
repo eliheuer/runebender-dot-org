@@ -1,0 +1,60 @@
+---
+title: "Color Fonts."
+navLabel: "Color Fonts"
+eyebrow: "Editing"
+lede: "Build a colour font from layers and a palette. Runebender writes COLRv0 through the standard lib keys, and converts to COLRv1 when you need gradients."
+status: "Implemented"
+audience: "Type designers making colour fonts"
+source: "The current editor build"
+stability: "Stable"
+order: 12
+description: "Making colour fonts in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="The Palette">
+
+The Color section in the grid view holds the CPAL palette. Add and
+remove colours there. The palette is stored in the standard ufo2ft lib
+key, so any tool in that chain reads it.
+
+</DocSection>
+
+<DocSection title="Layers">
+
+A colour glyph is a stack of layers, each painted with one entry from
+the palette. Add a layer, assign it a colour, and the stacked preview
+shows the result.
+
+The stacked-preview toggle switches between seeing the layers combined
+and seeing the glyph as it draws without colour.
+
+</DocSection>
+
+<DocSection title="COLRv0 and COLRv1">
+
+By default Runebender writes the COLRv0 shape: layers and a palette,
+with ufo2ft exploding them into real glyphs at compile time.
+
+The **To v1** button converts the font: every colour glyph's layers
+become real suffixed glyphs with explicit `colorLayers` structures and
+solid paints. That is the COLRv1 baseline. From that point ufo2ft's
+own exploding is off, because the structures are already there.
+
+<Callout>
+  Convert to v1 when you need gradients. Solid-colour fonts are
+  simpler and better supported as v0.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Gradients">
+
+Once a font is in the v1 shape, a layer can carry a linear gradient
+instead of a solid paint: from the layer's own colour at the baseline
+to a selected swatch at the ascender. Converting to v1 happens
+automatically if you ask for a gradient before converting.
+
+</DocSection>

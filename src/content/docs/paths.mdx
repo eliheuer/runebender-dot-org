@@ -12,6 +12,7 @@ description: "Path operations and filters in the Runebender font editor."
 ---
 
 import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
 
 <DocSection title="Clean Up">
 
@@ -21,11 +22,18 @@ import DocSection from "../../components/DocSection.astro";
     <tr><th>Tidy Up Paths</th><td><code>Cmd+Shift+T</code>. Drops zero-length segments.</td></tr>
     <tr><th>Add Extremes</th><td>Inserts points at the extremes of each curve.</td></tr>
     <tr><th>Round Coordinates</th><td>Snaps every coordinate to whole units.</td></tr>
-    <tr><th>Correct Path Direction</th><td><code>Cmd+Shift+R</code>. Sets outer contours counter-clockwise and holes clockwise, by containment depth.</td></tr>
-    <tr><th>Reverse Contours</th><td><code>Cmd+Alt+Shift+R</code>. Flips direction by hand.</td></tr>
-    <tr><th>Set Start Point</th><td>Makes the selected point the first point of its contour.</td></tr>
+    <tr><th>Correct Path Direction</th><td><code>Cmd+Shift+R</code>. Outer contours counter-clockwise, holes clockwise, by containment depth.</td></tr>
+    <tr><th>Reverse Contours</th><td><code>Cmd+Alt+Shift+R</code>. Flip direction by hand.</td></tr>
+    <tr><th>Set Start Point</th><td>Make the selected point the first point of its contour.</td></tr>
   </tbody>
 </table>
+
+<Callout>
+  Run Correct Path Direction, Set Start Point, and Tidy Up Paths
+  before blaming interpolation. Between them they cause most
+  incompatible glyphs. See <a href="/docs/masters.html">Masters and
+  Interpolation</a>.
+</Callout>
 
 </DocSection>
 
@@ -35,12 +43,15 @@ import DocSection from "../../components/DocSection.astro";
   <caption>Boolean operations</caption>
   <tbody>
     <tr><th>Remove Overlap</th><td><code>Cmd+Shift+O</code>. Merges overlapping contours into one outline.</td></tr>
-    <tr><th>Union</th><td>Adds the selected contours together.</td></tr>
-    <tr><th>Subtract</th><td>Cuts the later contours out of the first.</td></tr>
+    <tr><th>Union</th><td>Adds everything together.</td></tr>
+    <tr><th>Subtract</th><td>Cuts the rest out of the first contour.</td></tr>
     <tr><th>Intersect</th><td>Keeps only the area they share.</td></tr>
     <tr><th>Exclude</th><td>Keeps only the area they do not share.</td></tr>
   </tbody>
 </table>
+
+Union merges everything; the others apply the first contour against
+the rest combined.
 
 </DocSection>
 
@@ -52,15 +63,13 @@ import DocSection from "../../components/DocSection.astro";
     <tr><th>Flip Horizontal</th><td><code>Cmd+Shift+H</code></td></tr>
     <tr><th>Flip Vertical</th><td><code>Cmd+Shift+V</code></td></tr>
     <tr><th>Rotate</th><td>90 degrees left, 90 degrees right, or 180 degrees.</td></tr>
-    <tr><th>Duplicate Selection</th><td><code>Cmd+D</code>. Copies contours, components, and anchors.</td></tr>
-    <tr><th>Duplicate + Repeat</th><td><code>Cmd+Alt+Shift+T</code>. Duplicates and re-applies the last flip or rotation.</td></tr>
+    <tr><th>Duplicate Selection</th><td><code>Cmd+D</code>. Contours, components, and anchors.</td></tr>
+    <tr><th>Duplicate + Repeat</th><td><code>Cmd+Alt+Shift+T</code>. Duplicates and re-applies the last flip or rotation, so a repeated pattern takes one keystroke per step.</td></tr>
   </tbody>
 </table>
 
-For an exact move or scale, use the Selection section of the right
-panel. Pick a reference point on the nine-point grid, then set X and Y
-to move the selection so the reference lands there, or W and H to
-scale about it.
+The Transformations tiles in the right panel do the same things by
+mouse. For an exact move or scale, use the Coordinates panel.
 
 </DocSection>
 
@@ -69,9 +78,10 @@ scale about it.
 <table>
   <caption>Curve commands</caption>
   <tbody>
-    <tr><th>Harmonize</th><td>Makes the curvature continuous across an on-curve point.</td></tr>
+    <tr><th>Harmonize</th><td>Makes curvature continuous across an on-curve point.</td></tr>
     <tr><th>Balance</th><td>Evens out the handles of a segment.</td></tr>
     <tr><th>Optimize</th><td>Reduces the point count where the shape allows it.</td></tr>
+    <tr><th>Fit Curve</th><td>Sets the selected segments' handles to a percentage of their tangent-intersection maximum, so a run of curves takes one consistent tension.</td></tr>
   </tbody>
 </table>
 
@@ -85,7 +95,7 @@ continuity display, so you can see the result rather than guess at it.
 <table>
   <caption>Curve type</caption>
   <tbody>
-    <tr><th>Hyperbezier to Cubic</th><td>Converts hyperbezier contours to ordinary cubic segments.</td></tr>
+    <tr><th>Hyperbezier to Cubic</th><td>Hyperbezier contours become ordinary cubic segments.</td></tr>
     <tr><th>Quadratic to Cubic</th><td>For sources that came from TrueType outlines.</td></tr>
     <tr><th>Cubic to Quadratic</th><td>For output that needs them.</td></tr>
   </tbody>
@@ -101,6 +111,7 @@ Filters reshape an outline rather than clean it up.
   <caption>Filter menu</caption>
   <tbody>
     <tr><th>Offset Curve</th><td>Grows or shrinks the outline by a distance.</td></tr>
+    <tr><th>Expand Stroke</th><td>Turns each contour into the outline of a stroke of the width you type, with round joins and caps.</td></tr>
     <tr><th>Extrude</th><td>Pushes the shape out along a direction.</td></tr>
     <tr><th>Roughen</th><td>Breaks smooth edges into a rougher line.</td></tr>
     <tr><th>Round Corners</th><td>Fillets the selected corners. The size and handle ratio follow the corners already in the glyph.</td></tr>
@@ -110,12 +121,26 @@ Filters reshape an outline rather than clean it up.
 
 </DocSection>
 
+<DocSection title="The Monoline Workflow">
+
+Expand Stroke is the second half of a way of working rather than a
+one-off effect.
+
+1. Draw open skeleton paths with the pen tool.
+2. Select them, or select nothing to take the whole glyph.
+3. Run Expand Stroke and type a weight.
+
+You get letterforms from a skeleton, and the skeleton is easy to
+redraw at a different weight.
+
+</DocSection>
+
 <DocSection title="Context Menu">
 
 Right-click on the canvas for the operations that apply to what is
 under the pointer: lock and unlock a component, decompose one or all,
-add a component, set the start point, reverse the contour, round
-corners, move a contour up or down in the order, and add or delete an
-anchor.
+add a component, apply a corner component, set the start point,
+reverse the contour, round corners, move a contour up or down in the
+order, and add or delete an anchor.
 
 </DocSection>

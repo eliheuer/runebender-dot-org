@@ -8,7 +8,7 @@ audience: "Type designers"
 source: "The current editor build"
 stability: "Stable"
 order: 6
-description: "Managing glyphs in the Runebender font editor."
+description: "Managing glyphs, layers, and images in the Runebender font editor."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -26,63 +26,98 @@ import Callout from "../../components/Callout.astro";
 </table>
 
 A language row in the left panel that is missing glyphs shows a plus.
-Pressing it adds every missing glyph for that language, named and
-encoded, to every master at once.
+Pressing it adds every glyph that row names, encoded, to every master
+at once. That is the fast way to take a font from one script coverage
+target to another.
 
 </DocSection>
 
 <DocSection title="Name, Unicode, Groups">
 
 The Glyph section of the right panel holds the name, the Unicode
-value, and the left and right kerning groups.
+value, the kerning groups, and the metric keys.
 
 Unicode values are accepted as `0041`, `U+0041`, or `0x41`.
 
 Renaming updates every place the old name was used: components in
 other glyphs, kerning group membership, kerning pairs, the open text
-session, and the current selection. Kerning group edits are written to
-`groups.plist` for every master, and clearing a field removes the
-membership.
+session, and the current selection. You do not have to go and fix
+references by hand.
 
 <Callout>
   Renaming and Unicode editing need the native application. Text
   fields cannot take focus in the browser build yet.
 </Callout>
 
-</DocSection>
-
-<DocSection title="Marks and Selection">
-
-Cells in the grid take colour marks. Cmd-click toggles a cell,
-shift-click selects a range in the order shown, and a mark applies to
-the whole selection. The footer copies the selection as text.
+Kerning groups and metric keys are covered in
+[Spacing and Kerning](/docs/spacing.html).
 
 </DocSection>
 
-<DocSection title="Metrics">
+<DocSection title="Working in the Grid">
 
-Advance width and side bearings live in the bottom bar. Editing a
-field moves the outline or the sidebearing. Glyph, Update Metrics
-recalculates them, and <code>Cmd+Ctrl+M</code> does the same.
+Cmd-click toggles a cell, and shift-click selects a range in the order
+shown. Colour marks apply to the whole selection at once, and the
+footer copies the selection as text so you can paste a glyph set
+somewhere else.
+
+Sort the grid by name or by Unicode value from the View menu, and
+narrow it with the search box and filters in the left panel.
 
 </DocSection>
 
-<DocSection title="Images">
+<DocSection title="Related Glyphs">
+
+The Related section of the right panel shows the glyph's base, its
+suffix siblings such as `a.alt` beside `a`, the glyphs it uses as
+components, and every composite that uses it. Each is one click away.
+
+It is how you find the rest of a family of glyphs without searching
+for names you have to remember.
+
+</DocSection>
+
+<DocSection title="Layers">
+
+<table>
+  <caption>Layers block</caption>
+  <tbody>
+    <tr><th>Backup</th><td>Copies the current drawing into a fresh layer, named <code>backup-1</code>, <code>backup-2</code> and so on. Try something without losing what you had.</td></tr>
+    <tr><th>Swap</th><td>Exchanges the drawing with a named layer's copy. Undoable.</td></tr>
+    <tr><th>Delete</th><td>Drops a layer's copy of this glyph. An emptied layer goes with it.</td></tr>
+    <tr><th>+ Intermediate</th><td>An intermediate layer for interpolation. See <a href="/docs/masters.html">Masters and Interpolation</a>.</td></tr>
+  </tbody>
+</table>
+
+The Background section is separate. It shows, sends to, swaps with, or
+clears the UFO `public.background` layer, which is saved with the
+font, and it can ghost another glyph behind the drawing by name so you
+can match a shape you are working towards.
+
+</DocSection>
+
+<DocSection title="Images and SVG">
 
 <table>
   <caption>Image commands</caption>
   <tbody>
     <tr><th>Place Image…</th><td>Puts a bitmap behind the glyph as a reference.</td></tr>
-    <tr><th>Trace Image…</th><td>Converts the placed bitmap into contours and replaces what the glyph holds. Undoable.</td></tr>
+    <tr><th>Trace Image…</th><td>Converts the placed bitmap into contours, replacing what the glyph holds. Undoable.</td></tr>
     <tr><th>Remove Image</th><td>Takes the bitmap away.</td></tr>
     <tr><th>Import SVG…</th><td>Brings an SVG outline in as contours.</td></tr>
-    <tr><th>Export Glyph as SVG</th><td>Writes the current glyph out as an SVG file.</td></tr>
+    <tr><th>Export Glyph as SVG</th><td>Writes the current glyph out beside the source.</td></tr>
   </tbody>
 </table>
 
-The Background section of the right panel is separate from a placed
-image. It shows, sends to, swaps with, or clears the UFO
-`public.background` layer, which is saved with the font. It can also
-ghost another glyph behind the drawing, named by hand.
+</DocSection>
+
+<DocSection title="Notes">
+
+An annotation is a note dropped at a point on a glyph. Use it to mark
+what is unfinished, or to leave a message for whoever opens the file
+next.
+
+Annotations are per master, and they are never exported. They live in
+the source for the people working on it.
 
 </DocSection>

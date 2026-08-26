@@ -1,0 +1,98 @@
+---
+title: "Feature Code."
+navLabel: "Feature Code"
+eyebrow: "Editing"
+lede: "Edit the master's features.fea in the editor, or generate the mechanical parts from your glyph names and anchors. Runebender compiles what you write and shapes text with it immediately."
+status: "Implemented"
+audience: "Type designers writing OpenType features"
+source: "The current editor build"
+stability: "Stable"
+order: 11
+description: "Editing and generating OpenType feature code in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="The Editor">
+
+The Features section in the grid view holds the active master's
+`features.fea` in a plain text editor. UFO keeps prefixes, classes,
+and features in that one file, so that is what you edit.
+
+<table>
+  <caption>Buttons</caption>
+  <tbody>
+    <tr><th>Apply</th><td>Writes the file, recompiles, and reports the verdict. Text in the editor reshapes with the new rules at once.</td></tr>
+    <tr><th>Generate</th><td>Rewrites the mechanical feature blocks from the font. See below.</td></tr>
+    <tr><th>Revert</th><td>Throws away your edits and reloads the file from disk.</td></tr>
+  </tbody>
+</table>
+
+A file that does not compile is still saved. The previously compiled
+rules stay in force for shaping, so you can leave a broken feature
+file open and keep working while you fix it.
+
+</DocSection>
+
+<DocSection title="What Generate Writes">
+
+Generate reads your glyph names and anchors and writes the feature
+blocks that follow mechanically from them. It replaces those blocks
+and leaves everything else you wrote alone.
+
+<table>
+  <caption>Generated blocks</caption>
+  <tbody>
+    <tr><th><code>init</code>, <code>medi</code>, <code>fina</code></th><td>Positional substitutions, from glyphs named <code>base.init</code> and so on where <code>base</code> also exists.</td></tr>
+    <tr><th><code>curs</code></th><td>Cursive attachment, from entry and exit anchors. A missing side becomes <code>NULL</code>.</td></tr>
+    <tr><th><code>mark</code></th><td>Mark positioning, from each anchor family and the marks that attach to it.</td></tr>
+    <tr><th><code>mkmk</code></th><td>Mark-to-mark positioning, reusing the classes the mark block defines.</td></tr>
+    <tr><th><code>ccmp</code></th><td>Composition, from composite-only glyphs.</td></tr>
+    <tr><th><code>liga</code></th><td>Ligatures from underscore-joined names, longest first, so <code>f_f_i</code> wins over <code>f_f</code>.</td></tr>
+    <tr><th><code>table GDEF</code></th><td>Ligature caret positions, from <code>caret_1</code>, <code>caret_2</code>, and so on.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Keeping Your Own Code">
+
+Generate never overwrites hand-written blocks with tags it does not
+produce. To control where new blocks land, put a line reading
+`# Automatic Code` in the file. Generated blocks are inserted above
+that marker, so your own code can sit below it and stay put.
+
+<Callout>
+  Review what Generate produced before pressing Apply. The status line
+  names the tags it rewrote.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Compiling">
+
+Apply compiles the file against the active master's glyph set, using
+the same build the text tool shapes with. That means a feature you
+just wrote is testable immediately: switch to the text tool, type the
+sequence, and look.
+
+The compile verdict appears beside the buttons. When it fails, the
+message names the problem.
+
+<Callout>
+  `languagesystem` statements must come before every feature block. It
+  is the most common reason a file that looks right refuses to
+  compile.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Testing Under a Language">
+
+Shaping can be run under a chosen script and language rather than
+letting the engine infer them. Use it to check that a `locl` rule
+fires for the language it was written for. See
+[Text and Shaping](/docs/text.html).
+
+</DocSection>

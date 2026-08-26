@@ -131,61 +131,95 @@ designspace back to disk and shows the time in the header.
 ## The Interface
 https://runebender.org/docs/interface.html
 
-Runebender has two views: a grid of every glyph in the font, and an editor for one glyph in context. The panels around them stay the same in both.
+Runebender has two views: a grid of every glyph in the font, and an editor for one glyph in context. The panels around them change with what you are doing.
 
 ### Two Views
 
 The **grid** shows every glyph in the font as a cell. It is where you
-browse, search, filter, select several glyphs at once, and apply marks.
+browse, search, filter, select several glyphs at once, apply colour
+marks, and work on the font as a whole: kerning tables, groups,
+feature code, colour palettes, font info.
 
-The **editor** shows one glyph with its points, handles, and metrics.
-Its neighbours are drawn around it, so you always see the glyph in
-context rather than alone on a page.
+The **editor** shows one glyph with its points, handles, and metrics,
+and draws its neighbours around it. You always see a glyph in context
+rather than alone on a page.
 
-Double-click a cell to enter the editor. The tab strip above the
-canvas holds several edit sessions at once. Press the plus to open
-another session on the current glyph. Each session keeps its own
-buffer, tool, selection, viewport, and undo stack, and follows a glyph
-by name across renames and master switches.
+Double-click a cell to enter the editor. The panels stay in place; the
+sections inside them change.
+
+### Sessions
+
+The tab strip above the canvas holds several edit sessions. Press the
+plus to open another session on the current glyph, and the cross to
+close one.
+
+Each session keeps its own text buffer, tool, selection, viewport, and
+undo stack. Sessions track a glyph by name, so they survive a rename
+and follow you across master switches.
 
 ### Left Panel
 
 Left panel:
-- Search: Filter by name or Unicode value. The buttons beside the box set the scope and turn on regular expressions and case matching.
+- Search: Narrow the grid. The controls beside the box set the scope to name, Unicode, or both, and turn on regular expressions and case matching.
 - Categories: Unicode categories: letters, marks, numbers, punctuation, symbols.
-- Languages: Language and script rows with Google Fonts coverage. A row missing glyphs shows a plus that adds them, named and encoded, to every master.
-- Filters: Saved filters. A filter you build from the search controls can be kept and reused; they are stored in the font.
-- Sort: Order the grid by name or by Unicode value.
+- Languages: Language and script rows with Google Fonts coverage. A row still missing glyphs shows a plus that adds every one it names, encoded, to every master.
+- Filters: Saved filters. Build one from the search controls and keep it; filters are stored in the font, so they travel with the source.
 
-### Right Panel
+View, Sort Glyphs by Name and View, Sort Glyphs by Unicode set the
+order of the grid.
 
-The right panel changes with what is selected and which tool is
-active. Sections appear and disappear rather than greying out.
+### Right Panel: Both Views
 
-Right panel sections:
+Always available:
 - Preview: The current glyph drawn large, with an anatomy view: outline, handle lines, points, and a metric frame.
-- Glyph: Name, Unicode value, and left and right kerning groups. Editing the name updates components in other glyphs, group membership, kerning pairs, and the open text session.
-- Selection: Coordinates for what is selected, a nine-point reference picker, and numeric move and scale fields. Works on points, a component, or an anchor.
-- Masters: One row per master, each showing the current glyph as that master draws it. Axis sliders sit above.
-- Background: Show, send, swap, or clear the background layer, and name a reference glyph to ghost behind the drawing.
-- Measure: Appears with the measure tool. Toggles for outline colouring, handle and segment lengths, stems and counters, side bearings, and sums.
-- Curves: Curvature comb and continuity display.
+- Glyph: Name, Unicode value, kerning groups, and the metric keys. See Glyphs.
+- Masters: One row per master, each drawing the current glyph as that master draws it. Axis sliders sit above. See Masters and Interpolation.
+
+### Right Panel: Editor
+
+While editing a glyph:
+- Coordinates: Where the selection is, a nine-point reference picker, and numeric move and scale. With an anchor selected the fields address the anchor, and a Lock and Free toggle governs anchor-locked components.
 - Transformations: Flip, rotate, and duplicate tiles.
+- Curves: Curvature comb and continuity display.
+- Background: Show, send, swap, or clear the background layer, and name a reference glyph to ghost behind the drawing.
+- Layers: Backup layers, intermediate layers, and shape switches. See Masters and Interpolation.
+- Related: The glyph's base, its suffix siblings, the glyphs it uses as components, and every composite that uses it. One click away each.
+- Shaping: The text buffer's characters in logical order against the shaped glyphs, linked by cluster. See Text and Shaping.
+- Measure: Appears only while the measure tool is active. See Tools.
+
+### Right Panel: Grid
+
+Font-wide work:
+- Font Info: Names and vertical metrics of the active master, saved to fontinfo.plist.
+- Groups: Kerning groups as shelves, with the grid selection assignable in one press. See Spacing and Kerning.
+- Kerning: Every pair on the active master, searchable, editable.
+- Features: The master's features.fea in an editor, with Generate, Apply, and Revert. See Feature Code.
+- Color: The CPAL palette and layer mapping. See Color Fonts.
+- Compare: Every master against the active one: glyph counts, structural incompatibilities, differing advances, kerning pair counts, and vertical metrics that disagree.
+- Dimensions: Stems and bars measured from the reference glyphs, per master. Measured from the outlines, not typed in.
+- Axes: Axis sliders, instances, and axis mappings, for designspaces.
 
 ### Bottom Bar
 
-The bottom bar carries the metrics of the current glyph: advance
-width, left and right side bearings, and the current master. Editing a
-field moves the outline or the sidebearing directly.
+In the editor, the bottom bar carries the metrics of the current
+glyph: advance width and the two sidebearings. Editing a field moves
+the outline or the sidebearing directly.
 
-In the grid, the bottom bar shows the current selection and offers to
-copy it as text.
+In the grid, it shows the current selection and copies it as text.
 
 ### Header
 
 The header shows the path of the open font and the state of the file.
 After a save it reads the time, so you can tell at a glance whether
 what is on screen is on disk.
+
+Runebender watches the files it has open. Change a UFO on disk with
+another tool, or with a script, and the editor reloads it.
+
+### Themes
+
+View, Theme switches the palette. The application's own colours, the
+widget library's theme, and the menu tick all follow the choice.
 
 
 ## Tools
@@ -195,16 +229,23 @@ Eight edit modes. Select and pen cover most work; the rest are for cutting, meas
 
 ### Select
 
-Drag a point to move it. Drag a handle to reshape the curve. Drag on
-empty canvas for a marquee. Shift extends the selection.
+Selecting:
+- Click: Select a point, a handle, a component, or an anchor.
+- Shift-click: Extend the selection.
+- Drag on empty canvas: Marquee.
+- Cmd+A / Cmd+Alt+A: Select or deselect every point.
+- Tab / Shift+Tab: Step the selection through the glyph's points in contour order.
 
-Arrow keys nudge the selection. Hold a modifier for the larger steps.
+Moving:
+- Drag a point: Move it. A handle on a smooth point travels with it.
+- Drag a handle: Reshape the segment.
+- Arrow keys: Nudge. Hold a modifier for the larger step.
+- Drag a sidebearing edge: Change spacing without touching the outline.
+- Double-click a component: Open the glyph it points at.
 
-Drag the sidebearing edges to change spacing without touching the
-outline. Drag a component to move it, and double-click it to open the
-glyph it points at.
-
-Cmd+A selects every point, Cmd+Alt+A deselects.
+For an exact move or scale, use the Coordinates panel: pick a
+reference point on the nine-point grid, then set X and Y to move the
+selection so the reference lands there, or W and H to scale about it.
 
 ### Pen
 
@@ -212,13 +253,21 @@ Click to place a corner point. Click and drag to place a point and
 pull its outgoing handle out of it. Click the first point of the
 contour to close it.
 
+Leave a contour open and it stays open. That is the starting point for
+the monoline workflow: draw open skeletons, then use Expand Stroke to
+turn them into letterforms. See
+[Paths and Filters](/docs/paths.html).
+
 ### Hyperbezier Pen
 
-Draws hyperbezier contours: curves defined by the points you place
-rather than by handles you position. Use Path, Hyperbezier to Cubic to
-convert a hyperbezier contour into ordinary cubic segments. With
-nothing selected, that command converts every hyperbezier contour in
-the glyph.
+Draws hyperbezier contours: curves defined by the points you place,
+with the control points solved rather than positioned by hand. Fewer
+things to hold, and the curvature stays continuous by construction.
+
+Path, Hyperbezier to Cubic converts a hyperbezier contour into
+ordinary cubic segments. With nothing selected it converts every
+hyperbezier contour in the glyph. Do that before handing a source to a
+tool that expects plain cubics.
 
 ### Shapes
 
@@ -233,25 +282,36 @@ to an axis.
 ### Measure
 
 Drag a line to measure across the glyph. Hold shift to lock it to an
-axis. The Measure section in the right panel turns on outline
-colouring, handle lengths, segment lengths, stems and counters, side
-bearings, and running sums.
+axis.
+
+The Measure section appears in the right panel while the tool is
+active.
+
+Measure options:
+- Colorize outline: Tints the outline by thickness, so uneven weight is visible rather than inferred.
+- Handle lengths: Labels every handle.
+- Segment lengths: Labels every segment.
+- Stems and counters: Measures the black and the white.
+- Side bearings: Shows them on the canvas.
+- Sums: Running totals across the measure line.
+
+Labels dodge each other rather than stacking, so a dense glyph stays
+readable.
 
 ### Text
 
 Type, and the font lays out as real text with kerning applied. Click a
-glyph in the line to edit it in place. Editing changes propagate to
-the line as you work.
+glyph in the line to edit it in place, with its neighbours around it.
 
 Text handles bidirectional scripts. Arrow keys move the caret
-visually, not by storage order, so left means left on screen in Arabic
-and Hebrew. See [Text and Shaping](/docs/text.html).
+visually, so left means left on screen in Arabic and Hebrew. See
+[Text and Shaping](/docs/text.html).
 
 ### Preview
 
-Hides points, handles, and metric guides so you see the shapes alone.
+Hides points, handles, and metric guides, so you see the shapes alone.
 
-### Shift
+### Modifiers
 
 Shift constrains the shapes, knife, and measure tools. It does not
 constrain point drags: there it extends the selection.
@@ -270,50 +330,77 @@ Glyph menu:
 - Remove Glyph: Deletes it from every master.
 
 A language row in the left panel that is missing glyphs shows a plus.
-Pressing it adds every missing glyph for that language, named and
-encoded, to every master at once.
+Pressing it adds every glyph that row names, encoded, to every master
+at once. That is the fast way to take a font from one script coverage
+target to another.
 
 ### Name, Unicode, Groups
 
 The Glyph section of the right panel holds the name, the Unicode
-value, and the left and right kerning groups.
+value, the kerning groups, and the metric keys.
 
 Unicode values are accepted as 0041, U+0041, or 0x41.
 
 Renaming updates every place the old name was used: components in
 other glyphs, kerning group membership, kerning pairs, the open text
-session, and the current selection. Kerning group edits are written to
-groups.plist for every master, and clearing a field removes the
-membership.
+session, and the current selection. You do not have to go and fix
+references by hand.
 
 Renaming and Unicode editing need the native application. Text
 fields cannot take focus in the browser build yet.
 
-### Marks and Selection
+Kerning groups and metric keys are covered in
+[Spacing and Kerning](/docs/spacing.html).
 
-Cells in the grid take colour marks. Cmd-click toggles a cell,
-shift-click selects a range in the order shown, and a mark applies to
-the whole selection. The footer copies the selection as text.
+### Working in the Grid
 
-### Metrics
+Cmd-click toggles a cell, and shift-click selects a range in the order
+shown. Colour marks apply to the whole selection at once, and the
+footer copies the selection as text so you can paste a glyph set
+somewhere else.
 
-Advance width and side bearings live in the bottom bar. Editing a
-field moves the outline or the sidebearing. Glyph, Update Metrics
-recalculates them, and Cmd+Ctrl+M does the same.
+Sort the grid by name or by Unicode value from the View menu, and
+narrow it with the search box and filters in the left panel.
 
-### Images
+### Related Glyphs
+
+The Related section of the right panel shows the glyph's base, its
+suffix siblings such as a.alt beside a, the glyphs it uses as
+components, and every composite that uses it. Each is one click away.
+
+It is how you find the rest of a family of glyphs without searching
+for names you have to remember.
+
+### Layers
+
+Layers block:
+- Backup: Copies the current drawing into a fresh layer, named backup-1, backup-2 and so on. Try something without losing what you had.
+- Swap: Exchanges the drawing with a named layer's copy. Undoable.
+- Delete: Drops a layer's copy of this glyph. An emptied layer goes with it.
+- + Intermediate: An intermediate layer for interpolation. See Masters and Interpolation.
+
+The Background section is separate. It shows, sends to, swaps with, or
+clears the UFO public.background layer, which is saved with the
+font, and it can ghost another glyph behind the drawing by name so you
+can match a shape you are working towards.
+
+### Images and SVG
 
 Image commands:
 - Place Image…: Puts a bitmap behind the glyph as a reference.
-- Trace Image…: Converts the placed bitmap into contours and replaces what the glyph holds. Undoable.
+- Trace Image…: Converts the placed bitmap into contours, replacing what the glyph holds. Undoable.
 - Remove Image: Takes the bitmap away.
 - Import SVG…: Brings an SVG outline in as contours.
-- Export Glyph as SVG: Writes the current glyph out as an SVG file.
+- Export Glyph as SVG: Writes the current glyph out beside the source.
 
-The Background section of the right panel is separate from a placed
-image. It shows, sends to, swaps with, or clears the UFO
-public.background layer, which is saved with the font. It can also
-ghost another glyph behind the drawing, named by hand.
+### Notes
+
+An annotation is a note dropped at a point on a glyph. Use it to mark
+what is unfinished, or to leave a message for whoever opens the file
+next.
+
+Annotations are per master, and they are never exported. They live in
+the source for the people working on it.
 
 
 ## Paths and Filters
@@ -327,18 +414,26 @@ Path menu, cleanup:
 - Tidy Up Paths: Cmd+Shift+T. Drops zero-length segments.
 - Add Extremes: Inserts points at the extremes of each curve.
 - Round Coordinates: Snaps every coordinate to whole units.
-- Correct Path Direction: Cmd+Shift+R. Sets outer contours counter-clockwise and holes clockwise, by containment depth.
-- Reverse Contours: Cmd+Alt+Shift+R. Flips direction by hand.
-- Set Start Point: Makes the selected point the first point of its contour.
+- Correct Path Direction: Cmd+Shift+R. Outer contours counter-clockwise, holes clockwise, by containment depth.
+- Reverse Contours: Cmd+Alt+Shift+R. Flip direction by hand.
+- Set Start Point: Make the selected point the first point of its contour.
+
+Run Correct Path Direction, Set Start Point, and Tidy Up Paths
+before blaming interpolation. Between them they cause most
+incompatible glyphs. See Masters and
+Interpolation.
 
 ### Combine
 
 Boolean operations:
 - Remove Overlap: Cmd+Shift+O. Merges overlapping contours into one outline.
-- Union: Adds the selected contours together.
-- Subtract: Cuts the later contours out of the first.
+- Union: Adds everything together.
+- Subtract: Cuts the rest out of the first contour.
 - Intersect: Keeps only the area they share.
 - Exclude: Keeps only the area they do not share.
+
+Union merges everything; the others apply the first contour against
+the rest combined.
 
 ### Transform
 
@@ -346,20 +441,19 @@ Transformations:
 - Flip Horizontal: Cmd+Shift+H
 - Flip Vertical: Cmd+Shift+V
 - Rotate: 90 degrees left, 90 degrees right, or 180 degrees.
-- Duplicate Selection: Cmd+D. Copies contours, components, and anchors.
-- Duplicate + Repeat: Cmd+Alt+Shift+T. Duplicates and re-applies the last flip or rotation.
+- Duplicate Selection: Cmd+D. Contours, components, and anchors.
+- Duplicate + Repeat: Cmd+Alt+Shift+T. Duplicates and re-applies the last flip or rotation, so a repeated pattern takes one keystroke per step.
 
-For an exact move or scale, use the Selection section of the right
-panel. Pick a reference point on the nine-point grid, then set X and Y
-to move the selection so the reference lands there, or W and H to
-scale about it.
+The Transformations tiles in the right panel do the same things by
+mouse. For an exact move or scale, use the Coordinates panel.
 
 ### Curve Quality
 
 Curve commands:
-- Harmonize: Makes the curvature continuous across an on-curve point.
+- Harmonize: Makes curvature continuous across an on-curve point.
 - Balance: Evens out the handles of a segment.
 - Optimize: Reduces the point count where the shape allows it.
+- Fit Curve: Sets the selected segments' handles to a percentage of their tangent-intersection maximum, so a run of curves takes one consistent tension.
 
 The Curves section of the right panel draws a curvature comb and a
 continuity display, so you can see the result rather than guess at it.
@@ -367,7 +461,7 @@ continuity display, so you can see the result rather than guess at it.
 ### Convert
 
 Curve type:
-- Hyperbezier to Cubic: Converts hyperbezier contours to ordinary cubic segments.
+- Hyperbezier to Cubic: Hyperbezier contours become ordinary cubic segments.
 - Quadratic to Cubic: For sources that came from TrueType outlines.
 - Cubic to Quadratic: For output that needs them.
 
@@ -377,38 +471,54 @@ Filters reshape an outline rather than clean it up.
 
 Filter menu:
 - Offset Curve: Grows or shrinks the outline by a distance.
+- Expand Stroke: Turns each contour into the outline of a stroke of the width you type, with round joins and caps.
 - Extrude: Pushes the shape out along a direction.
 - Roughen: Breaks smooth edges into a rougher line.
 - Round Corners: Fillets the selected corners. The size and handle ratio follow the corners already in the glyph.
 - Slanter: Slants the outline, for oblique work.
 
+### The Monoline Workflow
+
+Expand Stroke is the second half of a way of working rather than a
+one-off effect.
+
+1. Draw open skeleton paths with the pen tool.
+2. Select them, or select nothing to take the whole glyph.
+3. Run Expand Stroke and type a weight.
+
+You get letterforms from a skeleton, and the skeleton is easy to
+redraw at a different weight.
+
 ### Context Menu
 
 Right-click on the canvas for the operations that apply to what is
 under the pointer: lock and unlock a component, decompose one or all,
-add a component, set the start point, reverse the contour, round
-corners, move a contour up or down in the order, and add or delete an
-anchor.
+add a component, apply a corner component, set the start point,
+reverse the contour, round corners, move a contour up or down in the
+order, and add or delete an anchor.
 
 
 ## Components and Anchors
 https://runebender.org/docs/components.html
 
-Build accented and composite glyphs out of other glyphs. Anchors hold the pieces together, and marks follow their base as you edit it.
+Build accented and composite glyphs out of other glyphs. Anchors hold the pieces together, marks follow their base as you edit it, and smart components carry a range of shapes rather than one.
 
 ### Components
 
 A component places another glyph inside this one. Edit the base glyph
 and every glyph using it follows.
 
-Add a component from the canvas context menu and type the base glyph
-name. Select and drag a component with the select tool, and
-double-click it to open the glyph it points at. Delete removes it.
+Add one from the canvas context menu and type the base glyph name.
+Select and drag a component with the select tool, and double-click it
+to open the glyph it points at. Delete removes it.
 
 Component commands:
-- Decompose Components: Cmd+Shift+D. Replaces components with their outlines.
+- Decompose Components: Cmd+Shift+D. Replaces every component with its outlines.
 - Decompose One: Context menu. Only the component under the pointer.
-- Lock / Unlock: Context menu, or the Lock and Free toggle in the Selection panel.
+- Lock / Unlock: Context menu, or the toggle in the Coordinates panel.
+
+The Related section of the right panel lists the glyphs this one uses
+as components and every composite that uses it, one click away each.
 
 ### Anchors and Auto-Alignment
 
@@ -416,11 +526,11 @@ An anchor is a named point that says where a mark attaches. Give the
 base glyph an anchor, give the mark a matching one, and the mark
 places itself.
 
-Composites align live. When you move the anchor on a base glyph, every
-accented glyph built from it follows immediately. A component that is
-locked to an anchor refuses to be dragged, because its position comes
-from the anchor rather than from you. Use the Lock and Free toggle in
-the Selection panel when you need to override that.
+Composites align live. Move the anchor on a base glyph and every
+accented glyph built from it follows immediately. A component locked
+to an anchor refuses to be dragged, because its position comes from
+the anchor rather than from you. Use the Lock and Free toggle in the
+Coordinates panel to override that.
 
 A component added from the context menu arrives anchor-locked, so
 marks snap to their anchor without extra work.
@@ -428,41 +538,102 @@ marks snap to their anchor without extra work.
 ### Editing Anchors
 
 Add and delete anchors from the canvas context menu. Select one with
-the select tool and drag it, or set exact coordinates in the Selection
-panel: with an anchor selected, the X and Y fields address the anchor
-itself. Its name is a field in the same panel.
+the select tool and drag it, or set exact coordinates in the
+Coordinates panel: with an anchor selected, the X and Y fields address
+the anchor itself. Its name is a field in the same panel.
+
+Anchor names drive generated feature code. Entry and exit anchors
+produce cursive attachment, anchor families produce mark and mark-to-
+mark positioning, and caret_1, caret_2 and so on produce ligature
+caret positions. See [Feature Code](/docs/features.html).
+
+### Smart Components
+
+A smart component carries its own axes, so one part glyph can hold a
+range of shapes. A single serif component can be short at one end of
+its range and long at the other, and each placement picks a value.
+
+To make one, use Smart Axis on a part glyph and give it an axis as
+Width,0,100. That writes the glyphsLib smartComponentAxes entry,
+marks the default drawing as the bottom pole, and seeds a .top layer
+as the other pole. Edit the poles through the swap arrows.
+
+Place the part in a glyph and set its value in the Coordinates panel.
+Interpolation across several axes uses the corner-delta model
+described in
+[Masters and Interpolation](/docs/masters.html).
+
+Smart components use the glyphsLib keys, so a source that came out
+of Glyphs keeps working and a source that leaves Runebender takes
+them along.
+
+### Corner Components
+
+A corner component reshapes a node rather than adding a shape: a
+chamfer, a flare, a spur applied consistently everywhere it belongs.
+
+Apply one from the context menu at a node, naming it chamfer or
+_corner.chamfer. It is applied in every master, because all masters
+must keep the same structure to interpolate.
 
 ### Joining Scripts
 
-Glyph, Check Joining reports whether the joining forms of a
-cursive script are present and correctly named. Use it on Arabic and
-other connected scripts before assuming a shaping problem is a
-shaping problem. See [Text and Shaping](/docs/text.html).
+Glyph, Check Joining is for cursive scripts. For every positional
+form, it measures the connecting stroke's band at the joining edges,
+where initial and medial join at x = 0 and medial and final at the
+advance, then finds the font's common band and selects every form that
+misses it.
+
+It measures the joining line rather than asking you to eyeball it.
+See [Text and Shaping](/docs/text.html).
 
 
 ## Masters and Interpolation
 https://runebender.org/docs/masters.html
 
-A designspace opens every master it names. Axis sliders move you through the space, and the editor draws what falls between.
+A designspace opens every master it names. Axis sliders move you through the space, the editor draws what falls between, and intermediate layers let you correct it where the straight interpolation is wrong.
 
 ### Masters
 
 Open a .designspace file and Runebender opens every master it names.
 Open a single .ufo and you get one master.
 
-The Masters section of the right panel lists them. Each row draws the
-current glyph as that master draws it, so you can compare without
-switching. Click a row to switch to it. View, Next Master and View,
-Previous Master step through them from the keyboard.
+The Masters section of the right panel lists them, and each row draws
+the current glyph as that master draws it, so you compare without
+switching. Click a row to switch. View, Next Master and View, Previous
+Master step through them.
 
 View, Show All Masters draws every master at once over the current
 glyph.
 
 ### Axes
 
-Axis sliders sit above the master list. Moving one shows the
-interpolated result as a ghost over the drawing, so you can see what a
-weight between two masters looks like while you edit either one.
+Axis sliders sit above the master list, and in the Axes section in the
+grid view. Moving one shows the interpolated result as a ghost over
+the drawing, so you can see a weight between two masters while you
+edit either one.
+
+Axes section:
+- Sliders: One per designspace axis. The position they set is the preview location, which several commands below use.
+- Instances: Name a style at the preview location to add it, or rename the instance already there. The family name is inherited.
+- Mappings: An avar pair on the first axis: user-space input to design-space output, written into the designspace.
+
+### Compatibility
+
+Interpolation needs matching outlines: the same number of contours,
+the same number of points in each, in the same order, starting at the
+same place. When a glyph does not interpolate, that is almost always
+why.
+
+The usual fixes:
+- Correct Path Direction: Outer contours one way, holes the other, by containment depth.
+- Set Start Point: Make each contour start in the same place.
+- Tidy Up Paths: Remove zero-length segments, which differ between masters without being visible.
+
+The Compare section in the grid view reports structural
+incompatibilities across every master at once, along with glyph
+counts, differing advances, kerning pair counts, and vertical metrics
+that disagree. Use it before you go hunting glyph by glyph.
 
 ### Reinterpolate
 
@@ -474,23 +645,46 @@ designspace.
 Reinterpolate overwrites the glyph in the current master. Undo
 brings it back.
 
-### Compatibility
+### Intermediate Layers
 
-Interpolation needs matching outlines: the same number of contours,
-the same number of points in each, in the same order, starting at the
-same place. When a glyph does not interpolate, that is almost always
-why.
+Sometimes the straight interpolation between two masters is wrong in
+the middle, and adding a whole master is too much. An intermediate
+layer fixes one glyph at one point in the space.
 
-Path, Correct Path Direction and Path, Set Start Point fix the two
-most common causes. Tidy Up Paths removes zero-length segments, which
-can differ between masters without being visible.
+In the Layers block, **+ Intermediate** freezes the current
+interpolation of the open glyph at the preview location: a named UFO
+layer plus a sparse designspace source. Edit it through the swap
+arrows. The interpolation ghost and the master strip pick it up live.
+
+This is a standard designspace construct, so every compiler
+understands the result.
+
+### Interpolation Timing
+
+An ease bakes timing into an intermediate layer. A positive ease means
+the change arrives late, so the lighter shape holds on longer; a
+negative ease means it arrives early.
+
+Only the selected points ease. The rest stay on the straight
+interpolation, which keeps the layer point-compatible with its
+neighbours.
+
+### Shape Switches
+
+A shape switch swaps one drawing for another partway along an axis:
+the classic case is a two-storey letter that becomes single-storey at
+heavy weights.
+
+Adding one creates an unencoded alternate, copied into every master,
+plus a designspace rule substituting it from a chosen axis position to
+the end of the axis. Design the alternate in the Regular master; the
+copies start marked so you can see which ones still need drawing.
 
 ### Smart Components
 
-A smart component carries its own axes, so one component can hold a
-range of shapes rather than a single fixed one. Runebender reads and
-writes the glyphsLib keys for them, so sources that came out of Glyphs
-keep working.
+A smart component carries its own axes, so one component holds a range
+of shapes rather than a single fixed one. See
+[Components and Anchors](/docs/components.html).
 
 Interpolation across several axes uses a corner-delta model: the
 default shape plus the contribution of each axis corner. One axis
@@ -499,63 +693,276 @@ interpolate bilinearly.
 
 ### Masks
 
-Glyph, Bake Masks resolves the intermediate layers of a glyph into
-ordinary outlines. Use it when a source needs to be read by a tool
-that does not understand them.
+A contour can be marked as a mask, subtracting from the shapes behind
+it while you draw. Glyph, Bake Masks makes the subtraction real in
+every master, so the exported outline matches what the preview showed.
+
+
+## Spacing and Kerning
+https://runebender.org/docs/spacing.html
+
+Set widths and sidebearings by dragging or by typing, let metric keys derive one glyph's spacing from another, and kern by dragging in real text.
+
+### Widths and Sidebearings
+
+The bottom bar of the editor holds the advance width and the left and
+right sidebearings of the current glyph. Type a value and the outline
+or the sidebearing moves.
+
+You can also drag. With the select tool, the sidebearing edges are
+draggable directly, which changes spacing without touching the
+outline.
+
+### Metric Keys
+
+A metric key derives a sidebearing from another glyph, so a change to
+one glyph carries to every glyph that refers to it. Set them in the
+Glyph section of the right panel.
+
+Metric key syntax:
+- =n: The same sidebearing as glyph n.
+- =|o: The opposite sidebearing of glyph o. Use it for a mirrored pair.
+- =n+10: The same, plus ten units.
+- =n*1.1: The same, scaled.
+- =50: A constant.
+
+Glyph, Update Metrics (Cmd+Ctrl+M) applies every key in
+every master. Keys can chain: if n has a key of its own, the passes
+repeat until nothing moves.
+
+Metric keys are stored in the lib keys glyphsLib round-trips, so a
+source that came from Glyphs keeps its formulas and a source that
+leaves Runebender takes them along.
+
+### Kerning by Dragging
+
+Kerning is fastest in text. Switch to the text tool, type a pair, and
+drag the space between the two glyphs. This is the working path: you
+see the pair at size, in the word it belongs to, while you set it.
+
+### Kerning Groups
+
+A group lets one value cover many pairs. Set the left and right group
+of a glyph in the Glyph section of the right panel. Clearing a field
+removes the membership.
+
+The Groups section in the grid view shows every group as a shelf with
+its members as chips. Select glyphs in the grid, then press the button
+to add the whole selection to a group at once. The field creates a new
+group from the selection: o makes a first-side group, |o a
+second-side one.
+
+Groups are written to groups.plist for every master, using the
+standard public.kern prefixes.
+
+### The Kerning Table
+
+The Kerning section in the grid view lists every pair on the active
+master. Filter it with the search field, and edit a value in the row.
+Enter commits.
+
+Use the table to audit and to fix a specific value you already know
+is wrong. Use dragging in text to design the spacing in the first
+place.
+
+### Checking Your Work
+
+The Dimensions section in the grid view measures stems and bars from
+the reference glyphs in each master, so you can see whether the
+weights actually match across a designspace rather than trusting the
+numbers you meant to draw.
+
+The Compare section lists differing advance widths between masters,
+along with structural incompatibilities and kerning pair counts.
+
+
+## Feature Code
+https://runebender.org/docs/features.html
+
+Edit the master's features.fea in the editor, or generate the mechanical parts from your glyph names and anchors. Runebender compiles what you write and shapes text with it immediately.
+
+### The Editor
+
+The Features section in the grid view holds the active master's
+features.fea in a plain text editor. UFO keeps prefixes, classes,
+and features in that one file, so that is what you edit.
+
+Buttons:
+- Apply: Writes the file, recompiles, and reports the verdict. Text in the editor reshapes with the new rules at once.
+- Generate: Rewrites the mechanical feature blocks from the font. See below.
+- Revert: Throws away your edits and reloads the file from disk.
+
+A file that does not compile is still saved. The previously compiled
+rules stay in force for shaping, so you can leave a broken feature
+file open and keep working while you fix it.
+
+### What Generate Writes
+
+Generate reads your glyph names and anchors and writes the feature
+blocks that follow mechanically from them. It replaces those blocks
+and leaves everything else you wrote alone.
+
+Generated blocks:
+- init, medi, fina: Positional substitutions, from glyphs named base.init and so on where base also exists.
+- curs: Cursive attachment, from entry and exit anchors. A missing side becomes NULL.
+- mark: Mark positioning, from each anchor family and the marks that attach to it.
+- mkmk: Mark-to-mark positioning, reusing the classes the mark block defines.
+- ccmp: Composition, from composite-only glyphs.
+- liga: Ligatures from underscore-joined names, longest first, so f_f_i wins over f_f.
+- table GDEF: Ligature caret positions, from caret_1, caret_2, and so on.
+
+### Keeping Your Own Code
+
+Generate never overwrites hand-written blocks with tags it does not
+produce. To control where new blocks land, put a line reading
+# Automatic Code in the file. Generated blocks are inserted above
+that marker, so your own code can sit below it and stay put.
+
+Review what Generate produced before pressing Apply. The status line
+names the tags it rewrote.
+
+### Compiling
+
+Apply compiles the file against the active master's glyph set, using
+the same build the text tool shapes with. That means a feature you
+just wrote is testable immediately: switch to the text tool, type the
+sequence, and look.
+
+The compile verdict appears beside the buttons. When it fails, the
+message names the problem.
+
+languagesystem statements must come before every feature block. It
+is the most common reason a file that looks right refuses to
+compile.
+
+### Testing Under a Language
+
+Shaping can be run under a chosen script and language rather than
+letting the engine infer them. Use it to check that a locl rule
+fires for the language it was written for. See
+[Text and Shaping](/docs/text.html).
+
+
+## Color Fonts
+https://runebender.org/docs/color.html
+
+Build a colour font from layers and a palette. Runebender writes COLRv0 through the standard lib keys, and converts to COLRv1 when you need gradients.
+
+### The Palette
+
+The Color section in the grid view holds the CPAL palette. Add and
+remove colours there. The palette is stored in the standard ufo2ft lib
+key, so any tool in that chain reads it.
+
+### Layers
+
+A colour glyph is a stack of layers, each painted with one entry from
+the palette. Add a layer, assign it a colour, and the stacked preview
+shows the result.
+
+The stacked-preview toggle switches between seeing the layers combined
+and seeing the glyph as it draws without colour.
+
+### COLRv0 and COLRv1
+
+By default Runebender writes the COLRv0 shape: layers and a palette,
+with ufo2ft exploding them into real glyphs at compile time.
+
+The **To v1** button converts the font: every colour glyph's layers
+become real suffixed glyphs with explicit colorLayers structures and
+solid paints. That is the COLRv1 baseline. From that point ufo2ft's
+own exploding is off, because the structures are already there.
+
+Convert to v1 when you need gradients. Solid-colour fonts are
+simpler and better supported as v0.
+
+### Gradients
+
+Once a font is in the v1 shape, a layer can carry a linear gradient
+instead of a solid paint: from the layer's own colour at the baseline
+to a selected swatch at the ascender. Converting to v1 happens
+automatically if you ask for a gradient before converting.
 
 
 ## Text and Shaping
 https://runebender.org/docs/text.html
 
-Type with the font you are drawing. The text tool shapes real text, applies kerning, and handles bidirectional and connected scripts, so Arabic work is not an afterthought.
+Type with the font you are drawing. The text tool shapes real text, applies kerning and features, and handles bidirectional and connected scripts, so Arabic work is not an afterthought.
 
 ### Typing
 
 Press the text tool and type. The glyphs of the open font lay out as a
-line of real text, shaped and kerned. Click a glyph in that line to
-edit it in place, with its neighbours around it.
+line of real text, shaped with the font's own feature code and kerned.
+Click a glyph in that line to edit it in place, with its neighbours
+around it.
 
 Edits show up in the line as you make them. The glyph you are editing
 uses its own live advance width, so spacing changes are visible in
-context immediately.
+context immediately rather than after a reload.
 
-View, Next Sample String cycles through sample strings.
+View, Next Sample String rebuilds the buffer as sample text around the
+glyph you have open.
 
-### Bidirectional Text
+### The Caret
 
-The caret moves visually. Left means left on the screen and right
-means right, whichever direction the run is written in. Home and End
-go to the visual edges of the line.
+Caret keys:
+- Left, Right: Move visually, not by storage order. Left means left on screen, whichever direction the run runs.
+- Up, Down: Move a line.
+- Home, End: The visual edges of the line.
+- Backspace, Delete: Delete, re-shaping Arabic around the caret.
+- Enter: Line break.
 
-Arabic re-shapes around the caret as you type and as you delete, so
-joining forms stay correct while the text changes.
+Arabic re-shapes as you type and as you delete, so joining forms stay
+correct while the text changes under them.
 
-### Connected Scripts
+### The Shaping Inspector
 
-Arabic and other cursive scripts need the joining forms of each
-letter: initial, medial, final, and isolated. Glyph, Check Joining
-reports which forms a glyph is missing and whether the names follow
-the expected convention.
+The Shaping section of the right panel shows the buffer's characters
+in logical order beside the glyphs they shaped into, linked by
+cluster.
 
-When a word does not join correctly, check the glyph names first.
-Shaping engines find joining forms by name, so a misnamed glyph
-looks to them like a missing one.
+Click a chip to cross-highlight its cluster, so you can see which
+characters produced which glyphs. Double-click a glyph chip to open
+that glyph for editing inside the shaped run.
 
-### Kerning
-
-Kerning is edited by dragging. Put two glyphs next to each other in
-the text line and drag the space between them.
-
-Kerning groups let one value cover many pairs. Set the left and right
-group of a glyph in the Glyph section of the right panel. Groups are
-written to groups.plist for every master.
+This is the tool for the question "why did that come out wrong". It
+shows you the mapping instead of leaving you to infer it from the
+result.
 
 ### Script and Language
 
-Shaping can be run under a chosen script and language, rather than
-letting the engine guess from the characters. That matters where a
-language changes the expected forms, and it is how you check that a
-feature fires for the language it was written for.
+Shaping can be run under a chosen script and language rather than
+letting the engine infer them from the characters. Set them in the
+Shaping section.
+
+It matters wherever a language changes the expected forms: Turkish,
+Romanian, Dutch, Vietnamese, Farsi, Urdu, Sindhi, Kashmiri. It is also
+how you check that a locl rule fires for the language it was written
+for rather than assuming it does.
+
+### Connected Scripts
+
+Cursive scripts need the joining forms of each letter: initial,
+medial, final, and isolated. Shaping engines find them by glyph name,
+so a misnamed glyph looks to them like a missing one.
+
+Glyph, Check Joining measures rather than eyeballs. For every
+positional form it measures the connecting stroke's band at the
+joining edges, where initial and medial join at x = 0 and medial and
+final join at the advance, finds the font's common band, and selects
+every form that misses it.
+
+Naming the forms correctly also feeds feature generation: init,
+medi, and fina substitutions are written from those names, and
+entry and exit anchors become cursive attachment. See
+[Feature Code](/docs/features.html).
+
+### Kerning in Text
+
+Drag the space between two glyphs to kern the pair. This is the
+working path, because you set the value while looking at the pair at
+size in a real word. See
+[Spacing and Kerning](/docs/spacing.html).
 
 
 ## Shortcuts
@@ -582,6 +989,7 @@ Edit:
 - Cmd+V: Paste
 - Cmd+A: Select all points
 - Cmd+Alt+A: Deselect all points
+- Tab / Shift+Tab: Step the point selection through the contour
 
 ### Glyph
 
@@ -657,6 +1065,10 @@ Standard UFO data:
 - public.kern: Group names follow the standard prefixes.
 - public.background: The background layer, saved with the font.
 - public.postscriptNames: Production names, used on export.
+- Features: features.fea, one file per master, holding prefixes, classes, and features.
+- Layers: Backup and intermediate layers are ordinary UFO layers. Intermediate layers also add a sparse designspace source.
+- Designspace: Axes, sources, instances, avar mappings, and substitution rules for shape switches.
+- com.github.googlei18n.ufo2ft.colorPalettes: The CPAL palette for colour fonts.
 
 ### Glyphs Compatibility
 
@@ -667,7 +1079,7 @@ its own.
 glyphsLib keys:
 - com.schriftgestaltung.Glyphs.smartComponentAxes: The axes a smart component carries.
 - com.schriftgestaltung.Glyphs.componentsSmartComponentValues: Where a placed component sits in those axes.
-- com.schriftgestaltung.Glyphs.glyph.leftMetricsKey: Metric keys, left and right.
+- com.schriftgestaltung.Glyphs.glyph.leftMetricsKey: Metric keys, left and right. See Spacing and Kerning.
 
 ### Runebender Keys
 
@@ -691,6 +1103,21 @@ contours in GLIF with identifier="hyperbezier".
 An editor that does not know the identifier reads the points as
 ordinary curve points, so the file stays valid. Use Path, Hyperbezier
 to Cubic before handing a source to a tool that needs plain cubics.
+
+### What Survives a Round Trip
+
+Runebender aims to write files another tool can read. Standard data
+stays standard, Glyphs-compatible data uses the glyphsLib keys rather
+than a private spelling, and anything genuinely new sits under
+com.runebender where another editor will ignore it and leave the
+rest of the source intact.
+
+Two things to know before handing a source on:
+
+1. Hyperbezier contours read as ordinary curves elsewhere. Convert
+them if the receiving tool will re-save the file.
+2. Masks are a Runebender idea. Run Glyph, Bake Masks so the
+subtraction is real in the outlines.
 
 
 ## Exporting

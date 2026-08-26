@@ -24,8 +24,11 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Glyphs](https://runebender.org/docs/glyphs.html): add, rename, encode, group, remove; images and the background layer.
 - [Paths and filters](https://runebender.org/docs/paths.html): cleanup, booleans, transforms, curve quality, curve conversion, filters.
 - [Components and anchors](https://runebender.org/docs/components.html): composites, live auto-alignment, anchor editing.
-- [Masters and interpolation](https://runebender.org/docs/masters.html): designspace masters, axis sliders, reinterpolation, smart components.
-- [Text and shaping](https://runebender.org/docs/text.html): editing in text context, bidirectional carets, cursive joining, kerning.
+- [Masters and interpolation](https://runebender.org/docs/masters.html): designspace masters, axis sliders, instances, avar mappings, reinterpolation, intermediate layers, interpolation timing, shape switches, smart components, masks.
+- [Spacing and kerning](https://runebender.org/docs/spacing.html): widths, sidebearings, metric keys, kerning by dragging, groups, the kerning table.
+- [Feature code](https://runebender.org/docs/features.html): the features.fea editor, and generation of init/medi/fina, curs, mark, mkmk, ccmp, liga, and GDEF carets.
+- [Color fonts](https://runebender.org/docs/color.html): CPAL palettes, layers, COLRv0 and v1, gradients.
+- [Text and shaping](https://runebender.org/docs/text.html): editing in text context, the shaping inspector, bidirectional carets, cursive joining, script and language overrides.
 
 ## Reference
 

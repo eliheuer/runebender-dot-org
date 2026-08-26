@@ -7,7 +7,7 @@ status: "Reference"
 audience: "Type designers, tool builders"
 source: "The keys the editor reads and writes"
 stability: "Standard data is stable; the namespaced keys can still change"
-order: 12
+order: 15
 description: "The UFO data Runebender reads and writes."
 ---
 
@@ -41,6 +41,10 @@ drawing the way you would any other change.
     <tr><th><code>public.kern</code></th><td>Group names follow the standard prefixes.</td></tr>
     <tr><th><code>public.background</code></th><td>The background layer, saved with the font.</td></tr>
     <tr><th><code>public.postscriptNames</code></th><td>Production names, used on export.</td></tr>
+    <tr><th>Features</th><td><code>features.fea</code>, one file per master, holding prefixes, classes, and features.</td></tr>
+    <tr><th>Layers</th><td>Backup and intermediate layers are ordinary UFO layers. Intermediate layers also add a sparse designspace source.</td></tr>
+    <tr><th>Designspace</th><td>Axes, sources, instances, <code>avar</code> mappings, and substitution rules for shape switches.</td></tr>
+    <tr><th><code>com.github.googlei18n.ufo2ft.colorPalettes</code></th><td>The CPAL palette for colour fonts.</td></tr>
   </tbody>
 </table>
 
@@ -57,7 +61,7 @@ its own.
   <tbody>
     <tr><th><code>com.schriftgestaltung.Glyphs.smartComponentAxes</code></th><td>The axes a smart component carries.</td></tr>
     <tr><th><code>com.schriftgestaltung.Glyphs.componentsSmartComponentValues</code></th><td>Where a placed component sits in those axes.</td></tr>
-    <tr><th><code>com.schriftgestaltung.Glyphs.glyph.leftMetricsKey</code></th><td>Metric keys, left and right.</td></tr>
+    <tr><th><code>com.schriftgestaltung.Glyphs.glyph.leftMetricsKey</code></th><td>Metric keys, left and right. See <a href="/docs/spacing.html">Spacing and Kerning</a>.</td></tr>
   </tbody>
 </table>
 
@@ -91,5 +95,22 @@ contours in GLIF with `identifier="hyperbezier"`.
 An editor that does not know the identifier reads the points as
 ordinary curve points, so the file stays valid. Use Path, Hyperbezier
 to Cubic before handing a source to a tool that needs plain cubics.
+
+</DocSection>
+
+<DocSection title="What Survives a Round Trip">
+
+Runebender aims to write files another tool can read. Standard data
+stays standard, Glyphs-compatible data uses the glyphsLib keys rather
+than a private spelling, and anything genuinely new sits under
+`com.runebender` where another editor will ignore it and leave the
+rest of the source intact.
+
+Two things to know before handing a source on:
+
+1. Hyperbezier contours read as ordinary curves elsewhere. Convert
+   them if the receiving tool will re-save the file.
+2. Masks are a Runebender idea. Run Glyph, Bake Masks so the
+   subtraction is real in the outlines.
 
 </DocSection>

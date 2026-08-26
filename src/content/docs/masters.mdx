@@ -2,13 +2,13 @@
 title: "Masters and Interpolation."
 navLabel: "Masters and Interpolation"
 eyebrow: "Editing"
-lede: "A designspace opens every master it names. Axis sliders move you through the space, and the editor draws what falls between."
+lede: "A designspace opens every master it names. Axis sliders move you through the space, the editor draws what falls between, and intermediate layers let you correct it where the straight interpolation is wrong."
 status: "Implemented"
 audience: "Type designers working on variable fonts"
 source: "The current editor build"
 stability: "Stable"
 order: 9
-description: "Working with masters and interpolation in Runebender."
+description: "Masters, axes, interpolation, and intermediate layers in Runebender."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -19,10 +19,10 @@ import Callout from "../../components/Callout.astro";
 Open a `.designspace` file and Runebender opens every master it names.
 Open a single `.ufo` and you get one master.
 
-The Masters section of the right panel lists them. Each row draws the
-current glyph as that master draws it, so you can compare without
-switching. Click a row to switch to it. View, Next Master and View,
-Previous Master step through them from the keyboard.
+The Masters section of the right panel lists them, and each row draws
+the current glyph as that master draws it, so you compare without
+switching. Click a row to switch. View, Next Master and View, Previous
+Master step through them.
 
 View, Show All Masters draws every master at once over the current
 glyph.
@@ -31,9 +31,42 @@ glyph.
 
 <DocSection title="Axes">
 
-Axis sliders sit above the master list. Moving one shows the
-interpolated result as a ghost over the drawing, so you can see what a
-weight between two masters looks like while you edit either one.
+Axis sliders sit above the master list, and in the Axes section in the
+grid view. Moving one shows the interpolated result as a ghost over
+the drawing, so you can see a weight between two masters while you
+edit either one.
+
+<table>
+  <caption>Axes section</caption>
+  <tbody>
+    <tr><th>Sliders</th><td>One per designspace axis. The position they set is the preview location, which several commands below use.</td></tr>
+    <tr><th>Instances</th><td>Name a style at the preview location to add it, or rename the instance already there. The family name is inherited.</td></tr>
+    <tr><th>Mappings</th><td>An <code>avar</code> pair on the first axis: user-space input to design-space output, written into the designspace.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Compatibility">
+
+Interpolation needs matching outlines: the same number of contours,
+the same number of points in each, in the same order, starting at the
+same place. When a glyph does not interpolate, that is almost always
+why.
+
+<table>
+  <caption>The usual fixes</caption>
+  <tbody>
+    <tr><th>Correct Path Direction</th><td>Outer contours one way, holes the other, by containment depth.</td></tr>
+    <tr><th>Set Start Point</th><td>Make each contour start in the same place.</td></tr>
+    <tr><th>Tidy Up Paths</th><td>Remove zero-length segments, which differ between masters without being visible.</td></tr>
+  </tbody>
+</table>
+
+The Compare section in the grid view reports structural
+incompatibilities across every master at once, along with glyph
+counts, differing advances, kerning pair counts, and vertical metrics
+that disagree. Use it before you go hunting glyph by glyph.
 
 </DocSection>
 
@@ -51,25 +84,52 @@ designspace.
 
 </DocSection>
 
-<DocSection title="Compatibility">
+<DocSection title="Intermediate Layers">
 
-Interpolation needs matching outlines: the same number of contours,
-the same number of points in each, in the same order, starting at the
-same place. When a glyph does not interpolate, that is almost always
-why.
+Sometimes the straight interpolation between two masters is wrong in
+the middle, and adding a whole master is too much. An intermediate
+layer fixes one glyph at one point in the space.
 
-Path, Correct Path Direction and Path, Set Start Point fix the two
-most common causes. Tidy Up Paths removes zero-length segments, which
-can differ between masters without being visible.
+In the Layers block, **+ Intermediate** freezes the current
+interpolation of the open glyph at the preview location: a named UFO
+layer plus a sparse designspace source. Edit it through the swap
+arrows. The interpolation ghost and the master strip pick it up live.
+
+This is a standard designspace construct, so every compiler
+understands the result.
+
+</DocSection>
+
+<DocSection title="Interpolation Timing">
+
+An ease bakes timing into an intermediate layer. A positive ease means
+the change arrives late, so the lighter shape holds on longer; a
+negative ease means it arrives early.
+
+Only the selected points ease. The rest stay on the straight
+interpolation, which keeps the layer point-compatible with its
+neighbours.
+
+</DocSection>
+
+<DocSection title="Shape Switches">
+
+A shape switch swaps one drawing for another partway along an axis:
+the classic case is a two-storey letter that becomes single-storey at
+heavy weights.
+
+Adding one creates an unencoded alternate, copied into every master,
+plus a designspace rule substituting it from a chosen axis position to
+the end of the axis. Design the alternate in the Regular master; the
+copies start marked so you can see which ones still need drawing.
 
 </DocSection>
 
 <DocSection title="Smart Components">
 
-A smart component carries its own axes, so one component can hold a
-range of shapes rather than a single fixed one. Runebender reads and
-writes the glyphsLib keys for them, so sources that came out of Glyphs
-keep working.
+A smart component carries its own axes, so one component holds a range
+of shapes rather than a single fixed one. See
+[Components and Anchors](/docs/components.html).
 
 Interpolation across several axes uses a corner-delta model: the
 default shape plus the contribution of each axis corner. One axis
@@ -80,8 +140,8 @@ interpolate bilinearly.
 
 <DocSection title="Masks">
 
-Glyph, Bake Masks resolves the intermediate layers of a glyph into
-ordinary outlines. Use it when a source needs to be read by a tool
-that does not understand them.
+A contour can be marked as a mask, subtracting from the shapes behind
+it while you draw. Glyph, Bake Masks makes the subtraction real in
+every master, so the exported outline matches what the preview showed.
 
 </DocSection>

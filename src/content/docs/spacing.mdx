@@ -1,0 +1,105 @@
+---
+title: "Spacing and Kerning."
+navLabel: "Spacing and Kerning"
+eyebrow: "Editing"
+lede: "Set widths and sidebearings by dragging or by typing, let metric keys derive one glyph's spacing from another, and kern by dragging in real text."
+status: "Implemented"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Stable"
+order: 10
+description: "Spacing, metric keys, and kerning in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Widths and Sidebearings">
+
+The bottom bar of the editor holds the advance width and the left and
+right sidebearings of the current glyph. Type a value and the outline
+or the sidebearing moves.
+
+You can also drag. With the select tool, the sidebearing edges are
+draggable directly, which changes spacing without touching the
+outline.
+
+</DocSection>
+
+<DocSection title="Metric Keys">
+
+A metric key derives a sidebearing from another glyph, so a change to
+one glyph carries to every glyph that refers to it. Set them in the
+Glyph section of the right panel.
+
+<table>
+  <caption>Metric key syntax</caption>
+  <tbody>
+    <tr><th><code>=n</code></th><td>The same sidebearing as glyph <code>n</code>.</td></tr>
+    <tr><th><code>=|o</code></th><td>The opposite sidebearing of glyph <code>o</code>. Use it for a mirrored pair.</td></tr>
+    <tr><th><code>=n+10</code></th><td>The same, plus ten units.</td></tr>
+    <tr><th><code>=n*1.1</code></th><td>The same, scaled.</td></tr>
+    <tr><th><code>=50</code></th><td>A constant.</td></tr>
+  </tbody>
+</table>
+
+Glyph, Update Metrics (<code>Cmd+Ctrl+M</code>) applies every key in
+every master. Keys can chain: if `n` has a key of its own, the passes
+repeat until nothing moves.
+
+Metric keys are stored in the lib keys glyphsLib round-trips, so a
+source that came from Glyphs keeps its formulas and a source that
+leaves Runebender takes them along.
+
+</DocSection>
+
+<DocSection title="Kerning by Dragging">
+
+Kerning is fastest in text. Switch to the text tool, type a pair, and
+drag the space between the two glyphs. This is the working path: you
+see the pair at size, in the word it belongs to, while you set it.
+
+</DocSection>
+
+<DocSection title="Kerning Groups">
+
+A group lets one value cover many pairs. Set the left and right group
+of a glyph in the Glyph section of the right panel. Clearing a field
+removes the membership.
+
+The Groups section in the grid view shows every group as a shelf with
+its members as chips. Select glyphs in the grid, then press the button
+to add the whole selection to a group at once. The field creates a new
+group from the selection: `o` makes a first-side group, `|o` a
+second-side one.
+
+Groups are written to `groups.plist` for every master, using the
+standard `public.kern` prefixes.
+
+</DocSection>
+
+<DocSection title="The Kerning Table">
+
+The Kerning section in the grid view lists every pair on the active
+master. Filter it with the search field, and edit a value in the row.
+Enter commits.
+
+<Callout>
+  Use the table to audit and to fix a specific value you already know
+  is wrong. Use dragging in text to design the spacing in the first
+  place.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Checking Your Work">
+
+The Dimensions section in the grid view measures stems and bars from
+the reference glyphs in each master, so you can see whether the
+weights actually match across a designspace rather than trusting the
+numbers you meant to draw.
+
+The Compare section lists differing advance widths between masters,
+along with structural incompatibilities and kerning pair counts.
+
+</DocSection>

@@ -2,12 +2,12 @@
 title: "Text and Shaping."
 navLabel: "Text and Shaping"
 eyebrow: "Editing"
-lede: "Type with the font you are drawing. The text tool shapes real text, applies kerning, and handles bidirectional and connected scripts, so Arabic work is not an afterthought."
+lede: "Type with the font you are drawing. The text tool shapes real text, applies kerning and features, and handles bidirectional and connected scripts, so Arabic work is not an afterthought."
 status: "Implemented"
 audience: "Type designers, especially for complex scripts"
 source: "The current editor build"
 stability: "Stable"
-order: 10
+order: 13
 description: "Editing in text context, including Arabic and RTL, in Runebender."
 ---
 
@@ -17,59 +17,92 @@ import Callout from "../../components/Callout.astro";
 <DocSection title="Typing">
 
 Press the text tool and type. The glyphs of the open font lay out as a
-line of real text, shaped and kerned. Click a glyph in that line to
-edit it in place, with its neighbours around it.
+line of real text, shaped with the font's own feature code and kerned.
+Click a glyph in that line to edit it in place, with its neighbours
+around it.
 
 Edits show up in the line as you make them. The glyph you are editing
 uses its own live advance width, so spacing changes are visible in
-context immediately.
+context immediately rather than after a reload.
 
-View, Next Sample String cycles through sample strings.
-
-</DocSection>
-
-<DocSection title="Bidirectional Text">
-
-The caret moves visually. Left means left on the screen and right
-means right, whichever direction the run is written in. Home and End
-go to the visual edges of the line.
-
-Arabic re-shapes around the caret as you type and as you delete, so
-joining forms stay correct while the text changes.
+View, Next Sample String rebuilds the buffer as sample text around the
+glyph you have open.
 
 </DocSection>
 
-<DocSection title="Connected Scripts">
+<DocSection title="The Caret">
 
-Arabic and other cursive scripts need the joining forms of each
-letter: initial, medial, final, and isolated. Glyph, Check Joining
-reports which forms a glyph is missing and whether the names follow
-the expected convention.
+<table>
+  <caption>Caret keys</caption>
+  <tbody>
+    <tr><th>Left, Right</th><td>Move visually, not by storage order. Left means left on screen, whichever direction the run runs.</td></tr>
+    <tr><th>Up, Down</th><td>Move a line.</td></tr>
+    <tr><th>Home, End</th><td>The visual edges of the line.</td></tr>
+    <tr><th>Backspace, Delete</th><td>Delete, re-shaping Arabic around the caret.</td></tr>
+    <tr><th>Enter</th><td>Line break.</td></tr>
+  </tbody>
+</table>
+
+Arabic re-shapes as you type and as you delete, so joining forms stay
+correct while the text changes under them.
+
+</DocSection>
+
+<DocSection title="The Shaping Inspector">
+
+The Shaping section of the right panel shows the buffer's characters
+in logical order beside the glyphs they shaped into, linked by
+cluster.
+
+Click a chip to cross-highlight its cluster, so you can see which
+characters produced which glyphs. Double-click a glyph chip to open
+that glyph for editing inside the shaped run.
 
 <Callout>
-  When a word does not join correctly, check the glyph names first.
-  Shaping engines find joining forms by name, so a misnamed glyph
-  looks to them like a missing one.
+  This is the tool for the question "why did that come out wrong". It
+  shows you the mapping instead of leaving you to infer it from the
+  result.
 </Callout>
-
-</DocSection>
-
-<DocSection title="Kerning">
-
-Kerning is edited by dragging. Put two glyphs next to each other in
-the text line and drag the space between them.
-
-Kerning groups let one value cover many pairs. Set the left and right
-group of a glyph in the Glyph section of the right panel. Groups are
-written to `groups.plist` for every master.
 
 </DocSection>
 
 <DocSection title="Script and Language">
 
-Shaping can be run under a chosen script and language, rather than
-letting the engine guess from the characters. That matters where a
-language changes the expected forms, and it is how you check that a
-feature fires for the language it was written for.
+Shaping can be run under a chosen script and language rather than
+letting the engine infer them from the characters. Set them in the
+Shaping section.
+
+It matters wherever a language changes the expected forms: Turkish,
+Romanian, Dutch, Vietnamese, Farsi, Urdu, Sindhi, Kashmiri. It is also
+how you check that a `locl` rule fires for the language it was written
+for rather than assuming it does.
+
+</DocSection>
+
+<DocSection title="Connected Scripts">
+
+Cursive scripts need the joining forms of each letter: initial,
+medial, final, and isolated. Shaping engines find them by glyph name,
+so a misnamed glyph looks to them like a missing one.
+
+Glyph, Check Joining measures rather than eyeballs. For every
+positional form it measures the connecting stroke's band at the
+joining edges, where initial and medial join at x = 0 and medial and
+final join at the advance, finds the font's common band, and selects
+every form that misses it.
+
+Naming the forms correctly also feeds feature generation: `init`,
+`medi`, and `fina` substitutions are written from those names, and
+entry and exit anchors become cursive attachment. See
+[Feature Code](/docs/features.html).
+
+</DocSection>
+
+<DocSection title="Kerning in Text">
+
+Drag the space between two glyphs to kern the pair. This is the
+working path, because you set the value while looking at the pair at
+size in a real word. See
+[Spacing and Kerning](/docs/spacing.html).
 
 </DocSection>
