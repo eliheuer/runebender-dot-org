@@ -13,14 +13,34 @@
   /* The whole site uses one size; add another only when a real
      need appears. */
   --text-base: 20px;
-  --ink: #1f1f1f;
-  --muted: #505050;
-  --paper: #b6b6b2;
-  --paper-2: #aaaaa6;
-  --panel: #c8c8c4;
-  --line: #242424;
-  --line-soft: #777773;
-  --reverse: #d8d8d4;
+
+  /* Grayscale ramp, oklch, named by lightness. Two knobs steer the
+     whole site: raise --tone-c above 0 to warm every step at once,
+     and --tone-h picks which way it warms. Add a step only when a
+     real need appears; do not write a raw colour anywhere else. */
+  --tone-h: 95;
+  --tone-c: 0;
+  --g-16: oklch(16% var(--tone-c) var(--tone-h));
+  --g-25: oklch(25% var(--tone-c) var(--tone-h));
+  --g-44: oklch(44% var(--tone-c) var(--tone-h));
+  --g-57: oklch(57% var(--tone-c) var(--tone-h));
+  --g-68: oklch(68% var(--tone-c) var(--tone-h));
+  --g-73: oklch(73% var(--tone-c) var(--tone-h));
+  --g-76: oklch(76% var(--tone-c) var(--tone-h));
+  --g-82: oklch(82% var(--tone-c) var(--tone-h));
+  --g-87: oklch(87% var(--tone-c) var(--tone-h));
+
+  /* Roles. Every rule uses one of these, never a step directly. */
+  --ink: var(--g-25);
+  --line: var(--g-25);
+  --muted: var(--g-44);
+  --line-soft: var(--g-57);
+  --code-ink: var(--g-16);
+  --code-paper: var(--g-68);
+  --paper-2: var(--g-73);
+  --paper: var(--g-76);
+  --panel: var(--g-82);
+  --reverse: var(--g-87);
 }
 
 * {
@@ -114,9 +134,9 @@ button:focus-visible {
 }
 
 code {
-  background: #9d9d99;
+  background: var(--code-paper);
   border: 2px solid var(--line);
-  color: #111;
+  color: var(--code-ink);
   display: inline-block;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 1em;
@@ -126,7 +146,7 @@ code {
 
 .site-header {
   align-items: stretch;
-  background: rgba(182, 182, 178, 0.94);
+  background: color-mix(in oklab, var(--paper) 94%, transparent);
   border-bottom: 2px solid var(--line);
   display: flex;
   position: sticky;
@@ -257,7 +277,7 @@ h3 {
 }
 
 .lede {
-  color: #303030;
+  color: var(--ink);
   max-width: 680px;
 }
 
@@ -721,7 +741,7 @@ th {
 }
 
 .manifesto {
-  background: #252525;
+  background: var(--ink);
   color: var(--reverse);
 }
 
@@ -1085,8 +1105,10 @@ th {
 }
 
 .install-steps pre {
-  background: var(--panel);
+  /* Commands read as terminal output: light on dark. */
+  background: var(--ink);
   border: 2px solid var(--line);
+  color: var(--reverse);
   margin: 0;
   overflow-x: auto;
   padding: 18px;
@@ -1095,6 +1117,7 @@ th {
 .install-steps pre code {
   background: none;
   border: 0;
+  color: inherit;
   display: block;
   padding: 0;
   white-space: pre;
