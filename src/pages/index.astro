@@ -1,11 +1,12 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import editorScreenshot from "../assets/runebender-gpui-screenshot.png";
 ---
 
 <BaseLayout
   title="Runebender"
   description="Runebender is a family of experimental font editor projects: Core, Xilem, Comfy, historical Druid, and future front-end work."
-  isolate={true}
 >
   <main id="top">
     <section class="hero" aria-label="Runebender web editor">
@@ -21,15 +22,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </div>
 
-      <figure class="screenshot-block editor-embed">
-        <iframe
-          src="/gpui/index.html"
-          title="Runebender GPUI editor"
+      <figure class="screenshot-block">
+        <Image
+          src={editorScreenshot}
+          alt="The Runebender GPUI editor showing the demo font's glyph grid"
+          widths={[640, 960, 1280, 1600]}
+          sizes="(max-width: 1060px) 100vw, 60vw"
           loading="eager"
-        ></iframe>
+        />
         <figcaption>
-          The live GPUI editor with the bundled demo font — the same build the Launch button
-          opens full-screen.
+          The GPUI editor with the bundled demo font — the Launch button opens this build in
+          your browser.
         </figcaption>
       </figure>
     </section>
