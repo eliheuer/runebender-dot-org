@@ -189,17 +189,27 @@ code {
 
 .brand:hover,
 .site-header nav a:hover,
-.doc-sidebar nav a:hover,
 .button:hover,
 .resource-links a:hover {
   background: var(--g-25);
   color: var(--g-76);
 }
 
-.site-header nav a[aria-current="page"],
-.doc-sidebar nav a[aria-current="page"] {
+.site-header nav a[aria-current="page"] {
   background: var(--g-25);
   color: var(--g-76);
+}
+
+/* In the sidebar the dark fill belongs to the group heading, so the
+   current page and hover are lighter fills with ordinary dark text. */
+.doc-sidebar nav a[aria-current="page"] {
+  background: var(--g-82);
+  color: var(--g-25);
+}
+
+.doc-sidebar nav a:hover {
+  background: var(--g-87);
+  color: var(--g-25);
 }
 
 .doc-index article:hover p,
@@ -538,11 +548,12 @@ h3 {
 }
 
 .doc-nav-group h2 {
-  /* A filled label, so a group heading never looks like a link. */
-  background: var(--g-82);
+  /* Dark fill: a group heading is the strongest thing in the
+     sidebar, and never reads as a link. */
+  background: var(--g-25);
   border: 2px solid var(--g-25);
   border-bottom: 0;
-  color: var(--g-44);
+  color: var(--g-87);
   font-weight: 400;
   letter-spacing: 0;
   margin: 0;
