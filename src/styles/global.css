@@ -148,9 +148,12 @@ code {
 }
 
 /* Every header cell: the word plus the same margin on all sides.
-   Cells size to their content; the nav sits at the far right. */
+   Cells size to their content; the nav sits at the far right.
+   These rules are scoped to the header: the docs sidebar is also a
+   nav, and used to inherit them, including the nowrap that pushed
+   long labels out through its box. */
 .brand,
-nav a {
+.site-header nav a {
   padding: 14px 16px;
   position: relative;
 }
@@ -159,7 +162,7 @@ nav a {
   border-right: 2px solid var(--g-25);
 }
 
-nav a {
+.site-header nav a {
   border-left: 2px solid var(--g-25);
 }
 
@@ -170,15 +173,14 @@ nav a {
   letter-spacing: 0;
 }
 
-
-nav {
+.site-header nav {
   display: flex;
   flex: 1;
   justify-content: flex-end;
   min-width: 0;
 }
 
-nav a {
+.site-header nav a {
   align-items: center;
   display: inline-flex;
   font-weight: 400;
@@ -186,17 +188,16 @@ nav a {
 }
 
 .brand:hover,
-nav a:hover,
+.site-header nav a:hover,
+.doc-sidebar nav a:hover,
 .button:hover,
-.tool-strip a:hover,
-.family-card:hover,
-.resource-links a:hover,
-.doc-index article:hover {
+.resource-links a:hover {
   background: var(--g-25);
   color: var(--g-76);
 }
 
-nav a[aria-current="page"] {
+.site-header nav a[aria-current="page"],
+.doc-sidebar nav a[aria-current="page"] {
   background: var(--g-25);
   color: var(--g-76);
 }
@@ -537,12 +538,13 @@ h3 {
 }
 
 .doc-nav-group h2 {
+  /* A filled label, so a group heading never looks like a link. */
+  background: var(--g-82);
   border: 2px solid var(--g-25);
   border-bottom: 0;
-  color: var(--g-25);
+  color: var(--g-44);
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 1;
   margin: 0;
   padding: 10px 12px;
 }
@@ -551,6 +553,7 @@ h3 {
   border: 2px solid var(--g-25);
   border-bottom: 0;
   min-height: 0;
+  min-width: 0;
   padding: 12px;
 }
 
