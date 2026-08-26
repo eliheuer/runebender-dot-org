@@ -14,10 +14,11 @@
      need appears. */
   --text-base: 20px;
 
-  /* Grayscale ramp, oklch, named by lightness. Two knobs steer the
-     whole site: raise --tone-c above 0 to warm every step at once,
-     and --tone-h picks which way it warms. Add a step only when a
-     real need appears; do not write a raw colour anywhere else. */
+  /* The palette: a grayscale ramp, named by oklch lightness. Two
+     knobs steer all of it - raise --tone-c above 0 to warm every
+     step at once, and --tone-h picks which way it warms. Rules use
+     these directly. Add a step only when a real need appears, and
+     never write a raw colour anywhere else. */
   --tone-h: 95;
   --tone-c: 0;
   --g-16: oklch(16% var(--tone-c) var(--tone-h));
@@ -29,18 +30,6 @@
   --g-76: oklch(76% var(--tone-c) var(--tone-h));
   --g-82: oklch(82% var(--tone-c) var(--tone-h));
   --g-87: oklch(87% var(--tone-c) var(--tone-h));
-
-  /* Roles. Every rule uses one of these, never a step directly. */
-  --ink: var(--g-25);
-  --line: var(--g-25);
-  --muted: var(--g-44);
-  --line-soft: var(--g-57);
-  --code-ink: var(--g-16);
-  --code-paper: var(--g-68);
-  --paper-2: var(--g-73);
-  --paper: var(--g-76);
-  --panel: var(--g-82);
-  --reverse: var(--g-87);
 }
 
 * {
@@ -48,7 +37,7 @@
   /* One size for the whole site. Headings, table cells, and form
      controls all inherit it instead of carrying UA sizes. */
   font-size: inherit;
-  scrollbar-color: var(--line-soft) transparent;
+  scrollbar-color: var(--g-57) transparent;
   scrollbar-width: thin;
 }
 
@@ -58,18 +47,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--paper);
-  border-left: 2px solid var(--line);
+  background: var(--g-76);
+  border-left: 2px solid var(--g-25);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--line-soft);
-  border: 4px solid var(--paper);
+  background: var(--g-57);
+  border: 4px solid var(--g-76);
   border-left-width: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ink);
+  background: var(--g-25);
 }
 
 ::-webkit-scrollbar-corner {
@@ -89,13 +78,13 @@ html {
 }
 
 html {
-  background: var(--paper);
+  background: var(--g-76);
 }
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--g-76);
+  color: var(--g-25);
   font-family:
     "Virtua Grotesk", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui,
     -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -129,14 +118,14 @@ a {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 3px solid var(--ink);
+  outline: 3px solid var(--g-25);
   outline-offset: 3px;
 }
 
 code {
-  background: var(--code-paper);
-  border: 2px solid var(--line);
-  color: var(--code-ink);
+  background: var(--g-68);
+  border: 2px solid var(--g-25);
+  color: var(--g-16);
   display: inline-block;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 1em;
@@ -146,8 +135,8 @@ code {
 
 .site-header {
   align-items: stretch;
-  background: color-mix(in oklab, var(--paper) 94%, transparent);
-  border-bottom: 2px solid var(--line);
+  background: color-mix(in oklab, var(--g-76) 94%, transparent);
+  border-bottom: 2px solid var(--g-25);
   display: flex;
   position: sticky;
   top: 0;
@@ -164,11 +153,11 @@ nav a {
 }
 
 .brand {
-  border-right: 2px solid var(--line);
+  border-right: 2px solid var(--g-25);
 }
 
 nav a {
-  border-left: 2px solid var(--line);
+  border-left: 2px solid var(--g-25);
 }
 
 .brand {
@@ -200,8 +189,8 @@ nav a:hover,
 .family-card:hover,
 .resource-links a:hover,
 .doc-index article:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--g-25);
+  color: var(--g-76);
 }
 
 .doc-index article:hover p,
@@ -209,18 +198,18 @@ nav a:hover,
 .family-card:hover p,
 .family-card:hover span,
 .resource-links a:hover span {
-  color: var(--reverse);
+  color: var(--g-87);
 }
 
 nav a[aria-current="page"] {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--g-25);
+  color: var(--g-76);
 }
 
 
 
 .hero {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 0;
   grid-template-columns: minmax(380px, 0.82fr) minmax(0, 1.18fr);
@@ -230,7 +219,7 @@ nav a[aria-current="page"] {
 
 .hero-copy {
   align-self: stretch;
-  border-right: 2px solid var(--line);
+  border-right: 2px solid var(--g-25);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -241,7 +230,7 @@ nav a[aria-current="page"] {
 
 .eyebrow,
 .section-kicker {
-  color: var(--ink);
+  color: var(--g-25);
   font-weight: 400;
   letter-spacing: 0;
   margin: 0;
@@ -277,7 +266,7 @@ h3 {
 }
 
 .lede {
-  color: var(--ink);
+  color: var(--g-25);
   max-width: 680px;
 }
 
@@ -289,7 +278,7 @@ h3 {
 }
 
 .button {
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   display: inline-flex;
   font-weight: 400;
   justify-content: center;
@@ -302,13 +291,13 @@ h3 {
 }
 
 .button.primary {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--g-25);
+  color: var(--g-76);
 }
 
 .button.primary:hover {
   background: transparent;
-  color: var(--ink);
+  color: var(--g-25);
 }
 
 .screenshot-block {
@@ -319,7 +308,7 @@ h3 {
 }
 
 .screenshot-block img {
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   display: block;
   height: auto;
   max-height: calc(100vh - 200px);
@@ -328,14 +317,14 @@ h3 {
 }
 
 .screenshot-block figcaption {
-  border-bottom: 2px solid var(--line);
-  border-inline: 2px solid var(--line);
-  color: var(--muted);
+  border-bottom: 2px solid var(--g-25);
+  border-inline: 2px solid var(--g-25);
+  color: var(--g-44);
   padding: 10px 12px;
 }
 
 .status-grid {
-  border-block: 2px solid var(--line);
+  border-block: 2px solid var(--g-25);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
@@ -346,7 +335,7 @@ h3 {
 }
 
 .status-grid div + div {
-  border-left: 2px solid var(--line);
+  border-left: 2px solid var(--g-25);
 }
 
 .status-grid span,
@@ -368,7 +357,7 @@ h3 {
 .research-grid p,
 .manifesto p,
 .resource-links span {
-  color: var(--muted);
+  color: var(--g-44);
   /* One line per description; the copy is written to fit. */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -376,14 +365,14 @@ h3 {
 }
 
 .tool-strip {
-  background: var(--panel);
-  border-bottom: 2px solid var(--line);
+  background: var(--g-82);
+  border-bottom: 2px solid var(--g-25);
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
 
 .tool-strip a {
-  border-right: 2px solid var(--line);
+  border-right: 2px solid var(--g-25);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -422,7 +411,7 @@ h3 {
 }
 
 .manual-section {
-  background: var(--panel);
+  background: var(--g-82);
 }
 
 /* No rule of its own: the card row ends in the cards' own bottom
@@ -443,7 +432,7 @@ h3 {
 }
 
 .family-grid {
-  border-top: 2px solid var(--line);
+  border-top: 2px solid var(--g-25);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-inline: -20px;
@@ -451,8 +440,8 @@ h3 {
 }
 
 .family-card {
-  border-bottom: 2px solid var(--line);
-  border-right: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
+  border-right: 2px solid var(--g-25);
   display: flex;
   flex-direction: column;
   min-height: 220px;
@@ -464,7 +453,7 @@ h3 {
 }
 
 .family-card span {
-  color: var(--muted);
+  color: var(--g-44);
   display: block;
   font-weight: 400;
   margin-bottom: auto;
@@ -475,17 +464,17 @@ h3 {
 }
 
 .family-card p {
-  color: var(--muted);
+  color: var(--g-44);
 }
 
 .core-card {
-  background: var(--panel);
+  background: var(--g-82);
 }
 
 
 
 .trust-section {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 24px;
   grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
@@ -497,7 +486,7 @@ h3 {
 }
 
 .doc-index {
-  border-top: 2px solid var(--line);
+  border-top: 2px solid var(--g-25);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-inline: -20px;
@@ -505,8 +494,8 @@ h3 {
 }
 
 .doc-index article {
-  border-bottom: 2px solid var(--line);
-  border-right: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
+  border-right: 2px solid var(--g-25);
   min-height: 180px;
   padding: 18px;
 }
@@ -528,7 +517,7 @@ h3 {
 }
 
 .doc-sidebar {
-  border-right: 2px solid var(--line);
+  border-right: 2px solid var(--g-25);
   padding: 22px;
 }
 
@@ -544,9 +533,9 @@ h3 {
 }
 
 .doc-nav-group h2 {
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   border-bottom: 0;
-  color: var(--ink);
+  color: var(--g-25);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1;
@@ -555,14 +544,14 @@ h3 {
 }
 
 .doc-sidebar nav a {
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   border-bottom: 0;
   min-height: 0;
   padding: 12px;
 }
 
 .doc-nav-group a:last-child {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
 }
 
 .doc-page {
@@ -570,7 +559,7 @@ h3 {
 }
 
 .doc-hero {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   margin: -20px -20px 20px;
   padding: 20px;
 }
@@ -580,7 +569,7 @@ h3 {
 }
 
 .doc-hero p {
-  color: var(--muted);
+  color: var(--g-44);
   max-width: 820px;
 }
 
@@ -596,12 +585,12 @@ h3 {
 }
 
 .page-summary td {
-  color: var(--muted);
+  color: var(--g-44);
 }
 
 /* Section rules bleed to the sidebar line and the window edge. */
 .doc-section {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 32px;
   grid-template-columns: minmax(220px, 0.48fr) minmax(0, 1.52fr);
@@ -615,7 +604,7 @@ h3 {
 
 .doc-section p,
 .doc-section li {
-  color: var(--muted);
+  color: var(--g-44);
 }
 
 .doc-section ol,
@@ -641,22 +630,22 @@ h3 {
 }
 
 .callout {
-  background: var(--panel);
-  border: 2px solid var(--line);
-  color: var(--ink);
+  background: var(--g-82);
+  border: 2px solid var(--g-25);
+  color: var(--g-25);
   margin-top: 18px;
   padding: 14px;
 }
 
 .mini-index {
-  border-top: 2px solid var(--line);
+  border-top: 2px solid var(--g-25);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .mini-index a {
-  border-bottom: 2px solid var(--line);
-  border-right: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
+  border-right: 2px solid var(--g-25);
   display: grid;
   gap: 6px;
   min-height: 160px;
@@ -668,11 +657,11 @@ h3 {
 }
 
 .mini-index span {
-  color: var(--muted);
+  color: var(--g-44);
 }
 
 .split-section {
-  border-top: 2px solid var(--line);
+  border-top: 2px solid var(--g-25);
   display: grid;
   gap: 44px;
   grid-template-columns: minmax(260px, 0.56fr) minmax(0, 1.44fr);
@@ -691,7 +680,7 @@ table {
 }
 
 caption {
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   border-bottom: 0;
   font-weight: 400;
   padding: 10px;
@@ -700,7 +689,7 @@ caption {
 
 th,
 td {
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   padding: 14px;
   text-align: left;
   vertical-align: top;
@@ -711,12 +700,12 @@ th {
 }
 
 .research-section {
-  background: var(--paper-2);
-  border-top: 2px solid var(--line);
+  background: var(--g-73);
+  border-top: 2px solid var(--g-25);
 }
 
 .research-grid {
-  border-top: 2px solid var(--line);
+  border-top: 2px solid var(--g-25);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin-inline: -20px;
@@ -724,7 +713,7 @@ th {
 }
 
 .research-grid article {
-  border-right: 2px solid var(--line);
+  border-right: 2px solid var(--g-25);
   min-height: 200px;
   padding: 18px;
 }
@@ -734,27 +723,27 @@ th {
 }
 
 .research-grid a {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   display: inline-block;
   font-weight: 400;
   margin-top: 18px;
 }
 
 .manifesto {
-  background: var(--ink);
-  color: var(--reverse);
+  background: var(--g-25);
+  color: var(--g-87);
 }
 
 .manifesto .section-kicker,
 .manifesto p {
-  color: var(--reverse);
+  color: var(--g-87);
 }
 
 .manifesto p {
 }
 
 .resource-section {
-  background: var(--panel);
+  background: var(--g-82);
   display: grid;
   gap: 44px;
   grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
@@ -764,13 +753,13 @@ th {
   /* A closed box: every row rule ends on the left or the right rail,
      and the box ends where the section padding ends. It used to bleed
      20px past that, which read as running off the window. */
-  border: 2px solid var(--line);
+  border: 2px solid var(--g-25);
   border-bottom: 0;
   display: grid;
 }
 
 .resource-links a {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 18px;
   grid-template-columns: minmax(180px, 0.34fr) minmax(0, 0.66fr);
@@ -781,30 +770,30 @@ th {
 }
 
 .cloud-hero {
-  background: var(--ink);
-  border-bottom: 2px solid var(--line);
-  color: var(--reverse);
+  background: var(--g-25);
+  border-bottom: 2px solid var(--g-25);
+  color: var(--g-87);
   min-height: min(calc(100vh - 56px), 900px);
   padding: 34px;
 }
 
 .cloud-hero .eyebrow,
 .cloud-hero .lede {
-  color: var(--reverse);
+  color: var(--g-87);
 }
 
 .cloud-hero h1 {
-  color: var(--reverse);
+  color: var(--g-87);
 }
 
 .cloud-hero code {
   background: transparent;
-  border-color: var(--reverse);
-  color: var(--reverse);
+  border-color: var(--g-87);
+  color: var(--g-87);
 }
 
 .site-footer {
-  border-top: 2px solid var(--line);
+  border-top: 2px solid var(--g-25);
 }
 
 /* The footer mirrors the header: equal cells, one word each, the same
@@ -815,7 +804,7 @@ th {
 }
 
 .footer-links a {
-  border-right: 2px solid var(--line);
+  border-right: 2px solid var(--g-25);
   padding: 14px 16px;
 }
 
@@ -824,13 +813,13 @@ th {
 }
 
 .footer-links a:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--g-25);
+  color: var(--g-76);
 }
 
 .footer-note {
-  border-top: 2px solid var(--line);
-  color: var(--muted);
+  border-top: 2px solid var(--g-25);
+  color: var(--g-44);
   display: flex;
   gap: 16px;
   justify-content: space-between;
@@ -855,7 +844,7 @@ th {
   }
 
   .hero-copy {
-    border-bottom: 2px solid var(--line);
+    border-bottom: 2px solid var(--g-25);
     border-right: 0;
     min-height: 420px;
   }
@@ -893,7 +882,7 @@ th {
 
   .status-grid div + div,
   .tool-strip a + a {
-    border-top: 2px solid var(--line);
+    border-top: 2px solid var(--g-25);
   }
 
   .doc-index article,
@@ -902,7 +891,7 @@ th {
   }
 
   .doc-sidebar {
-    border-bottom: 2px solid var(--line);
+    border-bottom: 2px solid var(--g-25);
     border-right: 0;
     overflow-x: auto;
   }
@@ -1017,7 +1006,7 @@ th {
   }
 
   .button + .button {
-    border-left: 2px solid var(--line);
+    border-left: 2px solid var(--g-25);
     border-top: 0;
   }
 
@@ -1041,7 +1030,7 @@ th {
   }
 
   .footer-links a:nth-child(-n + 2) {
-    border-bottom: 2px solid var(--line);
+    border-bottom: 2px solid var(--g-25);
   }
 
   .footer-note {
@@ -1085,7 +1074,7 @@ th {
 /* Quick install: heading on the left, the command block on the right,
    matching the source code section below it. */
 .install-section {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 44px;
   grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
@@ -1099,16 +1088,16 @@ th {
 }
 
 .install-steps p {
-  color: var(--muted);
+  color: var(--g-44);
   margin: 0;
   max-width: 760px;
 }
 
 .install-steps pre {
   /* Commands read as terminal output: light on dark. */
-  background: var(--ink);
-  border: 2px solid var(--line);
-  color: var(--reverse);
+  background: var(--g-25);
+  border: 2px solid var(--g-25);
+  color: var(--g-87);
   margin: 0;
   overflow-x: auto;
   padding: 18px;
