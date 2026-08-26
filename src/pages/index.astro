@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import editorScreenshot from "../assets/runebender-gpui-screenshot.png";
+import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
 ---
 
 <BaseLayout
@@ -25,14 +25,14 @@ import editorScreenshot from "../assets/runebender-gpui-screenshot.png";
       <figure class="screenshot-block">
         <Image
           src={editorScreenshot}
-          alt="The Runebender GPUI editor showing the demo font's glyph grid"
+          alt="The Runebender Xilem editor showing a glyph editing workspace"
           widths={[640, 960, 1280, 1600]}
           sizes="(max-width: 1060px) 100vw, 60vw"
           loading="eager"
         />
         <figcaption>
-          The GPUI editor with the bundled demo font — the Launch button opens this build in
-          your browser.
+          The Runebender Xilem editor. The Launch button opens the current GPUI build in your
+          browser.
         </figcaption>
       </figure>
     </section>
