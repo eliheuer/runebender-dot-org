@@ -764,12 +764,12 @@ th {
 }
 
 .resource-links {
-  border-top: 2px solid var(--line);
-  /* Left rail corners into the top rule and the last row's bottom
-     rule, so the row lines never dead-end at the column edge. */
-  border-left: 2px solid var(--line);
+  /* A closed box: every row rule ends on the left or the right rail,
+     and the box ends where the section padding ends. It used to bleed
+     20px past that, which read as running off the window. */
+  border: 2px solid var(--line);
+  border-bottom: 0;
   display: grid;
-  margin-right: -20px;
 }
 
 .resource-links a {
