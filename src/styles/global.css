@@ -802,6 +802,9 @@ th {
 .footer-note {
   border-top: 2px solid var(--g-25);
   color: var(--g-44);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
   padding: 14px 16px;
 }
 
@@ -1002,6 +1005,12 @@ th {
 
 
 
+
+  .footer-note {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
 
   .mini-index {
     grid-template-columns: 1fr;
