@@ -3,11 +3,17 @@ type NavLink = { href: string; label: string; external?: boolean; action?: boole
 
 const links: NavLink[] = [
   { href: "/docs", label: "Documentation" },
-  { href: "/#resources", label: "Source Code" },
+  { href: "https://github.com/eliheuer/runebender-gpui", label: "Source Code", external: true },
   { href: "/gpui/index.html", label: "Launch Editor" },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+// On the home page the brand launches the editor; everywhere else it
+// goes home.
+const isHome = current === "/";
+const brandHref = isHome ? "/gpui/index.html" : "/";
+const brandLabel = isHome ? "Launch the Runebender editor" : "Runebender home";
+
 const isCurrent = (href: string) => {
   if (href.startsWith("http")) return false;
   const target = href.replace(/\/$/, "") || "/";
@@ -16,7 +22,7 @@ const isCurrent = (href: string) => {
 ---
 
 <header class="site-header">
-  <a class="brand" href="/gpui/index.html" aria-label="Launch the Runebender editor">
+  <a class="brand" href={brandHref} aria-label={brandLabel}>
     <span>Runebender</span>
   </a>
   <nav aria-label="Primary navigation">
