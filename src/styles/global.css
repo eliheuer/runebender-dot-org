@@ -1,6 +1,8 @@
 @font-face {
   font-family: "Virtua Grotesk";
-  src: url("/fonts/VirtuaGrotesk-Regular.woff2") format("woff2");
+  src: url("/fonts/VirtuaGroteskVF.woff2") format("woff2-variations");
+  /* The file carries wght 400-700; the site stays on 400 while the
+     design is in flux. Widen this range when bold joins. */
   font-weight: 400;
   font-style: normal;
   font-display: swap;
