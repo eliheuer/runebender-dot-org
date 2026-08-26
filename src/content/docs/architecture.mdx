@@ -1,6 +1,6 @@
 ---
-title: "Xilem architecture."
-navLabel: "Xilem architecture"
+title: "Xilem Architecture."
+navLabel: "Xilem Architecture"
 eyebrow: "Architecture"
 lede: "A contributor-level map of the Runebender Xilem source architecture. This page is intentionally structural: it explains where responsibilities live without turning internal modules into a stable API contract."
 status: "Alpha architecture map"
@@ -13,7 +13,7 @@ description: "Runebender Xilem architecture map for contributors and documentati
 
 import DocSection from "../../components/DocSection.astro";
 
-<DocSection title="Application flow">
+<DocSection title="Application Flow">
 
 The app starts in `src/main.rs`, calls into `runebender::run`, builds Xilem state, then switches between welcome, glyph grid, and editor surfaces depending on loaded font state.
 
@@ -30,7 +30,7 @@ The app starts in `src/main.rs`, calls into `runebender::run`, builds Xilem stat
 
 </DocSection>
 
-<DocSection title="State model">
+<DocSection title="State Model">
 
 `src/data/mod.rs` describes `AppState` as the central application state that drives the Xilem reactive UI.
 
@@ -42,7 +42,7 @@ The app starts in `src/main.rs`, calls into `runebender::run`, builds Xilem stat
 
 </DocSection>
 
-<DocSection title="Editing layers">
+<DocSection title="Editing Layers">
 
 <table>
   <caption>Interaction model</caption>
@@ -57,7 +57,7 @@ The app starts in `src/main.rs`, calls into `runebender::run`, builds Xilem stat
 
 </DocSection>
 
-<DocSection title="Data and geometry">
+<DocSection title="Data and Geometry">
 
 <table>
   <caption>Source data</caption>
@@ -72,7 +72,7 @@ The app starts in `src/main.rs`, calls into `runebender::run`, builds Xilem stat
 
 </DocSection>
 
-<DocSection title="Use this page">
+<DocSection title="Use This Page">
 
 - Use [Source map](/docs/source-map.html) for file-level orientation.
 - Use this page for subsystem boundaries and responsibility flow.
