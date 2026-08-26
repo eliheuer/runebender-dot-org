@@ -1,34 +1,9 @@
 ---
-type FooterLink = { href: string; label: string; external?: boolean };
-
-const links: FooterLink[] = [
-  { href: "/docs", label: "Documentation" },
-  { href: "/#source", label: "Source Code" },
-  {
-    href: "https://xi.zulipchat.com/#narrow/channel/197075-runebender",
-    label: "Zulip",
-    external: true,
-  },
-  { href: "/docs/alpha-limits.html", label: "Alpha Limits" },
-];
 ---
 
 <footer class="site-footer">
-  <div class="footer-links">
-    {
-      links.map(({ href, label, external }) => (
-        <a
-          href={href}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noreferrer" : undefined}
-        >
-          {label}
-        </a>
-      ))
-    }
-  </div>
   <div class="footer-note">
-    <span>Runebender Is Alpha Software. Work On Copies.</span>
+    <span>Runebender Is Alpha Software.</span>
     <span>Apache-2.0 or MIT</span>
   </div>
 </footer>
