@@ -359,6 +359,10 @@ h3 {
 .manifesto p,
 .resource-links span {
   color: var(--muted);
+  /* One line per description; the copy is written to fit. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tool-strip {
@@ -1085,67 +1089,9 @@ th {
     gap: 4px;
     grid-template-columns: 1fr;
   }
-}
 
-/* The community note reads as a normal section, not a dark slab. */
-.community-section {
-  border-top: 2px solid var(--line);
-}
-
-.community-section a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Source code list: full-bleed rows, name and one-line description.
-   Each rule runs from window edge to window edge. */
-.repo-section {
-  padding-bottom: 0;
-}
-
-.repo-list {
-  border-top: 2px solid var(--line);
-  margin-inline: -20px;
-  margin-top: 24px;
-}
-
-.repo-list a {
-  align-items: baseline;
-  border-bottom: 2px solid var(--line);
-  display: grid;
-  gap: 24px;
-  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-  padding: 14px 20px;
-}
-
-.repo-list a:last-child {
-  border-bottom: 0;
-}
-
-.repo-list a:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.repo-list span {
-  color: var(--muted);
-  /* One line per description; the copy is written to fit. */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.repo-list a:hover span {
-  color: var(--reverse);
-}
-
-@media (max-width: 720px) {
-  .repo-list a {
-    gap: 6px;
-    grid-template-columns: 1fr;
-  }
-
-  .repo-list span {
+  .resource-links span {
     white-space: normal;
   }
 }
+
