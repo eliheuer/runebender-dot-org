@@ -795,33 +795,13 @@ th {
   /* No rule here: .footer-note draws the only one. */
 }
 
-/* The footer mirrors the header: equal cells, one word each, the same
-   invert on hover. Every rule runs to a window edge or another rule. */
-.footer-links {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
 
-.footer-links a {
-  border-right: 2px solid var(--g-25);
-  padding: 14px 16px;
-}
 
-.footer-links a:last-child {
-  border-right: 0;
-}
 
-.footer-links a:hover {
-  background: var(--g-25);
-  color: var(--g-76);
-}
 
 .footer-note {
   border-top: 2px solid var(--g-25);
   color: var(--g-44);
-  display: flex;
-  gap: 16px;
-  justify-content: space-between;
   padding: 14px 16px;
 }
 
@@ -1020,23 +1000,8 @@ th {
     border-top: 0;
   }
 
-  .footer-links {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
-  .footer-links a:nth-child(2n) {
-    border-right: 0;
-  }
 
-  .footer-links a:nth-child(-n + 2) {
-    border-bottom: 2px solid var(--g-25);
-  }
-
-  .footer-note {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
-  }
 
   .mini-index {
     grid-template-columns: 1fr;
