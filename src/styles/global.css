@@ -656,7 +656,10 @@ h3 {
 }
 
 .mini-index {
-  border-top: 2px solid var(--g-25);
+  /* A closed box. The cells draw the bottom rule, so the container
+     leaves that side to them. */
+  border: 2px solid var(--g-25);
+  border-bottom: 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
@@ -672,6 +675,13 @@ h3 {
 
 .mini-index a:nth-child(2n) {
   border-right: 0;
+}
+
+/* An odd number of items would leave the last cell with a divider
+   running into an empty slot. Let it take the whole row instead. */
+.mini-index a:last-child:nth-child(odd) {
+  border-right: 0;
+  grid-column: 1 / -1;
 }
 
 .mini-index span {
