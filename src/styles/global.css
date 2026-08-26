@@ -53,10 +53,13 @@
   background: transparent;
 }
 
+/* No overflow clip on the root or body: the header's divider
+   rails extend above the document top and must stay paintable in
+   the rubber-band overscroll area. Horizontal overflow is handled
+   where it can occur (tables, nav), not globally. */
 html {
   scroll-behavior: smooth;
   max-width: 100%;
-  overflow-x: hidden;
 }
 
 html {
@@ -72,7 +75,6 @@ body {
     -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   line-height: 1.35;
-  overflow-x: hidden;
 }
 
 /* Virtua Grotesk ships one weight; nothing on the site fakes a
