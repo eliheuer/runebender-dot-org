@@ -804,13 +804,39 @@ th {
 }
 
 .site-footer {
-  align-items: center;
+  border-top: 2px solid var(--line);
+}
+
+/* The footer mirrors the header: equal cells, one word each, the same
+   invert on hover. Every rule runs to a window edge or another rule. */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.footer-links a {
+  border-right: 2px solid var(--line);
+  font-size: var(--text-base);
+  padding: 14px 16px;
+}
+
+.footer-links a:last-child {
+  border-right: 0;
+}
+
+.footer-links a:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.footer-note {
   border-top: 2px solid var(--line);
   color: var(--muted);
   display: flex;
   font-size: var(--text-base);
+  gap: 16px;
   justify-content: space-between;
-  padding: 18px 34px;
+  padding: 14px 16px;
 }
 
 @media (max-width: 1060px) {
@@ -1016,11 +1042,22 @@ th {
     border-top: 0;
   }
 
-  .site-footer {
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-links a:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .footer-links a:nth-child(-n + 2) {
+    border-bottom: 2px solid var(--line);
+  }
+
+  .footer-note {
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
-    padding: 18px 22px;
   }
 
   .mini-index {
