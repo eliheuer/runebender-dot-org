@@ -34,32 +34,20 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
       </figure>
     </section>
 
-    <section class="section get-section" id="get" aria-label="Ways to Run Runebender">
-      <div class="family-grid">
-        <article class="family-card core-card">
-          <span>Default · Browser</span>
-          <h3><a href="/gpui/index.html">Runebender GPUI</a></h3>
-          <p>
-            The current editor, compiled to WebAssembly. Variable fonts, Arabic and RTL shaping,
-            smart components, and export.
-          </p>
-        </article>
-        <article class="family-card">
-          <span>Native · Build From Source</span>
-          <h3><a href="/docs/install.html">Runebender Xilem</a></h3>
-          <p>
-            The native desktop editor, written in Rust on Xilem. The install guide covers the
-            build.
-          </p>
-        </article>
-        <article class="family-card">
-          <span>Earlier · Browser</span>
-          <h3><a href="/cloud/editor/index.html">Runebender Cloud</a></h3>
-          <p>
-            The first web build. Small and stable, kept for comparison and for links that already
-            point at it.
-          </p>
-        </article>
+    <section class="section install-section" id="install" aria-labelledby="install-title">
+      <div>
+        <div class="section-kicker">Quick Install</div>
+        <h2 id="install-title">Run It Natively.</h2>
+      </div>
+      <div class="install-steps">
+        <p>Install the default editor with cargo, then open a font from anywhere.</p>
+        <pre><code>cargo install --locked --git https://github.com/eliheuer/runebender-gpui
+runebender-gpui path/to/Font.designspace</code></pre>
+        <p>
+          Use <code>--locked</code>: several dependencies track a git branch, and the committed
+          lockfile holds the revisions the editor is known to build against. The repository pins
+          the stable Rust toolchain.
+        </p>
       </div>
     </section>
 
