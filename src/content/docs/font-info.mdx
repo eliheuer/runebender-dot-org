@@ -1,0 +1,91 @@
+---
+title: "Font Info."
+navLabel: "Font Info"
+eyebrow: "Editing"
+lede: "Names, vertical metrics, and the PostScript hinting values, per master. These are the numbers that decide how the font sits on a line of text everywhere it is used."
+status: "Implemented"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Names and metrics are editable; more of Font Info comes later"
+order: 15
+description: "Editing font names and vertical metrics in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Where It Is">
+
+The Font Info section appears in the right panel in the grid view. It
+edits the active master and writes to that master's
+`fontinfo.plist`.
+
+Switch masters in the Masters section to edit another one.
+
+</DocSection>
+
+<DocSection title="Names">
+
+<table>
+  <caption>Names</caption>
+  <tbody>
+    <tr><th>Family Name</th><td>The family every style belongs to.</td></tr>
+    <tr><th>Style Name</th><td>This master's style.</td></tr>
+    <tr><th>UPM</th><td>Units per em. The coordinate grid everything else is measured in.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  Change UPM only at the start of a project. Every coordinate in the
+  font is expressed in these units, and changing it later does not
+  rescale the drawings.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Vertical Metrics">
+
+<table>
+  <caption>Vertical metrics</caption>
+  <tbody>
+    <tr><th>Ascender, Descender</th><td>The UFO values, used by the editor and by tools reading the source.</td></tr>
+    <tr><th>Cap Height</th><td>The height of the capitals.</td></tr>
+    <tr><th>Italic Angle</th><td>The slant, in degrees.</td></tr>
+    <tr><th>typoAsc, typoDesc, typoGap</th><td>The OS/2 typographic values.</td></tr>
+    <tr><th>hheaAsc, hheaDesc, hheaGap</th><td>The hhea values.</td></tr>
+    <tr><th>winAsc, winDesc</th><td>The OS/2 Windows values, which govern clipping.</td></tr>
+  </tbody>
+</table>
+
+Three sets of vertical metrics exist because different systems read
+different ones. They need to agree, or a line of text sits at
+different heights in different applications.
+
+The Compare section reports vertical metrics that disagree between
+masters, which is the other way they go wrong.
+
+</DocSection>
+
+<DocSection title="Hinting Values">
+
+<table>
+  <caption>PostScript values</caption>
+  <tbody>
+    <tr><th>Blue Values, Other Blues</th><td>The alignment zones: baseline, x-height, cap height, and the overshoots around them.</td></tr>
+    <tr><th>Stems V, Stems H</th><td>The dominant stem widths, vertical and horizontal.</td></tr>
+  </tbody>
+</table>
+
+The Dimensions section measures the stems actually present in your
+reference glyphs, per master. Use it to check that the values you
+typed here match what you drew.
+
+</DocSection>
+
+<DocSection title="Axes and Instances">
+
+Axes, instances, and axis mappings belong to the designspace rather
+than to one master, so they live in the Axes section. See
+[Masters and Interpolation](/docs/masters.html).
+
+</DocSection>

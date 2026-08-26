@@ -7,7 +7,7 @@ status: "Implemented"
 audience: "Type designers working on variable fonts"
 source: "The current editor build"
 stability: "Stable"
-order: 9
+order: 10
 description: "Masters, axes, interpolation, and intermediate layers in Runebender."
 ---
 
@@ -109,6 +109,23 @@ negative ease means it arrives early.
 Only the selected points ease. The rest stay on the straight
 interpolation, which keeps the layer point-compatible with its
 neighbours.
+
+</DocSection>
+
+<DocSection title="Trajectories">
+
+Between two masters, a point normally travels in a straight line. A
+trajectory bends that line.
+
+Turn on Trajectories with the select tool and each node shows a knob
+at the middle of its path. Drag the knob and the node's interpolation
+curves through that point instead of running straight, which is how
+you keep a stem from bowing or a joint from pinching partway through
+a weight axis.
+
+The intermediate points are stored on the axis-minimum master so they
+stay editable. What compilers consume is the baked intermediate
+layer, so the result is standard designspace either way.
 
 </DocSection>
 

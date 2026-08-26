@@ -128,6 +128,82 @@ designspace back to disk and shows the time in the header.
 - Masters: Work across a designspace.
 
 
+## Opening and Saving
+https://runebender.org/docs/opening.html
+
+Runebender edits UFO and designspace sources in place. It also opens Glyphs files and compiled fonts by converting them, and it never writes over a file it cannot round-trip.
+
+### What Opens
+
+Formats:
+- .designspace: Opens every master it names. This is the normal way to work on a family.
+- .ufo: Opens as a single master.
+- A directory: Opens the sources it holds.
+- .glyphs: Converted to UFO and designspace files in a sibling directory, then opened. See below.
+- .ttf, .otf: A compiled font opens as an editable UFO in memory. See below.
+
+Use File, Open, or start the editor with a path.
+
+    runebender-gpui path/to/Font.designspace
+
+### Glyphs Files
+
+Opening a .glyphs file converts it to UFO plus designspace files in
+a sibling directory and opens those. The original is left alone.
+
+From then on you are working on the converted files: saving writes
+them, and exporting compiles them. Runebender is not a Glyphs editor
+that happens to read UFO. It is a UFO editor that can take a Glyphs
+file as a starting point.
+
+Smart components, metric keys, and the other Glyphs constructs
+survive the conversion, because Runebender stores them in the same
+glyphsLib keys. See File Format.
+
+### Compiled Fonts
+
+A .ttf or .otf opens as an editable UFO built in memory from the
+binary. It is a way to look inside a font, take a shape out of one, or
+start from something that only exists compiled.
+
+Saving writes that UFO next to the binary. It never writes over the
+binary, and exporting compiles from the UFO rather than touching the
+original file.
+
+### A New Font
+
+Cmd+N creates an untitled UFO with Google Fonts metrics
+and the Latin Core glyph set as empty encoded glyphs, then asks where
+to save it.
+
+Starting from a real glyph set rather than an empty file means the
+grid, the language coverage rows, and the search all do something from
+the first minute.
+
+### Saving
+
+File menu:
+- Save: Cmd+S. Writes every changed master back to disk.
+- Save As…: Cmd+Shift+S. Choose a new location.
+- Export…: Cmd+E. Builds a font file. See Exporting.
+
+The header shows the path of the open font and the time of the last
+save, so you can tell whether what is on screen is on disk.
+
+Runebender writes your sources in place. Keep them in version
+control. A UFO is a directory of small files, so a day's drawing
+reads as a reviewable diff.
+
+### Changes From Outside
+
+Runebender watches the files it has open. Edit a UFO with another
+tool, run a script over it, or check out a different branch, and the
+editor reloads.
+
+That makes it reasonable to keep the editor open while working on the
+same font from a terminal.
+
+
 ## The Interface
 https://runebender.org/docs/interface.html
 
@@ -669,6 +745,21 @@ Only the selected points ease. The rest stay on the straight
 interpolation, which keeps the layer point-compatible with its
 neighbours.
 
+### Trajectories
+
+Between two masters, a point normally travels in a straight line. A
+trajectory bends that line.
+
+Turn on Trajectories with the select tool and each node shows a knob
+at the middle of its path. Drag the knob and the node's interpolation
+curves through that point instead of running straight, which is how
+you keep a stem from bowing or a joint from pinching partway through
+a weight axis.
+
+The intermediate points are stored on the axis-minimum master so they
+stay editable. What compilers consume is the baked intermediate
+layer, so the result is standard designspace either way.
+
 ### Shape Switches
 
 A shape switch swaps one drawing for another partway along an axis:
@@ -963,6 +1054,249 @@ Drag the space between two glyphs to kern the pair. This is the
 working path, because you set the value while looking at the pair at
 size in a real word. See
 [Spacing and Kerning](/docs/spacing.html).
+
+
+## Font Info
+https://runebender.org/docs/font-info.html
+
+Names, vertical metrics, and the PostScript hinting values, per master. These are the numbers that decide how the font sits on a line of text everywhere it is used.
+
+### Where It Is
+
+The Font Info section appears in the right panel in the grid view. It
+edits the active master and writes to that master's
+fontinfo.plist.
+
+Switch masters in the Masters section to edit another one.
+
+### Names
+
+Names:
+- Family Name: The family every style belongs to.
+- Style Name: This master's style.
+- UPM: Units per em. The coordinate grid everything else is measured in.
+
+Change UPM only at the start of a project. Every coordinate in the
+font is expressed in these units, and changing it later does not
+rescale the drawings.
+
+### Vertical Metrics
+
+Vertical metrics:
+- Ascender, Descender: The UFO values, used by the editor and by tools reading the source.
+- Cap Height: The height of the capitals.
+- Italic Angle: The slant, in degrees.
+- typoAsc, typoDesc, typoGap: The OS/2 typographic values.
+- hheaAsc, hheaDesc, hheaGap: The hhea values.
+- winAsc, winDesc: The OS/2 Windows values, which govern clipping.
+
+Three sets of vertical metrics exist because different systems read
+different ones. They need to agree, or a line of text sits at
+different heights in different applications.
+
+The Compare section reports vertical metrics that disagree between
+masters, which is the other way they go wrong.
+
+### Hinting Values
+
+PostScript values:
+- Blue Values, Other Blues: The alignment zones: baseline, x-height, cap height, and the overshoots around them.
+- Stems V, Stems H: The dominant stem widths, vertical and horizontal.
+
+The Dimensions section measures the stems actually present in your
+reference glyphs, per master. Use it to check that the values you
+typed here match what you drew.
+
+### Axes and Instances
+
+Axes, instances, and axis mappings belong to the designspace rather
+than to one master, so they live in the Axes section. See
+[Masters and Interpolation](/docs/masters.html).
+
+
+## Checking a Font
+https://runebender.org/docs/checking.html
+
+Runebender measures things it could ask you to eyeball: stem weights across masters, structural compatibility, joining bands, curvature. Use them before you export, not after someone reports a bug.
+
+### Across Masters
+
+The Compare section in the grid view puts every master against the
+active one.
+
+What Compare reports:
+- Glyph count: A master missing glyphs the others have.
+- Structural incompatibilities: Glyphs that cannot interpolate, listed rather than discovered one at a time.
+- Differing advances: Widths that disagree where they should not.
+- Kerning pairs: The count per master, which catches kerning that only got done once.
+- Vertical metrics: Values that disagree between masters.
+
+Run Compare before hunting an interpolation problem glyph by glyph.
+It usually names the glyph for you.
+
+### Weights
+
+The Dimensions section measures stems and bars from the reference
+glyphs in each master. The numbers are measured from the outlines, not
+typed in, so they say what you drew rather than what you meant.
+
+Use it to check that a designspace's weights step evenly, and to check
+the Stems values in
+[Font Info](/docs/font-info.html) against reality.
+
+### Curves
+
+The Curves section draws a curvature comb and a continuity display
+over the glyph. A kink that is invisible at text size shows as a break
+in the comb.
+
+Harmonize, Balance, and Fit Curve are the usual repairs. See
+[Paths and Filters](/docs/paths.html).
+
+### Outlines
+
+Before export:
+- Correct Path Direction: Outer contours one way, holes the other.
+- Tidy Up Paths: Zero-length segments, which are invisible and break interpolation.
+- Round Coordinates: Whole units, if that is your convention.
+- Bake Masks: Makes mask subtraction real, so the exported outline matches the preview.
+
+### Joining
+
+Glyph, Check Joining measures the connecting stroke's band at the
+joining edges of every positional form, finds the font's common band,
+and selects every form that misses it.
+
+It is the difference between a cursive script that joins and one that
+nearly joins. See [Text and Shaping](/docs/text.html).
+
+### Measuring by Hand
+
+The measure tool colours the outline by thickness, labels handle and
+segment lengths, and measures stems, counters, and sidebearings. Turn
+on what you need in the Measure section while the tool is active. See
+[Tools](/docs/tools.html).
+
+### Reading the Text
+
+The last check is looking. Switch to the text tool, type real words in
+the scripts the font is for, and read them at size. The shaping
+inspector shows which characters produced which glyphs when something
+comes out wrong.
+
+
+## Workflows
+https://runebender.org/docs/workflows.html
+
+Short recipes for jobs that span several parts of the editor. Each one names the pages that cover the steps in detail.
+
+### Build an Accented Glyph
+
+1. Draw the base letter and the mark as separate glyphs.
+2. Put an anchor on the base where the mark belongs, and a matching
+one on the mark.
+3. Open the accented glyph. Add both as components from the context
+menu.
+4. The mark places itself from the anchors, and stays put when you
+edit the base.
+5. Run Generate in the Features section to write the mark feature
+from those anchors.
+
+See [Components and Anchors](/docs/components.html) and
+[Feature Code](/docs/features.html).
+
+### Draw From a Skeleton
+
+1. With the pen tool, draw open paths down the middle of the strokes.
+2. Select them, or select nothing to take the whole glyph.
+3. Run Filter, Expand Stroke and type a weight.
+4. Clean up with Remove Overlap and Correct Path Direction.
+
+Keep the skeleton in a backup layer, and you can re-expand it at a
+different weight instead of redrawing.
+
+See [Paths and Filters](/docs/paths.html).
+
+### Add a Weight
+
+1. Copy the UFO of an existing master and add it to the designspace as
+a new source.
+2. Open the designspace. The new master appears in the Masters
+section.
+3. Draw the extremes of the weight, then use the axis sliders to check
+what falls between.
+4. Run Compare to find glyphs that no longer interpolate.
+5. Where the middle is wrong but the ends are right, add an
+intermediate layer rather than another master.
+
+See [Masters and Interpolation](/docs/masters.html) and
+[Checking a Font](/docs/checking.html).
+
+### Space and Kern a Font
+
+1. Set widths and sidebearings on the control characters first, using
+the bottom bar.
+2. Use metric keys so related glyphs follow one another instead of
+being spaced twice.
+3. Run Glyph, Update Metrics to apply every key.
+4. Switch to the text tool and kern by dragging, in real words.
+5. Put glyphs that kern alike into groups, so one value covers many
+pairs.
+6. Audit the result in the Kerning section.
+
+See [Spacing and Kerning](/docs/spacing.html).
+
+### Start an Arabic Font
+
+1. Name the positional forms by convention: beh.init, beh.medi,
+beh.fina, with beh as the isolated form.
+2. Put entry and exit anchors on the joining edges.
+3. Run Generate in the Features section. It writes init, medi,
+fina, and curs from those names and anchors.
+4. Press Apply, then type words with the text tool and read them.
+5. Run Glyph, Check Joining. It selects every form whose connecting
+stroke misses the font's common band.
+6. Use the Shaping section when a word comes out wrong: it shows which
+characters produced which glyphs.
+
+See [Text and Shaping](/docs/text.html).
+
+### Trace a Drawing
+
+1. Glyph, Place Image… puts a bitmap behind the glyph.
+2. Glyph, Trace Image… converts it to contours. It is undoable.
+3. Tidy the result: Optimize, then Add Extremes, then Correct Path
+Direction.
+
+For a cleaner result, trace to get the shape and then redraw over it
+with the pen tool, using the image as a reference rather than as the
+outline.
+
+See [Glyphs](/docs/glyphs.html).
+
+### Make a Variable Font
+
+1. Draw the masters and keep them compatible as you go.
+2. Add instances at the positions the family should name.
+3. Add avar mappings if the axis should not be linear in user space.
+4. Run Compare and fix what it reports.
+5. Export.
+
+Export runs your project's build script if it finds one, and
+compiles with fontc otherwise. See
+Exporting.
+
+### Work on a Font From a Terminal
+
+Runebender reloads files changed on disk, so a script and the editor
+can share a font.
+
+1. Keep the editor open on the designspace.
+2. Run your script over the UFO.
+3. The editor picks up the change.
+
+Keep the source in version control, so a script that goes wrong is one
+git checkout away from being undone.
 
 
 ## Shortcuts

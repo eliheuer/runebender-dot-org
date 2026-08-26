@@ -1,0 +1,104 @@
+---
+title: "Checking a Font."
+navLabel: "Checking a Font"
+eyebrow: "Editing"
+lede: "Runebender measures things it could ask you to eyeball: stem weights across masters, structural compatibility, joining bands, curvature. Use them before you export, not after someone reports a bug."
+status: "Implemented"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Stable"
+order: 16
+description: "Checking outlines, masters, and joining in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Across Masters">
+
+The Compare section in the grid view puts every master against the
+active one.
+
+<table>
+  <caption>What Compare reports</caption>
+  <tbody>
+    <tr><th>Glyph count</th><td>A master missing glyphs the others have.</td></tr>
+    <tr><th>Structural incompatibilities</th><td>Glyphs that cannot interpolate, listed rather than discovered one at a time.</td></tr>
+    <tr><th>Differing advances</th><td>Widths that disagree where they should not.</td></tr>
+    <tr><th>Kerning pairs</th><td>The count per master, which catches kerning that only got done once.</td></tr>
+    <tr><th>Vertical metrics</th><td>Values that disagree between masters.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  Run Compare before hunting an interpolation problem glyph by glyph.
+  It usually names the glyph for you.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Weights">
+
+The Dimensions section measures stems and bars from the reference
+glyphs in each master. The numbers are measured from the outlines, not
+typed in, so they say what you drew rather than what you meant.
+
+Use it to check that a designspace's weights step evenly, and to check
+the Stems values in
+[Font Info](/docs/font-info.html) against reality.
+
+</DocSection>
+
+<DocSection title="Curves">
+
+The Curves section draws a curvature comb and a continuity display
+over the glyph. A kink that is invisible at text size shows as a break
+in the comb.
+
+Harmonize, Balance, and Fit Curve are the usual repairs. See
+[Paths and Filters](/docs/paths.html).
+
+</DocSection>
+
+<DocSection title="Outlines">
+
+<table>
+  <caption>Before export</caption>
+  <tbody>
+    <tr><th>Correct Path Direction</th><td>Outer contours one way, holes the other.</td></tr>
+    <tr><th>Tidy Up Paths</th><td>Zero-length segments, which are invisible and break interpolation.</td></tr>
+    <tr><th>Round Coordinates</th><td>Whole units, if that is your convention.</td></tr>
+    <tr><th>Bake Masks</th><td>Makes mask subtraction real, so the exported outline matches the preview.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Joining">
+
+Glyph, Check Joining measures the connecting stroke's band at the
+joining edges of every positional form, finds the font's common band,
+and selects every form that misses it.
+
+It is the difference between a cursive script that joins and one that
+nearly joins. See [Text and Shaping](/docs/text.html).
+
+</DocSection>
+
+<DocSection title="Measuring by Hand">
+
+The measure tool colours the outline by thickness, labels handle and
+segment lengths, and measures stems, counters, and sidebearings. Turn
+on what you need in the Measure section while the tool is active. See
+[Tools](/docs/tools.html).
+
+</DocSection>
+
+<DocSection title="Reading the Text">
+
+The last check is looking. Switch to the text tool, type real words in
+the scripts the font is for, and read them at size. The shaping
+inspector shows which characters produced which glyphs when something
+comes out wrong.
+
+</DocSection>

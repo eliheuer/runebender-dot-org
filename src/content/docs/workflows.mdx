@@ -1,0 +1,141 @@
+---
+title: "Workflows."
+navLabel: "Workflows"
+eyebrow: "How-To"
+lede: "Short recipes for jobs that span several parts of the editor. Each one names the pages that cover the steps in detail."
+status: "How-to recipes"
+audience: "Type designers"
+source: "The current editor build"
+stability: "Steps are stable"
+order: 17
+description: "Common workflows in the Runebender font editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Build an Accented Glyph">
+
+1. Draw the base letter and the mark as separate glyphs.
+2. Put an anchor on the base where the mark belongs, and a matching
+   one on the mark.
+3. Open the accented glyph. Add both as components from the context
+   menu.
+4. The mark places itself from the anchors, and stays put when you
+   edit the base.
+5. Run Generate in the Features section to write the `mark` feature
+   from those anchors.
+
+See [Components and Anchors](/docs/components.html) and
+[Feature Code](/docs/features.html).
+
+</DocSection>
+
+<DocSection title="Draw From a Skeleton">
+
+1. With the pen tool, draw open paths down the middle of the strokes.
+2. Select them, or select nothing to take the whole glyph.
+3. Run Filter, Expand Stroke and type a weight.
+4. Clean up with Remove Overlap and Correct Path Direction.
+
+Keep the skeleton in a backup layer, and you can re-expand it at a
+different weight instead of redrawing.
+
+See [Paths and Filters](/docs/paths.html).
+
+</DocSection>
+
+<DocSection title="Add a Weight">
+
+1. Copy the UFO of an existing master and add it to the designspace as
+   a new source.
+2. Open the designspace. The new master appears in the Masters
+   section.
+3. Draw the extremes of the weight, then use the axis sliders to check
+   what falls between.
+4. Run Compare to find glyphs that no longer interpolate.
+5. Where the middle is wrong but the ends are right, add an
+   intermediate layer rather than another master.
+
+See [Masters and Interpolation](/docs/masters.html) and
+[Checking a Font](/docs/checking.html).
+
+</DocSection>
+
+<DocSection title="Space and Kern a Font">
+
+1. Set widths and sidebearings on the control characters first, using
+   the bottom bar.
+2. Use metric keys so related glyphs follow one another instead of
+   being spaced twice.
+3. Run Glyph, Update Metrics to apply every key.
+4. Switch to the text tool and kern by dragging, in real words.
+5. Put glyphs that kern alike into groups, so one value covers many
+   pairs.
+6. Audit the result in the Kerning section.
+
+See [Spacing and Kerning](/docs/spacing.html).
+
+</DocSection>
+
+<DocSection title="Start an Arabic Font">
+
+1. Name the positional forms by convention: `beh.init`, `beh.medi`,
+   `beh.fina`, with `beh` as the isolated form.
+2. Put entry and exit anchors on the joining edges.
+3. Run Generate in the Features section. It writes `init`, `medi`,
+   `fina`, and `curs` from those names and anchors.
+4. Press Apply, then type words with the text tool and read them.
+5. Run Glyph, Check Joining. It selects every form whose connecting
+   stroke misses the font's common band.
+6. Use the Shaping section when a word comes out wrong: it shows which
+   characters produced which glyphs.
+
+See [Text and Shaping](/docs/text.html).
+
+</DocSection>
+
+<DocSection title="Trace a Drawing">
+
+1. Glyph, Place Image… puts a bitmap behind the glyph.
+2. Glyph, Trace Image… converts it to contours. It is undoable.
+3. Tidy the result: Optimize, then Add Extremes, then Correct Path
+   Direction.
+
+For a cleaner result, trace to get the shape and then redraw over it
+with the pen tool, using the image as a reference rather than as the
+outline.
+
+See [Glyphs](/docs/glyphs.html).
+
+</DocSection>
+
+<DocSection title="Make a Variable Font">
+
+1. Draw the masters and keep them compatible as you go.
+2. Add instances at the positions the family should name.
+3. Add `avar` mappings if the axis should not be linear in user space.
+4. Run Compare and fix what it reports.
+5. Export.
+
+<Callout>
+  Export runs your project's build script if it finds one, and
+  compiles with fontc otherwise. See <a href="/docs/exporting.html">
+  Exporting</a>.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Work on a Font From a Terminal">
+
+Runebender reloads files changed on disk, so a script and the editor
+can share a font.
+
+1. Keep the editor open on the designspace.
+2. Run your script over the UFO.
+3. The editor picks up the change.
+
+Keep the source in version control, so a script that goes wrong is one
+`git checkout` away from being undone.
+
+</DocSection>

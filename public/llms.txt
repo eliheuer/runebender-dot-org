@@ -16,6 +16,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Documentation map](https://runebender.org/docs): every page, grouped.
 - [Install](https://runebender.org/docs/install.html): run it in the browser, or build the native application with cargo.
 - [First steps](https://runebender.org/docs/first-steps.html): open a font, draw, save.
+- [Opening and saving](https://runebender.org/docs/opening.html): UFO, designspace, .glyphs conversion, compiled font import, file watching.
 - [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.
 
 ## Editing
@@ -29,6 +30,13 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Feature code](https://runebender.org/docs/features.html): the features.fea editor, and generation of init/medi/fina, curs, mark, mkmk, ccmp, liga, and GDEF carets.
 - [Color fonts](https://runebender.org/docs/color.html): CPAL palettes, layers, COLRv0 and v1, gradients.
 - [Text and shaping](https://runebender.org/docs/text.html): editing in text context, the shaping inspector, bidirectional carets, cursive joining, script and language overrides.
+
+- [Font info](https://runebender.org/docs/font-info.html): names, vertical metrics, and PostScript hinting values.
+- [Checking a font](https://runebender.org/docs/checking.html): compare masters, measure stems, verify joining and curvature.
+
+## How-To
+
+- [Workflows](https://runebender.org/docs/workflows.html): accented glyphs, monoline drawing, adding a weight, spacing and kerning, starting an Arabic font, tracing, variable fonts, scripting alongside the editor.
 
 ## Reference
 

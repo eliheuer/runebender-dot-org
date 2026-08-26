@@ -5,6 +5,7 @@ import MiniIndex from "../../components/MiniIndex.astro";
 const start = [
   { href: "/docs/install.html", title: "Install", description: "Run it in the browser, or build the native application with cargo." },
   { href: "/docs/first-steps.html", title: "First Steps", description: "Open a font, draw a shape, and save." },
+  { href: "/docs/opening.html", title: "Opening and Saving", description: "What opens, what converts, and how saving works." },
   { href: "/docs/interface.html", title: "The Interface", description: "What each panel and bar does." },
 ];
 
@@ -18,6 +19,12 @@ const editing = [
   { href: "/docs/features.html", title: "Feature Code", description: "Edit features.fea, or generate it from names and anchors." },
   { href: "/docs/color.html", title: "Color Fonts", description: "Palettes, layers, and COLRv0 or v1." },
   { href: "/docs/text.html", title: "Text and Shaping", description: "Type in context, including Arabic and other RTL scripts." },
+  { href: "/docs/font-info.html", title: "Font Info", description: "Names, vertical metrics, and hinting values." },
+  { href: "/docs/checking.html", title: "Checking a Font", description: "Compare masters, measure weights, verify joining." },
+];
+
+const howto = [
+  { href: "/docs/workflows.html", title: "Workflows", description: "Recipes for jobs that span several parts of the editor." },
 ];
 
 const reference = [
@@ -64,6 +71,11 @@ const reference = [
   <section class="doc-section">
     <h2>Editing</h2>
     <div><MiniIndex items={editing} /></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>How-To</h2>
+    <div><MiniIndex items={howto} /></div>
   </section>
 
   <section class="doc-section">

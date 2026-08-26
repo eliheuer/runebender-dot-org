@@ -11,6 +11,7 @@ paths="
 /docs
 /docs/install.html
 /docs/first-steps.html
+/docs/opening.html
 /docs/interface.html
 /docs/tools.html
 /docs/glyphs.html
@@ -21,6 +22,9 @@ paths="
 /docs/features.html
 /docs/color.html
 /docs/text.html
+/docs/font-info.html
+/docs/checking.html
+/docs/workflows.html
 /docs/shortcuts.html
 /docs/format.html
 /docs/exporting.html

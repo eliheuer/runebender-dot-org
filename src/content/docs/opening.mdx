@@ -1,0 +1,112 @@
+---
+title: "Opening and Saving."
+navLabel: "Opening and Saving"
+eyebrow: "Start Here"
+lede: "Runebender edits UFO and designspace sources in place. It also opens Glyphs files and compiled fonts by converting them, and it never writes over a file it cannot round-trip."
+status: "Implemented"
+audience: "Everyone"
+source: "The current editor build"
+stability: "Stable"
+order: 4
+description: "Opening, importing, and saving fonts in Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="What Opens">
+
+<table>
+  <caption>Formats</caption>
+  <tbody>
+    <tr><th><code>.designspace</code></th><td>Opens every master it names. This is the normal way to work on a family.</td></tr>
+    <tr><th><code>.ufo</code></th><td>Opens as a single master.</td></tr>
+    <tr><th>A directory</th><td>Opens the sources it holds.</td></tr>
+    <tr><th><code>.glyphs</code></th><td>Converted to UFO and designspace files in a sibling directory, then opened. See below.</td></tr>
+    <tr><th><code>.ttf</code>, <code>.otf</code></th><td>A compiled font opens as an editable UFO in memory. See below.</td></tr>
+  </tbody>
+</table>
+
+Use File, Open, or start the editor with a path.
+
+<CommandList commands={[
+  "runebender-gpui path/to/Font.designspace",
+]} />
+
+</DocSection>
+
+<DocSection title="Glyphs Files">
+
+Opening a `.glyphs` file converts it to UFO plus designspace files in
+a sibling directory and opens those. The original is left alone.
+
+From then on you are working on the converted files: saving writes
+them, and exporting compiles them. Runebender is not a Glyphs editor
+that happens to read UFO. It is a UFO editor that can take a Glyphs
+file as a starting point.
+
+<Callout>
+  Smart components, metric keys, and the other Glyphs constructs
+  survive the conversion, because Runebender stores them in the same
+  glyphsLib keys. See <a href="/docs/format.html">File Format</a>.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Compiled Fonts">
+
+A `.ttf` or `.otf` opens as an editable UFO built in memory from the
+binary. It is a way to look inside a font, take a shape out of one, or
+start from something that only exists compiled.
+
+Saving writes that UFO next to the binary. It never writes over the
+binary, and exporting compiles from the UFO rather than touching the
+original file.
+
+</DocSection>
+
+<DocSection title="A New Font">
+
+<code>Cmd+N</code> creates an untitled UFO with Google Fonts metrics
+and the Latin Core glyph set as empty encoded glyphs, then asks where
+to save it.
+
+Starting from a real glyph set rather than an empty file means the
+grid, the language coverage rows, and the search all do something from
+the first minute.
+
+</DocSection>
+
+<DocSection title="Saving">
+
+<table>
+  <caption>File menu</caption>
+  <tbody>
+    <tr><th>Save</th><td><code>Cmd+S</code>. Writes every changed master back to disk.</td></tr>
+    <tr><th>Save As…</th><td><code>Cmd+Shift+S</code>. Choose a new location.</td></tr>
+    <tr><th>Export…</th><td><code>Cmd+E</code>. Builds a font file. See <a href="/docs/exporting.html">Exporting</a>.</td></tr>
+  </tbody>
+</table>
+
+The header shows the path of the open font and the time of the last
+save, so you can tell whether what is on screen is on disk.
+
+<Callout>
+  Runebender writes your sources in place. Keep them in version
+  control. A UFO is a directory of small files, so a day's drawing
+  reads as a reviewable diff.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Changes From Outside">
+
+Runebender watches the files it has open. Edit a UFO with another
+tool, run a script over it, or check out a different branch, and the
+editor reloads.
+
+That makes it reasonable to keep the editor open while working on the
+same font from a terminal.
+
+</DocSection>
