@@ -13,6 +13,9 @@
   /* The whole site uses one size; add another only when a real
      need appears. */
   --text-base: 20px;
+  /* The one exception to the single size: monospace reads large
+     next to the sans at the same point size. */
+  --text-mono: 18px;
 
   /* The palette: a grayscale ramp, named by oklch lightness. Two
      knobs steer all of it - raise --tone-c above 0 to warm every
@@ -128,7 +131,7 @@ code {
   color: var(--g-16);
   display: inline-block;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 1em;
+  font-size: var(--text-mono);
   padding: 2px 5px;
   overflow-wrap: anywhere;
 }
@@ -292,7 +295,8 @@ h3 {
 
 .button.primary {
   background: var(--g-25);
-  color: var(--g-76);
+  /* Same light step as the text in the command blocks. */
+  color: var(--g-87);
 }
 
 .button.primary:hover {
@@ -1067,6 +1071,7 @@ th {
 }
 
 .install-steps pre {
+  font-size: var(--text-mono);
   /* Commands read as terminal output: light on dark. */
   background: var(--g-25);
   border: 2px solid var(--g-25);
