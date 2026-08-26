@@ -1037,3 +1037,13 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+/* The community note reads as a normal section, not a dark slab. */
+.community-section {
+  border-top: 2px solid var(--line);
+}
+
+.community-section a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

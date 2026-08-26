@@ -34,5 +34,84 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
       </figure>
     </section>
 
+    <section class="section family-section" id="get" aria-labelledby="get-title">
+      <div class="section-kicker">Get It</div>
+      <div class="section-heading">
+        <h2 id="get-title">Three Ways to Run Runebender.</h2>
+        <p>
+          Nothing to install unless you want to. GPUI is the default and gets the new work first.
+        </p>
+      </div>
+      <div class="family-grid">
+        <article class="family-card core-card">
+          <span>Default · Browser</span>
+          <h3><a href="/gpui/index.html">Runebender GPUI</a></h3>
+          <p>
+            The current editor, compiled to WebAssembly. Variable fonts, Arabic and RTL shaping,
+            smart components, and export.
+          </p>
+        </article>
+        <article class="family-card">
+          <span>Native · Build From Source</span>
+          <h3><a href="/docs/install.html">Runebender Xilem</a></h3>
+          <p>
+            The native desktop editor, written in Rust on Xilem. The install guide covers the
+            build.
+          </p>
+        </article>
+        <article class="family-card">
+          <span>Earlier · Browser</span>
+          <h3><a href="/cloud/editor/index.html">Runebender Cloud</a></h3>
+          <p>
+            The first web build. Small and stable, kept for comparison and for links that already
+            point at it.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section resource-section" id="source" aria-labelledby="source-title">
+      <div>
+        <div class="section-kicker">Source Code</div>
+        <h2 id="source-title">Every Repository, Apache-2.0 or MIT.</h2>
+      </div>
+      <div class="resource-links">
+        <a href="https://github.com/eliheuer/runebender-gpui">
+          <strong>runebender-gpui</strong>
+          <span>The current editor. Runs in the browser and as a native app from one codebase.</span>
+        </a>
+        <a href="https://github.com/eliheuer/runebender-core">
+          <strong>runebender-core</strong>
+          <span>The headless Rust library. Font operations with no interface attached.</span>
+        </a>
+        <a href="https://github.com/eliheuer/runebender-xilem">
+          <strong>runebender-xilem</strong>
+          <span>The native desktop editor built on Xilem.</span>
+        </a>
+        <a href="https://github.com/eliheuer/runebender-comfy">
+          <strong>runebender-comfy</strong>
+          <span>Node-based font work as ComfyUI custom nodes.</span>
+        </a>
+        <a href="https://github.com/linebender/runebender">
+          <strong>linebender/runebender</strong>
+          <span>The original Druid implementation, kept as project history.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section community-section" aria-labelledby="community-title">
+      <div class="section-kicker">Community</div>
+      <div class="section-heading">
+        <h2 id="community-title">Runebender Is Alpha Software.</h2>
+        <p>
+        Development happens in the open on
+        <a href="https://xi.zulipchat.com/#narrow/channel/197075-runebender">the Linebender Zulip</a>.
+        Keep your font sources under version control and work on copies. Read
+        <a href="/docs/alpha-limits.html">Alpha Limits</a> for what can still change, or start at the
+          <a href="/docs">documentation map</a>.
+        </p>
+      </div>
+    </section>
+
   </main>
 </BaseLayout>
