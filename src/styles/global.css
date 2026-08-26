@@ -135,7 +135,8 @@ code {
 
 .site-header {
   align-items: stretch;
-  background: color-mix(in oklab, var(--g-76) 94%, transparent);
+  background: color-mix(in oklab, var(--g-25) 94%, transparent);
+  color: var(--g-87);
   border-bottom: 2px solid var(--g-25);
   display: flex;
   position: sticky;
@@ -153,11 +154,11 @@ nav a {
 }
 
 .brand {
-  border-right: 2px solid var(--g-25);
+  border-right: 2px solid var(--g-76);
 }
 
 nav a {
-  border-left: 2px solid var(--g-25);
+  border-left: 2px solid var(--g-76);
 }
 
 .brand {
@@ -183,7 +184,16 @@ nav a {
 }
 
 .brand:hover,
-nav a:hover,
+nav a:hover {
+  background: var(--g-87);
+  color: var(--g-25);
+}
+
+nav a[aria-current="page"] {
+  background: var(--g-87);
+  color: var(--g-25);
+}
+
 .button:hover,
 .tool-strip a:hover,
 .family-card:hover,
@@ -199,11 +209,6 @@ nav a:hover,
 .family-card:hover span,
 .resource-links a:hover span {
   color: var(--g-87);
-}
-
-nav a[aria-current="page"] {
-  background: var(--g-25);
-  color: var(--g-76);
 }
 
 
@@ -743,7 +748,6 @@ th {
 }
 
 .resource-section {
-  background: var(--g-82);
   display: grid;
   gap: 44px;
   grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
@@ -793,7 +797,7 @@ th {
 }
 
 .site-footer {
-  border-top: 2px solid var(--g-25);
+  /* No rule here: .footer-note draws the only one. */
 }
 
 /* The footer mirrors the header: equal cells, one word each, the same
@@ -1116,4 +1120,15 @@ th {
   .install-section {
     grid-template-columns: 1fr;
   }
+}
+
+/* Home page sections alternate between the two lightest steps. The
+   background belongs to the position in the page, not to the
+   section's own class. */
+#top > section:nth-of-type(odd) {
+  background: var(--g-82);
+}
+
+#top > section:nth-of-type(even) {
+  background: var(--g-76);
 }
