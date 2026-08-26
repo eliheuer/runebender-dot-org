@@ -135,8 +135,7 @@ code {
 
 .site-header {
   align-items: stretch;
-  background: color-mix(in oklab, var(--g-25) 94%, transparent);
-  color: var(--g-87);
+  background: color-mix(in oklab, var(--g-73) 94%, transparent);
   border-bottom: 2px solid var(--g-25);
   display: flex;
   position: sticky;
@@ -154,11 +153,11 @@ nav a {
 }
 
 .brand {
-  border-right: 2px solid var(--g-76);
+  border-right: 2px solid var(--g-25);
 }
 
 nav a {
-  border-left: 2px solid var(--g-76);
+  border-left: 2px solid var(--g-25);
 }
 
 .brand {
@@ -184,21 +183,17 @@ nav a {
 }
 
 .brand:hover,
-nav a:hover {
-  background: var(--g-87);
-  color: var(--g-25);
-}
-
-nav a[aria-current="page"] {
-  background: var(--g-87);
-  color: var(--g-25);
-}
-
+nav a:hover,
 .button:hover,
 .tool-strip a:hover,
 .family-card:hover,
 .resource-links a:hover,
 .doc-index article:hover {
+  background: var(--g-25);
+  color: var(--g-76);
+}
+
+nav a[aria-current="page"] {
   background: var(--g-25);
   color: var(--g-76);
 }
