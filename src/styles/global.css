@@ -414,8 +414,21 @@ h3 {
   background: var(--panel);
 }
 
+/* No rule of its own: the card row ends in the cards' own bottom
+   border, so the divider stays the same 2px as every other line. */
 .family-section {
-  border-bottom: 2px solid var(--line);
+  border-bottom: 0;
+}
+
+/* The card row is the whole section: it butts against the hero rule
+   above and supplies the rule below. */
+.get-section {
+  padding: 0;
+}
+
+.get-section .family-grid {
+  border-top: 0;
+  margin: 0;
 }
 
 .family-grid {
@@ -741,7 +754,6 @@ th {
 
 .resource-section {
   background: var(--panel);
-  border-top: 2px solid var(--line);
   display: grid;
   gap: 44px;
   grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
