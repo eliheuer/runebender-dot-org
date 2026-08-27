@@ -18,7 +18,7 @@ const resolveLink = (link: { slug: string; label?: string; href?: string }) => {
   if (!entry) return null;
   return {
     slug: link.slug,
-    label: link.label ?? entry.data.navLabel ?? entry.data.title,
+    label: link.label ?? entry.data.title,
     href: link.href ?? `/docs/${link.slug}.html`,
   };
 };

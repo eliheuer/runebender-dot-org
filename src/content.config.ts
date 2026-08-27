@@ -5,7 +5,6 @@ const docs = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/docs" }),
   schema: z.object({
     title: z.string(),
-    navLabel: z.string().optional(),
     lede: z.string(),
     status: z.string(),
     audience: z.string(),
