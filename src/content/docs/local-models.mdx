@@ -49,11 +49,16 @@ config to see what you have.
 
 <DocSection title="Boldening">
 
-Open a glyph in the lighter master, then Glyph → Bolden With Model…,
-and choose a model directory. The editor predicts a heavier version of
-that glyph and installs it.
+Open the Local AI section of the left panel, then click the model row
+and choose a model directory. The editor remembers it for the session.
+
+Open a glyph in the lighter master and click Bolden this glyph. The
+editor predicts a heavier version and installs it. The button stays
+inactive until a glyph is open.
 
 The result is an ordinary edit. To reject it, undo.
+
+Glyph → Bolden With Model… does the same thing from the menu.
 
 <table>
   <caption>What you get</caption>
@@ -87,6 +92,36 @@ number of offsets does not match the number of points.
 
 </DocSection>
 
+<DocSection title="Strength">
+
+The slider under the model row scales how far the predicted points
+move. 1.00x applies the prediction as it came.
+
+Leave it at 1.00x unless you have a reason. Measured over 71 held-out
+glyphs, raising the strength made the result worse at every step: the
+model does not under-move uniformly, so scaling amplifies its mistakes
+along with its good guesses. The slider is there for the case where a
+model is right about direction and short on distance, which is a
+property of a particular model, not a general fix.
+
+</DocSection>
+
+<DocSection title="Scoring a Prediction">
+
+Click Score against the other master when both masters have the glyph
+drawn. The editor compares the prediction to the drawing you already
+made and reports two numbers: the model's average error per point, and
+the error from simply shifting every point by the average amount.
+
+Lower is better, and the second number is the one to beat. A model
+that cannot beat a uniform shift is not telling you anything a
+constant could not.
+
+This only works on glyphs you have already drawn in both masters, so
+it measures a model on known work before you trust it on unknown work.
+
+</DocSection>
+
 <DocSection title="What to Expect">
 
 Quality varies by glyph, and not evenly. Running the Virtua-12M model
@@ -97,6 +132,11 @@ Straight stems are easier to be right about than curves.
 Read the moved-point count in the status line as a rough confidence
 signal. A glyph where most points stayed put is one the model had
 little to say about.
+
+A good average score does not mean a usable drawing. Average point
+error says nothing about whether stems landed on the weights the
+family uses, which is what decides if a glyph reads correctly. Judge
+the drawing with your eyes and use the score to compare models.
 
 </DocSection>
 
