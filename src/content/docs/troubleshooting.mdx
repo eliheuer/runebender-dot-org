@@ -17,12 +17,12 @@ If the build fails inside `pathfinder_simd`, you are on a nightly
 toolchain. The repository pins a stable one in `rust-toolchain.toml`.
 Remove any override and let the pin apply.
 
-If cargo cannot resolve dependencies, or the build fails in a
-dependency you did not change, you probably installed without
-`--locked`.
+If the build fails in a dependency you did not change, install again.
+Every git dependency is pinned to a revision, so the graph is the same
+every time.
 
 <CommandList commands={[
-  "cargo install --locked --git https://github.com/eliheuer/runebender-gpui",
+  "cargo install --git https://github.com/eliheuer/runebender-gpui",
 ]} />
 
 </DocSection>

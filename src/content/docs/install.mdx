@@ -32,7 +32,7 @@ You need a Rust toolchain. Install one from
 Install the editor.
 
 <CommandList commands={[
-  "cargo install --locked --git https://github.com/eliheuer/runebender-gpui",
+  "cargo install --git https://github.com/eliheuer/runebender-gpui",
 ]} />
 
 Then open a font.
@@ -46,10 +46,8 @@ directory that holds them. Start it without a path to get an empty
 window, then use File, Open.
 
 <Callout>
-  Use `--locked`. Several dependencies track a git branch, and the
-  committed lockfile holds the revisions the editor is known to build
-  against. Without it, cargo resolves those dependencies to whatever
-  the branch tip is today.
+  Every git dependency is pinned to a revision, so a fresh install
+  resolves the same graph every time. No `--locked` needed.
 </Callout>
 
 </DocSection>
