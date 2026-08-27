@@ -7,8 +7,6 @@ const docs = defineCollection({
     title: z.string(),
     lede: z.string(),
     status: z.string(),
-    audience: z.string(),
-    source: z.string(),
     stability: z.string(),
     order: z.number(),
     description: z.string().optional(),

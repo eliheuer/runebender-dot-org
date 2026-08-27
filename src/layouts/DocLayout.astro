@@ -6,8 +6,6 @@ interface Props {
   title: string;
   lede: string;
   status: string;
-  audience: string;
-  source: string;
   stability: string;
   currentSlug?: string;
   description?: string;
@@ -17,8 +15,6 @@ const {
   title,
   lede,
   status,
-  audience,
-  source,
   stability,
   currentSlug,
   description,
@@ -38,8 +34,6 @@ const metaDescription = description ?? lede;
         <table class="page-summary">
           <tbody>
             <tr><th>Status</th><td>{status}</td></tr>
-            <tr><th>Audience</th><td>{audience}</td></tr>
-            <tr><th>Source</th><td>{source}</td></tr>
             <tr><th>Stability</th><td>{stability}</td></tr>
           </tbody>
         </table>
