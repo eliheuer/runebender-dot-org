@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Sidebar from "../components/Sidebar.astro";
+import { groupFor } from "../lib/doc-nav";
 
 interface Props {
   title: string;
@@ -11,14 +12,11 @@ interface Props {
   stability: string;
   currentSlug?: string;
   description?: string;
-  /** The docs index says its own name in the nav and the sidebar. */
-  hideHeading?: boolean;
 }
 
 const {
   title,
   lede,
-  hideHeading = false,
   status,
   audience,
   source,
@@ -27,6 +25,8 @@ const {
   description,
 } = Astro.props;
 
+// The label above the title is the sidebar group this page sits in.
+const section = groupFor(currentSlug);
 const pageTitle = `${title.replace(/\.$/, "")} / Runebender`;
 const metaDescription = description ?? lede;
 ---
@@ -36,7 +36,8 @@ const metaDescription = description ?? lede;
     <Sidebar currentSlug={currentSlug} />
     <article class="doc-page">
       <header class="doc-hero">
-        {!hideHeading && <h1>{title}</h1>}
+        {section && <p class="doc-section-label">{section}</p>}
+        <h1>{title}</h1>
         <p>{lede}</p>
         <table class="page-summary">
           <tbody>

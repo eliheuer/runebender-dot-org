@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { docGroups } from "../lib/doc-nav";
 
 interface Props {
   currentSlug?: string;
@@ -9,49 +10,7 @@ const { currentSlug } = Astro.props;
 const entries = await getCollection("docs");
 const bySlug = new Map(entries.map((entry) => [entry.id, entry]));
 
-const groups = [
-  {
-    label: "Start",
-    links: [
-      { slug: "index", label: "Docs Map", href: "/docs" },
-      { slug: "install" },
-      { slug: "first-steps" },
-      { slug: "opening" },
-      { slug: "interface" },
-    ],
-  },
-  {
-    label: "Editing",
-    links: [
-      { slug: "tools" },
-      { slug: "glyphs" },
-      { slug: "paths" },
-      { slug: "components" },
-      { slug: "masters" },
-      { slug: "spacing" },
-      { slug: "features" },
-      { slug: "color" },
-      { slug: "text" },
-      { slug: "font-info" },
-      { slug: "checking" },
-    ],
-  },
-  {
-    label: "How-To",
-    links: [{ slug: "workflows" }],
-  },
-  {
-    label: "Reference",
-    links: [
-      { slug: "shortcuts" },
-      { slug: "format" },
-      { slug: "exporting" },
-      { slug: "troubleshooting" },
-      { slug: "development" },
-      { slug: "glossary" },
-    ],
-  },
-];
+const groups = docGroups;
 
 const resolveLink = (link: { slug: string; label?: string; href?: string }) => {
   if (link.href && link.label) return link;
