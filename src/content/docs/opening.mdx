@@ -22,15 +22,13 @@ import CommandList from "../../components/CommandList.astro";
     <tr><th><code>.designspace</code></th><td>Opens every master it names. This is the normal way to work on a family.</td></tr>
     <tr><th><code>.ufo</code></th><td>Opens as a single master.</td></tr>
     <tr><th>A directory</th><td>Opens the sources it holds.</td></tr>
-    <tr><th><code>.glyphs</code></th><td>Converted to UFO and designspace files in a sibling directory, then opened. See below.</td></tr>
+    <tr><th><code>.glyphs</code>, <code>.glyphspackage</code></th><td>Converted to UFO and designspace files in a sibling directory, then opened. See below.</td></tr>
     <tr><th><code>.ttf</code>, <code>.otf</code></th><td>A compiled font opens as an editable UFO in memory. See below.</td></tr>
   </tbody>
 </table>
 
 <Callout>
-  Not yet: <code>.glyphspackage</code>, the directory form of a Glyphs
-  file. Save as a single <code>.glyphs</code> file to bring one in.
-  FontLab and FontForge sources are not read either.
+  FontLab and FontForge sources are not read.
 </Callout>
 
 Use File, Open, or start the editor with a path.
@@ -43,8 +41,10 @@ Use File, Open, or start the editor with a path.
 
 <DocSection title="Glyphs Files">
 
-Opening a `.glyphs` file converts it to UFO plus designspace files in
-a sibling directory and opens those. The original is left alone.
+Opening a `.glyphs` file or a `.glyphspackage` converts it to UFO plus
+designspace files in a sibling directory and opens those. The original
+is left alone. Both forms hold the same data, so both convert the same
+way.
 
 From then on you are working on the converted files: saving writes
 them, and exporting compiles them. Runebender is not a Glyphs editor
