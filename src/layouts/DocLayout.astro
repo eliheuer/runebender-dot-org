@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Sidebar from "../components/Sidebar.astro";
-import { groupFor } from "../lib/doc-nav";
 
 interface Props {
   title: string;
@@ -25,8 +24,6 @@ const {
   description,
 } = Astro.props;
 
-// The label above the title is the sidebar group this page sits in.
-const section = groupFor(currentSlug);
 const pageTitle = `${title} / Runebender`;
 const metaDescription = description ?? lede;
 ---
@@ -36,7 +33,6 @@ const metaDescription = description ?? lede;
     <Sidebar currentSlug={currentSlug} />
     <article class="doc-page">
       <header class="doc-hero">
-        {section && <p class="doc-section-label">{section}</p>}
         <h1>{title}</h1>
         <p>{lede}</p>
         <table class="page-summary">

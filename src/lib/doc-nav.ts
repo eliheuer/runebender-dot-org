@@ -1,8 +1,7 @@
 /** The documentation groups, in the order the sidebar shows them.
  *
- * One list, used by the sidebar and by the page header: the section
- * label above a page title is the group that page sits in, so the two
- * can never disagree. */
+ * The sidebar is the only place a group name appears; a page title
+ * comes from the page itself. */
 export type DocLink = { slug: string; label?: string; href?: string };
 export type DocGroup = { label: string; links: DocLink[] };
 
@@ -49,9 +48,3 @@ export const docGroups: DocGroup[] = [
     ],
   },
 ];
-
-/** The group a page belongs to, for the label above its title. */
-export function groupFor(slug: string | undefined): string | undefined {
-  if (!slug) return undefined;
-  return docGroups.find((g) => g.links.some((l) => l.slug === slug))?.label;
-}

@@ -590,10 +590,6 @@ h3 {
   padding: 20px;
 }
 
-.doc-section-label {
-  margin: 0 0 20px;
-}
-
 .doc-hero h1 {
   font-size: var(--text-title);
   letter-spacing: -0.02em;
