@@ -828,7 +828,10 @@ th {
   /* The name column is sized to the names, not to a share of the
      row, so the description starts right after it. */
   grid-template-columns: 210px minmax(0, 1fr);
-  padding: 18px;
+  /* Less padding above and below than at the sides, because the
+     line box already carries about 6px of leading on each side.
+     Equal numbers here would read as a taller gap than the side one. */
+  padding: 12px 18px;
 }
 
 .resource-links strong {
