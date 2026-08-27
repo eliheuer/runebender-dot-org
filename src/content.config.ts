@@ -6,7 +6,6 @@ const docs = defineCollection({
   schema: z.object({
     title: z.string(),
     navLabel: z.string().optional(),
-    eyebrow: z.string(),
     lede: z.string(),
     status: z.string(),
     audience: z.string(),

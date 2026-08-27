@@ -4,7 +4,6 @@ import Sidebar from "../components/Sidebar.astro";
 
 interface Props {
   title: string;
-  eyebrow: string;
   lede: string;
   status: string;
   audience: string;
@@ -12,12 +11,14 @@ interface Props {
   stability: string;
   currentSlug?: string;
   description?: string;
+  /** The docs index says its own name in the nav and the sidebar. */
+  hideHeading?: boolean;
 }
 
 const {
   title,
-  eyebrow,
   lede,
+  hideHeading = false,
   status,
   audience,
   source,
@@ -35,8 +36,7 @@ const metaDescription = description ?? lede;
     <Sidebar currentSlug={currentSlug} />
     <article class="doc-page">
       <header class="doc-hero">
-        <p class="eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
+        {!hideHeading && <h1>{title}</h1>}
         <p>{lede}</p>
         <table class="page-summary">
           <tbody>

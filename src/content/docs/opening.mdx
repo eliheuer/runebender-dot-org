@@ -1,7 +1,6 @@
 ---
 title: "Opening and Saving."
 navLabel: "Opening and Saving"
-eyebrow: "Start Here"
 lede: "Runebender edits UFO and designspace sources in place. It also opens Glyphs files and compiled fonts by converting them, and it never writes over a file it cannot round-trip."
 status: "Implemented"
 audience: "Everyone"
@@ -27,6 +26,12 @@ import CommandList from "../../components/CommandList.astro";
     <tr><th><code>.ttf</code>, <code>.otf</code></th><td>A compiled font opens as an editable UFO in memory. See below.</td></tr>
   </tbody>
 </table>
+
+<Callout>
+  Not yet: <code>.glyphspackage</code>, the directory form of a Glyphs
+  file. Save as a single <code>.glyphs</code> file to bring one in.
+  FontLab and FontForge sources are not read either.
+</Callout>
 
 Use File, Open, or start the editor with a path.
 

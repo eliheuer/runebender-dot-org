@@ -142,6 +142,10 @@ Formats:
 - .glyphs: Converted to UFO and designspace files in a sibling directory, then opened. See below.
 - .ttf, .otf: A compiled font opens as an editable UFO in memory. See below.
 
+Not yet: .glyphspackage, the directory form of a Glyphs
+file. Save as a single .glyphs file to bring one in.
+FontLab and FontForge sources are not read either.
+
 Use File, Open, or start the editor with a path.
 
     runebender-gpui path/to/Font.designspace
