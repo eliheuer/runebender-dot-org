@@ -1,6 +1,6 @@
 ---
 title: "Tutorial: Draw a Glyph"
-lede: "Draw a letter from nothing, space it, see it in a word, and save it. About twenty minutes, and it touches most of the editor."
+lede: "Draw a letter, space it, see it in a word, and save it. About twenty minutes."
 status: "Tutorial"
 stability: "Steps are stable"
 order: 19
@@ -63,8 +63,8 @@ The copy lands on top of the original. Drag it right, holding shift to
 keep it level.
 
 Draw the crossbar the same way, a rectangle between the two stems, a
-little above the middle. Optically the centre of a letter sits above
-the mathematical centre.
+little above the middle. The optical centre of a letter sits above the
+mathematical centre.
 
 </DocSection>
 
@@ -75,9 +75,9 @@ Three commands, in this order, before you go further.
 <table>
   <caption>Cleanup</caption>
   <tbody>
-    <tr><th>Path, Remove Overlap</th><td><code>Cmd+Shift+O</code>. Merges the three rectangles into one outline.</td></tr>
-    <tr><th>Path, Correct Path Direction</th><td><code>Cmd+Shift+R</code>. Sets the direction the fill rule expects.</td></tr>
-    <tr><th>Path, Tidy Up Paths</th><td><code>Cmd+Shift+T</code>. Drops any zero-length segments the overlap left.</td></tr>
+    <tr><th>Path → Remove Overlap</th><td><code>Cmd+Shift+O</code>. Merges the three rectangles into one outline.</td></tr>
+    <tr><th>Path → Correct Path Direction</th><td><code>Cmd+Shift+R</code>. Sets the direction the fill rule expects.</td></tr>
+    <tr><th>Path → Tidy Up Paths</th><td><code>Cmd+Shift+T</code>. Drops any zero-length segments the overlap left.</td></tr>
   </tbody>
 </table>
 
@@ -89,7 +89,7 @@ The bottom bar holds the advance width and the two sidebearings. Set
 both sidebearings to the same number to start; something near 80 units
 for a capital H at 1000 UPM.
 
-Spacing is judged in company, not alone, which is the next step.
+Spacing is judged in company, not alone.
 
 </DocSection>
 
@@ -104,18 +104,17 @@ sidebearing edges until they do. Everything you change shows up in the
 line as you change it.
 
 <Callout>
-  Nearly all spacing is done this way. A glyph alone tells you almost
-  nothing.
+  Space glyphs in company. A glyph on its own shows little.
 </Callout>
 
 </DocSection>
 
 <DocSection title="7. Check the Curves">
 
-Not needed for an H, but do it once now so you know where it is. Open
-the Curves section in the right panel and turn on the comb. On
-straight segments it is flat. On a letter with curves, a kink that is
-invisible at text size shows as a break in it.
+An H needs no curve checking, but find the control now. Open the
+Curves section in the right panel and turn on the comb. It is flat on
+straight segments. On curves, a kink invisible at text size shows as a
+break.
 
 </DocSection>
 

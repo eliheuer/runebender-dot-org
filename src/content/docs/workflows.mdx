@@ -1,6 +1,6 @@
 ---
 title: "Workflows"
-lede: "Short recipes for jobs that span several parts of the editor. Each one names the pages that cover the steps in detail."
+lede: "Short recipes for jobs that cross several parts of the editor."
 status: "How-to recipes"
 stability: "Steps are stable"
 order: 20
@@ -31,7 +31,7 @@ See [Components and Anchors](/docs/components.html) and
 
 1. With the pen tool, draw open paths down the middle of the strokes.
 2. Select them, or select nothing to take the whole glyph.
-3. Run Filter, Expand Stroke and type a weight.
+3. Run Filter → Expand Stroke and type a weight.
 4. Clean up with Remove Overlap and Correct Path Direction.
 
 Keep the skeleton in a backup layer, and you can re-expand it at a
@@ -64,7 +64,7 @@ See [Masters and Interpolation](/docs/masters.html) and
    the bottom bar.
 2. Use metric keys so related glyphs follow one another instead of
    being spaced twice.
-3. Run Glyph, Update Metrics to apply every key.
+3. Run Glyph → Update Metrics to apply every key.
 4. Switch to the text tool and kern by dragging, in real words.
 5. Put glyphs that kern alike into groups, so one value covers many
    pairs.
@@ -82,7 +82,7 @@ See [Spacing and Kerning](/docs/spacing.html).
 3. Run Generate in the Features section. It writes `init`, `medi`,
    `fina`, and `curs` from those names and anchors.
 4. Press Apply, then type words with the text tool and read them.
-5. Run Glyph, Check Joining. It selects every form whose connecting
+5. Run Glyph → Check Joining. It selects every form whose connecting
    stroke misses the font's common band.
 6. Use the Shaping section when a word comes out wrong: it shows which
    characters produced which glyphs.
@@ -93,8 +93,8 @@ See [Text and Shaping](/docs/text.html).
 
 <DocSection title="Trace a Drawing">
 
-1. Glyph, Place Image… puts a bitmap behind the glyph.
-2. Glyph, Trace Image… converts it to contours. It is undoable.
+1. Glyph → Place Image… puts a bitmap behind the glyph.
+2. Glyph → Trace Image… converts it to contours. It is undoable.
 3. Tidy the result: Optimize, then Add Extremes, then Correct Path
    Direction.
 

@@ -9,7 +9,6 @@ paths="
 /cloud/editor/index.html
 /docs
 /docs/install.html
-/docs/first-steps.html
 /docs/opening.html
 /docs/concepts.html
 /docs/interface.html

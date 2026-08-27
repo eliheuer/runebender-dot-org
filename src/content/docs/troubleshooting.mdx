@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting"
-lede: "What to check when the editor will not build, will not open a font, or does something you did not expect."
+lede: "What to check when the editor will not build, will not open a font, or does something unexpected."
 status: "Reference"
 stability: "Browser limits are being worked through"
 order: 25
@@ -43,9 +43,9 @@ Interpolation needs matching outlines across masters: the same number
 of contours, the same number of points in each, in the same order,
 starting at the same point.
 
-1. Run Path, Correct Path Direction in each master.
-2. Use Path, Set Start Point so each contour starts in the same place.
-3. Run Path, Tidy Up Paths to remove zero-length segments, which
+1. Run Path → Correct Path Direction in each master.
+2. Use Path → Set Start Point so each contour starts in the same place.
+3. Run Path → Tidy Up Paths to remove zero-length segments, which
    differ between masters without being visible.
 4. Compare the point counts in the Masters section.
 
@@ -56,7 +56,7 @@ starting at the same point.
 Cursive scripts find their joining forms by glyph name. A misnamed
 glyph looks to a shaping engine like a missing one.
 
-Run Glyph, Check Joining. It reports which of the initial, medial,
+Run Glyph → Check Joining. It reports which of the initial, medial,
 final, and isolated forms are present and whether the names follow
 the expected convention.
 

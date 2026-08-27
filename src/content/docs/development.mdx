@@ -1,6 +1,6 @@
 ---
 title: "Development"
-lede: "Build from source, work on the editor and the shared core together, and build the browser bundle."
+lede: "Build from source, work on the shared core alongside, and build the browser bundle."
 status: "Reference"
 stability: "The wasm toolchain pin moves"
 order: 26
@@ -82,7 +82,7 @@ stable, because gpui uses library features that stable already has.
 Install `rust-src` and the wasm target for whichever nightly you use.
 
 To deploy, copy `dist/` into this site's `public/gpui/`. Keep
-`coi-serviceworker.min.js` and its script tag at the top of `<head>`:
+`coi-serviceworker.min.js` and its script tag at the top of `<head>`.
 GitHub Pages cannot send the COOP and COEP headers that shared memory
 requires, so the worker sets them in the browser instead.
 

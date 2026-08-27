@@ -1,6 +1,6 @@
 ---
 title: "Exporting"
-lede: "Export builds a font file from your sources. If the project has a build script, Runebender runs that. Otherwise it compiles with fontc."
+lede: "Export builds a font file. A project build script wins; otherwise it compiles with fontc."
 status: "Implemented, native only"
 stability: "Stable"
 order: 23
@@ -13,7 +13,7 @@ import CommandList from "../../components/CommandList.astro";
 
 <DocSection title="Export">
 
-Press <code>Cmd+E</code>, or use File, Export. Unsaved masters are
+Press <code>Cmd+E</code>, or use File → Export. Unsaved masters are
 saved first, so what you export is what is on disk.
 
 </DocSection>
@@ -62,7 +62,7 @@ names in your source do not have to be the names that ship.
 
 <DocSection title="Single Glyphs">
 
-Glyph, Export Glyph as SVG writes the current glyph as an SVG file
+Glyph → Export Glyph as SVG writes the current glyph as an SVG file
 beside the source. It is for a drawing you want outside the font, not
 part of the font build.
 

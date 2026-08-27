@@ -1,6 +1,6 @@
 ---
 title: "Text and Shaping"
-lede: "Type with the font you are drawing. The text tool shapes real text, applies kerning and features, and handles bidirectional and connected scripts, so Arabic work is not an afterthought."
+lede: "Type with the font you are drawing. Shaping, kerning and bidirectional text all work while you edit."
 status: "Implemented"
 stability: "Stable"
 order: 15
@@ -21,7 +21,7 @@ Edits show up in the line as you make them. The glyph you are editing
 uses its own live advance width, so spacing changes are visible in
 context immediately rather than after a reload.
 
-View, Next Sample String rebuilds the buffer as sample text around the
+View → Next Sample String rebuilds the buffer as sample text around the
 glyph you have open.
 
 </DocSection>
@@ -81,11 +81,11 @@ Cursive scripts need the joining forms of each letter: initial,
 medial, final, and isolated. Shaping engines find them by glyph name,
 so a misnamed glyph looks to them like a missing one.
 
-Glyph, Check Joining measures rather than eyeballs. For every
-positional form it measures the connecting stroke's band at the
-joining edges, where initial and medial join at x = 0 and medial and
-final join at the advance, finds the font's common band, and selects
-every form that misses it.
+Glyph → Check Joining measures rather than eyeballs. For every
+positional form it measures the connecting stroke at the joining
+edges. Initial and medial join at x = 0; medial and final join at the
+advance. It then finds the font's common band and selects every form
+that misses it.
 
 Naming the forms correctly also feeds feature generation: `init`,
 `medi`, and `fina` substitutions are written from those names, and

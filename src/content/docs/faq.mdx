@@ -1,6 +1,6 @@
 ---
 title: "FAQ"
-lede: "Short answers to the questions this project gets asked, including the ones with uncomfortable answers."
+lede: "Short answers, including the uncomfortable ones."
 status: "Reference"
 stability: "Answers change as the editor does"
 order: 27
@@ -59,7 +59,7 @@ import DocSection from "../../components/DocSection.astro";
   <tbody>
     <tr><th>Why will my glyph not interpolate?</th><td>The masters disagree about contour count, point count, point order, or start point. See <a href="/docs/concepts.html">Concepts</a> and <a href="/docs/checking.html">Checking a Font</a>.</td></tr>
     <tr><th>What is a hyperbezier?</th><td>A curve defined by the points you place, with the handles solved rather than positioned. Convert to cubics before handing the source to a tool that expects them.</td></tr>
-    <tr><th>Why does my Arabic not join?</th><td>Usually glyph names. Shaping engines find joining forms by name. Run Glyph, Check Joining. See <a href="/docs/text.html">Text and Shaping</a>.</td></tr>
+    <tr><th>Why does my Arabic not join?</th><td>Usually glyph names. Shaping engines find joining forms by name. Run Glyph → Check Joining. See <a href="/docs/text.html">Text and Shaping</a>.</td></tr>
     <tr><th>Can I script it?</th><td>Not from inside the editor. It reloads files changed on disk, so a script and the editor can share a font. See <a href="/docs/scripting.html">Scripting</a>.</td></tr>
     <tr><th>Does it use AI?</th><td>It can run a model on your machine, over your sources, with nothing sent anywhere. One job so far: proposing a heavier master from a lighter one. It is experimental and often wrong. See <a href="/docs/local-models.html">Local Models</a>.</td></tr>
   </tbody>

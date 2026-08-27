@@ -19,7 +19,7 @@ License: Apache-2.0 or MIT
 ## Install
 https://runebender.org/docs/install.html
 
-Runebender runs in a browser with nothing to install. To open fonts from your own disk, build the native application with cargo.
+Runebender runs in a browser with nothing to install. Build the native application with cargo to open your own files.
 
 ### In the Browser
 
@@ -47,7 +47,7 @@ Then open a font.
 
 Runebender opens .designspace files, .ufo directories, and a
 directory that holds them. Start it without a path to get an empty
-window, then use File, Open.
+window, then use File → Open.
 
 Every git dependency is pinned to a revision, so a fresh install
 resolves the same graph every time. No --locked needed.
@@ -69,67 +69,10 @@ untitled UFO with Google Fonts metrics and the Latin Core glyph set as
 empty encoded glyphs, then asks where to save it.
 
 
-## First Steps
-https://runebender.org/docs/first-steps.html
-
-Open a font, find a glyph, draw something, and save it. This page is the shortest path from a fresh install to a changed file on disk.
-
-### Open a Font
-
-Work on a copy. Runebender writes to your source files in place.
-
-1. Start the editor with a path, or use File, Open.
-2. Point it at a .designspace file, a .ufo directory, or a folder
-that holds them.
-3. The glyph grid fills the window.
-
-A designspace opens every master it names. A single UFO opens as one
-master.
-
-### Find a Glyph
-
-The left panel lists categories, languages, and saved filters. Type in
-the search box to narrow the grid by name or by Unicode value. The
-buttons beside the box switch the search between name, Unicode, and
-everything, and turn on regular expressions or case matching.
-
-Double-click a cell to open that glyph.
-
-### Draw
-
-Press the pen tool in the toolbar. Click to place corner points. Click
-and drag to place a point and pull its outgoing handle. Click the
-first point again to close the contour.
-
-Switch to the select tool to move points. Drag a point to move it,
-drag a handle to reshape the curve, and drag a marquee to select
-several points at once.
-
-Press Cmd+Z to undo. Every edit session keeps its own
-undo stack.
-
-### See It in Text
-
-Press the text tool. Type, and the glyphs of the current font lay out
-in a line with real kerning. Click a glyph in that line to edit it in
-place, with its neighbours still visible around it.
-
-### Save
-
-Press Cmd+S. Runebender writes the open UFO or
-designspace back to disk and shows the time in the header.
-
-### Next
-
-- The Interface: What every panel and bar does.
-- Tools: The other six edit modes.
-- Masters: Work across a designspace.
-
-
 ## Opening and Saving
 https://runebender.org/docs/opening.html
 
-Runebender edits UFO and designspace sources in place. It also opens Glyphs files and compiled fonts by converting them, and it never writes over a file it cannot round-trip.
+Runebender edits UFO and designspace sources in place. Glyphs files and compiled fonts are converted on the way in.
 
 ### What Opens
 
@@ -142,7 +85,7 @@ Formats:
 
 FontLab and FontForge sources are not read.
 
-Use File, Open, or start the editor with a path.
+Use File → Open, or start the editor with a path.
 
     runebender-gpui path/to/Font.designspace
 
@@ -209,7 +152,7 @@ same font from a terminal.
 ## Concepts
 https://runebender.org/docs/concepts.html
 
-The ideas the rest of these pages assume: what a font source is, what the coordinate grid means, and what has to be true for a variable font to interpolate.
+The ideas the other pages assume: sources, the coordinate grid, and what interpolation requires.
 
 ### Sources and Fonts
 
@@ -218,10 +161,10 @@ It is a build artefact. You do not edit it any more than you edit a
 compiled program.
 
 A **source** is what you draw. Runebender's sources are UFO
-directories and a designspace file that names them. Because a UFO is a
-directory of small text files, a source belongs in version control,
-where a day's drawing reads as a reviewable diff and a mistake is one
-git checkout away from being undone.
+directories and a designspace file that names them. A UFO is a
+directory of small text files, so a source belongs in version control.
+A day's drawing reads as a reviewable diff, and a mistake is one
+git checkout away.
 
 This is why the editor writes in place rather than keeping its own
 project format. Your repository is the project file.
@@ -263,9 +206,9 @@ A **variable font** holds a range rather than a single drawing. You
 draw the ends, called **masters**, and every weight between them is
 calculated.
 
-For that calculation to work, the masters must be **compatible**: the
-same number of contours, the same number of points in each, in the
-same order, starting at the same point. The computer pairs point one
+The masters must be **compatible** for that to work. Same number of
+contours, same number of points in each, same order, same start
+point. The computer pairs point one
 with point one and moves it partway. If the counts differ, there is no
 pairing and no interpolation.
 
@@ -294,10 +237,9 @@ Typing produces characters. A font produces glyphs. **Shaping** is the
 step between: an engine reads the characters, applies the font's own
 rules, and returns positioned glyphs.
 
-For Latin, that is often close to one character per glyph. For Arabic,
-Devanagari, and other complex scripts it is not: a letter takes a
-different form depending on its neighbours, marks are positioned
-against anchors, and sequences merge into ligatures. Those rules are
+For Latin, that is often close to one character per glyph. For Arabic, Devanagari and other complex scripts it is not. A letter
+changes form with its neighbours, marks are positioned against anchors,
+and sequences merge into ligatures. Those rules are
 [feature code](/docs/features.html), and the editor runs them live so
 you see the result while drawing rather than after compiling.
 
@@ -315,14 +257,14 @@ dozen drawings this way. See
 ## The Interface
 https://runebender.org/docs/interface.html
 
-Runebender has two views: a grid of every glyph in the font, and an editor for one glyph in context. The panels around them change with what you are doing.
+Two views: a grid of every glyph, and an editor for one glyph in context.
 
 ### Two Views
 
-The **grid** shows every glyph in the font as a cell. It is where you
-browse, search, filter, select several glyphs at once, apply colour
-marks, and work on the font as a whole: kerning tables, groups,
-feature code, colour palettes, font info.
+The **grid** shows every glyph in the font as a cell. Browse, search,
+filter, select several glyphs at once, and apply colour marks. The
+font-wide work is here too: kerning tables, groups, feature code,
+colour palettes, font info.
 
 The **editor** shows one glyph with its points, handles, and metrics,
 and draws its neighbours around it. You always see a glyph in context
@@ -349,7 +291,7 @@ Left panel:
 - Languages: Language and script rows with Google Fonts coverage. A row still missing glyphs shows a plus that adds every one it names, encoded, to every master.
 - Filters: Saved filters. Build one from the search controls and keep it; filters are stored in the font, so they travel with the source.
 
-View, Sort Glyphs by Name and View, Sort Glyphs by Unicode set the
+View → Sort Glyphs by Name and View → Sort Glyphs by Unicode set the
 order of the grid.
 
 ### Right Panel: Both Views
@@ -402,14 +344,14 @@ another tool, or with a script, and the editor reloads it.
 
 ### Themes
 
-View, Theme switches the palette. The application's own colours, the
+View → Theme switches the palette. The application's own colours, the
 widget library's theme, and the menu tick all follow the choice.
 
 
 ## Tools
 https://runebender.org/docs/tools.html
 
-Eight edit modes. Select and pen cover most work; the rest are for cutting, measuring, previewing, and typing.
+Eight edit modes. Select and pen cover most work; the rest cut, measure, preview and type.
 
 ### Select
 
@@ -427,9 +369,9 @@ Moving:
 - Drag a sidebearing edge: Change spacing without touching the outline.
 - Double-click a component: Open the glyph it points at.
 
-For an exact move or scale, use the Coordinates panel: pick a
-reference point on the nine-point grid, then set X and Y to move the
-selection so the reference lands there, or W and H to scale about it.
+For an exact move or scale, use the Coordinates panel. Pick a reference
+point on the nine-point grid. X and Y move the selection so the
+reference lands there; W and H scale about it.
 
 ### Pen
 
@@ -448,7 +390,7 @@ Draws hyperbezier contours: curves defined by the points you place,
 with the control points solved rather than positioned by hand. Fewer
 things to hold, and the curvature stays continuous by construction.
 
-Path, Hyperbezier to Cubic converts a hyperbezier contour into
+Path → Hyperbezier to Cubic converts a hyperbezier contour into
 ordinary cubic segments. With nothing selected it converts every
 hyperbezier contour in the glyph. Do that before handing a source to a
 tool that expects plain cubics.
@@ -504,7 +446,7 @@ constrain point drags: there it extends the selection.
 ## Glyphs
 https://runebender.org/docs/glyphs.html
 
-Add, rename, encode, group, and remove glyphs. Renaming is safe: Runebender follows the name everywhere it is used.
+Add, rename, encode, group and remove glyphs. Renaming follows the name everywhere it is used.
 
 ### Add and Remove
 
@@ -525,9 +467,9 @@ value, the kerning groups, and the metric keys.
 
 Unicode values are accepted as 0041, U+0041, or 0x41.
 
-Renaming updates every place the old name was used: components in
-other glyphs, kerning group membership, kerning pairs, the open text
-session, and the current selection. You do not have to go and fix
+Renaming updates every place the old name was used: components in other
+glyphs, group membership, kerning pairs, the open text session, and the
+selection. You do not have to go and fix
 references by hand.
 
 Renaming and Unicode editing need the native application. Text
@@ -548,12 +490,16 @@ narrow it with the search box and filters in the left panel.
 
 ### Related Glyphs
 
-The Related section of the right panel shows the glyph's base, its
-suffix siblings such as a.alt beside a, the glyphs it uses as
-components, and every composite that uses it. Each is one click away.
+The Related section of the right panel lists four things, each one
+click away.
 
-It is how you find the rest of a family of glyphs without searching
-for names you have to remember.
+Related:
+- Base: The glyph this one is built from.
+- Siblings: Suffix variants, such as a.alt beside a.
+- Uses: The glyphs it places as components.
+- Used by: Every composite that places this one.
+
+Use it to reach the rest of a family without searching for names.
 
 ### Layers
 
@@ -563,10 +509,9 @@ Layers block:
 - Delete: Drops a layer's copy of this glyph. An emptied layer goes with it.
 - + Intermediate: An intermediate layer for interpolation. See Masters and Interpolation.
 
-The Background section is separate. It shows, sends to, swaps with, or
-clears the UFO public.background layer, which is saved with the
-font, and it can ghost another glyph behind the drawing by name so you
-can match a shape you are working towards.
+The Background section is separate. It shows, sends to, swaps with, or clears the UFO public.background
+layer, which is saved with the font. It can also ghost another glyph
+behind the drawing, named by hand.
 
 ### Images and SVG
 
@@ -590,7 +535,7 @@ the source for the people working on it.
 ## Paths and Filters
 https://runebender.org/docs/paths.html
 
-Clean up outlines, combine them, transform them, and convert between curve types. Everything here works on the selection, or on the whole glyph when nothing is selected.
+Clean up outlines, combine them, transform them, and convert between curve types.
 
 ### Clean Up
 
@@ -675,17 +620,19 @@ redraw at a different weight.
 
 ### Context Menu
 
-Right-click on the canvas for the operations that apply to what is
-under the pointer: lock and unlock a component, decompose one or all,
-add a component, apply a corner component, set the start point,
-reverse the contour, round corners, move a contour up or down in the
-order, and add or delete an anchor.
+Right-click the canvas for the operations that apply to what is under
+the pointer.
+
+Context menu:
+- Components: Lock, unlock, decompose one or all, add a component, apply a corner component.
+- Contours: Set the start point, reverse, round corners, move up or down in the order.
+- Anchors: Add, delete.
 
 
 ## Components and Anchors
 https://runebender.org/docs/components.html
 
-Build accented and composite glyphs out of other glyphs. Anchors hold the pieces together, marks follow their base as you edit it, and smart components carry a range of shapes rather than one.
+Build accented glyphs from other glyphs. Anchors hold the pieces together, and marks follow their base.
 
 ### Components
 
@@ -721,10 +668,9 @@ marks snap to their anchor without extra work.
 
 ### Editing Anchors
 
-Add and delete anchors from the canvas context menu. Select one with
-the select tool and drag it, or set exact coordinates in the
-Coordinates panel: with an anchor selected, the X and Y fields address
-the anchor itself. Its name is a field in the same panel.
+Add and delete anchors from the canvas context menu. Select one with the select tool and drag it. For exact coordinates, use
+the Coordinates panel: with an anchor selected, its X and Y fields
+address the anchor. Its name is a field in the same panel.
 
 Anchor names drive generated feature code. Entry and exit anchors
 produce cursive attachment, anchor families produce mark and mark-to-
@@ -762,20 +708,18 @@ must keep the same structure to interpolate.
 
 ### Joining Scripts
 
-Glyph, Check Joining is for cursive scripts. For every positional
-form, it measures the connecting stroke's band at the joining edges,
-where initial and medial join at x = 0 and medial and final at the
-advance, then finds the font's common band and selects every form that
-misses it.
+Glyph → Check Joining is for cursive scripts. It measures each positional form's connecting stroke at the joining
+edges. Initial and medial join at x = 0; medial and final join at the
+advance. It then finds the font's common band and selects every form
+that misses it.
 
-It measures the joining line rather than asking you to eyeball it.
 See [Text and Shaping](/docs/text.html).
 
 
 ## Masters and Interpolation
 https://runebender.org/docs/masters.html
 
-A designspace opens every master it names. Axis sliders move you through the space, the editor draws what falls between, and intermediate layers let you correct it where the straight interpolation is wrong.
+A designspace opens every master it names. Axis sliders move through the space, and the editor draws what falls between.
 
 ### Masters
 
@@ -784,10 +728,10 @@ Open a single .ufo and you get one master.
 
 The Masters section of the right panel lists them, and each row draws
 the current glyph as that master draws it, so you compare without
-switching. Click a row to switch. View, Next Master and View, Previous
-Master step through them.
+switching. Click a row to switch. View → Next Master and View →
+Previous Master step through them.
 
-View, Show All Masters draws every master at once over the current
+View → Show All Masters draws every master at once over the current
 glyph.
 
 ### Axes
@@ -821,7 +765,7 @@ that disagree. Use it before you go hunting glyph by glyph.
 
 ### Reinterpolate
 
-Glyph, Reinterpolate replaces the current glyph with what the
+Glyph → Reinterpolate replaces the current glyph with what the
 surrounding masters say it should be at this position. It is the way
 back when a glyph has drifted out of step with the rest of the
 designspace.
@@ -859,10 +803,9 @@ Between two masters, a point normally travels in a straight line. A
 trajectory bends that line.
 
 Turn on Trajectories with the select tool and each node shows a knob
-at the middle of its path. Drag the knob and the node's interpolation
-curves through that point instead of running straight, which is how
-you keep a stem from bowing or a joint from pinching partway through
-a weight axis.
+at the middle of its path. Drag the knob and the node's interpolation curves through that point
+instead of running straight. Use it to stop a stem bowing, or a joint
+pinching, partway along an axis.
 
 The intermediate points are stored on the axis-minimum master so they
 stay editable. What compilers consume is the baked intermediate
@@ -893,14 +836,14 @@ interpolate bilinearly.
 ### Masks
 
 A contour can be marked as a mask, subtracting from the shapes behind
-it while you draw. Glyph, Bake Masks makes the subtraction real in
+it while you draw. Glyph → Bake Masks makes the subtraction real in
 every master, so the exported outline matches what the preview showed.
 
 
 ## Spacing and Kerning
 https://runebender.org/docs/spacing.html
 
-Set widths and sidebearings by dragging or by typing, let metric keys derive one glyph's spacing from another, and kern by dragging in real text.
+Set widths and sidebearings, derive them with metric keys, and kern by dragging in real text.
 
 ### Widths and Sidebearings
 
@@ -925,7 +868,7 @@ Metric key syntax:
 - =n*1.1: The same, scaled.
 - =50: A constant.
 
-Glyph, Update Metrics (Cmd+Ctrl+M) applies every key in
+Glyph → Update Metrics (Cmd+Ctrl+M) applies every key in
 every master. Keys can chain: if n has a key of its own, the passes
 repeat until nothing moves.
 
@@ -935,9 +878,9 @@ leaves Runebender takes them along.
 
 ### Kerning by Dragging
 
-Kerning is fastest in text. Switch to the text tool, type a pair, and
-drag the space between the two glyphs. This is the working path: you
-see the pair at size, in the word it belongs to, while you set it.
+Switch to the text tool, type a pair, and drag the space between the
+two glyphs. You see the pair at size, in the word it belongs to, while
+you set it.
 
 ### Kerning Groups
 
@@ -960,16 +903,14 @@ The Kerning section in the grid view lists every pair on the active
 master. Filter it with the search field, and edit a value in the row.
 Enter commits.
 
-Use the table to audit and to fix a specific value you already know
-is wrong. Use dragging in text to design the spacing in the first
-place.
+Use the table to audit and to correct a known value. Design the
+spacing by dragging in text.
 
 ### Checking Your Work
 
 The Dimensions section in the grid view measures stems and bars from
-the reference glyphs in each master, so you can see whether the
-weights actually match across a designspace rather than trusting the
-numbers you meant to draw.
+the reference glyphs in each master. It shows whether the weights
+match across a designspace, rather than the numbers you meant to draw.
 
 The Compare section lists differing advance widths between masters,
 along with structural incompatibilities and kerning pair counts.
@@ -978,7 +919,7 @@ along with structural incompatibilities and kerning pair counts.
 ## Feature Code
 https://runebender.org/docs/features.html
 
-Edit the master's features.fea in the editor, or generate the mechanical parts from your glyph names and anchors. Runebender compiles what you write and shapes text with it immediately.
+Edit the master's features.fea, or generate the mechanical parts from glyph names and anchors.
 
 ### The Editor
 
@@ -1045,7 +986,7 @@ fires for the language it was written for. See
 ## Color Fonts
 https://runebender.org/docs/color.html
 
-Build a colour font from layers and a palette. Runebender writes COLRv0 through the standard lib keys, and converts to COLRv1 when you need gradients.
+Build a colour font from layers and a palette, in COLRv0 or COLRv1.
 
 ### The Palette
 
@@ -1077,16 +1018,16 @@ simpler and better supported as v0.
 
 ### Gradients
 
-Once a font is in the v1 shape, a layer can carry a linear gradient
-instead of a solid paint: from the layer's own colour at the baseline
-to a selected swatch at the ascender. Converting to v1 happens
+In the v1 shape, a layer can carry a linear gradient instead of a
+solid paint. It runs from the layer's own colour at the baseline to a
+selected swatch at the ascender. Converting to v1 happens
 automatically if you ask for a gradient before converting.
 
 
 ## Text and Shaping
 https://runebender.org/docs/text.html
 
-Type with the font you are drawing. The text tool shapes real text, applies kerning and features, and handles bidirectional and connected scripts, so Arabic work is not an afterthought.
+Type with the font you are drawing. Shaping, kerning and bidirectional text all work while you edit.
 
 ### Typing
 
@@ -1099,7 +1040,7 @@ Edits show up in the line as you make them. The glyph you are editing
 uses its own live advance width, so spacing changes are visible in
 context immediately rather than after a reload.
 
-View, Next Sample String rebuilds the buffer as sample text around the
+View → Next Sample String rebuilds the buffer as sample text around the
 glyph you have open.
 
 ### The Caret
@@ -1145,11 +1086,11 @@ Cursive scripts need the joining forms of each letter: initial,
 medial, final, and isolated. Shaping engines find them by glyph name,
 so a misnamed glyph looks to them like a missing one.
 
-Glyph, Check Joining measures rather than eyeballs. For every
-positional form it measures the connecting stroke's band at the
-joining edges, where initial and medial join at x = 0 and medial and
-final join at the advance, finds the font's common band, and selects
-every form that misses it.
+Glyph → Check Joining measures rather than eyeballs. For every
+positional form it measures the connecting stroke at the joining
+edges. Initial and medial join at x = 0; medial and final join at the
+advance. It then finds the font's common band and selects every form
+that misses it.
 
 Naming the forms correctly also feeds feature generation: init,
 medi, and fina substitutions are written from those names, and
@@ -1167,7 +1108,7 @@ size in a real word. See
 ## Font Info
 https://runebender.org/docs/font-info.html
 
-Names, vertical metrics, and the PostScript hinting values, per master. These are the numbers that decide how the font sits on a line of text everywhere it is used.
+Names, vertical metrics and hinting values, per master.
 
 ### Where It Is
 
@@ -1225,7 +1166,7 @@ than to one master, so they live in the Axes section. See
 ## Checking a Font
 https://runebender.org/docs/checking.html
 
-Runebender measures things it could ask you to eyeball: stem weights across masters, structural compatibility, joining bands, curvature. Use them before you export, not after someone reports a bug.
+The editor measures what it could ask you to eyeball: stem weights, compatibility, joining, curvature.
 
 ### Across Masters
 
@@ -1271,12 +1212,11 @@ Before export:
 
 ### Joining
 
-Glyph, Check Joining measures the connecting stroke's band at the
+Glyph → Check Joining measures the connecting stroke's band at the
 joining edges of every positional form, finds the font's common band,
 and selects every form that misses it.
 
-It is the difference between a cursive script that joins and one that
-nearly joins. See [Text and Shaping](/docs/text.html).
+A form that misses the band is what makes a script nearly join. See [Text and Shaping](/docs/text.html).
 
 ### Measuring by Hand
 
@@ -1287,16 +1227,15 @@ on what you need in the Measure section while the tool is active. See
 
 ### Reading the Text
 
-The last check is looking. Switch to the text tool, type real words in
-the scripts the font is for, and read them at size. The shaping
-inspector shows which characters produced which glyphs when something
-comes out wrong.
+Then read it. Switch to the text tool, type words in the scripts the
+font is for, and look at them at size. When something comes out wrong,
+the Shaping section shows which characters produced which glyphs.
 
 
 ## Local Models
 https://runebender.org/docs/local-models.html
 
-Runebender can run a machine-learning model on your own machine, over your own sources, with nothing sent anywhere. Today it does one job: proposing a heavier master from a lighter one.
+Run a model on your own machine, over your own sources. Nothing is sent anywhere.
 
 ### What This Is
 
@@ -1326,7 +1265,7 @@ config to see what you have.
 
 ### Boldening
 
-Open a glyph in the lighter master, then Glyph, Bolden With Model…,
+Open a glyph in the lighter master, then Glyph → Bolden With Model…,
 and choose a model directory. The editor predicts a heavier version of
 that glyph and installs it.
 
@@ -1342,18 +1281,17 @@ A Bold master has to stay point-compatible with its Regular: the same
 contours, the same points, in the same order. Break that and the
 family stops interpolating.
 
-The prediction cannot break it. Every drawing command and every source
-coordinate is fixed from the glyph you already have, and the model is
-allowed to fill in only the offsets between them, choosing from a
-range of distances. There is no point in the process at which it could
+The prediction cannot break it. Every drawing command and every source coordinate is fixed from the
+glyph you already have. The model fills in only the offsets between
+them, chosen from a range of distances. There is no point in the process at which it could
 add, remove, or reorder a point. It moves points, and that is all it
 can do.
 
 The editor checks the result anyway before writing, and refuses if the
 number of offsets does not match the number of points.
 
-So the risk is not a broken font. The risk is a bad drawing, which
-you can see and undo.
+The risk is not a broken font. It is a bad drawing, which you can see
+and undo.
 
 ### What to Expect
 
@@ -1391,7 +1329,7 @@ today.
 ## Tutorial: Draw a Glyph
 https://runebender.org/docs/tutorial-first-glyph.html
 
-Draw a letter from nothing, space it, see it in a word, and save it. About twenty minutes, and it touches most of the editor.
+Draw a letter, space it, see it in a word, and save it. About twenty minutes.
 
 ### Before You Start
 
@@ -1435,17 +1373,17 @@ The copy lands on top of the original. Drag it right, holding shift to
 keep it level.
 
 Draw the crossbar the same way, a rectangle between the two stems, a
-little above the middle. Optically the centre of a letter sits above
-the mathematical centre.
+little above the middle. The optical centre of a letter sits above the
+mathematical centre.
 
 ### 4. Clean Up
 
 Three commands, in this order, before you go further.
 
 Cleanup:
-- Path, Remove Overlap: Cmd+Shift+O. Merges the three rectangles into one outline.
-- Path, Correct Path Direction: Cmd+Shift+R. Sets the direction the fill rule expects.
-- Path, Tidy Up Paths: Cmd+Shift+T. Drops any zero-length segments the overlap left.
+- Path → Remove Overlap: Cmd+Shift+O. Merges the three rectangles into one outline.
+- Path → Correct Path Direction: Cmd+Shift+R. Sets the direction the fill rule expects.
+- Path → Tidy Up Paths: Cmd+Shift+T. Drops any zero-length segments the overlap left.
 
 ### 5. Space It
 
@@ -1453,7 +1391,7 @@ The bottom bar holds the advance width and the two sidebearings. Set
 both sidebearings to the same number to start; something near 80 units
 for a capital H at 1000 UPM.
 
-Spacing is judged in company, not alone, which is the next step.
+Spacing is judged in company, not alone.
 
 ### 6. See It in a Word
 
@@ -1465,15 +1403,14 @@ between two Hs want to look like the same amount of space. Drag the
 sidebearing edges until they do. Everything you change shows up in the
 line as you change it.
 
-Nearly all spacing is done this way. A glyph alone tells you almost
-nothing.
+Space glyphs in company. A glyph on its own shows little.
 
 ### 7. Check the Curves
 
-Not needed for an H, but do it once now so you know where it is. Open
-the Curves section in the right panel and turn on the comb. On
-straight segments it is flat. On a letter with curves, a kink that is
-invisible at text size shows as a break in it.
+An H needs no curve checking, but find the control now. Open the
+Curves section in the right panel and turn on the comb. It is flat on
+straight segments. On curves, a kink invisible at text size shows as a
+break.
 
 ### 8. Save
 
@@ -1497,7 +1434,7 @@ accented glyph, which you build rather than draw: see
 ## Workflows
 https://runebender.org/docs/workflows.html
 
-Short recipes for jobs that span several parts of the editor. Each one names the pages that cover the steps in detail.
+Short recipes for jobs that cross several parts of the editor.
 
 ### Build an Accented Glyph
 
@@ -1518,7 +1455,7 @@ See [Components and Anchors](/docs/components.html) and
 
 1. With the pen tool, draw open paths down the middle of the strokes.
 2. Select them, or select nothing to take the whole glyph.
-3. Run Filter, Expand Stroke and type a weight.
+3. Run Filter → Expand Stroke and type a weight.
 4. Clean up with Remove Overlap and Correct Path Direction.
 
 Keep the skeleton in a backup layer, and you can re-expand it at a
@@ -1547,7 +1484,7 @@ See [Masters and Interpolation](/docs/masters.html) and
 the bottom bar.
 2. Use metric keys so related glyphs follow one another instead of
 being spaced twice.
-3. Run Glyph, Update Metrics to apply every key.
+3. Run Glyph → Update Metrics to apply every key.
 4. Switch to the text tool and kern by dragging, in real words.
 5. Put glyphs that kern alike into groups, so one value covers many
 pairs.
@@ -1563,7 +1500,7 @@ beh.fina, with beh as the isolated form.
 3. Run Generate in the Features section. It writes init, medi,
 fina, and curs from those names and anchors.
 4. Press Apply, then type words with the text tool and read them.
-5. Run Glyph, Check Joining. It selects every form whose connecting
+5. Run Glyph → Check Joining. It selects every form whose connecting
 stroke misses the font's common band.
 6. Use the Shaping section when a word comes out wrong: it shows which
 characters produced which glyphs.
@@ -1572,8 +1509,8 @@ See [Text and Shaping](/docs/text.html).
 
 ### Trace a Drawing
 
-1. Glyph, Place Image… puts a bitmap behind the glyph.
-2. Glyph, Trace Image… converts it to contours. It is undoable.
+1. Glyph → Place Image… puts a bitmap behind the glyph.
+2. Glyph → Trace Image… converts it to contours. It is undoable.
 3. Tidy the result: Optimize, then Add Extremes, then Correct Path
 Direction.
 
@@ -1611,7 +1548,7 @@ git checkout away from being undone.
 ## Shortcuts
 https://runebender.org/docs/shortcuts.html
 
-Every keyboard command in the editor, grouped by the menu it belongs to. On Windows and Linux, read Cmd as Ctrl.
+Every keyboard command, by menu. On Windows and Linux, read Cmd as Ctrl.
 
 ### File
 
@@ -1685,7 +1622,7 @@ the keyboard commands there.
 ## File Format
 https://runebender.org/docs/format.html
 
-Runebender edits UFO and designspace sources in place. It writes standard data where a standard exists, and namespaced keys where one does not.
+Runebender edits UFO in place. It writes standard data where a standard exists, and namespaced keys where none does.
 
 ### Sources
 
@@ -1744,33 +1681,32 @@ control points solved rather than placed. Runebender marks these
 contours in GLIF with identifier="hyperbezier".
 
 An editor that does not know the identifier reads the points as
-ordinary curve points, so the file stays valid. Use Path, Hyperbezier
+ordinary curve points, so the file stays valid. Use Path → Hyperbezier
 to Cubic before handing a source to a tool that needs plain cubics.
 
 ### What Survives a Round Trip
 
-Runebender aims to write files another tool can read. Standard data
-stays standard, Glyphs-compatible data uses the glyphsLib keys rather
-than a private spelling, and anything genuinely new sits under
-com.runebender where another editor will ignore it and leave the
-rest of the source intact.
+Runebender aims to write files another tool can read. Standard data stays standard. Glyphs-compatible data uses the glyphsLib
+keys rather than a private spelling. Anything genuinely new sits under
+com.runebender, which another editor ignores while leaving the rest of
+the source intact.
 
 Two things to know before handing a source on:
 
 1. Hyperbezier contours read as ordinary curves elsewhere. Convert
 them if the receiving tool will re-save the file.
-2. Masks are a Runebender idea. Run Glyph, Bake Masks so the
+2. Masks are a Runebender idea. Run Glyph → Bake Masks so the
 subtraction is real in the outlines.
 
 
 ## Exporting
 https://runebender.org/docs/exporting.html
 
-Export builds a font file from your sources. If the project has a build script, Runebender runs that. Otherwise it compiles with fontc.
+Export builds a font file. A project build script wins; otherwise it compiles with fontc.
 
 ### Export
 
-Press Cmd+E, or use File, Export. Unsaved masters are
+Press Cmd+E, or use File → Export. Unsaved masters are
 saved first, so what you export is what is on disk.
 
 ### A Build Script Wins
@@ -1809,7 +1745,7 @@ names in your source do not have to be the names that ship.
 
 ### Single Glyphs
 
-Glyph, Export Glyph as SVG writes the current glyph as an SVG file
+Glyph → Export Glyph as SVG writes the current glyph as an SVG file
 beside the source. It is for a drawing you want outside the font, not
 part of the font build.
 
@@ -1820,7 +1756,7 @@ write to your disk.
 ## Scripting
 https://runebender.org/docs/scripting.html
 
-Runebender has no plugin API. It watches the files it has open, so a script and the editor work on the same font at the same time, and the shared core is a Rust library you can build on.
+There is no plugin API. The editor reloads files changed on disk, so a script can work alongside it.
 
 ### What Exists
 
@@ -1886,7 +1822,7 @@ you need to automate inside the editor, it is not the right tool yet.
 ## Troubleshooting
 https://runebender.org/docs/troubleshooting.html
 
-What to check when the editor will not build, will not open a font, or does something you did not expect.
+What to check when the editor will not build, will not open a font, or does something unexpected.
 
 ### It Will Not Build
 
@@ -1914,9 +1850,9 @@ Interpolation needs matching outlines across masters: the same number
 of contours, the same number of points in each, in the same order,
 starting at the same point.
 
-1. Run Path, Correct Path Direction in each master.
-2. Use Path, Set Start Point so each contour starts in the same place.
-3. Run Path, Tidy Up Paths to remove zero-length segments, which
+1. Run Path → Correct Path Direction in each master.
+2. Use Path → Set Start Point so each contour starts in the same place.
+3. Run Path → Tidy Up Paths to remove zero-length segments, which
 differ between masters without being visible.
 4. Compare the point counts in the Masters section.
 
@@ -1925,7 +1861,7 @@ differ between masters without being visible.
 Cursive scripts find their joining forms by glyph name. A misnamed
 glyph looks to a shaping engine like a missing one.
 
-Run Glyph, Check Joining. It reports which of the initial, medial,
+Run Glyph → Check Joining. It reports which of the initial, medial,
 final, and isolated forms are present and whether the names follow
 the expected convention.
 
@@ -1961,7 +1897,7 @@ evidence there is.
 ## Development
 https://runebender.org/docs/development.html
 
-Build from source, work on the editor and the shared core together, and build the browser bundle.
+Build from source, work on the shared core alongside, and build the browser bundle.
 
 ### Repositories
 
@@ -2016,7 +1952,7 @@ stable, because gpui uses library features that stable already has.
 Install rust-src and the wasm target for whichever nightly you use.
 
 To deploy, copy dist/ into this site's public/gpui/. Keep
-coi-serviceworker.min.js and its script tag at the top of :
+coi-serviceworker.min.js and its script tag at the top of .
 GitHub Pages cannot send the COOP and COEP headers that shared memory
 requires, so the worker sets them in the browser instead.
 
@@ -2047,7 +1983,7 @@ Apache-2.0 or MIT.
 ## FAQ
 https://runebender.org/docs/faq.html
 
-Short answers to the questions this project gets asked, including the ones with uncomfortable answers.
+Short answers, including the uncomfortable ones.
 
 ### The Project
 
@@ -2079,7 +2015,7 @@ Install and launch:
 Common confusions:
 - Why will my glyph not interpolate?: The masters disagree about contour count, point count, point order, or start point. See Concepts and Checking a Font.
 - What is a hyperbezier?: A curve defined by the points you place, with the handles solved rather than positioned. Convert to cubics before handing the source to a tool that expects them.
-- Why does my Arabic not join?: Usually glyph names. Shaping engines find joining forms by name. Run Glyph, Check Joining. See Text and Shaping.
+- Why does my Arabic not join?: Usually glyph names. Shaping engines find joining forms by name. Run Glyph → Check Joining. See Text and Shaping.
 - Can I script it?: Not from inside the editor. It reloads files changed on disk, so a script and the editor can share a font. See Scripting.
 - Does it use AI?: It can run a model on your machine, over your sources, with nothing sent anywhere. One job so far: proposing a heavier master from a lighter one. It is experimental and often wrong. See Local Models.
 

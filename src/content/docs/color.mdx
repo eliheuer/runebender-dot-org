@@ -1,6 +1,6 @@
 ---
 title: "Color Fonts"
-lede: "Build a colour font from layers and a palette. Runebender writes COLRv0 through the standard lib keys, and converts to COLRv1 when you need gradients."
+lede: "Build a colour font from layers and a palette, in COLRv0 or COLRv1."
 status: "Implemented"
 stability: "Stable"
 order: 14
@@ -48,9 +48,9 @@ own exploding is off, because the structures are already there.
 
 <DocSection title="Gradients">
 
-Once a font is in the v1 shape, a layer can carry a linear gradient
-instead of a solid paint: from the layer's own colour at the baseline
-to a selected swatch at the ascender. Converting to v1 happens
+In the v1 shape, a layer can carry a linear gradient instead of a
+solid paint. It runs from the layer's own colour at the baseline to a
+selected swatch at the ascender. Converting to v1 happens
 automatically if you ask for a gradient before converting.
 
 </DocSection>

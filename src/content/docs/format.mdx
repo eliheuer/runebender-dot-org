@@ -1,6 +1,6 @@
 ---
 title: "File Format"
-lede: "Runebender edits UFO and designspace sources in place. It writes standard data where a standard exists, and namespaced keys where one does not."
+lede: "Runebender edits UFO in place. It writes standard data where a standard exists, and namespaced keys where none does."
 status: "Reference"
 stability: "Standard data is stable; the namespaced keys can still change"
 order: 22
@@ -89,24 +89,23 @@ control points solved rather than placed. Runebender marks these
 contours in GLIF with `identifier="hyperbezier"`.
 
 An editor that does not know the identifier reads the points as
-ordinary curve points, so the file stays valid. Use Path, Hyperbezier
+ordinary curve points, so the file stays valid. Use Path → Hyperbezier
 to Cubic before handing a source to a tool that needs plain cubics.
 
 </DocSection>
 
 <DocSection title="What Survives a Round Trip">
 
-Runebender aims to write files another tool can read. Standard data
-stays standard, Glyphs-compatible data uses the glyphsLib keys rather
-than a private spelling, and anything genuinely new sits under
-`com.runebender` where another editor will ignore it and leave the
-rest of the source intact.
+Runebender aims to write files another tool can read. Standard data stays standard. Glyphs-compatible data uses the glyphsLib
+keys rather than a private spelling. Anything genuinely new sits under
+`com.runebender`, which another editor ignores while leaving the rest of
+the source intact.
 
 Two things to know before handing a source on:
 
 1. Hyperbezier contours read as ordinary curves elsewhere. Convert
    them if the receiving tool will re-save the file.
-2. Masks are a Runebender idea. Run Glyph, Bake Masks so the
+2. Masks are a Runebender idea. Run Glyph → Bake Masks so the
    subtraction is real in the outlines.
 
 </DocSection>

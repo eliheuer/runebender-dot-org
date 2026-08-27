@@ -1,6 +1,6 @@
 ---
 title: "Local Models"
-lede: "Runebender can run a machine-learning model on your own machine, over your own sources, with nothing sent anywhere. Today it does one job: proposing a heavier master from a lighter one."
+lede: "Run a model on your own machine, over your own sources. Nothing is sent anywhere."
 status: "Experimental. The mechanism works; the models are early"
 stability: "The workflow is stable; what a model predicts is not"
 order: 18
@@ -49,7 +49,7 @@ config to see what you have.
 
 <DocSection title="Boldening">
 
-Open a glyph in the lighter master, then Glyph, Bolden With Model…,
+Open a glyph in the lighter master, then Glyph → Bolden With Model…,
 and choose a model directory. The editor predicts a heavier version of
 that glyph and installs it.
 
@@ -71,10 +71,9 @@ A Bold master has to stay point-compatible with its Regular: the same
 contours, the same points, in the same order. Break that and the
 family stops interpolating.
 
-The prediction cannot break it. Every drawing command and every source
-coordinate is fixed from the glyph you already have, and the model is
-allowed to fill in only the offsets between them, choosing from a
-range of distances. There is no point in the process at which it could
+The prediction cannot break it. Every drawing command and every source coordinate is fixed from the
+glyph you already have. The model fills in only the offsets between
+them, chosen from a range of distances. There is no point in the process at which it could
 add, remove, or reorder a point. It moves points, and that is all it
 can do.
 
@@ -82,8 +81,8 @@ The editor checks the result anyway before writing, and refuses if the
 number of offsets does not match the number of points.
 
 <Callout>
-  So the risk is not a broken font. The risk is a bad drawing, which
-  you can see and undo.
+  The risk is not a broken font. It is a bad drawing, which you can see
+  and undo.
 </Callout>
 
 </DocSection>

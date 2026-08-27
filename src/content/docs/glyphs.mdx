@@ -1,6 +1,6 @@
 ---
 title: "Glyphs"
-lede: "Add, rename, encode, group, and remove glyphs. Renaming is safe: Runebender follows the name everywhere it is used."
+lede: "Add, rename, encode, group and remove glyphs. Renaming follows the name everywhere it is used."
 status: "Implemented"
 stability: "Stable"
 order: 8
@@ -35,9 +35,9 @@ value, the kerning groups, and the metric keys.
 
 Unicode values are accepted as `0041`, `U+0041`, or `0x41`.
 
-Renaming updates every place the old name was used: components in
-other glyphs, kerning group membership, kerning pairs, the open text
-session, and the current selection. You do not have to go and fix
+Renaming updates every place the old name was used: components in other
+glyphs, group membership, kerning pairs, the open text session, and the
+selection. You do not have to go and fix
 references by hand.
 
 <Callout>
@@ -64,12 +64,20 @@ narrow it with the search box and filters in the left panel.
 
 <DocSection title="Related Glyphs">
 
-The Related section of the right panel shows the glyph's base, its
-suffix siblings such as `a.alt` beside `a`, the glyphs it uses as
-components, and every composite that uses it. Each is one click away.
+The Related section of the right panel lists four things, each one
+click away.
 
-It is how you find the rest of a family of glyphs without searching
-for names you have to remember.
+<table>
+  <caption>Related</caption>
+  <tbody>
+    <tr><th>Base</th><td>The glyph this one is built from.</td></tr>
+    <tr><th>Siblings</th><td>Suffix variants, such as `a.alt` beside `a`.</td></tr>
+    <tr><th>Uses</th><td>The glyphs it places as components.</td></tr>
+    <tr><th>Used by</th><td>Every composite that places this one.</td></tr>
+  </tbody>
+</table>
+
+Use it to reach the rest of a family without searching for names.
 
 </DocSection>
 
@@ -85,10 +93,9 @@ for names you have to remember.
   </tbody>
 </table>
 
-The Background section is separate. It shows, sends to, swaps with, or
-clears the UFO `public.background` layer, which is saved with the
-font, and it can ghost another glyph behind the drawing by name so you
-can match a shape you are working towards.
+The Background section is separate. It shows, sends to, swaps with, or clears the UFO `public.background`
+layer, which is saved with the font. It can also ghost another glyph
+behind the drawing, named by hand.
 
 </DocSection>
 

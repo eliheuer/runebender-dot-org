@@ -1,6 +1,6 @@
 ---
 title: "Checking a Font"
-lede: "Runebender measures things it could ask you to eyeball: stem weights across masters, structural compatibility, joining bands, curvature. Use them before you export, not after someone reports a bug."
+lede: "The editor measures what it could ask you to eyeball: stem weights, compatibility, joining, curvature."
 status: "Implemented"
 stability: "Stable"
 order: 17
@@ -72,12 +72,11 @@ Harmonize, Balance, and Fit Curve are the usual repairs. See
 
 <DocSection title="Joining">
 
-Glyph, Check Joining measures the connecting stroke's band at the
+Glyph → Check Joining measures the connecting stroke's band at the
 joining edges of every positional form, finds the font's common band,
 and selects every form that misses it.
 
-It is the difference between a cursive script that joins and one that
-nearly joins. See [Text and Shaping](/docs/text.html).
+A form that misses the band is what makes a script nearly join. See [Text and Shaping](/docs/text.html).
 
 </DocSection>
 
@@ -92,9 +91,8 @@ on what you need in the Measure section while the tool is active. See
 
 <DocSection title="Reading the Text">
 
-The last check is looking. Switch to the text tool, type real words in
-the scripts the font is for, and read them at size. The shaping
-inspector shows which characters produced which glyphs when something
-comes out wrong.
+Then read it. Switch to the text tool, type words in the scripts the
+font is for, and look at them at size. When something comes out wrong,
+the Shaping section shows which characters produced which glyphs.
 
 </DocSection>

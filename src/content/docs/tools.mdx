@@ -1,6 +1,6 @@
 ---
 title: "Tools"
-lede: "Eight edit modes. Select and pen cover most work; the rest are for cutting, measuring, previewing, and typing."
+lede: "Eight edit modes. Select and pen cover most work; the rest cut, measure, preview and type."
 status: "All eight modes implemented"
 stability: "Behaviour is settled; options are still being added"
 order: 7
@@ -34,9 +34,9 @@ import Callout from "../../components/Callout.astro";
   </tbody>
 </table>
 
-For an exact move or scale, use the Coordinates panel: pick a
-reference point on the nine-point grid, then set X and Y to move the
-selection so the reference lands there, or W and H to scale about it.
+For an exact move or scale, use the Coordinates panel. Pick a reference
+point on the nine-point grid. X and Y move the selection so the
+reference lands there; W and H scale about it.
 
 </DocSection>
 
@@ -59,7 +59,7 @@ Draws hyperbezier contours: curves defined by the points you place,
 with the control points solved rather than positioned by hand. Fewer
 things to hold, and the curvature stays continuous by construction.
 
-Path, Hyperbezier to Cubic converts a hyperbezier contour into
+Path → Hyperbezier to Cubic converts a hyperbezier contour into
 ordinary cubic segments. With nothing selected it converts every
 hyperbezier contour in the glyph. Do that before handing a source to a
 tool that expects plain cubics.

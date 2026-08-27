@@ -1,6 +1,6 @@
 ---
 title: "Masters and Interpolation"
-lede: "A designspace opens every master it names. Axis sliders move you through the space, the editor draws what falls between, and intermediate layers let you correct it where the straight interpolation is wrong."
+lede: "A designspace opens every master it names. Axis sliders move through the space, and the editor draws what falls between."
 status: "Implemented"
 stability: "Stable"
 order: 11
@@ -17,10 +17,10 @@ Open a single `.ufo` and you get one master.
 
 The Masters section of the right panel lists them, and each row draws
 the current glyph as that master draws it, so you compare without
-switching. Click a row to switch. View, Next Master and View, Previous
-Master step through them.
+switching. Click a row to switch. View → Next Master and View →
+Previous Master step through them.
 
-View, Show All Masters draws every master at once over the current
+View → Show All Masters draws every master at once over the current
 glyph.
 
 </DocSection>
@@ -68,7 +68,7 @@ that disagree. Use it before you go hunting glyph by glyph.
 
 <DocSection title="Reinterpolate">
 
-Glyph, Reinterpolate replaces the current glyph with what the
+Glyph → Reinterpolate replaces the current glyph with what the
 surrounding masters say it should be at this position. It is the way
 back when a glyph has drifted out of step with the rest of the
 designspace.
@@ -114,10 +114,9 @@ Between two masters, a point normally travels in a straight line. A
 trajectory bends that line.
 
 Turn on Trajectories with the select tool and each node shows a knob
-at the middle of its path. Drag the knob and the node's interpolation
-curves through that point instead of running straight, which is how
-you keep a stem from bowing or a joint from pinching partway through
-a weight axis.
+at the middle of its path. Drag the knob and the node's interpolation curves through that point
+instead of running straight. Use it to stop a stem bowing, or a joint
+pinching, partway along an axis.
 
 The intermediate points are stored on the axis-minimum master so they
 stay editable. What compilers consume is the baked intermediate
@@ -154,7 +153,7 @@ interpolate bilinearly.
 <DocSection title="Masks">
 
 A contour can be marked as a mask, subtracting from the shapes behind
-it while you draw. Glyph, Bake Masks makes the subtraction real in
+it while you draw. Glyph → Bake Masks makes the subtraction real in
 every master, so the exported outline matches what the preview showed.
 
 </DocSection>

@@ -1,6 +1,6 @@
 ---
 title: "Spacing and Kerning"
-lede: "Set widths and sidebearings by dragging or by typing, let metric keys derive one glyph's spacing from another, and kern by dragging in real text."
+lede: "Set widths and sidebearings, derive them with metric keys, and kern by dragging in real text."
 status: "Implemented"
 stability: "Stable"
 order: 12
@@ -39,7 +39,7 @@ Glyph section of the right panel.
   </tbody>
 </table>
 
-Glyph, Update Metrics (<code>Cmd+Ctrl+M</code>) applies every key in
+Glyph → Update Metrics (<code>Cmd+Ctrl+M</code>) applies every key in
 every master. Keys can chain: if `n` has a key of its own, the passes
 repeat until nothing moves.
 
@@ -51,9 +51,9 @@ leaves Runebender takes them along.
 
 <DocSection title="Kerning by Dragging">
 
-Kerning is fastest in text. Switch to the text tool, type a pair, and
-drag the space between the two glyphs. This is the working path: you
-see the pair at size, in the word it belongs to, while you set it.
+Switch to the text tool, type a pair, and drag the space between the
+two glyphs. You see the pair at size, in the word it belongs to, while
+you set it.
 
 </DocSection>
 
@@ -81,9 +81,8 @@ master. Filter it with the search field, and edit a value in the row.
 Enter commits.
 
 <Callout>
-  Use the table to audit and to fix a specific value you already know
-  is wrong. Use dragging in text to design the spacing in the first
-  place.
+  Use the table to audit and to correct a known value. Design the
+  spacing by dragging in text.
 </Callout>
 
 </DocSection>
@@ -91,9 +90,8 @@ Enter commits.
 <DocSection title="Checking Your Work">
 
 The Dimensions section in the grid view measures stems and bars from
-the reference glyphs in each master, so you can see whether the
-weights actually match across a designspace rather than trusting the
-numbers you meant to draw.
+the reference glyphs in each master. It shows whether the weights
+match across a designspace, rather than the numbers you meant to draw.
 
 The Compare section lists differing advance widths between masters,
 along with structural incompatibilities and kerning pair counts.

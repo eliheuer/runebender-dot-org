@@ -1,6 +1,6 @@
 ---
 title: "Opening and Saving"
-lede: "Runebender edits UFO and designspace sources in place. It also opens Glyphs files and compiled fonts by converting them, and it never writes over a file it cannot round-trip."
+lede: "Runebender edits UFO and designspace sources in place. Glyphs files and compiled fonts are converted on the way in."
 status: "Implemented"
 stability: "Stable"
 order: 4
@@ -28,7 +28,7 @@ import CommandList from "../../components/CommandList.astro";
   FontLab and FontForge sources are not read.
 </Callout>
 
-Use File, Open, or start the editor with a path.
+Use File → Open, or start the editor with a path.
 
 <CommandList commands={[
   "runebender-gpui path/to/Font.designspace",

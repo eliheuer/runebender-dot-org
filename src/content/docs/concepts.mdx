@@ -1,6 +1,6 @@
 ---
 title: "Concepts"
-lede: "The ideas the rest of these pages assume: what a font source is, what the coordinate grid means, and what has to be true for a variable font to interpolate."
+lede: "The ideas the other pages assume: sources, the coordinate grid, and what interpolation requires."
 status: "Explanation"
 stability: "These do not change with the editor"
 order: 5
@@ -17,10 +17,10 @@ It is a build artefact. You do not edit it any more than you edit a
 compiled program.
 
 A **source** is what you draw. Runebender's sources are UFO
-directories and a designspace file that names them. Because a UFO is a
-directory of small text files, a source belongs in version control,
-where a day's drawing reads as a reviewable diff and a mistake is one
-`git checkout` away from being undone.
+directories and a designspace file that names them. A UFO is a
+directory of small text files, so a source belongs in version control.
+A day's drawing reads as a reviewable diff, and a mistake is one
+`git checkout` away.
 
 <Callout>
   This is why the editor writes in place rather than keeping its own
@@ -74,9 +74,9 @@ A **variable font** holds a range rather than a single drawing. You
 draw the ends, called **masters**, and every weight between them is
 calculated.
 
-For that calculation to work, the masters must be **compatible**: the
-same number of contours, the same number of points in each, in the
-same order, starting at the same point. The computer pairs point one
+The masters must be **compatible** for that to work. Same number of
+contours, same number of points in each, same order, same start
+point. The computer pairs point one
 with point one and moves it partway. If the counts differ, there is no
 pairing and no interpolation.
 
@@ -113,10 +113,9 @@ Typing produces characters. A font produces glyphs. **Shaping** is the
 step between: an engine reads the characters, applies the font's own
 rules, and returns positioned glyphs.
 
-For Latin, that is often close to one character per glyph. For Arabic,
-Devanagari, and other complex scripts it is not: a letter takes a
-different form depending on its neighbours, marks are positioned
-against anchors, and sequences merge into ligatures. Those rules are
+For Latin, that is often close to one character per glyph. For Arabic, Devanagari and other complex scripts it is not. A letter
+changes form with its neighbours, marks are positioned against anchors,
+and sequences merge into ligatures. Those rules are
 [feature code](/docs/features.html), and the editor runs them live so
 you see the result while drawing rather than after compiling.
 

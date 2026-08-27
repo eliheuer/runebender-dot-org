@@ -11,7 +11,6 @@ export const docGroups: DocGroup[] = [
     links: [
       { slug: "index", label: "Overview", href: "/docs" },
       { slug: "install" },
-      { slug: "first-steps" },
       { slug: "opening" },
       { slug: "concepts" },
       { slug: "interface" },

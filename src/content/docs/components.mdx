@@ -1,6 +1,6 @@
 ---
 title: "Components and Anchors"
-lede: "Build accented and composite glyphs out of other glyphs. Anchors hold the pieces together, marks follow their base as you edit it, and smart components carry a range of shapes rather than one."
+lede: "Build accented glyphs from other glyphs. Anchors hold the pieces together, and marks follow their base."
 status: "Implemented"
 stability: "Stable"
 order: 10
@@ -52,10 +52,9 @@ marks snap to their anchor without extra work.
 
 <DocSection title="Editing Anchors">
 
-Add and delete anchors from the canvas context menu. Select one with
-the select tool and drag it, or set exact coordinates in the
-Coordinates panel: with an anchor selected, the X and Y fields address
-the anchor itself. Its name is a field in the same panel.
+Add and delete anchors from the canvas context menu. Select one with the select tool and drag it. For exact coordinates, use
+the Coordinates panel: with an anchor selected, its X and Y fields
+address the anchor. Its name is a field in the same panel.
 
 Anchor names drive generated feature code. Entry and exit anchors
 produce cursive attachment, anchor families produce mark and mark-to-
@@ -101,13 +100,11 @@ must keep the same structure to interpolate.
 
 <DocSection title="Joining Scripts">
 
-Glyph, Check Joining is for cursive scripts. For every positional
-form, it measures the connecting stroke's band at the joining edges,
-where initial and medial join at x = 0 and medial and final at the
-advance, then finds the font's common band and selects every form that
-misses it.
+Glyph → Check Joining is for cursive scripts. It measures each positional form's connecting stroke at the joining
+edges. Initial and medial join at x = 0; medial and final join at the
+advance. It then finds the font's common band and selects every form
+that misses it.
 
-It measures the joining line rather than asking you to eyeball it.
 See [Text and Shaping](/docs/text.html).
 
 </DocSection>
