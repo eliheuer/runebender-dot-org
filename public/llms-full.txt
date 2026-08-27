@@ -206,6 +206,112 @@ That makes it reasonable to keep the editor open while working on the
 same font from a terminal.
 
 
+## Concepts
+https://runebender.org/docs/concepts.html
+
+The ideas the rest of these pages assume: what a font source is, what the coordinate grid means, and what has to be true for a variable font to interpolate.
+
+### Sources and Fonts
+
+A **font** is the compiled file a system installs: a .ttf or .otf.
+It is a build artefact. You do not edit it any more than you edit a
+compiled program.
+
+A **source** is what you draw. Runebender's sources are UFO
+directories and a designspace file that names them. Because a UFO is a
+directory of small text files, a source belongs in version control,
+where a day's drawing reads as a reviewable diff and a mistake is one
+git checkout away from being undone.
+
+This is why the editor writes in place rather than keeping its own
+project format. Your repository is the project file.
+
+### The Em and Units
+
+Everything in a font is measured in a grid called the **em**, and the
+grid's resolution is **units per em**, or UPM. Runebender's new fonts
+use 1000; many use 1024 or 2048.
+
+Coordinates are units, not pixels. A stem 80 units wide is 80/1000 of
+the em, so it stays the same weight whether the text is set at 9pt or
+90pt. That is the whole point of the unit: the drawing is resolution
+independent, and the size is applied later.
+
+Change UPM only at the start of a project. It does not rescale
+anything already drawn.
+
+### Outlines
+
+A glyph is made of **contours**: closed paths of points.
+
+Point types:
+- On-curve: The outline passes through it.
+- Off-curve: A control point, or handle, that bends the segment beside it without being on it.
+
+Two curve mathematics are in use. **Cubic** curves have two handles
+per segment and are what UFO and PostScript outlines use. **Quadratic**
+curves have one, and are what TrueType uses. A compiler converts
+between them; Runebender can too.
+
+**Path direction** matters. The outer contour and the counter inside
+it must run opposite ways, or the fill rule cannot tell the hole from
+the shape.
+
+### Interpolation
+
+A **variable font** holds a range rather than a single drawing. You
+draw the ends, called **masters**, and every weight between them is
+calculated.
+
+For that calculation to work, the masters must be **compatible**: the
+same number of contours, the same number of points in each, in the
+same order, starting at the same point. The computer pairs point one
+with point one and moves it partway. If the counts differ, there is no
+pairing and no interpolation.
+
+This is the single fact that governs how variable fonts are drawn. It
+is why you draw the heavy weight by modifying a copy of the light one
+rather than starting fresh, and why
+[Checking a Font](/docs/checking.html) exists.
+
+### Axes, Instances, and Masters
+
+The pieces of a designspace:
+- Axis: A dimension of variation: weight, width, optical size. It has a range and a default.
+- Master: A drawing at a fixed position. The ends of the range, usually.
+- Instance: A named position, such as SemiBold. It is a label on a coordinate, not a drawing.
+- Intermediate: A correction for one glyph at one position, where the straight interpolation is wrong.
+
+An axis has two coordinate systems. **Design space** is where your
+masters sit, and **user space** is what a document asks for, such as
+weight 700. An avar mapping bends one onto the other, which is how
+the midpoint of a slider can be made to look like the middle rather
+than measuring like it.
+
+### Shaping
+
+Typing produces characters. A font produces glyphs. **Shaping** is the
+step between: an engine reads the characters, applies the font's own
+rules, and returns positioned glyphs.
+
+For Latin, that is often close to one character per glyph. For Arabic,
+Devanagari, and other complex scripts it is not: a letter takes a
+different form depending on its neighbours, marks are positioned
+against anchors, and sequences merge into ligatures. Those rules are
+[feature code](/docs/features.html), and the editor runs them live so
+you see the result while drawing rather than after compiling.
+
+### Composites
+
+Most accented glyphs are not drawn. They are **composites**: a
+reference to a base letter plus a reference to a mark, held together
+by **anchors**. Change the base and every glyph built on it follows.
+
+A font can reach a few hundred glyphs of Latin coverage from a few
+dozen drawings this way. See
+[Components and Anchors](/docs/components.html).
+
+
 ## The Interface
 https://runebender.org/docs/interface.html
 
@@ -1187,6 +1293,112 @@ inspector shows which characters produced which glyphs when something
 comes out wrong.
 
 
+## Tutorial: Draw a Glyph
+https://runebender.org/docs/tutorial-first-glyph.html
+
+Draw a letter from nothing, space it, see it in a word, and save it. About twenty minutes, and it touches most of the editor.
+
+### Before You Start
+
+You need Runebender installed and a font to work in. Press
+Cmd+N for a new one: an untitled UFO with Google Fonts
+metrics and the Latin Core set as empty encoded glyphs. Save it
+somewhere you can find it.
+
+Put the folder under version control first. It costs one command and
+makes every step below undoable.
+
+    git init && git add . && git commit -m 'Empty font'
+
+### 1. Open a Glyph
+
+Type H in the search box at the top left. Double-click the cell.
+
+The editor opens on an empty glyph with its metrics drawn around it:
+the baseline, the x-height, the cap height, and two vertical lines for
+the sidebearings.
+
+### 2. Draw the Left Stem
+
+Take the pen tool.
+
+1. Click at the baseline, a little right of the left sidebearing.
+2. Click straight up at the cap height.
+3. Click right by about 80 units.
+4. Click back down to the baseline.
+5. Click the first point again to close the contour.
+
+You have a rectangle. Switch to the select tool and drag its points
+until the width looks right at a glance. Numbers come later; the eye
+first.
+
+### 3. Reuse It
+
+Rather than draw the second stem, copy the first: select all four
+points with Cmd+A, then Cmd+D to duplicate.
+The copy lands on top of the original. Drag it right, holding shift to
+keep it level.
+
+Draw the crossbar the same way, a rectangle between the two stems, a
+little above the middle. Optically the centre of a letter sits above
+the mathematical centre.
+
+### 4. Clean Up
+
+Three commands, in this order, before you go further.
+
+Cleanup:
+- Path, Remove Overlap: Cmd+Shift+O. Merges the three rectangles into one outline.
+- Path, Correct Path Direction: Cmd+Shift+R. Sets the direction the fill rule expects.
+- Path, Tidy Up Paths: Cmd+Shift+T. Drops any zero-length segments the overlap left.
+
+### 5. Space It
+
+The bottom bar holds the advance width and the two sidebearings. Set
+both sidebearings to the same number to start; something near 80 units
+for a capital H at 1000 UPM.
+
+Spacing is judged in company, not alone, which is the next step.
+
+### 6. See It in a Word
+
+Take the text tool and type HHH. Then HOH if you have drawn an O,
+or leave it as three Hs.
+
+The rhythm should be even: the white inside the H and the white
+between two Hs want to look like the same amount of space. Drag the
+sidebearing edges until they do. Everything you change shows up in the
+line as you change it.
+
+Nearly all spacing is done this way. A glyph alone tells you almost
+nothing.
+
+### 7. Check the Curves
+
+Not needed for an H, but do it once now so you know where it is. Open
+the Curves section in the right panel and turn on the comb. On
+straight segments it is flat. On a letter with curves, a kink that is
+invisible at text size shows as a break in it.
+
+### 8. Save
+
+Cmd+S. The header shows the time.
+
+Now look at what changed:
+
+    git diff --stat
+
+One glyph file, and the metrics if you touched them. That is the
+argument for a source format made of small files.
+
+### Next
+
+Draw an O, and you meet curves, overshoot, and extremes. Then an
+accented glyph, which you build rather than draw: see
+[Components and Anchors](/docs/components.html) and the recipes in
+[Workflows](/docs/workflows.html).
+
+
 ## Workflows
 https://runebender.org/docs/workflows.html
 
@@ -1510,6 +1722,65 @@ Export and SVG export are native only. The browser build cannot
 write to your disk.
 
 
+## Scripting
+https://runebender.org/docs/scripting.html
+
+Runebender has no plugin API. It watches the files it has open, so a script and the editor work on the same font at the same time, and the shared core is a Rust library you can build on.
+
+### What Exists
+
+Runebender does not embed a scripting language, and it has no plugin
+API. Two things stand in for one.
+
+The two paths:
+- File watching: The editor reloads sources changed on disk. Run any script you like against the UFO and the change appears.
+- runebender-core: The editing model as a Rust library, with no interface attached. Build a tool on it.
+
+If you script fonts in Python today, keep doing that. UFO is the
+interchange, and Runebender is one of the tools around it rather
+than the centre of the workflow.
+
+### Working Alongside a Script
+
+1. Keep the editor open on the designspace.
+2. Run your script over the UFO.
+3. The editor picks the change up.
+
+This works with anything that writes UFO: fontTools, defcon,
+ufoLib2, a shell script, another editor.
+
+Two cautions. Save in the editor before running a script, or the
+reload will discard what you have not written. And keep the source in
+version control, so a script that goes wrong is one git checkout
+away from being undone.
+
+### Building on the Core
+
+[runebender-core](https://github.com/eliheuer/runebender-core) is the
+crate every front-end shares: the editing model, shaping through
+harfrust, measurement, curve analysis, path operations, and the Glyphs
+importer. It has no window and no interface.
+
+    cargo add --git https://github.com/eliheuer/runebender-core
+
+It is not a stable API. It changes when the editor needs it to, and
+there are no release notes yet. Pin a revision.
+
+### Building a Font
+
+For compiling, use the tools that already do it. Export runs your
+project's build-fontc.sh or build.sh if it finds one, and compiles
+with fontc otherwise, so a project that already builds a specific way
+keeps building that way. See
+[Exporting](/docs/exporting.html).
+
+### What Is Not Here
+
+Being plain about the gap: there is no equivalent of RoboFont's
+extensions, FontForge's scripting language, or a plugin manager. If
+you need to automate inside the editor, it is not the right tool yet.
+
+
 ## Troubleshooting
 https://runebender.org/docs/troubleshooting.html
 
@@ -1652,14 +1923,71 @@ requires, so the worker sets them in the browser instead.
 Every dependency comes from crates.io or a public git repository, so a
 plain clone builds with no local paths.
 
-GPUI and gpui_platform come from the Zed git repository rather than
-crates.io, because the editor shell uses
-[gpui-component](https://github.com/longbridge/gpui-component), which
-tracks Zed main.
+GPUI and gpui_platform come from the Zed git repository, which does
+not publish to crates.io. Both are pinned to a revision, so a fresh
+resolve lands on the same graph.
+
+gpui_platform needs its font-kit feature. Without it the platform
+falls back to a small embedded font list and no interface text renders
+at all, while everything else draws normally. Run
+runebender-gpui --fonts to see what it can resolve.
+
+The widgets are the editor's own, under src/widgets: text fields on
+[parley](https://github.com/linebender/parley), a slider, resizable
+panel groups, and an in-window menu bar for platforms without a native
+one.
 
 ### License
 
 Apache-2.0 or MIT.
+
+
+## FAQ
+https://runebender.org/docs/faq.html
+
+Short answers to the questions this project gets asked, including the ones with uncomfortable answers.
+
+### The Project
+
+What it is:
+- Is it ready for production work?: No. It is alpha. It writes to your sources in place, so keep them in version control and work on copies.
+- What does it cost?: Nothing. Apache-2.0 or MIT.
+- Is this an official Linebender project?: No. It is built on Linebender crates and aims at the Linebender stack, but the site and the editor are maintained independently.
+- Why are there several front-ends?: One editing core with interchangeable interfaces. GPUI is the current default; the Xilem port exists to compare the two on the same application. See Development.
+
+### Files
+
+Formats:
+- What can it open?: UFO, designspace, .glyphs, .glyphspackage, and compiled .ttf or .otf. See Opening and Saving.
+- Can it write .glyphs?: No. Glyphs files are converted to UFO on the way in, and you work on the converted files.
+- Will it overwrite my .ttf?: No. A compiled font opens as a UFO in memory, and saving writes that UFO beside the binary.
+- Does it read FontLab or FontForge sources?: No.
+- Can another editor open what it saves?: Yes. It writes standard UFO, and uses the glyphsLib keys for Glyphs-compatible data rather than inventing its own. See File Format.
+
+### Running It
+
+Install and launch:
+- Is there a download?: Not yet. Build it with cargo, or use the browser build. See Install.
+- Does the browser version upload my font?: No. It runs entirely in the browser. Nothing is sent anywhere.
+- Why is the browser version limited?: Its platform layer is younger than the native one. The gaps are listed in Troubleshooting.
+- Windows and Linux?: The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.
+
+### Drawing
+
+Common confusions:
+- Why will my glyph not interpolate?: The masters disagree about contour count, point count, point order, or start point. See Concepts and Checking a Font.
+- What is a hyperbezier?: A curve defined by the points you place, with the handles solved rather than positioned. Convert to cubics before handing the source to a tool that expects them.
+- Why does my Arabic not join?: Usually glyph names. Shaping engines find joining forms by name. Run Glyph, Check Joining. See Text and Shaping.
+- Can I script it?: Not from inside the editor. It reloads files changed on disk, so a script and the editor can share a font. See Scripting.
+
+### Getting Help
+
+Open an issue on
+[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+A useful report says what you did, what happened, and what you
+expected, and names the file and whether you were in the browser or
+the native application. If the editor wrote something wrong into a
+source, the diff from version control is the best evidence there is.
 
 
 ## Glossary

@@ -5,13 +5,13 @@ BASE_URL="${1:-http://127.0.0.1:4321}"
 
 paths="
 /
-/cloud
-/cloud/editor/index.html
 /gpui/index.html
+/cloud/editor/index.html
 /docs
 /docs/install.html
 /docs/first-steps.html
 /docs/opening.html
+/docs/concepts.html
 /docs/interface.html
 /docs/tools.html
 /docs/glyphs.html
@@ -24,12 +24,15 @@ paths="
 /docs/text.html
 /docs/font-info.html
 /docs/checking.html
+/docs/tutorial-first-glyph.html
 /docs/workflows.html
 /docs/shortcuts.html
 /docs/format.html
 /docs/exporting.html
+/docs/scripting.html
 /docs/troubleshooting.html
 /docs/development.html
+/docs/faq.html
 /docs/glossary.html
 /llms.txt
 /llms-full.txt

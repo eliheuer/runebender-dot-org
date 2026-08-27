@@ -676,6 +676,16 @@ h3 {
   padding: 14px;
 }
 
+/* The content arrives as its own paragraph; the box supplies the
+   spacing. */
+.callout > p {
+  margin: 0;
+}
+
+.callout > p + p {
+  margin-top: 10px;
+}
+
 .mini-index {
   /* A closed box. The cells draw the bottom rule, so the container
      leaves that side to them. */

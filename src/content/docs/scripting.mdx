@@ -1,0 +1,83 @@
+---
+title: "Scripting"
+lede: "Runebender has no plugin API. It watches the files it has open, so a script and the editor work on the same font at the same time, and the shared core is a Rust library you can build on."
+status: "No in-editor scripting; the file-watching path works today"
+stability: "The core API is not stable"
+order: 23
+description: "Automating font work alongside Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="What Exists">
+
+Runebender does not embed a scripting language, and it has no plugin
+API. Two things stand in for one.
+
+<table>
+  <caption>The two paths</caption>
+  <tbody>
+    <tr><th>File watching</th><td>The editor reloads sources changed on disk. Run any script you like against the UFO and the change appears.</td></tr>
+    <tr><th>runebender-core</th><td>The editing model as a Rust library, with no interface attached. Build a tool on it.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  If you script fonts in Python today, keep doing that. UFO is the
+  interchange, and Runebender is one of the tools around it rather
+  than the centre of the workflow.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Working Alongside a Script">
+
+1. Keep the editor open on the designspace.
+2. Run your script over the UFO.
+3. The editor picks the change up.
+
+This works with anything that writes UFO: fontTools, defcon,
+ufoLib2, a shell script, another editor.
+
+Two cautions. Save in the editor before running a script, or the
+reload will discard what you have not written. And keep the source in
+version control, so a script that goes wrong is one `git checkout`
+away from being undone.
+
+</DocSection>
+
+<DocSection title="Building on the Core">
+
+[runebender-core](https://github.com/eliheuer/runebender-core) is the
+crate every front-end shares: the editing model, shaping through
+harfrust, measurement, curve analysis, path operations, and the Glyphs
+importer. It has no window and no interface.
+
+<CommandList commands={[
+  "cargo add --git https://github.com/eliheuer/runebender-core",
+]} />
+
+It is not a stable API. It changes when the editor needs it to, and
+there are no release notes yet. Pin a revision.
+
+</DocSection>
+
+<DocSection title="Building a Font">
+
+For compiling, use the tools that already do it. Export runs your
+project's `build-fontc.sh` or `build.sh` if it finds one, and compiles
+with fontc otherwise, so a project that already builds a specific way
+keeps building that way. See
+[Exporting](/docs/exporting.html).
+
+</DocSection>
+
+<DocSection title="What Is Not Here">
+
+Being plain about the gap: there is no equivalent of RoboFont's
+extensions, FontForge's scripting language, or a plugin manager. If
+you need to automate inside the editor, it is not the right tool yet.
+
+</DocSection>

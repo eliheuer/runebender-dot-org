@@ -6,6 +6,7 @@ const start = [
   { href: "/docs/install.html", title: "Install", description: "Run it in the browser, or build the native application with cargo." },
   { href: "/docs/first-steps.html", title: "First Steps", description: "Open a font, draw a shape, and save." },
   { href: "/docs/opening.html", title: "Opening and Saving", description: "What opens, what converts, and how saving works." },
+  { href: "/docs/concepts.html", title: "Concepts", description: "Sources, the em, outlines, and what interpolation needs." },
   { href: "/docs/interface.html", title: "The Interface", description: "What each panel and bar does." },
 ];
 
@@ -23,7 +24,8 @@ const editing = [
   { href: "/docs/checking.html", title: "Checking a Font", description: "Compare masters, measure weights, verify joining." },
 ];
 
-const howto = [
+const learn = [
+  { href: "/docs/tutorial-first-glyph.html", title: "Draw a Glyph", description: "A tutorial from empty font to saved letter." },
   { href: "/docs/workflows.html", title: "Workflows", description: "Recipes for jobs that span several parts of the editor." },
 ];
 
@@ -31,8 +33,10 @@ const reference = [
   { href: "/docs/shortcuts.html", title: "Shortcuts", description: "Every keyboard command and menu item." },
   { href: "/docs/format.html", title: "File Format", description: "What Runebender writes into a UFO." },
   { href: "/docs/exporting.html", title: "Exporting", description: "Build a font file from your sources." },
+  { href: "/docs/scripting.html", title: "Scripting", description: "Automating alongside the editor, and what is not there." },
   { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "What to check when something fails." },
   { href: "/docs/development.html", title: "Development", description: "Build from source and find your way around the code." },
+  { href: "/docs/faq.html", title: "FAQ", description: "Short answers, including the uncomfortable ones." },
   { href: "/docs/glossary.html", title: "Glossary", description: "Terms used across these pages." },
 ];
 ---
@@ -71,8 +75,8 @@ const reference = [
   </section>
 
   <section class="doc-section">
-    <h2>How-To</h2>
-    <div><MiniIndex items={howto} /></div>
+    <h2>Learn</h2>
+    <div><MiniIndex items={learn} /></div>
   </section>
 
   <section class="doc-section">

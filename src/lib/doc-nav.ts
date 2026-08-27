@@ -13,6 +13,7 @@ export const docGroups: DocGroup[] = [
       { slug: "install" },
       { slug: "first-steps" },
       { slug: "opening" },
+      { slug: "concepts" },
       { slug: "interface" },
     ],
   },
@@ -33,8 +34,11 @@ export const docGroups: DocGroup[] = [
     ],
   },
   {
-    label: "How-To",
-    links: [{ slug: "workflows" }],
+    label: "Learn",
+    links: [
+      { slug: "tutorial-first-glyph", label: "Draw a Glyph" },
+      { slug: "workflows" },
+    ],
   },
   {
     label: "Reference",
@@ -42,8 +46,10 @@ export const docGroups: DocGroup[] = [
       { slug: "shortcuts" },
       { slug: "format" },
       { slug: "exporting" },
+      { slug: "scripting" },
       { slug: "troubleshooting" },
       { slug: "development" },
+      { slug: "faq" },
       { slug: "glossary" },
     ],
   },

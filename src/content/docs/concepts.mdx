@@ -1,0 +1,135 @@
+---
+title: "Concepts"
+lede: "The ideas the rest of these pages assume: what a font source is, what the coordinate grid means, and what has to be true for a variable font to interpolate."
+status: "Explanation"
+stability: "These do not change with the editor"
+order: 5
+description: "Core concepts behind font sources, coordinates, and variable fonts."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Sources and Fonts">
+
+A **font** is the compiled file a system installs: a `.ttf` or `.otf`.
+It is a build artefact. You do not edit it any more than you edit a
+compiled program.
+
+A **source** is what you draw. Runebender's sources are UFO
+directories and a designspace file that names them. Because a UFO is a
+directory of small text files, a source belongs in version control,
+where a day's drawing reads as a reviewable diff and a mistake is one
+`git checkout` away from being undone.
+
+<Callout>
+  This is why the editor writes in place rather than keeping its own
+  project format. Your repository is the project file.
+</Callout>
+
+</DocSection>
+
+<DocSection title="The Em and Units">
+
+Everything in a font is measured in a grid called the **em**, and the
+grid's resolution is **units per em**, or UPM. Runebender's new fonts
+use 1000; many use 1024 or 2048.
+
+Coordinates are units, not pixels. A stem 80 units wide is 80/1000 of
+the em, so it stays the same weight whether the text is set at 9pt or
+90pt. That is the whole point of the unit: the drawing is resolution
+independent, and the size is applied later.
+
+Change UPM only at the start of a project. It does not rescale
+anything already drawn.
+
+</DocSection>
+
+<DocSection title="Outlines">
+
+A glyph is made of **contours**: closed paths of points.
+
+<table>
+  <caption>Point types</caption>
+  <tbody>
+    <tr><th>On-curve</th><td>The outline passes through it.</td></tr>
+    <tr><th>Off-curve</th><td>A control point, or handle, that bends the segment beside it without being on it.</td></tr>
+  </tbody>
+</table>
+
+Two curve mathematics are in use. **Cubic** curves have two handles
+per segment and are what UFO and PostScript outlines use. **Quadratic**
+curves have one, and are what TrueType uses. A compiler converts
+between them; Runebender can too.
+
+**Path direction** matters. The outer contour and the counter inside
+it must run opposite ways, or the fill rule cannot tell the hole from
+the shape.
+
+</DocSection>
+
+<DocSection title="Interpolation">
+
+A **variable font** holds a range rather than a single drawing. You
+draw the ends, called **masters**, and every weight between them is
+calculated.
+
+For that calculation to work, the masters must be **compatible**: the
+same number of contours, the same number of points in each, in the
+same order, starting at the same point. The computer pairs point one
+with point one and moves it partway. If the counts differ, there is no
+pairing and no interpolation.
+
+This is the single fact that governs how variable fonts are drawn. It
+is why you draw the heavy weight by modifying a copy of the light one
+rather than starting fresh, and why
+[Checking a Font](/docs/checking.html) exists.
+
+</DocSection>
+
+<DocSection title="Axes, Instances, and Masters">
+
+<table>
+  <caption>The pieces of a designspace</caption>
+  <tbody>
+    <tr><th>Axis</th><td>A dimension of variation: weight, width, optical size. It has a range and a default.</td></tr>
+    <tr><th>Master</th><td>A drawing at a fixed position. The ends of the range, usually.</td></tr>
+    <tr><th>Instance</th><td>A named position, such as SemiBold. It is a label on a coordinate, not a drawing.</td></tr>
+    <tr><th>Intermediate</th><td>A correction for one glyph at one position, where the straight interpolation is wrong.</td></tr>
+  </tbody>
+</table>
+
+An axis has two coordinate systems. **Design space** is where your
+masters sit, and **user space** is what a document asks for, such as
+weight 700. An `avar` mapping bends one onto the other, which is how
+the midpoint of a slider can be made to look like the middle rather
+than measuring like it.
+
+</DocSection>
+
+<DocSection title="Shaping">
+
+Typing produces characters. A font produces glyphs. **Shaping** is the
+step between: an engine reads the characters, applies the font's own
+rules, and returns positioned glyphs.
+
+For Latin, that is often close to one character per glyph. For Arabic,
+Devanagari, and other complex scripts it is not: a letter takes a
+different form depending on its neighbours, marks are positioned
+against anchors, and sequences merge into ligatures. Those rules are
+[feature code](/docs/features.html), and the editor runs them live so
+you see the result while drawing rather than after compiling.
+
+</DocSection>
+
+<DocSection title="Composites">
+
+Most accented glyphs are not drawn. They are **composites**: a
+reference to a base letter plus a reference to a mark, held together
+by **anchors**. Change the base and every glyph built on it follows.
+
+A font can reach a few hundred glyphs of Latin coverage from a few
+dozen drawings this way. See
+[Components and Anchors](/docs/components.html).
+
+</DocSection>

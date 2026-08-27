@@ -3,7 +3,7 @@ title: "Development"
 lede: "Build from source, work on the editor and the shared core together, and build the browser bundle."
 status: "Reference"
 stability: "The wasm toolchain pin moves"
-order: 22
+order: 25
 description: "Building and contributing to Runebender."
 ---
 
@@ -93,10 +93,19 @@ requires, so the worker sets them in the browser instead.
 Every dependency comes from crates.io or a public git repository, so a
 plain clone builds with no local paths.
 
-GPUI and `gpui_platform` come from the Zed git repository rather than
-crates.io, because the editor shell uses
-[gpui-component](https://github.com/longbridge/gpui-component), which
-tracks Zed main.
+GPUI and `gpui_platform` come from the Zed git repository, which does
+not publish to crates.io. Both are pinned to a revision, so a fresh
+resolve lands on the same graph.
+
+`gpui_platform` needs its `font-kit` feature. Without it the platform
+falls back to a small embedded font list and no interface text renders
+at all, while everything else draws normally. Run
+`runebender-gpui --fonts` to see what it can resolve.
+
+The widgets are the editor's own, under `src/widgets`: text fields on
+[parley](https://github.com/linebender/parley), a slider, resizable
+panel groups, and an in-window menu bar for platforms without a native
+one.
 
 </DocSection>
 

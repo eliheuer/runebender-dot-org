@@ -1,4 +1,7 @@
 ---
 ---
 
-<p class="callout"><slot /></p>
+<!-- A div, not a p: in MDX the content becomes its own paragraph, and
+     a paragraph inside a paragraph is closed early by the parser,
+     which empties the box. -->
+<div class="callout"><slot /></div>

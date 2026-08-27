@@ -1,0 +1,78 @@
+---
+title: "FAQ"
+lede: "Short answers to the questions this project gets asked, including the ones with uncomfortable answers."
+status: "Reference"
+stability: "Answers change as the editor does"
+order: 26
+description: "Frequently asked questions about Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="The Project">
+
+<table>
+  <caption>What it is</caption>
+  <tbody>
+    <tr><th>Is it ready for production work?</th><td>No. It is alpha. It writes to your sources in place, so keep them in version control and work on copies.</td></tr>
+    <tr><th>What does it cost?</th><td>Nothing. Apache-2.0 or MIT.</td></tr>
+    <tr><th>Is this an official Linebender project?</th><td>No. It is built on Linebender crates and aims at the Linebender stack, but the site and the editor are maintained independently.</td></tr>
+    <tr><th>Why are there several front-ends?</th><td>One editing core with interchangeable interfaces. GPUI is the current default; the Xilem port exists to compare the two on the same application. See <a href="/docs/development.html">Development</a>.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Files">
+
+<table>
+  <caption>Formats</caption>
+  <tbody>
+    <tr><th>What can it open?</th><td>UFO, designspace, <code>.glyphs</code>, <code>.glyphspackage</code>, and compiled <code>.ttf</code> or <code>.otf</code>. See <a href="/docs/opening.html">Opening and Saving</a>.</td></tr>
+    <tr><th>Can it write .glyphs?</th><td>No. Glyphs files are converted to UFO on the way in, and you work on the converted files.</td></tr>
+    <tr><th>Will it overwrite my .ttf?</th><td>No. A compiled font opens as a UFO in memory, and saving writes that UFO beside the binary.</td></tr>
+    <tr><th>Does it read FontLab or FontForge sources?</th><td>No.</td></tr>
+    <tr><th>Can another editor open what it saves?</th><td>Yes. It writes standard UFO, and uses the glyphsLib keys for Glyphs-compatible data rather than inventing its own. See <a href="/docs/format.html">File Format</a>.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Running It">
+
+<table>
+  <caption>Install and launch</caption>
+  <tbody>
+    <tr><th>Is there a download?</th><td>Not yet. Build it with cargo, or use the browser build. See <a href="/docs/install.html">Install</a>.</td></tr>
+    <tr><th>Does the browser version upload my font?</th><td>No. It runs entirely in the browser. Nothing is sent anywhere.</td></tr>
+    <tr><th>Why is the browser version limited?</th><td>Its platform layer is younger than the native one. The gaps are listed in <a href="/docs/troubleshooting.html">Troubleshooting</a>.</td></tr>
+    <tr><th>Windows and Linux?</th><td>The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Drawing">
+
+<table>
+  <caption>Common confusions</caption>
+  <tbody>
+    <tr><th>Why will my glyph not interpolate?</th><td>The masters disagree about contour count, point count, point order, or start point. See <a href="/docs/concepts.html">Concepts</a> and <a href="/docs/checking.html">Checking a Font</a>.</td></tr>
+    <tr><th>What is a hyperbezier?</th><td>A curve defined by the points you place, with the handles solved rather than positioned. Convert to cubics before handing the source to a tool that expects them.</td></tr>
+    <tr><th>Why does my Arabic not join?</th><td>Usually glyph names. Shaping engines find joining forms by name. Run Glyph, Check Joining. See <a href="/docs/text.html">Text and Shaping</a>.</td></tr>
+    <tr><th>Can I script it?</th><td>Not from inside the editor. It reloads files changed on disk, so a script and the editor can share a font. See <a href="/docs/scripting.html">Scripting</a>.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Getting Help">
+
+Open an issue on
+[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+A useful report says what you did, what happened, and what you
+expected, and names the file and whether you were in the browser or
+the native application. If the editor wrote something wrong into a
+source, the diff from version control is the best evidence there is.
+
+</DocSection>
