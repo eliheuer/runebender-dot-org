@@ -98,11 +98,12 @@ The slider under the model row scales how far the predicted points
 move. 1.00x applies the prediction as it came.
 
 Leave it at 1.00x unless you have a reason. Measured over 71 held-out
-glyphs, raising the strength made the result worse at every step: the
-model does not under-move uniformly, so scaling amplifies its mistakes
-along with its good guesses. The slider is there for the case where a
-model is right about direction and short on distance, which is a
-property of a particular model, not a general fix.
+glyphs, raising the strength made the result worse at every step. The
+model does not under-move uniformly. Scaling amplifies its mistakes
+along with its good guesses.
+
+The slider is for a model that is right about direction and short on
+distance. That is a property of one model, not a general fix.
 
 </DocSection>
 
@@ -110,15 +111,15 @@ property of a particular model, not a general fix.
 
 Click Score against the other master when both masters have the glyph
 drawn. The editor compares the prediction to the drawing you already
-made and reports two numbers: the model's average error per point, and
-the error from simply shifting every point by the average amount.
+made. It reports two numbers: the model's average error per point, and
+the error from shifting every point by the average amount.
 
 Lower is better, and the second number is the one to beat. A model
 that cannot beat a uniform shift is not telling you anything a
 constant could not.
 
-This only works on glyphs you have already drawn in both masters, so
-it measures a model on known work before you trust it on unknown work.
+This works only on glyphs you have already drawn in both masters. It
+measures a model on known work before you trust it on unknown work.
 
 </DocSection>
 
