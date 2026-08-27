@@ -21,12 +21,15 @@
      knobs steer all of it - raise --tone-c above 0 to warm every
      step at once, and --tone-h picks which way it warms. Rules use
      these directly. Add a step only when a real need appears, and
-     never write a raw colour anywhere else. */
+     never write a raw colour anywhere else.
+
+     All text is --g-25. There is no second, lighter text colour:
+     hierarchy comes from the rules and the fills, not from greying
+     words out. */
   --tone-h: 95;
   --tone-c: 0;
   --g-16: oklch(16% var(--tone-c) var(--tone-h));
   --g-25: oklch(25% var(--tone-c) var(--tone-h));
-  --g-44: oklch(44% var(--tone-c) var(--tone-h));
   --g-57: oklch(57% var(--tone-c) var(--tone-h));
   --g-68: oklch(68% var(--tone-c) var(--tone-h));
   --g-73: oklch(73% var(--tone-c) var(--tone-h));
@@ -334,7 +337,7 @@ h3 {
 .screenshot-block figcaption {
   border-bottom: 2px solid var(--g-25);
   border-inline: 2px solid var(--g-25);
-  color: var(--g-44);
+  color: var(--g-25);
   padding: 10px 12px;
 }
 
@@ -372,7 +375,7 @@ h3 {
 .research-grid p,
 .manifesto p,
 .resource-links span {
-  color: var(--g-44);
+  color: var(--g-25);
   /* One line per description; the copy is written to fit. */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -468,7 +471,7 @@ h3 {
 }
 
 .family-card span {
-  color: var(--g-44);
+  color: var(--g-25);
   display: block;
   font-weight: 400;
   margin-bottom: auto;
@@ -479,7 +482,7 @@ h3 {
 }
 
 .family-card p {
-  color: var(--g-44);
+  color: var(--g-25);
 }
 
 .core-card {
@@ -587,7 +590,7 @@ h3 {
 }
 
 .doc-hero p {
-  color: var(--g-44);
+  color: var(--g-25);
   max-width: 820px;
 }
 
@@ -603,7 +606,7 @@ h3 {
 }
 
 .page-summary td {
-  color: var(--g-44);
+  color: var(--g-25);
 }
 
 /* Section rules bleed to the sidebar line and the window edge. */
@@ -622,7 +625,7 @@ h3 {
 
 .doc-section p,
 .doc-section li {
-  color: var(--g-44);
+  color: var(--g-25);
 }
 
 .doc-section ol,
@@ -685,7 +688,7 @@ h3 {
 }
 
 .mini-index span {
-  color: var(--g-44);
+  color: var(--g-25);
 }
 
 .split-section {
@@ -846,7 +849,7 @@ th {
 
 .footer-note {
   border-top: 2px solid var(--g-25);
-  color: var(--g-44);
+  color: var(--g-25);
   display: flex;
   gap: 16px;
   justify-content: space-between;
@@ -1106,7 +1109,7 @@ th {
 }
 
 .install-steps p {
-  color: var(--g-44);
+  color: var(--g-25);
   margin: 0;
   max-width: 760px;
 }
