@@ -578,12 +578,15 @@ h3 {
 }
 
 .doc-page {
-  padding: 20px;
+  /* No padding top or bottom: the hero and the sections bleed to the
+     column edges, so any padding here shows as a strip of page
+     background between them. */
+  padding: 0 20px;
 }
 
 .doc-hero {
   border-bottom: 2px solid var(--g-25);
-  margin: -20px -20px 20px;
+  margin-inline: -20px;
   padding: 20px;
 }
 
