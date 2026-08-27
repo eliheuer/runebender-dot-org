@@ -17,7 +17,7 @@
      next to the sans at the same point size. */
   --text-mono: 18px;
   /* Page titles, the only display size on the site. */
-  --text-title: 42px;
+  --text-title: 64px;
 
   /* The palette: a grayscale ramp, named by oklch lightness. Two
      knobs steer all of it - raise --tone-c above 0 to warm every
@@ -654,10 +654,19 @@ h3 {
 }
 
 .command-list code {
+  /* Same treatment as the home page's install block: light on dark,
+     so a command reads as terminal output. It wraps rather than
+     scrolling, because a command you have to scroll to read is a
+     command you will get wrong. Wrapping is visual only, so copying
+     still yields one line. */
+  background: var(--g-25);
+  border-color: var(--g-25);
+  color: var(--g-87);
   display: block;
-  overflow-x: auto;
-  padding: 10px;
-  white-space: nowrap;
+  font-size: var(--text-mono);
+  overflow-wrap: anywhere;
+  padding: 14px;
+  white-space: pre-wrap;
 }
 
 .callout {
@@ -937,7 +946,9 @@ th {
   }
 
   .doc-sidebar nav {
-    align-items: stretch;
+    /* Groups size to their own contents. Stretching them to the
+       tallest one left tall gaps inside the short ones. */
+    align-items: flex-start;
     display: flex;
     gap: 14px;
     overflow-x: auto;
@@ -956,7 +967,7 @@ th {
   }
 
   .command-list code {
-    white-space: normal;
+    white-space: pre-wrap;
   }
 }
 
@@ -1158,5 +1169,16 @@ th {
 }
 
 #top > section:nth-of-type(even) {
+  background: var(--g-76);
+}
+
+/* Doc sections alternate between the two lightest steps, the way the
+   home page does. The hero sits on the page background, so the first
+   section takes the other one. */
+.doc-page .doc-section:nth-of-type(odd) {
+  background: var(--g-82);
+}
+
+.doc-page .doc-section:nth-of-type(even) {
   background: var(--g-76);
 }
