@@ -22,7 +22,10 @@ const editing = [
   { href: "/docs/text.html", title: "Text and Shaping", description: "Type in context, including Arabic and other RTL scripts." },
   { href: "/docs/font-info.html", title: "Font Info", description: "Names, vertical metrics, and hinting values." },
   { href: "/docs/checking.html", title: "Checking a Font", description: "Compare masters, measure weights, verify joining." },
-  { href: "/docs/local-models.html", title: "Local Models", description: "Run a model on your machine, over your own sources." },
+];
+
+const localAi = [
+  { href: "/docs/local-models.html", title: "Local Models", description: "Run a model on your machine, over your own sources. Experimental." },
 ];
 
 const learn = [
@@ -73,6 +76,11 @@ const reference = [
   <section class="doc-section">
     <h2>Editing</h2>
     <div><MiniIndex items={editing} /></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Local AI</h2>
+    <div><MiniIndex items={localAi} /></div>
   </section>
 
   <section class="doc-section">

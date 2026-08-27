@@ -31,8 +31,11 @@ export const docGroups: DocGroup[] = [
       { slug: "text" },
       { slug: "font-info" },
       { slug: "checking" },
-      { slug: "local-models" },
     ],
+  },
+  {
+    label: "Local AI",
+    links: [{ slug: "local-models" }],
   },
   {
     label: "Learn",

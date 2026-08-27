@@ -35,6 +35,10 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Font info](https://runebender.org/docs/font-info.html): names, vertical metrics, and PostScript hinting values.
 - [Checking a font](https://runebender.org/docs/checking.html): compare masters, measure stems, verify joining and curvature.
 
+## Local AI
+
+- [Local models](https://runebender.org/docs/local-models.html): running a machine-learning model on your own machine over your own sources. Experimental; one job so far, proposing a heavier master from a lighter one, and often wrong.
+
 ## Learn
 
 - [Draw a glyph](https://runebender.org/docs/tutorial-first-glyph.html): a tutorial from an empty font to a saved, spaced letter.
@@ -46,7 +50,6 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [File format](https://runebender.org/docs/format.html): the UFO data Runebender reads and writes, including its own namespaced keys.
 - [Exporting](https://runebender.org/docs/exporting.html): build scripts take precedence, otherwise fontc.
 - [Troubleshooting](https://runebender.org/docs/troubleshooting.html): build, open, interpolation, joining, and browser-build limits.
-- [Local models](https://runebender.org/docs/local-models.html): running a machine-learning model on your own machine over your own sources. Experimental; one job so far, proposing a heavier master from a lighter one, and often wrong.
 - [Scripting](https://runebender.org/docs/scripting.html): no plugin API; file watching and the core crate are the two paths.
 - [FAQ](https://runebender.org/docs/faq.html): short answers about the project, formats, running it, and drawing.
 - [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
