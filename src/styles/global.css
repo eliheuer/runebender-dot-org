@@ -877,6 +877,11 @@ th {
   padding: 14px 16px;
 }
 
+.footer-note a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 1060px) {
   .site-header,
   .hero,
