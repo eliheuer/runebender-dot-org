@@ -1293,6 +1293,101 @@ inspector shows which characters produced which glyphs when something
 comes out wrong.
 
 
+## Local Models
+https://runebender.org/docs/local-models.html
+
+Runebender can run a machine-learning model on your own machine, over your own sources, with nothing sent anywhere. Today it does one job: proposing a heavier master from a lighter one.
+
+### What This Is
+
+A model here is a directory on your disk. You point at it, and it runs
+on your machine against the font you have open. Nothing is downloaded,
+no account is needed, and your drawings are not sent anywhere.
+
+This is experimental in a way the rest of the editor is not. The
+mechanism is sound and the guardrails are real, but the models are
+small and early, and what they propose is often wrong. Treat every
+result as a suggestion to judge, never as an answer.
+
+### Getting a Model
+
+There are no models to download yet. You either train one, or you have
+been given a directory by someone who did.
+
+A model is three files:
+
+What a model directory holds:
+- config.json: Shape of the network, and which kind of model it is.
+- weights.safetensors: The trained weights.
+- vocab.txt: The glyph names it was trained on.
+
+Nothing else is read, and the directory is inspectable: cat the
+config to see what you have.
+
+### Boldening
+
+Open a glyph in the lighter master, then Glyph, Bolden With Model…,
+and choose a model directory. The editor predicts a heavier version of
+that glyph and installs it.
+
+The result is an ordinary edit. To reject it, undo.
+
+What you get:
+- Status line: How many points moved, of how many, and the change in advance width.
+- The glyph: The proposal, in place, undoable.
+
+### Why It Cannot Break Compatibility
+
+A Bold master has to stay point-compatible with its Regular: the same
+contours, the same points, in the same order. Break that and the
+family stops interpolating.
+
+The prediction cannot break it. Every drawing command and every source
+coordinate is fixed from the glyph you already have, and the model is
+allowed to fill in only the offsets between them, choosing from a
+range of distances. There is no point in the process at which it could
+add, remove, or reorder a point. It moves points, and that is all it
+can do.
+
+The editor checks the result anyway before writing, and refuses if the
+number of offsets does not match the number of points.
+
+So the risk is not a broken font. The risk is a bad drawing, which
+you can see and undo.
+
+### What to Expect
+
+Quality varies by glyph, and not evenly. Running the Virtua-12M model
+on Virtua Grotesk, H moves all 25 of its points and thickens
+sensibly; eight moves only 15 of its 53, and the result needs work.
+Straight stems are easier to be right about than curves.
+
+Read the moved-point count in the status line as a rough confidence
+signal. A glyph where most points stayed put is one the model had
+little to say about.
+
+### From the Command Line
+
+The same models run outside the editor through
+[font-ml](https://github.com/eliheuer/font-ml), which is where the
+inference lives. Useful for trying a model over many glyphs before
+bringing it into a drawing session.
+
+    font-ml describe <model>
+    font-ml run bolden --model <model> --source Font.ufo --glyph eight
+
+describe reports what a model is and which jobs it can do, and every
+command takes --json.
+
+### What Is Not Here
+
+No chat, no assistant, no generation from a description, and no way to
+add a model to a menu as a plugin. Kerning and spacing models are
+named in font-ml and not built. See
+[Scripting](/docs/scripting.html) for what automation is possible
+today.
+
+
 ## Tutorial: Draw a Glyph
 https://runebender.org/docs/tutorial-first-glyph.html
 
@@ -1774,6 +1869,13 @@ with fontc otherwise, so a project that already builds a specific way
 keeps building that way. See
 [Exporting](/docs/exporting.html).
 
+### Models
+
+Running a machine-learning model over a font is a separate path with
+its own page: see [Local Models](/docs/local-models.html). It needs no
+scripting, and the same models run outside the editor through
+[font-ml](https://github.com/eliheuer/font-ml).
+
 ### What Is Not Here
 
 Being plain about the gap: there is no equivalent of RoboFont's
@@ -1979,6 +2081,7 @@ Common confusions:
 - What is a hyperbezier?: A curve defined by the points you place, with the handles solved rather than positioned. Convert to cubics before handing the source to a tool that expects them.
 - Why does my Arabic not join?: Usually glyph names. Shaping engines find joining forms by name. Run Glyph, Check Joining. See Text and Shaping.
 - Can I script it?: Not from inside the editor. It reloads files changed on disk, so a script and the editor can share a font. See Scripting.
+- Does it use AI?: It can run a model on your machine, over your sources, with nothing sent anywhere. One job so far: proposing a heavier master from a lighter one. It is experimental and often wrong. See Local Models.
 
 ### Getting Help
 

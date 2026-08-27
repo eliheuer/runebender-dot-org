@@ -3,7 +3,7 @@ title: "Scripting"
 lede: "Runebender has no plugin API. It watches the files it has open, so a script and the editor work on the same font at the same time, and the shared core is a Rust library you can build on."
 status: "No in-editor scripting; the file-watching path works today"
 stability: "The core API is not stable"
-order: 23
+order: 24
 description: "Automating font work alongside Runebender."
 ---
 
@@ -71,6 +71,15 @@ project's `build-fontc.sh` or `build.sh` if it finds one, and compiles
 with fontc otherwise, so a project that already builds a specific way
 keeps building that way. See
 [Exporting](/docs/exporting.html).
+
+</DocSection>
+
+<DocSection title="Models">
+
+Running a machine-learning model over a font is a separate path with
+its own page: see [Local Models](/docs/local-models.html). It needs no
+scripting, and the same models run outside the editor through
+[font-ml](https://github.com/eliheuer/font-ml).
 
 </DocSection>
 

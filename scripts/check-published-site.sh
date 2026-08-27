@@ -24,6 +24,7 @@ paths="
 /docs/text.html
 /docs/font-info.html
 /docs/checking.html
+/docs/local-models.html
 /docs/tutorial-first-glyph.html
 /docs/workflows.html
 /docs/shortcuts.html
