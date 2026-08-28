@@ -144,7 +144,12 @@ code {
   display: inline-block;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: var(--text-mono);
-  padding: 2px 5px;
+  /* The box must fit the line box it sits in, or consecutive lines
+     collide. At 20px/1.35 the line is 27px; this box is 18*1.1 + 2
+     padding + 4 border = 25.8px. Changing --text-mono, the padding or
+     the border means redoing this sum. */
+  line-height: 1.1;
+  padding: 1px 5px;
   overflow-wrap: anywhere;
 }
 
@@ -630,6 +635,12 @@ h3 {
 }
 
 /* Section rules bleed to the sidebar line and the window edge. */
+/* The footer draws its own top rule, so the last section's bottom
+   border would stack with it into a 4px line. */
+.doc-page .doc-section:last-child {
+  border-bottom: 0;
+}
+
 .doc-section {
   border-bottom: 2px solid var(--g-25);
   display: grid;
