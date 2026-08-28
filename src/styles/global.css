@@ -23,8 +23,8 @@
      because em-relative tracking already gives the big one more pixels
      per character. One value for both sizes reads as no change at all
      on the small one. */
-  --track-display: -0.035em;
-  --track-tight: -0.02em;
+  --track-display: -0.045em;
+  --track-tight: -0.025em;
 
   /* The palette: a grayscale ramp, named by oklch lightness. Two
      knobs steer all of it - raise --tone-c above 0 to warm every
