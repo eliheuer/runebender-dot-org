@@ -12,11 +12,11 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
     <section class="hero" aria-label="Runebender Web Editor">
       <div class="hero-copy">
         <p class="lede">
-          Runebender is a free, open-source, permissively licensed font editor built on the
-          Linebender ecosystem of Rust crates. A headless core handles the font work, and
-          separate front-ends put an interface on it. The current default front-end uses GPUI,
-          and the long-term goal is to build the whole application on the Linebender stack:
-          Masonry, Xilem, or whatever the ecosystem settles on.
+          Runebender is a free and open-source font editor built on the Linebender
+          ecosystem of Rust crates. A headless core does the font work, and separate
+          front-ends draw the interface. The default front-end uses GPUI and runs both
+          natively and in the browser. The long-term goal is to build the whole
+          application on the Linebender stack.
         </p>
         <div class="hero-actions" aria-label="Launch Runebender">
           <a class="button primary" href="/gpui/index.html">Launch Editor</a>
@@ -37,10 +37,10 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
     <section class="section install-section" id="install" aria-labelledby="install-title">
       <div>
         <div class="section-kicker">Quick Install</div>
-        <h2 id="install-title">Run It Natively.</h2>
+        <h2 id="install-title">Run It Natively</h2>
       </div>
       <div class="install-steps">
-        <p>Install the default editor with cargo.</p>
+        <p>Install the editor with cargo.</p>
         <pre><code>cargo install --git https://github.com/eliheuer/runebender-gpui</code></pre>
         <p>Then open a font from anywhere.</p>
         <pre><code>runebender-gpui path/to/Font.designspace</code></pre>
@@ -50,20 +50,20 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
     <section class="section resource-section" id="source" aria-labelledby="source-title">
       <div>
         <div class="section-kicker">Source Code</div>
-        <h2 id="source-title">Every Repository.</h2>
+        <h2 id="source-title">The Repositories</h2>
       </div>
       <div class="resource-links">
         <a href="https://github.com/eliheuer/runebender-gpui">
           <strong>runebender-gpui</strong>
-          <span>The current editor. Browser and native from one codebase.</span>
-        </a>
-        <a href="https://github.com/eliheuer/runebender-xilem">
-          <strong>runebender-xilem</strong>
-          <span>The same editor on Xilem, the Linebender UI stack.</span>
+          <span>The current editor. Native and browser from one codebase.</span>
         </a>
         <a href="https://github.com/eliheuer/runebender-core">
           <strong>runebender-core</strong>
           <span>The headless Rust library. Font work with no interface.</span>
+        </a>
+        <a href="https://github.com/eliheuer/runebender-xix">
+          <strong>runebender-xix</strong>
+          <span>The same editor on xix, a fork of Xilem.</span>
         </a>
         <a href="https://github.com/linebender/runebender">
           <strong>runebender-druid</strong>
