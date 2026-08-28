@@ -43,7 +43,6 @@
   --g-16: oklch(16% var(--tone-c) var(--tone-h));
   --g-25: oklch(25% var(--tone-c) var(--tone-h));
   --g-57: oklch(57% var(--tone-c) var(--tone-h));
-  --g-68: oklch(68% var(--tone-c) var(--tone-h));
   --g-73: oklch(73% var(--tone-c) var(--tone-h));
   --g-76: oklch(76% var(--tone-c) var(--tone-h));
   --g-82: oklch(82% var(--tone-c) var(--tone-h));
@@ -141,7 +140,7 @@ button:focus-visible {
 }
 
 code {
-  background: var(--g-68);
+  background: var(--g-87);
   border: 2px solid var(--g-25);
   color: var(--g-16);
   display: inline-block;
@@ -557,6 +556,7 @@ h3 {
 }
 
 .doc-sidebar {
+  background: var(--g-73);
   border-right: 2px solid var(--g-25);
   padding: 22px;
 }
