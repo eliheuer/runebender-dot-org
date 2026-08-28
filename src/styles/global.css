@@ -363,20 +363,21 @@ h3 {
      the window edge. */
   margin: 0 -20px 0 0;
   min-width: 0;
-  padding: 24px 20px;
+  /* Equal on all four sides. The image fills the content box, so this
+     padding IS the margin you see around the screenshot. */
+  padding: 20px;
 }
 
 .screenshot-block img {
   border: 2px solid var(--g-25);
   display: block;
-  /* width/height auto under two maxes: the browser scales on the
-     picture's own aspect and the box always matches it. With a fixed
-     width and object-fit the box stayed wide, the picture letterboxed
-     inside it, and the border drew around the empty box. */
-  width: auto;
+  /* Fills the content box and takes its height from its own aspect,
+     so the box always matches the picture and the four margins are
+     the block's padding, equally. A max-height here would scale the
+     image down below the column width and quietly widen the side
+     margins without touching the top. */
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  max-height: calc(100vh - 200px);
 }
 
 .screenshot-block figcaption {
