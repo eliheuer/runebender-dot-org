@@ -162,23 +162,16 @@ code {
 
 .site-header {
   align-items: stretch;
-  /* The ramp itself, left to right: the four chrome steps in order,
-     interpolated in oklab so the midpoints stay on the same neutral
-     the named steps sit on. Sticky, so it keeps the 94% fill and the
-     blur behind it. */
-  background: linear-gradient(
-    to right,
-    color-mix(in oklab, var(--g-68) 94%, transparent),
-    color-mix(in oklab, var(--g-73) 94%, transparent),
-    color-mix(in oklab, var(--g-76) 94%, transparent),
-    color-mix(in oklab, var(--g-82) 94%, transparent)
-  );
+  /* The header steps through the ramp, dark on the left to light on
+     the right, one named step per cell. The 2px rules already between
+     the cells are the edges, so the steps stay hard. This band is the
+     empty middle, between the brand and the nav. */
+  background: var(--g-73);
   border-bottom: 2px solid var(--g-25);
   display: flex;
   position: sticky;
   top: 0;
   z-index: 10;
-  backdrop-filter: blur(10px);
 }
 
 /* Every header cell: the word plus the same margin on all sides.
@@ -219,6 +212,27 @@ code {
   display: inline-flex;
   font-weight: 400;
   white-space: nowrap;
+}
+
+/* Left to right: g-68 brand, the header's own g-73 for the gap, then
+   76, 82, 87. It starts at 68 rather than 57 because the text is g-25
+   on every band and 57 puts it at 3.58 contrast. Hover and current sit
+   below this block on purpose: they match at the same specificity, so
+   they win on source order. */
+.brand {
+  background: var(--g-68);
+}
+
+.site-header nav a:nth-child(1) {
+  background: var(--g-76);
+}
+
+.site-header nav a:nth-child(2) {
+  background: var(--g-82);
+}
+
+.site-header nav a:nth-child(3) {
+  background: var(--g-87);
 }
 
 .brand:hover,
