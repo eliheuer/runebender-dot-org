@@ -162,7 +162,17 @@ code {
 
 .site-header {
   align-items: stretch;
-  background: color-mix(in oklab, var(--g-73) 94%, transparent);
+  /* The ramp itself, left to right: the four chrome steps in order,
+     interpolated in oklab so the midpoints stay on the same neutral
+     the named steps sit on. Sticky, so it keeps the 94% fill and the
+     blur behind it. */
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--g-68) 94%, transparent),
+    color-mix(in oklab, var(--g-73) 94%, transparent),
+    color-mix(in oklab, var(--g-76) 94%, transparent),
+    color-mix(in oklab, var(--g-82) 94%, transparent)
+  );
   border-bottom: 2px solid var(--g-25);
   display: flex;
   position: sticky;
