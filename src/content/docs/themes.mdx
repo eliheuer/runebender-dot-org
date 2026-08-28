@@ -1,0 +1,159 @@
+---
+title: "Themes"
+lede: "Four themes ship with the editor. Each one decides its greys, its corner radii, its rule weight, and how a glyph mark is drawn."
+status: "Themes are built in; a custom one means editing the token file and rebuilding"
+stability: "The token file's shape is settling and can still change"
+order: 26
+description: "The Runebender theme system, and how to write a theme of your own."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="Switching">
+
+View → Theme switches the palette. The menu tick follows the choice,
+and the status line names the theme you moved to.
+
+<table>
+  <caption>What ships</caption>
+  <tbody>
+    <tr><th>Dark</th><td>The default. Near-black canvas, hues at full strength.</td></tr>
+    <tr><th>Midnight</th><td>Darker still, with the panels at the canvas tone.</td></tr>
+    <tr><th>Gray</th><td>Mid grey with dark ink, square corners, a 2px rule.</td></tr>
+    <tr><th>Light</th><td>Near-white, with the hues stepped down to hold up on it.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="One File">
+
+Every theme comes from `themes/runebender.theme.json` in
+runebender-core. The editors read the same file, so a change lands in
+all of them at once and none of them can drift.
+
+Colour is authored in OKLCH rather than hex. Lightness and chroma mean
+the same thing at every hue there, so a set of colours reads as one
+family instead of a pile. A theme names a token, never a colour:
+
+```json
+"surfaces": { "canvas": "neutral.15", "outline": "neutral.23" },
+"roles":    { "accent": "green.dim", "danger": "red.dim" }
+```
+
+A token is a family and a step. `neutral.15` is the grey ramp at 15%
+lightness. `green.dim` is the green hue at its dim step.
+
+</DocSection>
+
+<DocSection title="What a Theme Decides">
+
+<table>
+  <caption>The blocks of a theme</caption>
+  <tbody>
+    <tr><th><code>surfaces</code></th><td>The grounds: app, panel, control, button, buttonHover, field, outline, divider, canvas.</td></tr>
+    <tr><th><code>text</code></th><td>primary, secondary, muted, subdued, overlay, glyph.</td></tr>
+    <tr><th><code>roles</code></th><td>The meanings: accent, danger, selection, the point types, curvature, kerning. Around thirty.</td></tr>
+    <tr><th><code>geometry</code></th><td>Corner radii and rule weights.</td></tr>
+    <tr><th><code>markStep</code>, <code>markStyle</code></th><td>How a glyph mark is coloured and drawn.</td></tr>
+  </tbody>
+</table>
+
+Every block is optional except the colours. A theme names only what it
+changes, and the rest falls back to the file's defaults.
+
+</DocSection>
+
+<DocSection title="Shape Is Themed Too">
+
+A theme sets its own corners and rule weights, because those carry as
+much of a look as colour does. The same palette at radius 0 with a 2px rule reads as a drawing tool.
+At radius 6 with a hairline it reads as a document application.
+
+<table>
+  <caption>geometry</caption>
+  <tbody>
+    <tr><th><code>radius</code></th><td>The default corner, on small chrome.</td></tr>
+    <tr><th><code>radiusControl</code></th><td>Pressable tiles: toolbar tiles, sidebar tabs, toggles.</td></tr>
+    <tr><th><code>stroke</code></th><td>The ordinary rule, on panels and chrome.</td></tr>
+    <tr><th><code>strokeEmphasis</code></th><td>Rings that mark a thing selected or grabbable.</td></tr>
+  </tbody>
+</table>
+
+The tokens are named for what they are used on, not for their size. A
+theme that disagrees about the sizes still knows what each one is for.
+Gray sets all four: square corners and a 2px rule.
+
+<Callout>
+  `strokeEmphasis` is its own value rather than `stroke` doubled.
+  Doubling works from a 1px base and breaks from a 2px one, where it
+  puts a 4px ring on an 18px swatch.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Marks">
+
+A glyph stores what its mark means, not the colour you see. The colour
+comes from the theme, so the same font reads correctly in all of them.
+
+How a mark is drawn is also the theme's choice, and it has to be.
+Tinting the cell's rule works where the ground is far from mid
+lightness. On a mid grey it cannot. A colour saturated enough to read as a hue
+sits at mid lightness too, and mid on mid is invisible.
+
+<table>
+  <caption>markStyle</caption>
+  <tbody>
+    <tr><th><code>border</code></th><td>Tint the cell's rule and label. Dark, Midnight and Light.</td></tr>
+    <tr><th><code>fill</code></th><td>Fill the cell with the hue and key it with a rule. Gray, with <code>markOutline</code> and <code>markInk</code> naming the keyline and the label on top.</td></tr>
+  </tbody>
+</table>
+
+`markStep` picks which step of each hue the theme uses. Dark takes
+`base`, Gray takes `base` under a keyline, Light takes `deep`.
+
+<Callout>
+  A theme switch never rewrites a font. The `public.markColor` other
+  editors read is frozen in the token file, so it does not follow the
+  display tuning.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Writing One">
+
+Themes are compiled into the editor. There is no folder to drop a
+theme into, and no setting that points at one. A theme of your own
+means editing the token file and building from source.
+
+1. Clone `runebender-core` and `runebender-gpui` side by side.
+2. Add a block under `themes` in `themes/runebender.theme.json`. Copy
+   the theme closest to what you want and change what differs.
+3. Add the theme to the editor's theme list and give it a menu action.
+4. Build and switch to it from View → Theme.
+
+<CommandList commands={[
+  "git clone https://github.com/eliheuer/runebender-core",
+  "git clone https://github.com/eliheuer/runebender-gpui",
+  "cargo run --release -- path/to/Font.designspace",
+]} />
+
+The tests in runebender-core check a new theme for the mistakes that
+are hard to see. A mark that does not clear its background. An
+emphasis ring lighter than the ordinary rule. A theme in the menu with
+no action behind it. Run them before trusting a theme you wrote.
+
+<CommandList commands={["cargo test"]} />
+
+</DocSection>
+
+<DocSection title="What Is Not Here">
+
+No theme editor, no live reload of a theme, no per-font or per-window
+theme, and no way to load one at runtime. The palette is one file
+compiled in, which is what keeps the editors from drifting apart.
+
+</DocSection>

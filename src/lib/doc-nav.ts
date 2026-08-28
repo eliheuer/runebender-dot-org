@@ -47,6 +47,7 @@ export const docGroups: DocGroup[] = [
     label: "Reference",
     links: [
       { slug: "shortcuts" },
+      { slug: "themes" },
       { slug: "format" },
       { slug: "exporting" },
       { slug: "scripting" },

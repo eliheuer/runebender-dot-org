@@ -48,6 +48,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 ## Reference
 
 - [Shortcuts](https://runebender.org/docs/shortcuts.html): every keyboard command.
+- [Themes](https://runebender.org/docs/themes.html): the OKLCH token file shared by every Runebender editor. A theme decides its greys, its corner radii and rule weights, and how a glyph mark is drawn. Themes are compiled in; a custom one means editing the token file and rebuilding.
 - [File format](https://runebender.org/docs/format.html): the UFO data Runebender reads and writes, including its own namespaced keys.
 - [Exporting](https://runebender.org/docs/exporting.html): build scripts take precedence, otherwise fontc.
 - [Troubleshooting](https://runebender.org/docs/troubleshooting.html): build, open, interpolation, joining, and browser-build limits.
