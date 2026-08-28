@@ -18,6 +18,9 @@
   --text-mono: 18px;
   /* Page titles, the only display size on the site. */
   --text-title: 64px;
+  /* Headlines track tighter than text. Set once so the 64px page title
+     and the body-size section headings stay in step. */
+  --track-tight: -0.02em;
 
   /* The palette: a grayscale ramp, named by oklch lightness. Two
      knobs steer all of it - raise --tone-c above 0 to warm every
@@ -596,7 +599,7 @@ h3 {
 
 .doc-hero h1 {
   font-size: var(--text-title);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-tight);
   line-height: 0.94;
   margin: 0 0 24px;
   max-width: 20ch;
@@ -633,7 +636,13 @@ h3 {
 }
 
 .doc-section h2 {
+  letter-spacing: var(--track-tight);
   margin-bottom: 0;
+}
+
+.doc-section h3,
+.doc-section h4 {
+  letter-spacing: var(--track-tight);
 }
 
 .doc-section p,
