@@ -8,8 +8,9 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 
 - [runebender-gpui](https://github.com/eliheuer/runebender-gpui): the editor. Browser and native from one codebase.
 - [runebender-core](https://github.com/eliheuer/runebender-core): the shared headless library. Editing model, shaping, measurement, curve analysis.
-- [runebender-xilem](https://github.com/eliheuer/runebender-xilem): the same editor on Xilem, the Linebender UI stack.
+- [runebender-xix](https://github.com/eliheuer/runebender-xix): the same editor on xix, a fork of Xilem.
 - [runebender-druid](https://github.com/linebender/runebender): the original implementation, kept as project history.
+- [font-ml](https://github.com/eliheuer/font-ml): a Rust library and CLI for running machine-learning models on font sources. Built to be driven by agents as well as people.
 
 ## Start Here
 
@@ -54,10 +55,25 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
 - [Glossary](https://runebender.org/docs/glossary.html): terms as Runebender uses them.
 
+## Command Line
+
+Entry points usable without a graphical session, for scripted and agent-driven font work.
+
+- `runebender-gpui path/to/Font.designspace` opens a source. The editor reloads files changed on disk, so a script can edit sources while a session is open.
+- `font-ml models <dir>` lists the model directories under a path.
+- `font-ml describe <model>` reports what a model is and which jobs it can do.
+- `font-ml tasks` lists the jobs font-ml defines and which are implemented.
+- `font-ml run bolden --model <model> --source Font.ufo --glyph eight` proposes a heavier drawing of one glyph.
+- `font-ml eval --model <model> --regular Light.ufo --bold Bold.ufo` scores a model against a master somebody drew.
+
+Every `font-ml` command takes `--json` for machine-readable output. Exit codes are 0 success, 2 usage error, 3 not implemented, 4 failed. There is no plugin API and no in-editor scripting; file watching and the `runebender-core` crate are the two automation paths.
+
 ## Agent Guidance
 
 - Runebender is alpha. Say so, and do not describe behaviour as stable unless the source says it is.
 - Describe Runebender as one editor. GPUI is the current front-end; the Xilem port and the earlier Druid implementation are context, not separate products a user must choose between.
 - The browser build has known gaps: text fields cannot take focus, in-window menus do not activate, paste is unavailable, and export is not possible. Native is unaffected.
 - Prefer linking to the source repository for implementation details.
+- For scripted or agent-driven font work, `font-ml` is the machine-facing surface: every command takes `--json` and reports distinct exit codes. Do not claim a font-ml job works before checking `font-ml tasks`; most are declared and not built.
+- Runebender reads and writes UFO and designspace sources. It is not a .glyphs editor, though it converts .glyphs files on open.
 - Use `llms-full.txt` when a single-file documentation context is more useful than crawling HTML.

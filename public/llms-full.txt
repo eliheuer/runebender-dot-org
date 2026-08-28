@@ -285,7 +285,19 @@ and follow you across master switches.
 
 ### Left Panel
 
-Left panel:
+A strip of icons at the top of the panel switches between its sections.
+Hover an icon for its name. Axes appears only when the font has a
+designspace.
+
+Left panel sections:
+- Glyphs: The glyph grid, with the search and filter controls below it.
+- Shapes: Reusable shapes to place in a drawing.
+- Axes: The designspace axes and where the current view sits on them.
+- Local AI: Choose a model and run it. See Local Models.
+
+The Glyphs section holds these controls:
+
+Glyphs section:
 - Search: Narrow the grid. The controls beside the box set the scope to name, Unicode, or both, and turn on regular expressions and case matching.
 - Categories: Unicode categories: letters, marks, numbers, punctuation, symbols.
 - Languages: Language and script rows with Google Fonts coverage. A row still missing glyphs shows a plus that adds every one it names, encoded, to every master.
@@ -1265,11 +1277,16 @@ config to see what you have.
 
 ### Boldening
 
-Open a glyph in the lighter master, then Glyph → Bolden With Model…,
-and choose a model directory. The editor predicts a heavier version of
-that glyph and installs it.
+Open the Local AI section of the left panel, then click the model row
+and choose a model directory. The editor remembers it for the session.
+
+Open a glyph in the lighter master and click Bolden this glyph. The
+editor predicts a heavier version and installs it. The button stays
+inactive until a glyph is open.
 
 The result is an ordinary edit. To reject it, undo.
+
+Glyph → Bolden With Model… does the same thing from the menu.
 
 What you get:
 - Status line: How many points moved, of how many, and the change in advance width.
@@ -1293,6 +1310,33 @@ number of offsets does not match the number of points.
 The risk is not a broken font. It is a bad drawing, which you can see
 and undo.
 
+### Strength
+
+The slider under the model row scales how far the predicted points
+move. 1.00x applies the prediction as it came.
+
+Leave it at 1.00x unless you have a reason. Measured over 71 held-out
+glyphs, raising the strength made the result worse at every step. The
+model does not under-move uniformly. Scaling amplifies its mistakes
+along with its good guesses.
+
+The slider is for a model that is right about direction and short on
+distance. That is a property of one model, not a general fix.
+
+### Scoring a Prediction
+
+Click Score against the other master when both masters have the glyph
+drawn. The editor compares the prediction to the drawing you already
+made. It reports two numbers: the model's average error per point, and
+the error from shifting every point by the average amount.
+
+Lower is better, and the second number is the one to beat. A model
+that cannot beat a uniform shift is not telling you anything a
+constant could not.
+
+This works only on glyphs you have already drawn in both masters. It
+measures a model on known work before you trust it on unknown work.
+
 ### What to Expect
 
 Quality varies by glyph, and not evenly. Running the Virtua-12M model
@@ -1303,6 +1347,11 @@ Straight stems are easier to be right about than curves.
 Read the moved-point count in the status line as a rough confidence
 signal. A glyph where most points stayed put is one the model had
 little to say about.
+
+A good average score does not mean a usable drawing. Average point
+error says nothing about whether stems landed on the weights the
+family uses, which is what decides if a glyph reads correctly. Judge
+the drawing with your eyes and use the score to compare models.
 
 ### From the Command Line
 
@@ -1904,7 +1953,7 @@ Build from source, work on the shared core alongside, and build the browser bund
 Where the code lives:
 - runebender-gpui: The editor. Runs in the browser and as a native application from one codebase.
 - runebender-core: The shared library: editing model, shaping, measurement, curve analysis. No interface.
-- runebender-xilem: The same editor on Xilem, the Linebender UI stack. It exists to compare the two GUI stacks on one application.
+- runebender-xix: The same editor on xix, a fork of Xilem. It exists to compare the two GUI stacks on one application.
 - runebender-druid: The original implementation, kept as project history.
 
 The core crate holds everything that does not need a window, so the

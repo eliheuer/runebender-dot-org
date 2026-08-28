@@ -11,9 +11,47 @@ interface Props {
 
 const {
   title,
-  description = "Runebender is a family of experimental font editor projects built around shared Rust core code and UFO-based type design workflows.",
+  description = "Runebender is a free, open-source font editor for UFO and designspace sources, written in Rust. It runs natively and in the browser.",
   ogTitle = "Runebender",
 } = Astro.props;
+
+// build.format is "preserve", so pages are served at .html paths. The
+// canonical must match the URL that actually resolves, using the same
+// rule as the sitemap serializer in astro.config.mjs.
+const canonicalPath = (p: string) => {
+  if (p === "/") return "/";
+  if (p === "/docs" || p === "/cloud") return `${p}/index.html`;
+  if (p.startsWith("/docs/") && !p.endsWith(".html")) return `${p}.html`;
+  return p;
+};
+const canonical = new URL(
+  canonicalPath(Astro.url.pathname),
+  Astro.site ?? "https://runebender.org",
+).href;
+
+// Structured data so search engines can answer tool-shaped questions
+// ("open source font editor", "edit UFO files") with this site, which is
+// how an agent doing font work is most likely to arrive here.
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Runebender",
+  applicationCategory: "DesignApplication",
+  applicationSubCategory: "Font editor",
+  operatingSystem: "macOS, Linux, Windows, Web",
+  url: "https://runebender.org",
+  downloadUrl: "https://github.com/eliheuer/runebender-gpui",
+  softwareVersion: "0.1",
+  programmingLanguage: "Rust",
+  license: "https://opensource.org/licenses/Apache-2.0",
+  isAccessibleForFree: true,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  description:
+    "A free, open-source font editor for UFO and designspace sources. Draw outlines, space and kern, build variable fonts, and edit OpenType feature code.",
+  keywords:
+    "font editor, type design, UFO, designspace, variable fonts, kerning, OpenType features, Rust, open source",
+  author: { "@type": "Person", name: "Eli Heuer", url: "https://elih.net" },
+};
 ---
 
 <!doctype html>
@@ -27,6 +65,11 @@ const {
     <meta property="og:image" content="https://runebender.org/assets/og-image.svg" />
     <meta property="og:type" content="website" />
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <!-- Machine-readable documentation, for agents that prefer one file
+         to crawling the HTML. -->
+    <link rel="alternate" type="text/plain" href="https://runebender.org/llms.txt" title="llms.txt" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <link rel="icon" href="/assets/favicon.png" type="image/png" sizes="512x512" />
     <link rel="apple-touch-icon" href="/assets/favicon.png" />
   </head>
