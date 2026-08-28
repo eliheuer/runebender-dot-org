@@ -13,6 +13,7 @@ export const docGroups: DocGroup[] = [
       { slug: "install" },
       { slug: "opening" },
       { slug: "concepts" },
+      { slug: "architecture" },
       { slug: "interface" },
     ],
   },

@@ -17,6 +17,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Documentation map](https://runebender.org/docs): every page, grouped.
 - [Install](https://runebender.org/docs/install.html): run it in the browser, or build the native application with cargo.
 - [Opening and saving](https://runebender.org/docs/opening.html): UFO, designspace, .glyphs conversion, compiled font import, file watching.
+- [Architecture](https://runebender.org/docs/architecture.html): one headless core (runebender-core) plus interchangeable front-ends (gpui, xilem, web). The rule is that anything changing a font lives in core, so it can be tested without a window and reused by every shell.
 - [Concepts](https://runebender.org/docs/concepts.html): sources, the em and units, outlines, interpolation compatibility, axes, shaping, composites.
 - [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.
 

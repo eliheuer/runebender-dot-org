@@ -1,0 +1,170 @@
+---
+title: "Architecture"
+lede: "One headless core does the font work. Several front-ends put an interface on it. This is why, and what belongs where."
+status: "Current, and the reason for most of the code's shape"
+stability: "The split is settled; which front-end is default is not"
+order: 6
+description: "How Runebender is put together: the shared core, the front-ends, and the decisions behind them."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="The Shape">
+
+Runebender is one editing engine with interchangeable shells.
+
+<table>
+  <caption>The pieces</caption>
+  <tbody>
+    <tr><th><code>runebender-core</code></th><td>Every operation that changes a font. No window, no toolkit, no drawing.</td></tr>
+    <tr><th><code>runebender-gpui</code></th><td>The current editor. Native on desktop and in the browser from one codebase.</td></tr>
+    <tr><th><code>runebender-xilem</code></th><td>The same editor on Xilem, the Linebender UI stack. More experimental.</td></tr>
+    <tr><th><code>runebender-web</code></th><td>Vello and Kurbo in WebAssembly with a Vue interface around them.</td></tr>
+    <tr><th><code>runebender-druid</code></th><td>The original, kept as project history.</td></tr>
+  </tbody>
+</table>
+
+Each front-end owns its window, input and drawing, and calls core for
+anything that changes a glyph.
+
+</DocSection>
+
+<DocSection title="The Rule">
+
+If an edit changes a font, it belongs in core.
+
+That single rule explains most of the layout. Core can be tested
+without opening a window, which means the hard parts (segment surgery,
+overlap removal, interpolation) have tests that run in milliseconds.
+It also means a second front-end is a new interface rather than a
+second editor.
+
+<Callout>
+  The test is not "is this about drawing" but "would another front-end
+  need it". Where a click lands is the shell's business. What that
+  click does to the outline is core's.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Why More Than One Front-End">
+
+Because the interesting question is not settled.
+
+GPUI is Zed's toolkit. It is fast, it ships in a real application, and
+it compiles to WebAssembly, so one codebase serves desktop and
+browser. That is why it is the default today.
+
+Xilem is the Linebender stack, which is where this project's
+sympathies are and where its dependencies already live. It is younger.
+The port exists so the comparison is made on a real application rather
+than a demo. It also keeps the editor ready if the answer changes.
+
+<Callout>
+  A shell that is hard to write on one stack and easy on another is
+  evidence. Keeping two honest is the cost of collecting it.
+</Callout>
+
+</DocSection>
+
+<DocSection title="What Sits in Core">
+
+<table>
+  <caption>runebender-core</caption>
+  <tbody>
+    <tr><th><code>glyph_ops</code></th><td>Point moves, deletion with segment surgery, smooth constraints, pen primitives, decompose, overlap removal, metrics, kerning.</td></tr>
+    <tr><th><code>glyph_paths</code>, <code>path/</code></th><td>norad to kurbo outlines, and the segment maths: cubic, quadratic, hyperbezier.</td></tr>
+    <tr><th><code>curve</code></th><td>Curvature analysis: continuity, kinks, extrema.</td></tr>
+    <tr><th><code>text</code></th><td>Shaping and the text-context editing model.</td></tr>
+    <tr><th><code>composites</code>, <code>var_model</code></th><td>Components and anchors; interpolation across a designspace.</td></tr>
+    <tr><th><code>theme</code>, <code>theme_oklch</code></th><td>The token file every editor resolves its colours from.</td></tr>
+    <tr><th><code>editing/</code>, <code>model/</code></th><td>Selection, undo, entity ids, the workspace model.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="The Format Is the Model">
+
+Runebender edits UFO through [norad](https://github.com/linebender/norad)
+rather than reading a font into a private model and writing it back.
+
+The gain is that nothing is lost in translation, and any other tool can
+read the sources mid-session. The cost is that the file's shape is the
+editor's shape, including the parts of UFO that are awkward.
+
+This is also why an agent or a script can work alongside the editor at
+all. See [Agents](/docs/agents.html).
+
+</DocSection>
+
+<DocSection title="Two Versions of Kurbo">
+
+Core carries `kurbo` twice, as `kurbo_09` and through its consumers.
+
+Front-ends are pinned to their toolkit's version, and a library can
+only declare one. Rather than hold every front-end to the oldest, core
+keeps the geometry types it needs at a pinned version and converts at
+the boundary.
+
+It is a real cost, and it is the reason some geometry-touching code
+still lives in each front-end instead of in core.
+
+</DocSection>
+
+<DocSection title="Inside a Front-End">
+
+`runebender-gpui` is one `Workspace` holding the model, split across
+files by concern.
+
+<table>
+  <caption>runebender-gpui</caption>
+  <tbody>
+    <tr><th><code>main.rs</code></th><td>The model, the actions, the menus, the wiring.</td></tr>
+    <tr><th><code>commands.rs</code></th><td>What the menus and shortcuts call. One method per user-facing command.</td></tr>
+    <tr><th><code>panels.rs</code></th><td>The regions either side of the canvas.</td></tr>
+    <tr><th><code>canvas.rs</code></th><td>The glyph grid and the editing view.</td></tr>
+    <tr><th><code>input.rs</code></th><td>Pointer and keyboard on the canvas.</td></tr>
+    <tr><th><code>theme.rs</code></th><td>Theme accessors. Call these instead of naming a colour or a radius.</td></tr>
+    <tr><th><code>widgets/</code></th><td>The controls the editor owns: text input, slider, resizable split, menu bar.</td></tr>
+  </tbody>
+</table>
+
+A command is the whole of one intent. The menu item, the shortcut and
+the context menu all land on the same method. There is one place to
+read, and one place to fix.
+
+</DocSection>
+
+<DocSection title="Decisions Worth Knowing">
+
+Small choices that look odd until you know why.
+
+<table>
+  <caption>The ones that surprise people</caption>
+  <tbody>
+    <tr><th>One canvas, not one per cell</th><td>Outlines in the grid are painted by a single canvas over the whole grid. gpui ends its render pass at every run of paths, so a canvas per cell meant a pass switch per cell.</td></tr>
+    <tr><th>Themes are compiled in</th><td>One token file, resolved at startup. It is what keeps the editors from drifting apart. See <a href="/docs/themes.html">Themes</a>.</td></tr>
+    <tr><th>The editor owns its widgets</th><td>Text fields are built on parley. A dependency that themes itself is a second design system to keep in step.</td></tr>
+    <tr><th>Undo snapshots the glyph</th><td>Simpler to reason about than a command log, and a glyph is small.</td></tr>
+    <tr><th>Files are watched</th><td>Sources changed on disk reload. This is the whole integration surface for scripts and agents.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="The Browser Build">
+
+The same code compiles to WebAssembly. What changes is what the
+platform allows, not the editing model.
+
+Text fields cannot take focus, in-window menus do not activate, paste
+is unavailable, and export is not possible. Those are limits of the
+build, and the native application has none of them.
+
+See [Development](/docs/development.html) for building it, and
+[Troubleshooting](/docs/troubleshooting.html) for what to expect.
+
+</DocSection>

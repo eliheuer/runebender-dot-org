@@ -254,6 +254,132 @@ dozen drawings this way. See
 [Components and Anchors](/docs/components.html).
 
 
+## Architecture
+https://runebender.org/docs/architecture.html
+
+One headless core does the font work. Several front-ends put an interface on it. This is why, and what belongs where.
+
+### The Shape
+
+Runebender is one editing engine with interchangeable shells.
+
+The pieces:
+- runebender-core: Every operation that changes a font. No window, no toolkit, no drawing.
+- runebender-gpui: The current editor. Native on desktop and in the browser from one codebase.
+- runebender-xilem: The same editor on Xilem, the Linebender UI stack. More experimental.
+- runebender-web: Vello and Kurbo in WebAssembly with a Vue interface around them.
+- runebender-druid: The original, kept as project history.
+
+Each front-end owns its window, input and drawing, and calls core for
+anything that changes a glyph.
+
+### The Rule
+
+If an edit changes a font, it belongs in core.
+
+That single rule explains most of the layout. Core can be tested
+without opening a window, which means the hard parts (segment surgery,
+overlap removal, interpolation) have tests that run in milliseconds.
+It also means a second front-end is a new interface rather than a
+second editor.
+
+The test is not "is this about drawing" but "would another front-end
+need it". Where a click lands is the shell's business. What that
+click does to the outline is core's.
+
+### Why More Than One Front-End
+
+Because the interesting question is not settled.
+
+GPUI is Zed's toolkit. It is fast, it ships in a real application, and
+it compiles to WebAssembly, so one codebase serves desktop and
+browser. That is why it is the default today.
+
+Xilem is the Linebender stack, which is where this project's
+sympathies are and where its dependencies already live. It is younger.
+The port exists so the comparison is made on a real application rather
+than a demo. It also keeps the editor ready if the answer changes.
+
+A shell that is hard to write on one stack and easy on another is
+evidence. Keeping two honest is the cost of collecting it.
+
+### What Sits in Core
+
+runebender-core:
+- glyph_ops: Point moves, deletion with segment surgery, smooth constraints, pen primitives, decompose, overlap removal, metrics, kerning.
+- glyph_paths, path/: norad to kurbo outlines, and the segment maths: cubic, quadratic, hyperbezier.
+- curve: Curvature analysis: continuity, kinks, extrema.
+- text: Shaping and the text-context editing model.
+- composites, var_model: Components and anchors; interpolation across a designspace.
+- theme, theme_oklch: The token file every editor resolves its colours from.
+- editing/, model/: Selection, undo, entity ids, the workspace model.
+
+### The Format Is the Model
+
+Runebender edits UFO through [norad](https://github.com/linebender/norad)
+rather than reading a font into a private model and writing it back.
+
+The gain is that nothing is lost in translation, and any other tool can
+read the sources mid-session. The cost is that the file's shape is the
+editor's shape, including the parts of UFO that are awkward.
+
+This is also why an agent or a script can work alongside the editor at
+all. See [Agents](/docs/agents.html).
+
+### Two Versions of Kurbo
+
+Core carries kurbo twice, as kurbo_09 and through its consumers.
+
+Front-ends are pinned to their toolkit's version, and a library can
+only declare one. Rather than hold every front-end to the oldest, core
+keeps the geometry types it needs at a pinned version and converts at
+the boundary.
+
+It is a real cost, and it is the reason some geometry-touching code
+still lives in each front-end instead of in core.
+
+### Inside a Front-End
+
+runebender-gpui is one Workspace holding the model, split across
+files by concern.
+
+runebender-gpui:
+- main.rs: The model, the actions, the menus, the wiring.
+- commands.rs: What the menus and shortcuts call. One method per user-facing command.
+- panels.rs: The regions either side of the canvas.
+- canvas.rs: The glyph grid and the editing view.
+- input.rs: Pointer and keyboard on the canvas.
+- theme.rs: Theme accessors. Call these instead of naming a colour or a radius.
+- widgets/: The controls the editor owns: text input, slider, resizable split, menu bar.
+
+A command is the whole of one intent. The menu item, the shortcut and
+the context menu all land on the same method. There is one place to
+read, and one place to fix.
+
+### Decisions Worth Knowing
+
+Small choices that look odd until you know why.
+
+The ones that surprise people:
+- One canvas, not one per cell: Outlines in the grid are painted by a single canvas over the whole grid. gpui ends its render pass at every run of paths, so a canvas per cell meant a pass switch per cell.
+- Themes are compiled in: One token file, resolved at startup. It is what keeps the editors from drifting apart. See Themes.
+- The editor owns its widgets: Text fields are built on parley. A dependency that themes itself is a second design system to keep in step.
+- Undo snapshots the glyph: Simpler to reason about than a command log, and a glyph is small.
+- Files are watched: Sources changed on disk reload. This is the whole integration surface for scripts and agents.
+
+### The Browser Build
+
+The same code compiles to WebAssembly. What changes is what the
+platform allows, not the editing model.
+
+Text fields cannot take focus, in-window menus do not activate, paste
+is unavailable, and export is not possible. Those are limits of the
+build, and the native application has none of them.
+
+See [Development](/docs/development.html) for building it, and
+[Troubleshooting](/docs/troubleshooting.html) for what to expect.
+
+
 ## The Interface
 https://runebender.org/docs/interface.html
 
