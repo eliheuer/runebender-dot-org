@@ -1,0 +1,177 @@
+---
+title: "Agents"
+lede: "Runebender holds no API keys and calls no model service. An agent edits the sources, and the editor follows."
+status: "The file-watching seam works today; there is no in-editor assistant"
+stability: "Stable, because it depends on UFO rather than on an editor API"
+order: 17
+description: "Directing an AI agent to do type design work alongside Runebender."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="The Seam">
+
+An agent does not talk to Runebender. It edits the UFO and
+designspace files on disk, and the editor reloads what changed.
+
+That is the whole integration. It needs no plugin API, no key in the
+application, and no permission from the editor. The agent works with
+files, which is what agents are already good at.
+
+<table>
+  <caption>Where each side works</caption>
+  <tbody>
+    <tr><th>The agent</th><td>Reads and writes UFO sources, runs builds, runs checks, reads the results.</td></tr>
+    <tr><th>The editor</th><td>Reloads changed files, draws them, and saves your edits back.</td></tr>
+    <tr><th>The file</th><td>The only thing both sides touch.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  Keep the editor open while an agent works. Changes appear as you
+  watch, which is the fastest way to catch a bad edit early.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Subscriptions and Keys">
+
+Runebender does not store credentials and never sends your work
+anywhere. You bring your own agent, and it uses whatever account you
+already pay for.
+
+<table>
+  <caption>What runs where</caption>
+  <tbody>
+    <tr><th>A coding agent</th><td>Claude Code, Codex, or any other. It signs in through its own tooling, not through Runebender.</td></tr>
+    <tr><th>A local model</th><td>Runs on your machine through <a href="/docs/local-models.html">font-ml</a>. No account, no network.</td></tr>
+  </tbody>
+</table>
+
+Because the seam is the filesystem, changing which service you use
+changes nothing about Runebender.
+
+</DocSection>
+
+<DocSection title="Setting Up a Repository">
+
+An agent works better on a font repository than on a loose UFO. Give
+it the same things a new collaborator would need.
+
+1. Put the sources in a repository, so every edit is reviewable and
+   revertible.
+2. Write down the build and check commands where the agent will read
+   them.
+3. Say what the font's rules are: the grid, the metrics, the naming.
+4. Point it at `https://runebender.org/llms-full.txt` for the manual
+   in one file.
+
+<CommandList commands={[
+  "runebender-gpui sources/Font.designspace",
+  "curl -O https://runebender.org/llms-full.txt",
+]} />
+
+Agents read a repository's own instructions file, `AGENTS.md` or
+`CLAUDE.md`, before anything else. That file is where the font's
+rules belong.
+
+</DocSection>
+
+<DocSection title="What an Agent Should Not Break">
+
+Type design has constraints that are invisible in a diff and
+expensive to undo. State them, because an agent will not infer them.
+
+<table>
+  <caption>The rules worth writing down</caption>
+  <tbody>
+    <tr><th>Point compatibility</th><td>Masters must keep the same contours, the same points, in the same order. Break it and the family stops interpolating.</td></tr>
+    <tr><th>Contour direction</th><td>Outer contours run one way and counters the other. A reversed contour fills a hole.</td></tr>
+    <tr><th>Start points</th><td>Rotating where a contour starts is invisible in one master and fatal across two.</td></tr>
+    <tr><th>The grid</th><td>If the family is drawn on a unit grid, say the number. Off-grid points survive every check and ruin the drawing.</td></tr>
+    <tr><th>Components</th><td>Decomposing is easy and rarely reversible. Say when it is allowed.</td></tr>
+    <tr><th>Sidebearings</th><td>Preserving an advance width is not the same as preserving spacing.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  Ask for a check after every batch, not at the end. A compatibility
+  break found after fifty glyphs costs fifty glyphs.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Grading the Work">
+
+An agent produces more drawings than you can review carefully, so
+separate what it made from what you have accepted.
+
+Mark colors do this. The glyph grid shows them, and the mark travels
+in the source, so the state survives a restart and a git clone. One
+workable protocol: the agent marks everything it touches with one
+color, and only you may set the color that means done.
+
+Runebender stores the meaning of a mark, not just its color, so a
+theme can draw it differently without changing the font. See
+[File format](/docs/format.html).
+
+</DocSection>
+
+<DocSection title="Building on the Core">
+
+For a tool rather than a session, `runebender-core` is the editing
+model as a Rust library with no interface attached. It carries the
+operations the editor itself uses: point edits, components, curve
+analysis, measurement, shaping, kerning with group fallback.
+
+An agent writing Rust can build a tool on it that makes exactly the
+edit you want, instead of driving a general one. See
+[Development](/docs/development.html).
+
+</DocSection>
+
+<DocSection title="Local Models">
+
+`font-ml` runs machine-learning models over font sources from the
+command line. Every command takes `--json`. The exit codes separate a
+usage mistake from an unimplemented job from a real failure, so an
+agent can tell what went wrong.
+
+<CommandList commands={[
+  "font-ml tasks",
+  "font-ml describe <model>",
+  "font-ml run bolden --model <model> --source Font.ufo --glyph eight",
+]} />
+
+Run `font-ml tasks` before trusting a job exists. Most are declared
+and not built. See [Local models](/docs/local-models.html).
+
+</DocSection>
+
+<DocSection title="Driving the Interface">
+
+An agent that controls the screen can use Runebender the way a person
+does, because it is an ordinary desktop application.
+
+It is the slowest way to do the work and the easiest to get wrong. A
+click lands or it does not, and neither the agent nor you can see
+which. Editing the source is faster, reviewable, and revertible.
+
+Reach for screen control only for what has no other path, such as
+judging how something looks.
+
+</DocSection>
+
+<DocSection title="What Is Not Here">
+
+No assistant in the editor, no chat panel, no prompt box, and no way
+for the application to call a model service. Runebender has no
+account system and stores no keys.
+
+This is a deliberate limit rather than a missing feature. The parts
+that would need a key are the parts that already work better outside
+the editor.
+
+</DocSection>

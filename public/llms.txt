@@ -35,8 +35,9 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Font info](https://runebender.org/docs/font-info.html): names, vertical metrics, and PostScript hinting values.
 - [Checking a font](https://runebender.org/docs/checking.html): compare masters, measure stems, verify joining and curvature.
 
-## Local AI
+## AI
 
+- [Agents](https://runebender.org/docs/agents.html): how an AI agent works with Runebender. The seam is the filesystem: the agent edits UFO sources, the editor reloads them. No plugin API, no key in the application, no model service called by the editor.
 - [Local models](https://runebender.org/docs/local-models.html): running a machine-learning model on your own machine over your own sources. Experimental; one job so far, proposing a heavier master from a lighter one, and often wrong.
 
 ## Learn

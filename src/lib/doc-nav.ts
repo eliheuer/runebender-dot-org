@@ -33,8 +33,8 @@ export const docGroups: DocGroup[] = [
     ],
   },
   {
-    label: "Local AI",
-    links: [{ slug: "local-models" }],
+    label: "AI",
+    links: [{ slug: "agents" }, { slug: "local-models" }],
   },
   {
     label: "Learn",
