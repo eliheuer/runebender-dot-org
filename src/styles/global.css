@@ -289,6 +289,10 @@ h3 {
   max-width: 680px;
 }
 
+.lede p + p {
+  margin-top: 1em;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;

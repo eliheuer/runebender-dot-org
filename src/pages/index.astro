@@ -11,13 +11,18 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
   <main id="top">
     <section class="hero" aria-label="Runebender Web Editor">
       <div class="hero-copy">
-        <p class="lede">
-          Runebender is a free and open-source font editor built on the Linebender
-          ecosystem of Rust crates. A headless core does the font work, and separate
-          front-ends draw the interface. The default front-end uses GPUI and runs both
-          natively and in the browser. The long-term goal is to build the whole
-          application on the Linebender stack.
-        </p>
+        <div class="lede">
+          <p>
+            Runebender is a free and open-source font editor built on the Linebender
+            ecosystem of Rust crates.
+          </p>
+          <p>
+            There are currently two maintained front-ends, Xilem and GPUI. The default
+            front-end for now uses GPUI and runs both cross-platform natively on desktop
+            and in the browser. The Xilem version is more experimental and less usable,
+            but could be interesting as an example of a Xilem application.
+          </p>
+        </div>
         <div class="hero-actions" aria-label="Launch Runebender">
           <a class="button primary" href="/gpui/index.html">Launch Editor</a>
         </div>
