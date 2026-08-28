@@ -63,6 +63,70 @@ paths = ["runebender-core"]
 
 </DocSection>
 
+<DocSection title="Where Things Live">
+
+The split is the thing to learn first. Font work lives in
+`runebender-core` and has no interface attached. The front-end draws
+and handles input, and calls core for anything that changes a glyph.
+
+<table>
+  <caption>runebender-core, by what you would go looking for</caption>
+  <tbody>
+    <tr><th><code>glyph_ops</code></th><td>Editing operations on norad glyphs: point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, decompose, remove overlap, metrics, kerning.</td></tr>
+    <tr><th><code>glyph_paths</code></th><td>norad to kurbo outlines, with components resolved.</td></tr>
+    <tr><th><code>path/</code></th><td>Segment maths: cubic, quadratic, hyperbezier.</td></tr>
+    <tr><th><code>curve</code></th><td>Curvature analysis and quality: G0 to G3, kinks, extrema.</td></tr>
+    <tr><th><code>knife</code>, <code>shape</code>, <code>measure</code></th><td>The tools that are more than a drag: slicing, primitives, measurement.</td></tr>
+    <tr><th><code>text</code></th><td>Shaping and the text-context editing model. The largest module.</td></tr>
+    <tr><th><code>composites</code>, <code>var_model</code></th><td>Components and anchors; interpolation across a designspace.</td></tr>
+    <tr><th><code>theme</code>, <code>theme_oklch</code></th><td>The token file and its resolver. See <a href="/docs/themes.html">Themes</a>.</td></tr>
+    <tr><th><code>glyphs_import</code></th><td>Reading .glyphs and .glyphspackage.</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>runebender-gpui</caption>
+  <tbody>
+    <tr><th><code>main.rs</code></th><td>The application: state, layout, input, menus, every panel. It is one large file.</td></tr>
+    <tr><th><code>widgets/</code></th><td>The controls the editor owns: text input, slider, resizable split, menu bar.</td></tr>
+    <tr><th><code>theme.rs</code></th><td>Theme accessors. Call these rather than naming a colour or a radius.</td></tr>
+    <tr><th><code>web_host.rs</code></th><td>What the browser build needs and the native build does not.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  If an edit changes a glyph, it belongs in core, where it can be
+  tested without a window and reused by the other front-ends.
+</Callout>
+
+</DocSection>
+
+<DocSection title="Adding a Tool">
+
+The knife is the shortest complete example. Its geometry is
+`knife_cut_glyph`, `slice_paths` and `knife_hit_points` in core, and
+the editor touches it in four places.
+
+1. Add a variant to the `Tool` enum in `main.rs`.
+2. Add an icon to `themes/toolbar-icons.json` in core, and a tile for
+   it beside the other tools.
+3. Handle the pointer in the canvas, under a check for your variant.
+4. Give it a keyboard shortcut in the key handler.
+
+<CommandList commands={[
+  "rg 'Tool::Knife' src/main.rs",
+  "rg 'knife' ../runebender-core/src",
+]} />
+
+Reading those two searches side by side shows the division. Four call
+sites in the front-end, and the cutting itself in core with tests
+around it.
+
+Write the geometry in core first and test it there. A tool whose
+maths only runs when a window is open is one you cannot check.
+
+</DocSection>
+
 <DocSection title="The Browser Build">
 
 The browser build needs a different toolchain from the native one.

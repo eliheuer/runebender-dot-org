@@ -3,7 +3,7 @@ title: "Themes"
 lede: "Four themes ship with the editor. Each one decides its greys, its corner radii, its rule weight, and how a glyph mark is drawn."
 status: "Themes are built in; a custom one means editing the token file and rebuilding"
 stability: "The token file's shape is settling and can still change"
-order: 26
+order: 25
 description: "The Runebender theme system, and how to write a theme of your own."
 ---
 
@@ -119,6 +119,44 @@ sits at mid lightness too, and mid on mid is invisible.
   A theme switch never rewrites a font. The `public.markColor` other
   editors read is frozen in the token file, so it does not follow the
   display tuning.
+</Callout>
+
+</DocSection>
+
+<DocSection title="The Ideas Behind It">
+
+Five decisions explain most of what the file does, and why a theme
+that ignores them stops looking like one thing.
+
+**Author in OKLCH, not hex.** Lightness and chroma mean the same thing
+at every hue there. That is what makes a set of colours read as one
+family. The palette this replaced ran from L 0.56 to L 0.94 and had
+three greens nobody had compared.
+
+**Give each hue its own pair.** A flat ramp holds every hue to the
+chroma only blue and green want. The result looks washed out.
+Yellow is light and red is not, so yellow sits at L 0.82 and red at
+0.61. Steps are offsets from a hue's own pair, never absolutes.
+
+**One text colour.** There is no second, lighter grey for secondary
+text. Hierarchy comes from rules and fills, not from greying words
+out. The Gray theme goes further. Its rules are drawn in the text colour,
+so the borders draw the layout instead of tints doing it.
+
+**Shape carries as much as colour.** Corners and rule weights are part
+of a theme, not constants in the frontend. A palette can be right and
+the thing still look wrong because everything is rounded.
+
+**Name a token for its use, not its size.** `radiusControl` tells a
+frontend what to do with a button. `radiusMedium` makes it guess. The
+same goes for `strokeEmphasis`, which exists because a selection ring
+is a decision, not arithmetic on another token.
+
+<Callout>
+  The hard case is the mid grey. On a near-black or near-white ground
+  a hue can always go the other way. On a mid grey it cannot, and no
+  amount of palette tuning fixes it. That is why the treatment is a
+  theme's decision and not just its colours.
 </Callout>
 
 </DocSection>
