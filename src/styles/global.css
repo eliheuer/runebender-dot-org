@@ -16,6 +16,9 @@
   /* The one exception to the single size: monospace reads large
      next to the sans at the same point size. */
   --text-mono: 18px;
+  /* Inline code sits inside a 27px line box and carries a 2px border,
+     so it runs smaller than block code to leave the lines room. */
+  --text-code: 16px;
   /* Page titles, the only display size on the site. */
   --text-title: 64px;
   /* Headlines track tighter than text, and tracking scales with size:
@@ -143,13 +146,14 @@ code {
   color: var(--g-16);
   display: inline-block;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: var(--text-mono);
+  font-size: var(--text-code);
   /* The box must fit the line box it sits in, or consecutive lines
-     collide. At 20px/1.35 the line is 27px; this box is 18*1.1 + 2
-     padding + 4 border = 25.8px. Changing --text-mono, the padding or
-     the border means redoing this sum. */
-  line-height: 1.1;
-  padding: 1px 5px;
+     collide. At 20px/1.35 the line is 27px; this box is 16*1.2 + 4
+     border = 23.2px, leaving 3.8px. The 1.2 line-height is also what
+     keeps descenders clear of the border with no vertical padding.
+     Changing --text-code or the border means redoing this sum. */
+  line-height: 1.2;
+  padding: 0 5px;
   overflow-wrap: anywhere;
 }
 
@@ -1192,6 +1196,7 @@ th {
 }
 
 .install-steps pre code {
+  font-size: inherit;
   background: none;
   border: 0;
   color: inherit;
