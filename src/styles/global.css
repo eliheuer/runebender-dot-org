@@ -340,7 +340,12 @@ h3 {
 }
 
 .screenshot-block {
-  align-self: center;
+  align-self: stretch;
+  /* The same step the docs sidebar sits on, so the two darker
+     surfaces on the site are one tone. */
+  background: var(--g-68);
+  display: flex;
+  align-items: center;
   margin: 0;
   min-width: 0;
   padding: 24px 20px;
