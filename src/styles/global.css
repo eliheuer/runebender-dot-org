@@ -249,7 +249,11 @@ code {
 .hero {
   border-bottom: 2px solid var(--g-25);
   display: grid;
-  gap: 0;
+  /* Same padding and gap as .section, or the shared --split ratio
+     still lands in a different place: a section's right column starts
+     one gap past the column edge, the hero's divider sat on it. */
+  gap: 44px;
+  padding: 0 20px;
   grid-template-columns: var(--split);
   min-height: 0;
   overflow: hidden;
@@ -257,13 +261,14 @@ code {
 
 .hero-copy {
   align-self: stretch;
-  border-right: 2px solid var(--g-25);
   display: flex;
   flex-direction: column;
   gap: 24px;
   justify-content: flex-start;
   min-width: 0;
-  padding: 24px 20px;
+  /* Horizontal padding comes from .hero now, so the lede starts on the
+     same line as the section labels below it. */
+  padding: 24px 0;
 }
 
 .eyebrow,
@@ -348,9 +353,15 @@ h3 {
   /* The same step the docs sidebar sits on, so the two darker
      surfaces on the site are one tone. */
   background: var(--g-68);
+  /* The rule lives here, at the start of column two, so it lines up
+     with where the sections below start their right column. */
+  border-left: 2px solid var(--g-25);
   display: flex;
   align-items: center;
-  margin: 0;
+  justify-content: center;
+  /* Cancels the hero's right padding so the darker panel still reaches
+     the window edge. */
+  margin: 0 -20px 0 0;
   min-width: 0;
   padding: 24px 20px;
 }
@@ -358,10 +369,14 @@ h3 {
 .screenshot-block img {
   border: 2px solid var(--g-25);
   display: block;
+  /* width/height auto under two maxes: the browser scales on the
+     picture's own aspect and the box always matches it. With a fixed
+     width and object-fit the box stayed wide, the picture letterboxed
+     inside it, and the border drew around the empty box. */
+  width: auto;
   height: auto;
+  max-width: 100%;
   max-height: calc(100vh - 200px);
-  object-fit: contain;
-  width: 100%;
 }
 
 .screenshot-block figcaption {
@@ -949,6 +964,15 @@ th {
   nav {
     justify-content: flex-start;
     overflow-x: auto;
+  }
+
+  .screenshot-block {
+    border-left: 0;
+    margin-right: 0;
+  }
+
+  .hero {
+    gap: 0;
   }
 
   .hero-copy {
