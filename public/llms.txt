@@ -8,7 +8,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 
 - [runebender-gpui](https://github.com/eliheuer/runebender-gpui): the editor. Browser and native from one codebase.
 - [runebender-core](https://github.com/eliheuer/runebender-core): the shared headless library. Editing model, shaping, measurement, curve analysis.
-- [runebender-xix](https://github.com/eliheuer/runebender-xix): the same editor on xix, a fork of Xilem.
+- [runebender-xilem](https://github.com/eliheuer/runebender-xilem): the same editor on Xilem, the Linebender UI stack.
 - [runebender-druid](https://github.com/linebender/runebender): the original implementation, kept as project history.
 - [font-ml](https://github.com/eliheuer/font-ml): a Rust library and CLI for running machine-learning models on font sources. Built to be driven by agents as well as people.
 

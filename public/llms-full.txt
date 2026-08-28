@@ -1953,7 +1953,7 @@ Build from source, work on the shared core alongside, and build the browser bund
 Where the code lives:
 - runebender-gpui: The editor. Runs in the browser and as a native application from one codebase.
 - runebender-core: The shared library: editing model, shaping, measurement, curve analysis. No interface.
-- runebender-xix: The same editor on xix, a fork of Xilem. It exists to compare the two GUI stacks on one application.
+- runebender-xilem: The same editor on Xilem, the Linebender UI stack. It exists to compare the two GUI stacks on one application.
 - runebender-druid: The original implementation, kept as project history.
 
 The core crate holds everything that does not need a window, so the
