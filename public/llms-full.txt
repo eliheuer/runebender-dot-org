@@ -1389,6 +1389,25 @@ Runebender stores the meaning of a mark, not just its color, so a
 theme can draw it differently without changing the font. See
 [File format](/docs/format.html).
 
+### The Command Line
+
+runebender runs the editor's own operations without a window. Same
+code, no interface.
+
+    runebender info Font.ufo
+    runebender measure Font.ufo --glyph eight
+    runebender check --a Light.ufo --b Bold.ufo
+
+Every command takes --json. The exit codes are 0 ok, 1 findings, 2
+usage, 4 failed, so a script can branch without reading text.
+
+check compares two masters for interpolation compatibility. That is the failure worth automating. A mismatch is invisible until
+the family stops building, so it belongs in a build rather than in a
+window.
+
+Exit code 1 means the command ran and found something. Do not treat
+it as an error, or a clean run and a failed run look the same.
+
 ### Building on the Core
 
 For a tool rather than a session, runebender-core is the editing
@@ -1413,6 +1432,10 @@ agent can tell what went wrong.
 
 Run font-ml tasks before trusting a job exists. Most are declared
 and not built. See [Local models](/docs/local-models.html).
+
+Models live in ~/.runebender/models. A model is a folder holding
+config.json, so installing one is putting it there. The editor lists
+what it finds at startup. RUNEBENDER_MODELS overrides the location.
 
 ### Driving the Interface
 
@@ -1526,6 +1549,10 @@ result as a suggestion to judge, never as an answer.
 
 There are no models to download yet. You either train one, or you have
 been given a directory by someone who did.
+
+Put it in ~/.runebender/models and the editor lists it at startup.
+Installing a model is dropping the folder there. Set
+RUNEBENDER_MODELS to keep them somewhere else.
 
 A model is three files:
 
