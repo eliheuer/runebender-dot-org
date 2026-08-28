@@ -27,6 +27,10 @@
      per character. One value for both sizes reads as no change at all
      on the small one. */
   --track-display: -0.045em;
+  /* The column split every full-width section shares: label on the
+     left, content on the right. The hero used its own ratio and its
+     divider landed 12% off the sections below it. */
+  --split: minmax(260px, 0.58fr) minmax(0, 1.42fr);
   --track-tight: -0.025em;
 
   /* The palette: a grayscale ramp, named by oklch lightness. Two
@@ -246,7 +250,7 @@ code {
   border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 0;
-  grid-template-columns: minmax(380px, 0.82fr) minmax(0, 1.18fr);
+  grid-template-columns: var(--split);
   min-height: 0;
   overflow: hidden;
 }
@@ -521,7 +525,7 @@ h3 {
   border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 24px;
-  grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
+  grid-template-columns: var(--split);
 }
 
 .trust-grid {
@@ -857,7 +861,7 @@ th {
 .resource-section {
   display: grid;
   gap: 44px;
-  grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
+  grid-template-columns: var(--split);
 }
 
 .resource-links {
@@ -1174,7 +1178,7 @@ th {
   border-bottom: 2px solid var(--g-25);
   display: grid;
   gap: 44px;
-  grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
+  grid-template-columns: var(--split);
 }
 
 .install-steps {
