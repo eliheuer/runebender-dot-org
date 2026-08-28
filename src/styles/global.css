@@ -18,7 +18,7 @@
   --text-mono: 18px;
   /* Inline code sits inside a 27px line box and carries a 2px border,
      so it runs smaller than block code to leave the lines room. */
-  --text-code: 16px;
+  --text-code: 14px;
   /* Page titles, the only display size on the site. */
   --text-title: 64px;
   /* Headlines track tighter than text, and tracking scales with size:
@@ -43,6 +43,7 @@
   --g-16: oklch(16% var(--tone-c) var(--tone-h));
   --g-25: oklch(25% var(--tone-c) var(--tone-h));
   --g-57: oklch(57% var(--tone-c) var(--tone-h));
+  --g-68: oklch(68% var(--tone-c) var(--tone-h));
   --g-73: oklch(73% var(--tone-c) var(--tone-h));
   --g-76: oklch(76% var(--tone-c) var(--tone-h));
   --g-82: oklch(82% var(--tone-c) var(--tone-h));
@@ -147,12 +148,11 @@ code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: var(--text-code);
   /* The box must fit the line box it sits in, or consecutive lines
-     collide. At 20px/1.35 the line is 27px; this box is 16*1.2 + 4
-     border = 23.2px, leaving 3.8px. The 1.2 line-height is also what
-     keeps descenders clear of the border with no vertical padding.
-     Changing --text-code or the border means redoing this sum. */
+     collide. At 20px/1.35 the line is 27px; this box is 14*1.2 + 2
+     padding + 4 border = 22.8px, leaving 4.2px. Changing --text-code,
+     the padding or the border means redoing this sum. */
   line-height: 1.2;
-  padding: 0 5px;
+  padding: 1px 6px;
   overflow-wrap: anywhere;
 }
 
@@ -556,7 +556,7 @@ h3 {
 }
 
 .doc-sidebar {
-  background: var(--g-73);
+  background: var(--g-68);
   border-right: 2px solid var(--g-25);
   padding: 22px;
 }
@@ -586,6 +586,7 @@ h3 {
 }
 
 .doc-sidebar nav a {
+  background: var(--g-76);
   border: 2px solid var(--g-25);
   border-bottom: 0;
   min-height: 0;
