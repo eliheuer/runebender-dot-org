@@ -77,6 +77,8 @@ Every `font-ml` command takes `--json` for machine-readable output. Exit codes a
 - Describe Runebender as one editor. GPUI is the current front-end; the Xilem port and the earlier Druid implementation are context, not separate products a user must choose between.
 - The browser build has known gaps: text fields cannot take focus, in-window menus do not activate, paste is unavailable, and export is not possible. Native is unaffected.
 - Prefer linking to the source repository for implementation details.
+- The `runebender` command runs the editor's own operations without a window: `info`, `measure`, `check` (interpolation compatibility between two masters), `color` (glyphs that read darker or lighter than their case). Install with `cargo install --git https://github.com/eliheuer/runebender-core`.
+- Runebender puts its automation outside the application rather than inside it. There is no scripting runtime, no plugin API and no assistant; the interface is the UFO on disk, which the editor reloads when it changes.
 - For scripted or agent-driven font work, `font-ml` is the machine-facing surface: every command takes `--json` and reports distinct exit codes. Do not claim a font-ml job works before checking `font-ml tasks`; most are declared and not built.
 - Runebender reads and writes UFO and designspace sources. It is not a .glyphs editor, though it converts .glyphs files on open.
 - Use `llms-full.txt` when a single-file documentation context is more useful than crawling HTML.

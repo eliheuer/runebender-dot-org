@@ -155,6 +155,72 @@ Small choices that look odd until you know why.
 
 </DocSection>
 
+<DocSection title="Files, Not a Runtime">
+
+Runebender's automation lives outside the application.
+
+There is no scripting runtime in the editor, no plugin API and no
+assistant. Instead the sources sit on disk as UFO, the editor reloads
+what changes, and the same operations run from a shell through
+`runebender`. Whatever you already use for scripting keeps working,
+because the interface is the file.
+
+The other approach is to put the runtime inside: an environment, a
+language and an assistant that all ship with the editor. Counterpunch
+does that, with Python in the browser and an assistant that writes
+scripts for it.
+
+<table>
+  <caption>What each choice buys</caption>
+  <tbody>
+    <tr><th>A runtime inside</th><td>Nothing to set up, and an assistant that knows the editor's own API.</td></tr>
+    <tr><th>Files outside</th><td>Your git history, your build, your existing scripts and your own agent all keep working.</td></tr>
+  </tbody>
+</table>
+
+<Callout>
+  Neither approach sends your font anywhere. That is a separate
+  question from where the automation runs, and both answers can be
+  private.
+</Callout>
+
+</DocSection>
+
+<DocSection title="How Unix-Shaped It Actually Is">
+
+Mostly, and it is worth being exact about where it is not.
+
+<table>
+  <caption>Against the old rules</caption>
+  <tbody>
+    <tr><th>Do one thing well</th><td>Held. Core does font work, the CLI exposes it, the front-end draws. None of the three needs the others to be tested.</td></tr>
+    <tr><th>Work together</th><td>Held. Files on disk are the interface, the editor reloads them, and exit codes let a script branch without reading prose.</td></tr>
+    <tr><th>Text as the universal interface</th><td>Partly. Output is JSON on request and UFO is XML on disk, but a font source is a directory, not a stream.</td></tr>
+  </tbody>
+</table>
+
+Three places it does not hold:
+
+`runebender` takes paths, not stdin, and writes reports rather than
+fonts. You cannot pipe one invocation into the next. That is a real
+limit, not a stylistic one, and it comes from a font source being a
+directory of files.
+
+There is no configuration file. Themes are compiled in, and the two
+things you can set are environment variables. There are no dotfiles to
+carry between machines.
+
+A window is not a filter. The editor is a normal desktop application,
+and no amount of architecture changes that.
+
+<Callout>
+  The claim that holds is narrower than "it is a Unix tool". The parts
+  are separable, the interface is a file, and the shell can reach the
+  operations the window can.
+</Callout>
+
+</DocSection>
+
 <DocSection title="The Browser Build">
 
 The same code compiles to WebAssembly. What changes is what the

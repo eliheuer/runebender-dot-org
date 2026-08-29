@@ -52,6 +52,25 @@ window, then use File → Open.
 Every git dependency is pinned to a revision, so a fresh install
 resolves the same graph every time. No --locked needed.
 
+### The Command Line
+
+The same operations run without a window. Install the core and you get
+a runebender command alongside the editor.
+
+    cargo install --git https://github.com/eliheuer/runebender-core
+    runebender info Font.ufo
+    runebender check --a Light.ufo --b Bold.ufo
+    runebender color Font.ufo
+
+check compares two masters for interpolation compatibility. color
+finds glyphs that read darker or lighter than the rest of their case.
+Every command takes --json, and the exit codes are 0 ok, 1 findings,
+2 usage, 4 failed.
+
+This is the same code the editor runs, so a check in a build and a
+check in a window cannot disagree. See
+[Agents](/docs/agents.html) for driving it from a script.
+
 ### Toolchain Notes
 
 The repository pins a stable Rust toolchain in rust-toolchain.toml,
@@ -366,6 +385,56 @@ The ones that surprise people:
 - The editor owns its widgets: Text fields are built on parley. A dependency that themes itself is a second design system to keep in step.
 - Undo snapshots the glyph: Simpler to reason about than a command log, and a glyph is small.
 - Files are watched: Sources changed on disk reload. This is the whole integration surface for scripts and agents.
+
+### Files, Not a Runtime
+
+Runebender's automation lives outside the application.
+
+There is no scripting runtime in the editor, no plugin API and no
+assistant. Instead the sources sit on disk as UFO, the editor reloads
+what changes, and the same operations run from a shell through
+runebender. Whatever you already use for scripting keeps working,
+because the interface is the file.
+
+The other approach is to put the runtime inside: an environment, a
+language and an assistant that all ship with the editor. Counterpunch
+does that, with Python in the browser and an assistant that writes
+scripts for it.
+
+What each choice buys:
+- A runtime inside: Nothing to set up, and an assistant that knows the editor's own API.
+- Files outside: Your git history, your build, your existing scripts and your own agent all keep working.
+
+Neither approach sends your font anywhere. That is a separate
+question from where the automation runs, and both answers can be
+private.
+
+### How Unix-Shaped It Actually Is
+
+Mostly, and it is worth being exact about where it is not.
+
+Against the old rules:
+- Do one thing well: Held. Core does font work, the CLI exposes it, the front-end draws. None of the three needs the others to be tested.
+- Work together: Held. Files on disk are the interface, the editor reloads them, and exit codes let a script branch without reading prose.
+- Text as the universal interface: Partly. Output is JSON on request and UFO is XML on disk, but a font source is a directory, not a stream.
+
+Three places it does not hold:
+
+runebender takes paths, not stdin, and writes reports rather than
+fonts. You cannot pipe one invocation into the next. That is a real
+limit, not a stylistic one, and it comes from a font source being a
+directory of files.
+
+There is no configuration file. Themes are compiled in, and the two
+things you can set are environment variables. There are no dotfiles to
+carry between machines.
+
+A window is not a filter. The editor is a normal desktop application,
+and no amount of architecture changes that.
+
+The claim that holds is narrower than "it is a Unix tool". The parts
+are separable, the interface is a file, and the shell can reach the
+operations the window can.
 
 ### The Browser Build
 
