@@ -2239,7 +2239,7 @@ and the status line names the theme you moved to.
 What ships:
 - Dark: Near-black canvas, hues at full strength.
 - Midnight: Darker still, with the panels at the canvas tone.
-- Gray: The default. Mid grey with dark ink, square corners, a 2px rule.
+- Gray: The default. Mid grey with dark ink, square corners, and rules in the text colour.
 - Light: Near-white, with the hues stepped down to hold up on it.
 
 ### One File
@@ -2285,7 +2285,10 @@ geometry:
 
 The tokens are named for what they are used on, not for their size. A
 theme that disagrees about the sizes still knows what each one is for.
-Gray sets all four: square corners and a 2px rule.
+
+Gray names only the two radii, at 0, and lets both rule weights fall
+back. Naming part of the geometry is the normal case: it wanted square
+corners, not heavier rules.
 
 strokeEmphasis is its own value rather than stroke doubled.
 Doubling works from a 1px base and breaks from a 2px one, where it

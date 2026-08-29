@@ -21,7 +21,7 @@ and the status line names the theme you moved to.
   <tbody>
     <tr><th>Dark</th><td>Near-black canvas, hues at full strength.</td></tr>
     <tr><th>Midnight</th><td>Darker still, with the panels at the canvas tone.</td></tr>
-    <tr><th>Gray</th><td>The default. Mid grey with dark ink, square corners, a 2px rule.</td></tr>
+    <tr><th>Gray</th><td>The default. Mid grey with dark ink, square corners, and rules in the text colour.</td></tr>
     <tr><th>Light</th><td>Near-white, with the hues stepped down to hold up on it.</td></tr>
   </tbody>
 </table>
@@ -84,7 +84,10 @@ At radius 6 with a hairline it reads as a document application.
 
 The tokens are named for what they are used on, not for their size. A
 theme that disagrees about the sizes still knows what each one is for.
-Gray sets all four: square corners and a 2px rule.
+
+Gray names only the two radii, at 0, and lets both rule weights fall
+back. Naming part of the geometry is the normal case: it wanted square
+corners, not heavier rules.
 
 <Callout>
   `strokeEmphasis` is its own value rather than `stroke` doubled.
