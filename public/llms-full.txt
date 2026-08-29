@@ -2237,9 +2237,9 @@ View → Theme switches the palette. The menu tick follows the choice,
 and the status line names the theme you moved to.
 
 What ships:
-- Dark: The default. Near-black canvas, hues at full strength.
+- Dark: Near-black canvas, hues at full strength.
 - Midnight: Darker still, with the panels at the canvas tone.
-- Gray: Mid grey with dark ink, square corners, a 2px rule.
+- Gray: The default. Mid grey with dark ink, square corners, a 2px rule.
 - Light: Near-white, with the hues stepped down to hold up on it.
 
 ### One File
@@ -2601,7 +2601,7 @@ There is no file until you write one, and every key in it is optional.
 ### What It Sets
 
 config.toml:
-- theme: Which theme to start in: dark, midnight, gray, light.
+- theme: Which theme to start in: dark, midnight, gray (the default), light.
 - models: Where to look for local models. Defaults to ~/.runebender/models.
 - journal: A file to append a record of each edit to. Unset means no journal.
 
