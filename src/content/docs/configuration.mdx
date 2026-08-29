@@ -1,0 +1,121 @@
+---
+title: "Configuration"
+lede: "One optional file sets the theme, where models live, and whether a session is logged."
+status: "The file works; the settings in it are few"
+stability: "Adding a key is safe; renaming one is not, so few exist"
+order: 27
+description: "The Runebender config file, and following a system theme."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="Where It Lives">
+
+`$XDG_CONFIG_HOME/runebender/config.toml`, or
+`~/.config/runebender/config.toml` when that variable is unset.
+
+There is no file until you write one, and every key in it is optional.
+
+<CommandList commands={[
+  "mkdir -p ~/.config/runebender",
+  "printf 'theme = \"gray\"\\n' > ~/.config/runebender/config.toml",
+]} />
+
+</DocSection>
+
+<DocSection title="What It Sets">
+
+<table>
+  <caption>config.toml</caption>
+  <tbody>
+    <tr><th><code>theme</code></th><td>Which theme to start in: <code>dark</code>, <code>midnight</code>, <code>gray</code>, <code>light</code>.</td></tr>
+    <tr><th><code>models</code></th><td>Where to look for local models. Defaults to <code>~/.runebender/models</code>.</td></tr>
+    <tr><th><code>journal</code></th><td>A file to append a record of each edit to. Unset means no journal.</td></tr>
+  </tbody>
+</table>
+
+```toml
+theme = "gray"
+models = "/srv/fonts/models"
+journal = "/tmp/runebender.jsonl"
+```
+
+The file is read once, before the window opens, so a change takes
+effect on the next launch.
+
+</DocSection>
+
+<DocSection title="What Wins">
+
+Environment first, then the file, then the built-in default.
+
+A variable set for one run has to beat a setting meant for every run.
+Otherwise putting one in front of the command would do nothing.
+
+<CommandList commands={[
+  "RUNEBENDER_MODELS=./scratch-models runebender-gpui Font.designspace",
+]} />
+
+<table>
+  <caption>The variables</caption>
+  <tbody>
+    <tr><th><code>RUNEBENDER_MODELS</code></th><td>Overrides <code>models</code>.</td></tr>
+    <tr><th><code>RUNEBENDER_JOURNAL</code></th><td>Overrides <code>journal</code>.</td></tr>
+    <tr><th><code>XDG_CONFIG_HOME</code></th><td>Moves the file itself.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="When It Is Wrong">
+
+A misspelled key or a value of the wrong type is an error. A setting
+that never took effect should not look like a bug in the editor.
+
+A file that fails to parse is treated as no file at all. Nobody should
+be locked out of their font by a stray comma. A theme name that does
+not exist prints a line and starts in the default.
+
+</DocSection>
+
+<DocSection title="Following a System Theme">
+
+Runebender has no code for any particular desktop, and does not need
+any. The file is four lines of TOML, so anything that can write a file
+can set the theme.
+
+[Omarchy](https://omarchy.org) is the useful case, because it already
+works this way. It keeps the active theme at `~/.config/omarchy/current/theme`, a
+symlink its theme switcher repoints. For applications it does not
+support directly, it renders templates from
+`~/.config/omarchy/themed/`.
+
+So a template writes this file:
+
+<CommandList commands={[
+  "~/.config/omarchy/themed/runebender.toml.tpl  ->  ~/.config/runebender/config.toml",
+]} />
+
+Runebender learns nothing about Omarchy, and Omarchy needs no support
+for Runebender. Both sides already agree on a file.
+
+<Callout>
+  Runebender has four themes, so a template maps a system theme onto
+  the nearest one rather than reproducing its colours. Light desktops
+  to `light` or `gray`, dark ones to `dark` or `midnight`.
+</Callout>
+
+</DocSection>
+
+<DocSection title="What Is Not Here">
+
+No settings window and no way to change the file from inside the
+editor. Nothing writes it but you.
+
+Themes are compiled in, so the file names one rather than defining
+one. See [Themes](/docs/themes.html) for what a theme decides and how
+to add one.
+
+</DocSection>

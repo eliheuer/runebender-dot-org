@@ -425,9 +425,9 @@ fonts. You cannot pipe one invocation into the next. That is a real
 limit, not a stylistic one, and it comes from a font source being a
 directory of files.
 
-There is no configuration file. Themes are compiled in, and the two
-things you can set are environment variables. There are no dotfiles to
-carry between machines.
+Configuration is thin. There is a file, at
+~/.config/runebender/config.toml, and it sets three things. Themes
+are still compiled in, so the file names one rather than defining one.
 
 A window is not a filter. The editor is a normal desktop application,
 and no amount of architecture changes that.
@@ -2581,6 +2581,92 @@ one.
 ### License
 
 Apache-2.0 or MIT.
+
+
+## Configuration
+https://runebender.org/docs/configuration.html
+
+One optional file sets the theme, where models live, and whether a session is logged.
+
+### Where It Lives
+
+$XDG_CONFIG_HOME/runebender/config.toml, or
+~/.config/runebender/config.toml when that variable is unset.
+
+There is no file until you write one, and every key in it is optional.
+
+    mkdir -p ~/.config/runebender
+    printf 'theme = \"gray\"\\n' > ~/.config/runebender/config.toml
+
+### What It Sets
+
+config.toml:
+- theme: Which theme to start in: dark, midnight, gray, light.
+- models: Where to look for local models. Defaults to ~/.runebender/models.
+- journal: A file to append a record of each edit to. Unset means no journal.
+
+toml
+theme = "gray"
+models = "/srv/fonts/models"
+journal = "/tmp/runebender.jsonl"
+
+The file is read once, before the window opens, so a change takes
+effect on the next launch.
+
+### What Wins
+
+Environment first, then the file, then the built-in default.
+
+A variable set for one run has to beat a setting meant for every run.
+Otherwise putting one in front of the command would do nothing.
+
+    RUNEBENDER_MODELS=./scratch-models runebender-gpui Font.designspace
+
+The variables:
+- RUNEBENDER_MODELS: Overrides models.
+- RUNEBENDER_JOURNAL: Overrides journal.
+- XDG_CONFIG_HOME: Moves the file itself.
+
+### When It Is Wrong
+
+A misspelled key or a value of the wrong type is an error. A setting
+that never took effect should not look like a bug in the editor.
+
+A file that fails to parse is treated as no file at all. Nobody should
+be locked out of their font by a stray comma. A theme name that does
+not exist prints a line and starts in the default.
+
+### Following a System Theme
+
+Runebender has no code for any particular desktop, and does not need
+any. The file is four lines of TOML, so anything that can write a file
+can set the theme.
+
+[Omarchy](https://omarchy.org) is the useful case, because it already
+works this way. It keeps the active theme at ~/.config/omarchy/current/theme, a
+symlink its theme switcher repoints. For applications it does not
+support directly, it renders templates from
+~/.config/omarchy/themed/.
+
+So a template writes this file:
+
+    ~/.config/omarchy/themed/runebender.toml.tpl  ->  ~/.config/runebender/config.toml
+
+Runebender learns nothing about Omarchy, and Omarchy needs no support
+for Runebender. Both sides already agree on a file.
+
+Runebender has four themes, so a template maps a system theme onto
+the nearest one rather than reproducing its colours. Light desktops
+to light or gray, dark ones to dark or midnight.
+
+### What Is Not Here
+
+No settings window and no way to change the file from inside the
+editor. Nothing writes it but you.
+
+Themes are compiled in, so the file names one rather than defining
+one. See [Themes](/docs/themes.html) for what a theme decides and how
+to add one.
 
 
 ## FAQ
