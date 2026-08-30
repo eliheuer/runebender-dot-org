@@ -1,0 +1,254 @@
+---
+title: "Code Layout"
+lede: "Where each piece of code lives, why it lives there, and the checks that keep it that way. Read this before changing the repositories."
+status: "Current. This page is the reference for how the code is organized"
+stability: "The rule is settled. The crate split is the next change"
+order: 27
+description: "How the Runebender code is organized across runebender-core and runebender-gpui, the conventions, and what is still out of place."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="The Three Repositories">
+
+Runebender is one library, one editor, and one website.
+
+<table>
+  <caption>What each repository is for</caption>
+  <tbody>
+    <tr><th><a href="https://github.com/eliheuer/runebender-core">runebender-core</a></th><td>Every operation on a font, the document model, and the <code>runebender</code> command line. No window.</td></tr>
+    <tr><th><a href="https://github.com/eliheuer/runebender-gpui">runebender-gpui</a></th><td>The editor. The window, the input, the drawing, and nothing that changes a font.</td></tr>
+    <tr><th><a href="https://github.com/eliheuer/runebender-dot-org">runebender-dot-org</a></th><td>This site: the documentation, and the browser build of the editor.</td></tr>
+  </tbody>
+</table>
+
+The library depends on [norad](https://github.com/linebender/norad)
+and [kurbo](https://github.com/linebender/kurbo). The editor depends
+on the library and on GPUI. The site depends on neither, and copies
+the browser build in as a static asset.
+
+</DocSection>
+
+<DocSection title="One Rule, and How It Is Kept">
+
+If an operation changes a font, or reads one to answer a question, it
+lives in core.
+
+The test is whether another front-end needs it. Where a click
+lands is the editor's business. What that click does to the outline
+is core's. An operation in core can be tested in milliseconds without
+a window. It can also run from the command line, from a script, or
+from an agent.
+
+Continuous integration keeps the rule honest. Every push to either
+crate runs the same gate on Linux and macOS.
+
+<table>
+  <caption>What CI checks</caption>
+  <tbody>
+    <tr><th><code>cargo fmt --check</code></th><td>Formatting is not a review topic.</td></tr>
+    <tr><th><code>cargo clippy --all-targets</code></th><td>With warnings denied. Both crates are clean today.</td></tr>
+    <tr><th><code>cargo doc --no-deps</code></th><td>With warnings denied, so a broken doc link fails the build.</td></tr>
+    <tr><th><code>cargo test</code></th><td>Core: 299 tests. Editor: 38, all of them about the shell itself.</td></tr>
+    <tr><th>Minimum Rust</th><td>Core also builds at the <code>rust-version</code> in its manifest.</td></tr>
+  </tbody>
+</table>
+
+Core forbids `unsafe` in its manifest. The editor denies it, and the
+two tests that set an environment variable allow it explicitly.
+
+<Callout>
+  A change that moves font logic into the editor will compile. Nothing
+  stops it mechanically. The rule is kept by review, and by this page
+  saying what the rule is.
+</Callout>
+
+</DocSection>
+
+<DocSection title="runebender-core, by Concern">
+
+Modules are named for what they do to a font. The crate has no
+folders below `src/` except `path/`, `editing/`, and `model/`. This
+is the map in `src/lib.rs`, expanded.
+
+<table>
+  <caption>Outline editing</caption>
+  <tbody>
+    <tr><th><code>glyph_ops</code></th><td>Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, decompose, remove overlap, metrics, kerning.</td></tr>
+    <tr><th><code>point_ops</code>, <code>segment_ops</code></th><td>Hit testing and insertion on points and segments.</td></tr>
+    <tr><th><code>knife</code>, <code>shape</code></th><td>Slicing, and the rectangle and ellipse primitives.</td></tr>
+    <tr><th><code>cleanup</code></th><td>Operations that keep the shape and fix its points: tidy, direction, rounding, extremes, handle fitting.</td></tr>
+    <tr><th><code>effects</code></th><td>Operations that make a new shape: offset, extrude, roughen, expand stroke, corner components, bolden.</td></tr>
+    <tr><th><code>convert</code></th><td>Quadratic to cubic and back.</td></tr>
+    <tr><th><code>embolden</code></th><td>Learn a per-point offset from reference pairs, and apply it.</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>Reading a font</caption>
+  <tbody>
+    <tr><th><code>measure</code></th><td>Stems, sidebearings, joining bands.</td></tr>
+    <tr><th><code>optical</code>, <code>spacing</code></th><td>Sampled ink density, and sidebearings checked against the family's grid.</td></tr>
+    <tr><th><code>curve</code></th><td>Curvature: continuity, kinks, extrema.</td></tr>
+    <tr><th><code>category</code>, <code>search</code></th><td>Unicode categories, and the glyph search query language.</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>Lib keys and formats</caption>
+  <tbody>
+    <tr><th><code>lib_keys</code></th><td>Every <code>com.runebender.*</code> key: masks, annotations, saved filters, HOI intermediates. One reader and one writer per key.</td></tr>
+    <tr><th><code>metrics_keys</code>, <code>mark_color</code>, <code>color_font</code></th><td>The Glyphs and ufo2ft keys the editor shares with other tools.</td></tr>
+    <tr><th><code>svg</code>, <code>binary_import</code>, <code>glyphs_import</code>, <code>image_trace</code></th><td>Other formats in and out: SVG, compiled fonts, .glyphs, images.</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>Families, text, and the document</caption>
+  <tbody>
+    <tr><th><code>project</code></th><td>The open document: <code>Master</code> and <code>Project</code>. See the next section.</td></tr>
+    <tr><th><code>var_model</code>, <code>composites</code></th><td>Interpolation across a designspace, and components with anchors.</td></tr>
+    <tr><th><code>shaping</code>, <code>text</code></th><td>OpenType shaping, and the text-context editing model.</td></tr>
+    <tr><th><code>editing/</code>, <code>font_memory</code>, <code>sidebar</code></th><td>Selection, undo, viewport, in-memory fonts, and the glyph grid's filter data.</td></tr>
+    <tr><th><code>theme</code>, <code>theme_oklch</code></th><td>The token file every editor resolves its colours from. See <a href="/docs/themes.html">Themes</a>.</td></tr>
+    <tr><th><code>bin/runebender</code></th><td>The command line over all of the above.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="The Document Layer">
+
+`src/project.rs` holds what the editor used to hold on its own.
+
+A `Master` is one UFO with its bookkeeping and a paint-ready cache.
+The bookkeeping is which glyphs changed since the last save, and
+whether kerning did. The cache is a `GlyphEntry` per glyph, in the
+order the grid shows. An entry holds the outline as a kurbo path, its
+points, its anchors, and its ink box. A `Project` holds the masters, the axes and
+their locations, the variation model, the named instances, and the
+sparse brace sources.
+
+Nothing in this layer knows how a glyph is drawn. Names are
+`Arc<str>`, not the toolkit's string type. The front-end reads the
+cache and paints it, and every front-end gets the same cache.
+
+<Callout>
+  Two constructors stay in the editor: the ones that build a project
+  from fetched or embedded files in the browser. They call
+  <code>Project::from_designspace</code> like everything else.
+</Callout>
+
+</DocSection>
+
+<DocSection title="runebender-gpui">
+
+The editor is one `Workspace` struct, split across files by concern.
+
+<table>
+  <caption>src/</caption>
+  <tbody>
+    <tr><th><code>main.rs</code></th><td>The <code>Workspace</code> state, the actions, the menus, the render tree, and <code>main()</code>.</td></tr>
+    <tr><th><code>commands.rs</code></th><td>One method per user-facing command. The menu item, the shortcut, and the context menu all land here.</td></tr>
+    <tr><th><code>canvas.rs</code></th><td>The glyph grid and the editing view: everything painted with paths.</td></tr>
+    <tr><th><code>panels.rs</code></th><td>The regions either side of the canvas.</td></tr>
+    <tr><th><code>input.rs</code></th><td>Pointer and keyboard on the canvas.</td></tr>
+    <tr><th><code>theme.rs</code></th><td>Theme accessors. Call these instead of naming a colour or a radius.</td></tr>
+    <tr><th><code>config.rs</code>, <code>journal.rs</code></th><td>The config file, and the operation log.</td></tr>
+    <tr><th><code>widgets/</code></th><td>The controls the editor owns: text input, slider, resizable split, and the in-window menu bar for platforms without a native one.</td></tr>
+    <tr><th><code>web_host.rs</code></th><td>What the browser build needs and the native build does not.</td></tr>
+    <tr><th><code>tests.rs</code></th><td>Tests of the shell itself. Anything checkable without a window belongs in core instead.</td></tr>
+  </tbody>
+</table>
+
+The editor imports what it needs from core by name, at the top of
+`main.rs`. That list is a fair summary of the seam between the two
+crates.
+
+</DocSection>
+
+<DocSection title="Tests and Fixtures">
+
+Tests live next to the code they test, in a `tests` module at the
+bottom of the file.
+
+Core tests that need a real font load Virtua Grotesk from the
+[runebender-web](https://github.com/eliheuer/runebender-web)
+repository, so the crate stays small. `src/test_fonts.rs` is the one
+place that knows where. It reads `RUNEBENDER_TEST_FONTS`, or looks
+for `../runebender-web/assets/test-fonts` beside the checkout, and
+fails with the expected path when neither exists.
+
+<CommandList commands={[
+  "git clone https://github.com/eliheuer/runebender-web",
+  "cd runebender-core && cargo test",
+]} />
+
+CI checks that repository out beside core, sparse to the fonts.
+
+</DocSection>
+
+<DocSection title="Conventions">
+
+<table>
+  <caption>What a change is expected to do</caption>
+  <tbody>
+    <tr><th>One file, one concern</th><td>A module is named for what it does to a font, and its header comment says so in a sentence.</td></tr>
+    <tr><th>norad in, norad out</th><td>Core functions take <code>norad::Glyph</code> or <code>norad::Font</code> and kurbo geometry, and return the same. No private model.</td></tr>
+    <tr><th>Report what changed</th><td>An operation that edits in place returns whether it changed anything, or how many things it changed.</td></tr>
+    <tr><th>Document every public item</th><td>Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.</td></tr>
+    <tr><th>Keys in one place</th><td>A UFO lib key has one constant, one reader, and one writer, in <code>lib_keys</code> or the module for its format.</td></tr>
+    <tr><th>Commit messages say why</th><td>The diff shows what changed. The message records what was wrong and what the change decided.</td></tr>
+    <tr><th>Builds anywhere</th><td>No path to a sibling checkout in a committed file. Local overrides live in a <code>.cargo/config.toml</code> above the repositories.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="What Is Still Out of Place">
+
+The rule holds. The shape inside the editor does not yet.
+
+<table>
+  <caption>Known, and in order of cost</caption>
+  <tbody>
+    <tr><th><code>impl Workspace</code></th><td>About 5,300 lines in one block in <code>main.rs</code>. It is a document, an edit session, a view state, tool state, and a render, all with methods on one struct.</td></tr>
+    <tr><th><code>main()</code></th><td>About 1,300 lines. Window setup, key bindings, and file watching share one function.</td></tr>
+    <tr><th><code>text</code></th><td>The largest module in core, and the least documented. It began as a port of the web editor's text buffer.</td></tr>
+    <tr><th><code>model/workspace</code></th><td>The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion in <code>path/</code>.</td></tr>
+    <tr><th>Two versions of kurbo</th><td>The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and <code>path/hyper.rs</code> converts between them.</td></tr>
+    <tr><th>Missing docs are not enforced</th><td>The <code>missing_docs</code> lint is off. Turning it on is the next lint change, after <code>text</code> is documented.</td></tr>
+    <tr><th>No wasm job in CI</th><td>The browser build needs a nightly toolchain and a rebuilt standard library, and is checked by hand.</td></tr>
+  </tbody>
+</table>
+
+</DocSection>
+
+<DocSection title="Where It Is Going">
+
+Core will become a Cargo workspace of small crates, layered the way
+the Linebender crates are. Each crate is one concept, and depends only
+on the layer below.
+
+<table>
+  <caption>The intended split</caption>
+  <tbody>
+    <tr><th>path</th><td>Contours and points, hyperbeziers, quadratic and cubic conversion. Kurbo only.</td></tr>
+    <tr><th>font</th><td>The document model and every lib key.</td></tr>
+    <tr><th>ufo</th><td>Reading and writing sources. The only crate that names norad.</td></tr>
+    <tr><th>ops</th><td>Every edit: point operations, knife, cleanup, effects, booleans.</td></tr>
+    <tr><th>analysis</th><td>Measurement, optical weight, spacing, curvature. Read only.</td></tr>
+    <tr><th>text</th><td>Shaping and the text buffer.</td></tr>
+    <tr><th>theme</th><td>The token file and its contrast tests.</td></tr>
+    <tr><th>cli</th><td>The <code>runebender</code> binary.</td></tr>
+  </tbody>
+</table>
+
+The two moves that made this possible are done: the font operations
+and the document layer left the editor. The crate boundaries now fall
+out of what is already separated. What is left is the names, and the
+order to do it in.
+
+</DocSection>

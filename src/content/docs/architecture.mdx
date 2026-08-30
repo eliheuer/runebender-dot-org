@@ -71,18 +71,12 @@ than a demo. It also keeps the editor ready if the answer changes.
 
 <DocSection title="What Sits in Core">
 
-<table>
-  <caption>runebender-core</caption>
-  <tbody>
-    <tr><th><code>glyph_ops</code></th><td>Point moves, deletion with segment surgery, smooth constraints, pen primitives, decompose, overlap removal, metrics, kerning.</td></tr>
-    <tr><th><code>glyph_paths</code>, <code>path/</code></th><td>norad to kurbo outlines, and the segment maths: cubic, quadratic, hyperbezier.</td></tr>
-    <tr><th><code>curve</code></th><td>Curvature analysis: continuity, kinks, extrema.</td></tr>
-    <tr><th><code>text</code></th><td>Shaping and the text-context editing model.</td></tr>
-    <tr><th><code>composites</code>, <code>var_model</code></th><td>Components and anchors; interpolation across a designspace.</td></tr>
-    <tr><th><code>theme</code>, <code>theme_oklch</code></th><td>The token file every editor resolves its colours from.</td></tr>
-    <tr><th><code>editing/</code>, <code>model/</code></th><td>Selection, undo, entity ids, the workspace model.</td></tr>
-  </tbody>
-</table>
+Everything that changes a font or reads one to answer a question,
+plus the document model and the command line.
+
+Modules are named for what they do: `glyph_ops`, `cleanup`,
+`effects`, `measure`, `lib_keys`, `project`, and so on. The full map,
+by concern, is on [Code Layout](/docs/code-layout.html).
 
 </DocSection>
 
@@ -109,32 +103,23 @@ only declare one. Rather than hold every front-end to the oldest, core
 keeps the geometry types it needs at a pinned version and converts at
 the boundary.
 
-It is a real cost, and it is the reason some geometry-touching code
-still lives in each front-end instead of in core.
+It is a real cost. Every consumer is on kurbo 0.13 now, so the only
+conversion left is around the hyperbezier solver.
 
 </DocSection>
 
 <DocSection title="Inside a Front-End">
 
-`runebender-gpui` is one `Workspace` holding the model, split across
-files by concern.
-
-<table>
-  <caption>runebender-gpui</caption>
-  <tbody>
-    <tr><th><code>main.rs</code></th><td>The model, the actions, the menus, the wiring.</td></tr>
-    <tr><th><code>commands.rs</code></th><td>What the menus and shortcuts call. One method per user-facing command.</td></tr>
-    <tr><th><code>panels.rs</code></th><td>The regions either side of the canvas.</td></tr>
-    <tr><th><code>canvas.rs</code></th><td>The glyph grid and the editing view.</td></tr>
-    <tr><th><code>input.rs</code></th><td>Pointer and keyboard on the canvas.</td></tr>
-    <tr><th><code>theme.rs</code></th><td>Theme accessors. Call these instead of naming a colour or a radius.</td></tr>
-    <tr><th><code>widgets/</code></th><td>The controls the editor owns: text input, slider, resizable split, menu bar.</td></tr>
-  </tbody>
-</table>
+`runebender-gpui` is one `Workspace` struct, split across files by
+concern: commands, canvas, panels, input, theme accessors, and the
+widgets the editor owns. Font logic is not among them. The editor
+imports what it needs from core by name, at the top of `main.rs`.
 
 A command is the whole of one intent. The menu item, the shortcut and
 the context menu all land on the same method. There is one place to
 read, and one place to fix.
+
+The file-by-file map is on [Code Layout](/docs/code-layout.html).
 
 </DocSection>
 

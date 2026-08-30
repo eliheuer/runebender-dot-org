@@ -55,6 +55,7 @@ export const docGroups: DocGroup[] = [
       { slug: "scripting" },
       { slug: "troubleshooting" },
       { slug: "development" },
+      { slug: "code-layout" },
       { slug: "faq" },
       { slug: "glossary" },
     ],

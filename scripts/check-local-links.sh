@@ -32,6 +32,11 @@ paths="
 /docs/scripting.html
 /docs/troubleshooting.html
 /docs/development.html
+/docs/code-layout.html
+/docs/agents.html
+/docs/architecture.html
+/docs/themes.html
+/docs/configuration.html
 /docs/faq.html
 /docs/glossary.html
 /llms.txt
