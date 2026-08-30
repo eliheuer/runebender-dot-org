@@ -7,7 +7,6 @@ const start = [
   { href: "/docs/tutorial-first-glyph.html", title: "Draw a Glyph", description: "A tutorial: from an empty font to a saved, spaced letter." },
   { href: "/docs/opening.html", title: "Opening and Saving", description: "What opens, what converts, and how saving works." },
   { href: "/docs/concepts.html", title: "Concepts", description: "Sources, the em, outlines, and what interpolation needs." },
-  { href: "/docs/architecture.html", title: "Architecture", description: "One headless core, several front-ends, and why." },
   { href: "/docs/interface.html", title: "The Interface", description: "What each panel and bar does." },
 ];
 
@@ -35,6 +34,12 @@ const learn = [
   { href: "/docs/workflows.html", title: "Workflows", description: "Recipes for jobs that span several parts of the editor." },
 ];
 
+const code = [
+  { href: "/docs/architecture.html", title: "Architecture", description: "One headless core, several front-ends, and why." },
+  { href: "/docs/code-layout.html", title: "Code Layout", description: "Where each piece of code lives, the conventions, and what is still out of place." },
+  { href: "/docs/development.html", title: "Development", description: "Build from source and work on core alongside." },
+];
+
 const reference = [
   { href: "/docs/shortcuts.html", title: "Shortcuts", description: "Every keyboard command and menu item." },
   { href: "/docs/configuration.html", title: "Configuration", description: "The config file: theme, models, and the session journal." },
@@ -43,8 +48,6 @@ const reference = [
   { href: "/docs/exporting.html", title: "Exporting", description: "Build a font file from your sources." },
   { href: "/docs/scripting.html", title: "Scripting", description: "Automating alongside the editor, and what is not there." },
   { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "What to check when something fails." },
-  { href: "/docs/development.html", title: "Development", description: "Build from source and work on core alongside." },
-  { href: "/docs/code-layout.html", title: "Code Layout", description: "Where each piece of code lives, the conventions, and what is still out of place." },
   { href: "/docs/faq.html", title: "FAQ", description: "Short answers, including the uncomfortable ones." },
   { href: "/docs/glossary.html", title: "Glossary", description: "Terms used across these pages." },
 ];
@@ -91,6 +94,11 @@ const reference = [
   <section class="doc-section">
     <h2>Learn</h2>
     <div><MiniIndex items={learn} /></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Code</h2>
+    <div><MiniIndex items={code} /></div>
   </section>
 
   <section class="doc-section">

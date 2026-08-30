@@ -17,7 +17,6 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Documentation map](https://runebender.org/docs): every page, grouped.
 - [Install](https://runebender.org/docs/install.html): run it in the browser, or build the native application with cargo.
 - [Opening and saving](https://runebender.org/docs/opening.html): UFO, designspace, .glyphs conversion, compiled font import, file watching.
-- [Architecture](https://runebender.org/docs/architecture.html): one headless core (runebender-core) plus interchangeable front-ends (gpui, xilem, web). The rule is that anything changing a font lives in core, so it can be tested without a window and reused by every shell.
 - [Concepts](https://runebender.org/docs/concepts.html): sources, the em and units, outlines, interpolation compatibility, axes, shaping, composites.
 - [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.
 
@@ -46,6 +45,12 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Draw a glyph](https://runebender.org/docs/tutorial-first-glyph.html): a tutorial from an empty font to a saved, spaced letter.
 - [Workflows](https://runebender.org/docs/workflows.html): accented glyphs, monoline drawing, adding a weight, spacing and kerning, starting an Arabic font, tracing, variable fonts, scripting alongside the editor.
 
+## Code
+
+- [Architecture](https://runebender.org/docs/architecture.html): one headless core (runebender-core) plus interchangeable front-ends (gpui, xilem, web). The rule is that anything changing a font lives in core, so it can be tested without a window and reused by every shell.
+- [Code layout](https://runebender.org/docs/code-layout.html): the reference for how the code is organized. Core modules by concern, the document layer (Master, Project), the editor's files, tests and fixtures, conventions, the CI gate, what is still out of place, and why core stays one crate.
+- [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
+
 ## Reference
 
 - [Shortcuts](https://runebender.org/docs/shortcuts.html): every keyboard command.
@@ -56,8 +61,6 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Troubleshooting](https://runebender.org/docs/troubleshooting.html): build, open, interpolation, joining, and browser-build limits.
 - [Scripting](https://runebender.org/docs/scripting.html): no plugin API; file watching and the core crate are the two paths.
 - [FAQ](https://runebender.org/docs/faq.html): short answers about the project, formats, running it, and drawing.
-- [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
-- [Code layout](https://runebender.org/docs/code-layout.html): the reference for how the code is organized. Core modules by concern, the document layer (Master, Project), the editor's files, tests and fixtures, conventions, the CI gate, what is still out of place, and why core stays one crate.
 - [Glossary](https://runebender.org/docs/glossary.html): terms as Runebender uses them.
 
 ## Command Line

@@ -13,7 +13,6 @@ export const docGroups: DocGroup[] = [
       { slug: "install" },
       { slug: "opening" },
       { slug: "concepts" },
-      { slug: "architecture" },
       { slug: "interface" },
     ],
   },
@@ -45,6 +44,10 @@ export const docGroups: DocGroup[] = [
     ],
   },
   {
+    label: "Code",
+    links: [{ slug: "architecture" }, { slug: "code-layout" }, { slug: "development" }],
+  },
+  {
     label: "Reference",
     links: [
       { slug: "shortcuts" },
@@ -54,8 +57,6 @@ export const docGroups: DocGroup[] = [
       { slug: "exporting" },
       { slug: "scripting" },
       { slug: "troubleshooting" },
-      { slug: "development" },
-      { slug: "code-layout" },
       { slug: "faq" },
       { slug: "glossary" },
     ],
