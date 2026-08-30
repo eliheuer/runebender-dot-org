@@ -2573,7 +2573,11 @@ Where each piece of code lives, why it lives there, and the checks that keep it 
 
 ### The Three Repositories
 
-Runebender is one library, one editor, and one website.
+Runebender is one library, one editor, and one website. Each Rust
+repository has an AGENTS.md at its root: the short guide for
+anyone arriving cold, human or agent, with the layout, how to build
+and test, the CI gate, and the conventions. This page is the long
+version.
 
 What each repository is for:
 - runebender-core: Every operation on a font, the document model, and the runebender command line. No window.
@@ -2680,7 +2684,7 @@ src/:
 - startup.rs: Workspace::new: every input widget and its subscription, the keymap, argument handling.
 - commands.rs: One method per user-facing command. The menu item, the shortcut, and the context menu all land here.
 - canvas.rs, input.rs: The glyph grid and the editing view; pointer and keyboard on them.
-- panels.rs, chrome.rs: The regions either side of the canvas; the header, status bar, and sliders.
+- panels/, chrome.rs: One file per panel region; the header, status bar, and sliders.
 - session.rs, grid.rs, sidebar.rs: Master switching and undo; grid geometry and order; filters and search.
 - editing.rs, inspector.rs, text_tool.rs: Selection and its operations; the right panel's fields; the text tool.
 - local_ai.rs, host.rs: Model discovery and the bolden model; files, watching, the browser host.
@@ -2723,7 +2727,6 @@ What a change is expected to do:
 ### What Is Still Out of Place
 
 Known, and in order of cost:
-- panels.rs: About 4,300 lines. The next file to split, by panel.
 - outline/path/hyper_model: The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.
 - Two versions of kurbo: The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and path/hyper.rs converts between them.
 - No wasm job in CI: The browser build needs a nightly toolchain and a rebuilt standard library, and is checked by hand.

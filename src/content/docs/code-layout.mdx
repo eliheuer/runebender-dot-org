@@ -13,7 +13,11 @@ import CommandList from "../../components/CommandList.astro";
 
 <DocSection title="The Three Repositories">
 
-Runebender is one library, one editor, and one website.
+Runebender is one library, one editor, and one website. Each Rust
+repository has an `AGENTS.md` at its root: the short guide for
+anyone arriving cold, human or agent, with the layout, how to build
+and test, the CI gate, and the conventions. This page is the long
+version.
 
 <table>
   <caption>What each repository is for</caption>
@@ -158,7 +162,7 @@ comment.
     <tr><th><code>startup.rs</code></th><td><code>Workspace::new</code>: every input widget and its subscription, the keymap, argument handling.</td></tr>
     <tr><th><code>commands.rs</code></th><td>One method per user-facing command. The menu item, the shortcut, and the context menu all land here.</td></tr>
     <tr><th><code>canvas.rs</code>, <code>input.rs</code></th><td>The glyph grid and the editing view; pointer and keyboard on them.</td></tr>
-    <tr><th><code>panels.rs</code>, <code>chrome.rs</code></th><td>The regions either side of the canvas; the header, status bar, and sliders.</td></tr>
+    <tr><th><code>panels/</code>, <code>chrome.rs</code></th><td>One file per panel region; the header, status bar, and sliders.</td></tr>
     <tr><th><code>session.rs</code>, <code>grid.rs</code>, <code>sidebar.rs</code></th><td>Master switching and undo; grid geometry and order; filters and search.</td></tr>
     <tr><th><code>editing.rs</code>, <code>inspector.rs</code>, <code>text_tool.rs</code></th><td>Selection and its operations; the right panel's fields; the text tool.</td></tr>
     <tr><th><code>local_ai.rs</code>, <code>host.rs</code></th><td>Model discovery and the bolden model; files, watching, the browser host.</td></tr>
@@ -217,7 +221,6 @@ CI checks that repository out beside core, sparse to the fonts.
 <table>
   <caption>Known, and in order of cost</caption>
   <tbody>
-    <tr><th><code>panels.rs</code></th><td>About 4,300 lines. The next file to split, by panel.</td></tr>
     <tr><th><code>outline/path/hyper_model</code></th><td>The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.</td></tr>
     <tr><th>Two versions of kurbo</th><td>The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and <code>path/hyper.rs</code> converts between them.</td></tr>
     <tr><th>No wasm job in CI</th><td>The browser build needs a nightly toolchain and a rebuilt standard library, and is checked by hand.</td></tr>
