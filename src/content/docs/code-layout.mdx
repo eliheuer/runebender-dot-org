@@ -13,7 +13,7 @@ import CommandList from "../../components/CommandList.astro";
 
 <DocSection title="The Three Repositories">
 
-Runebender is one library, one editor, and one website. Each Rust
+Runebender is one library, two editors, and one website. Each Rust
 repository has an `AGENTS.md` at its root: the short guide for
 anyone arriving cold, human or agent, with the layout, how to build
 and test, the CI gate, and the conventions. This page is the long
@@ -24,6 +24,7 @@ version.
   <tbody>
     <tr><th><a href="https://github.com/eliheuer/runebender-core">runebender-core</a></th><td>Every operation on a font, the document model, and the <code>runebender</code> command line. No window.</td></tr>
     <tr><th><a href="https://github.com/eliheuer/runebender-gpui">runebender-gpui</a></th><td>The editor. The window, the input, the drawing, and nothing that changes a font.</td></tr>
+    <tr><th><a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a></th><td>The same editor on Xilem, laid out to mirror the GPUI one.</td></tr>
     <tr><th><a href="https://github.com/eliheuer/runebender-dot-org">runebender-dot-org</a></th><td>This site: the documentation, and the browser build of the editor.</td></tr>
   </tbody>
 </table>
@@ -176,6 +177,29 @@ belongs in them.
 
 The `use runebender_core::...` list at the top of `main.rs` is the
 seam between the two crates.
+
+</DocSection>
+
+<DocSection title="runebender-xilem">
+
+The Xilem editor mirrors the GPUI layout file for file where the two
+share a concern, so a change in one is easy to carry to the other.
+
+<table>
+  <caption>src/, and how it maps</caption>
+  <tbody>
+    <tr><th><code>main.rs</code>, <code>workspace.rs</code>, <code>actions.rs</code>, <code>launch.rs</code></th><td>The same four roles as in GPUI. <code>actions.rs</code> also holds the native menu bar and the keymap behind it.</td></tr>
+    <tr><th><code>view/</code></th><td><code>canvas/</code> (editor, grid), <code>panels/</code>, <code>chrome</code>, <code>render</code>, <code>theme</code>, plus two Xilem has to carry itself: <code>design</code>, the design system, and <code>recipes</code>, the view functions that repeat.</td></tr>
+    <tr><th><code>edit/</code></th><td><code>commands</code>, <code>inspector</code>, <code>session</code>, <code>sidebar</code>, <code>text_tool</code>.</td></tr>
+    <tr><th><code>platform/</code></th><td><code>host</code>, <code>watch</code>, and <code>screenshot</code>, which renders a frame with no window.</td></tr>
+    <tr><th><code>widgets/</code></th><td>Icon tiles, text labels, the context menu, the shortcut host.</td></tr>
+    <tr><th><code>model.rs</code></th><td>Its own font model, older than core's. Replacing it with core's <code>Master</code> and <code>Project</code> is the next change.</td></tr>
+  </tbody>
+</table>
+
+Where the two differ, the difference is the framework. GPUI builds
+its input widgets once in <code>wiring.rs</code>; Xilem rebuilds
+views from state every frame, so there is no wiring step.
 
 </DocSection>
 

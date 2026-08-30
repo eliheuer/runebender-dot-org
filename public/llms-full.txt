@@ -2573,7 +2573,7 @@ Where each piece of code lives, why it lives there, and the checks that keep it 
 
 ### The Three Repositories
 
-Runebender is one library, one editor, and one website. Each Rust
+Runebender is one library, two editors, and one website. Each Rust
 repository has an AGENTS.md at its root: the short guide for
 anyone arriving cold, human or agent, with the layout, how to build
 and test, the CI gate, and the conventions. This page is the long
@@ -2582,6 +2582,7 @@ version.
 What each repository is for:
 - runebender-core: Every operation on a font, the document model, and the runebender command line. No window.
 - runebender-gpui: The editor. The window, the input, the drawing, and nothing that changes a font.
+- runebender-xilem: The same editor on Xilem, laid out to mirror the GPUI one.
 - runebender-dot-org: This site: the documentation, and the browser build of the editor.
 
 The library depends on [norad](https://github.com/linebender/norad)
@@ -2696,6 +2697,23 @@ src/:
 
 The use runebender_core::... list at the top of main.rs is the
 seam between the two crates.
+
+### runebender-xilem
+
+The Xilem editor mirrors the GPUI layout file for file where the two
+share a concern, so a change in one is easy to carry to the other.
+
+src/, and how it maps:
+- main.rs, workspace.rs, actions.rs, launch.rs: The same four roles as in GPUI. actions.rs also holds the native menu bar and the keymap behind it.
+- view/: canvas/ (editor, grid), panels/, chrome, render, theme, plus two Xilem has to carry itself: design, the design system, and recipes, the view functions that repeat.
+- edit/: commands, inspector, session, sidebar, text_tool.
+- platform/: host, watch, and screenshot, which renders a frame with no window.
+- widgets/: Icon tiles, text labels, the context menu, the shortcut host.
+- model.rs: Its own font model, older than core's. Replacing it with core's Master and Project is the next change.
+
+Where the two differ, the difference is the framework. GPUI builds
+its input widgets once in wiring.rs; Xilem rebuilds
+views from state every frame, so there is no wiring step.
 
 ### Tests and Fixtures
 
