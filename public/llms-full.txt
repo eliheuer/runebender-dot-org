@@ -2687,7 +2687,7 @@ belongs in them.
 
 src/:
 - main.rs: main() and the module list. About 300 lines.
-- workspace.rs: The Workspace struct and the types it is made of: tools, drags, sessions, the inspector's field groups.
+- workspace.rs: The Workspace struct and the types it is made of. Its state is five named groups: grid, sidebar, preview, models, and inputs, plus the tools, drags, and sessions.
 - actions.rs: The action list and the menus. One menu definition serves the native bar and the in-window one.
 - wiring.rs: Workspace::new: every input widget and the subscription that writes it through to the font.
 - launch.rs: The keymap, the keystroke router, argument handling, and the interface font. Everything main() calls before the window opens.

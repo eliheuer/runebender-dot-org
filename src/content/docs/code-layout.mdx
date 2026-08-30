@@ -165,7 +165,7 @@ belongs in them.
   <caption>src/</caption>
   <tbody>
     <tr><th><code>main.rs</code></th><td><code>main()</code> and the module list. About 300 lines.</td></tr>
-    <tr><th><code>workspace.rs</code></th><td>The <code>Workspace</code> struct and the types it is made of: tools, drags, sessions, the inspector's field groups.</td></tr>
+    <tr><th><code>workspace.rs</code></th><td>The <code>Workspace</code> struct and the types it is made of. Its state is five named groups: <code>grid</code>, <code>sidebar</code>, <code>preview</code>, <code>models</code>, and <code>inputs</code>, plus the tools, drags, and sessions.</td></tr>
     <tr><th><code>actions.rs</code></th><td>The action list and the menus. One menu definition serves the native bar and the in-window one.</td></tr>
     <tr><th><code>wiring.rs</code></th><td><code>Workspace::new</code>: every input widget and the subscription that writes it through to the font.</td></tr>
     <tr><th><code>launch.rs</code></th><td>The keymap, the keystroke router, argument handling, and the interface font. Everything <code>main()</code> calls before the window opens.</td></tr>
