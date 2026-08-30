@@ -56,6 +56,7 @@ crate runs the same gate on Linux and macOS.
     <tr><th><code>cargo clippy --all-targets</code></th><td>With warnings denied. Both crates are clean today.</td></tr>
     <tr><th><code>cargo doc --no-deps</code></th><td>With warnings denied, so a broken doc link fails the build.</td></tr>
     <tr><th><code>cargo test</code></th><td>Core: 299 tests. Editor: 38, all of them about the shell itself.</td></tr>
+    <tr><th>wasm32 check</th><td>The editor's browser build compiles on the pinned nightly with a rebuilt standard library.</td></tr>
     <tr><th><code>missing_docs</code></th><td>On in core. A public item without a doc comment fails the build.</td></tr>
     <tr><th>Minimum Rust</th><td>Core also builds at the <code>rust-version</code> in its manifest.</td></tr>
   </tbody>
@@ -182,19 +183,21 @@ seam between the two crates.
 Tests live next to the code they test, in a `tests` module at the
 bottom of the file.
 
-Core tests that need a real font load Virtua Grotesk from the
-[runebender-web](https://github.com/eliheuer/runebender-web)
-repository, so the crate stays small. `src/testing/fonts.rs` is the one
-place that knows where. It reads `RUNEBENDER_TEST_FONTS`, or looks
-for `../runebender-web/assets/test-fonts` beside the checkout, and
-fails with the expected path when neither exists.
+Tests that need a real font load Virtua Grotesk from the font's own
+repository, [virtua-grotesk](https://github.com/eliheuer/virtua-grotesk),
+so the crate stays small and the tests run against the current font.
+`src/testing/fonts.rs` is the one place that knows where. It reads
+`RUNEBENDER_TEST_FONTS`, or looks for `../virtua-grotesk/sources`
+beside the checkout, and fails with the expected path when neither
+exists. The editor's browser build embeds the same sources as its
+demo font.
 
 <CommandList commands={[
-  "git clone https://github.com/eliheuer/runebender-web",
+  "git clone https://github.com/eliheuer/virtua-grotesk",
   "cd runebender-core && cargo test",
 ]} />
 
-CI checks that repository out beside core, sparse to the fonts.
+CI checks that repository out beside each crate, sparse to `sources`.
 
 </DocSection>
 
@@ -222,8 +225,7 @@ CI checks that repository out beside core, sparse to the fonts.
   <tbody>
     <tr><th><code>outline/path/hyper_model</code></th><td>The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.</td></tr>
     <tr><th>Two versions of kurbo</th><td>The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and <code>path/hyper.rs</code> converts between them.</td></tr>
-    <tr><th>No wasm job in CI</th><td>The browser build needs a nightly toolchain and a rebuilt standard library, and is checked by hand.</td></tr>
-  </tbody>
+      </tbody>
 </table>
 
 </DocSection>

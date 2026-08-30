@@ -2608,6 +2608,7 @@ What CI checks:
 - cargo clippy --all-targets: With warnings denied. Both crates are clean today.
 - cargo doc --no-deps: With warnings denied, so a broken doc link fails the build.
 - cargo test: Core: 299 tests. Editor: 38, all of them about the shell itself.
+- wasm32 check: The editor's browser build compiles on the pinned nightly with a rebuilt standard library.
 - missing_docs: On in core. A public item without a doc comment fails the build.
 - Minimum Rust: Core also builds at the rust-version in its manifest.
 
@@ -2700,17 +2701,19 @@ seam between the two crates.
 Tests live next to the code they test, in a tests module at the
 bottom of the file.
 
-Core tests that need a real font load Virtua Grotesk from the
-[runebender-web](https://github.com/eliheuer/runebender-web)
-repository, so the crate stays small. src/testing/fonts.rs is the one
-place that knows where. It reads RUNEBENDER_TEST_FONTS, or looks
-for ../runebender-web/assets/test-fonts beside the checkout, and
-fails with the expected path when neither exists.
+Tests that need a real font load Virtua Grotesk from the font's own
+repository, [virtua-grotesk](https://github.com/eliheuer/virtua-grotesk),
+so the crate stays small and the tests run against the current font.
+src/testing/fonts.rs is the one place that knows where. It reads
+RUNEBENDER_TEST_FONTS, or looks for ../virtua-grotesk/sources
+beside the checkout, and fails with the expected path when neither
+exists. The editor's browser build embeds the same sources as its
+demo font.
 
-    git clone https://github.com/eliheuer/runebender-web
+    git clone https://github.com/eliheuer/virtua-grotesk
     cd runebender-core && cargo test
 
-CI checks that repository out beside core, sparse to the fonts.
+CI checks that repository out beside each crate, sparse to sources.
 
 ### Conventions
 
@@ -2728,7 +2731,6 @@ What a change is expected to do:
 Known, and in order of cost:
 - outline/path/hyper_model: The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.
 - Two versions of kurbo: The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and path/hyper.rs converts between them.
-- No wasm job in CI: The browser build needs a nightly toolchain and a rebuilt standard library, and is checked by hand.
 
 ### Not a Workspace of Crates
 
