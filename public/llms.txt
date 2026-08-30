@@ -45,7 +45,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Draw a glyph](https://runebender.org/docs/tutorial-first-glyph.html): a tutorial from an empty font to a saved, spaced letter.
 - [Workflows](https://runebender.org/docs/workflows.html): accented glyphs, monoline drawing, adding a weight, spacing and kerning, starting an Arabic font, tracing, variable fonts, scripting alongside the editor.
 
-## Code
+## Architecture and code
 
 - [Architecture](https://runebender.org/docs/architecture.html): one headless core (runebender-core) plus interchangeable front-ends (gpui, xilem, web). The rule is that anything changing a font lives in core, so it can be tested without a window and reused by every shell.
 - [Code layout](https://runebender.org/docs/code-layout.html): the reference for how the code is organized. Core modules by concern, the document layer (Master, Project), the editor's files, tests and fixtures, conventions, the CI gate, what is still out of place, and why core stays one crate.

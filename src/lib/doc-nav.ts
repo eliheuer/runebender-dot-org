@@ -44,7 +44,7 @@ export const docGroups: DocGroup[] = [
     ],
   },
   {
-    label: "Code",
+    label: "Architecture and code",
     links: [{ slug: "architecture" }, { slug: "code-layout" }, { slug: "development" }],
   },
   {
