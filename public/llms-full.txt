@@ -2627,7 +2627,8 @@ whose comment says what belongs there, so a newcomer reads six
 paragraphs and knows where to look.
 
 src/outline: what changes a shape:
-- glyph_ops: Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, decompose, remove overlap, metrics, kerning.
+- glyph_ops: Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, remove overlap.
+- component_ops: Components inside a glyph: resolve, hit test, move, add, duplicate, delete, decompose.
 - point_ops, segment_ops: Hit testing and insertion on points and segments.
 - knife: Slicing.
 - cleanup: Operations that keep the shape and fix its points: tidy, direction, rounding, extremes, handle fitting.
@@ -2648,9 +2649,10 @@ src/formats: keys and file formats:
 
 src/document, src/text, src/ui:
 - document/project: The open document: Master and Project. See the next section.
+- document/font_ops: Edits to the font rather than an outline: kerning pairs and groups, glyph names and unicodes.
 - document/var_model, composites: Interpolation across a designspace, and components with anchors.
 - document/font_memory, new_font, model/: Fonts without a filesystem, a new font from the template, kerning lookup, glyph metadata.
-- text/shape, joining, buffer: Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer.
+- text/shape, joining, buffer/: Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer in five files: types and edits, layout, shaping, bidi, kerning.
 - ui/theme, theme_oklch: The token file every editor resolves its colours from. See Themes.
 - ui/sidebar, editing/: The glyph grid's filter data; selection, undo, and the viewport.
 - testing/: What the tests share, compiled only for cargo test: where the fixture fonts are.

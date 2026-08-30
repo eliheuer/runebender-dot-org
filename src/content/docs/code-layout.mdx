@@ -83,7 +83,8 @@ paragraphs and knows where to look.
 <table>
   <caption>src/outline: what changes a shape</caption>
   <tbody>
-    <tr><th><code>glyph_ops</code></th><td>Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, decompose, remove overlap, metrics, kerning.</td></tr>
+    <tr><th><code>glyph_ops</code></th><td>Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, remove overlap.</td></tr>
+    <tr><th><code>component_ops</code></th><td>Components inside a glyph: resolve, hit test, move, add, duplicate, delete, decompose.</td></tr>
     <tr><th><code>point_ops</code>, <code>segment_ops</code></th><td>Hit testing and insertion on points and segments.</td></tr>
     <tr><th><code>knife</code></th><td>Slicing.</td></tr>
     <tr><th><code>cleanup</code></th><td>Operations that keep the shape and fix its points: tidy, direction, rounding, extremes, handle fitting.</td></tr>
@@ -116,9 +117,10 @@ paragraphs and knows where to look.
   <caption>src/document, src/text, src/ui</caption>
   <tbody>
     <tr><th><code>document/project</code></th><td>The open document: <code>Master</code> and <code>Project</code>. See the next section.</td></tr>
+    <tr><th><code>document/font_ops</code></th><td>Edits to the font rather than an outline: kerning pairs and groups, glyph names and unicodes.</td></tr>
     <tr><th><code>document/var_model</code>, <code>composites</code></th><td>Interpolation across a designspace, and components with anchors.</td></tr>
     <tr><th><code>document/font_memory</code>, <code>new_font</code>, <code>model/</code></th><td>Fonts without a filesystem, a new font from the template, kerning lookup, glyph metadata.</td></tr>
-    <tr><th><code>text/shape</code>, <code>joining</code>, <code>buffer</code></th><td>Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer.</td></tr>
+    <tr><th><code>text/shape</code>, <code>joining</code>, <code>buffer/</code></th><td>Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer in five files: types and edits, layout, shaping, bidi, kerning.</td></tr>
     <tr><th><code>ui/theme</code>, <code>theme_oklch</code></th><td>The token file every editor resolves its colours from. See <a href="/docs/themes.html">Themes</a>.</td></tr>
     <tr><th><code>ui/sidebar</code>, <code>editing/</code></th><td>The glyph grid's filter data; selection, undo, and the viewport.</td></tr>
     <tr><th><code>testing/</code></th><td>What the tests share, compiled only for <code>cargo test</code>: where the fixture fonts are.</td></tr>
