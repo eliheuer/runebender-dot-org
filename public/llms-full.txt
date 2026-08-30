@@ -2651,6 +2651,7 @@ src/document, src/text, src/ui:
 - text/shape, joining, buffer: Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer.
 - ui/theme, theme_oklch: The token file every editor resolves its colours from. See Themes.
 - ui/sidebar, editing/: The glyph grid's filter data; selection, undo, and the viewport.
+- testing/: What the tests share, compiled only for cargo test: where the fixture fonts are.
 - bin/runebender: The command line over all of the above.
 
 ### The Document Layer
@@ -2703,7 +2704,7 @@ bottom of the file.
 
 Core tests that need a real font load Virtua Grotesk from the
 [runebender-web](https://github.com/eliheuer/runebender-web)
-repository, so the crate stays small. src/test_fonts.rs is the one
+repository, so the crate stays small. src/testing/fonts.rs is the one
 place that knows where. It reads RUNEBENDER_TEST_FONTS, or looks
 for ../runebender-web/assets/test-fonts beside the checkout, and
 fails with the expected path when neither exists.
