@@ -57,7 +57,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [Scripting](https://runebender.org/docs/scripting.html): no plugin API; file watching and the core crate are the two paths.
 - [FAQ](https://runebender.org/docs/faq.html): short answers about the project, formats, running it, and drawing.
 - [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
-- [Code layout](https://runebender.org/docs/code-layout.html): the reference for how the code is organized. Core modules by concern, the document layer (Master, Project), the editor's files, tests and fixtures, conventions, the CI gate, what is still out of place, and the planned split into a workspace of crates.
+- [Code layout](https://runebender.org/docs/code-layout.html): the reference for how the code is organized. Core modules by concern, the document layer (Master, Project), the editor's files, tests and fixtures, conventions, the CI gate, what is still out of place, and why core stays one crate.
 - [Glossary](https://runebender.org/docs/glossary.html): terms as Runebender uses them.
 
 ## Command Line

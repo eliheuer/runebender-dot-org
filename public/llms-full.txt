@@ -2604,6 +2604,7 @@ What CI checks:
 - cargo clippy --all-targets: With warnings denied. Both crates are clean today.
 - cargo doc --no-deps: With warnings denied, so a broken doc link fails the build.
 - cargo test: Core: 299 tests. Editor: 38, all of them about the shell itself.
+- missing_docs: On in core. A public item without a doc comment fails the build.
 - Minimum Rust: Core also builds at the rust-version in its manifest.
 
 Core forbids unsafe in its manifest. The editor denies it, and the
@@ -2613,38 +2614,39 @@ A change that moves font logic into the editor will compile. Nothing
 stops it mechanically. The rule is kept by review, and by this page
 saying what the rule is.
 
-### runebender-core, by Concern
+### runebender-core, by Directory
 
-Modules are named for what they do to a font. The crate has no
-folders below src/ except path/, editing/, and model/. This
-is the map in src/lib.rs, expanded.
+Six directories under src/, one per concern. Each has a mod.rs
+whose comment says what belongs there, so a newcomer reads six
+paragraphs and knows where to look.
 
-Outline editing:
+src/outline: what changes a shape:
 - glyph_ops: Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, decompose, remove overlap, metrics, kerning.
 - point_ops, segment_ops: Hit testing and insertion on points and segments.
-- knife, shape: Slicing, and the rectangle and ellipse primitives.
+- knife: Slicing.
 - cleanup: Operations that keep the shape and fix its points: tidy, direction, rounding, extremes, handle fitting.
 - effects: Operations that make a new shape: offset, extrude, roughen, expand stroke, corner components, bolden.
-- convert: Quadratic to cubic and back.
-- embolden: Learn a per-point offset from reference pairs, and apply it.
+- convert, embolden: Quadratic to cubic and back; a learned per-point offset.
+- glyph_paths, path/: norad to kurbo outlines, and the segment maths: cubic, quadratic, hyperbezier.
 
-Reading a font:
+src/analysis: what reads a font:
 - measure: Stems, sidebearings, joining bands.
 - optical, spacing: Sampled ink density, and sidebearings checked against the family's grid.
 - curve: Curvature: continuity, kinks, extrema.
 - category, search: Unicode categories, and the glyph search query language.
 
-Lib keys and formats:
+src/formats: keys and file formats:
 - lib_keys: Every com.runebender.* key: masks, annotations, saved filters, HOI intermediates. One reader and one writer per key.
 - metrics_keys, mark_color, color_font: The Glyphs and ufo2ft keys the editor shares with other tools.
 - svg, binary_import, glyphs_import, image_trace: Other formats in and out: SVG, compiled fonts, .glyphs, images.
 
-Families, text, and the document:
-- project: The open document: Master and Project. See the next section.
-- var_model, composites: Interpolation across a designspace, and components with anchors.
-- shaping, text: OpenType shaping, and the text-context editing model.
-- editing/, font_memory, sidebar: Selection, undo, viewport, in-memory fonts, and the glyph grid's filter data.
-- theme, theme_oklch: The token file every editor resolves its colours from. See Themes.
+src/document, src/text, src/ui:
+- document/project: The open document: Master and Project. See the next section.
+- document/var_model, composites: Interpolation across a designspace, and components with anchors.
+- document/font_memory, new_font, model/: Fonts without a filesystem, a new font from the template, kerning lookup, glyph metadata.
+- text/shape, joining, buffer: Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer.
+- ui/theme, theme_oklch: The token file every editor resolves its colours from. See Themes.
+- ui/sidebar, editing/: The glyph grid's filter data; selection, undo, and the viewport.
 - bin/runebender: The command line over all of the above.
 
 ### The Document Layer
@@ -2669,19 +2671,22 @@ Project::from_designspace like everything else.
 
 ### runebender-gpui
 
-The editor is one Workspace struct, split across files by concern.
+The editor is one Workspace struct. Its methods are split across
+files by concern, each file an impl Workspace block with a module
+comment.
 
 src/:
-- main.rs: The Workspace state, the actions, the menus, the render tree, and main().
+- main.rs: The Workspace state, the actions, the menus, the render tree, and a 115-line main().
+- startup.rs: Workspace::new: every input widget and its subscription, the keymap, argument handling.
 - commands.rs: One method per user-facing command. The menu item, the shortcut, and the context menu all land here.
-- canvas.rs: The glyph grid and the editing view: everything painted with paths.
-- panels.rs: The regions either side of the canvas.
-- input.rs: Pointer and keyboard on the canvas.
-- theme.rs: Theme accessors. Call these instead of naming a colour or a radius.
-- config.rs, journal.rs: The config file, and the operation log.
+- canvas.rs, input.rs: The glyph grid and the editing view; pointer and keyboard on them.
+- panels.rs, chrome.rs: The regions either side of the canvas; the header, status bar, and sliders.
+- session.rs, grid.rs, sidebar.rs: Master switching and undo; grid geometry and order; filters and search.
+- editing.rs, inspector.rs, text_tool.rs: Selection and its operations; the right panel's fields; the text tool.
+- local_ai.rs, host.rs: Model discovery and the bolden model; files, watching, the browser host.
+- theme.rs, config.rs, journal.rs: Theme accessors; the config file; the operation log.
 - widgets/: The controls the editor owns: text input, slider, resizable split, and the in-window menu bar for platforms without a native one.
-- web_host.rs: What the browser build needs and the native build does not.
-- tests.rs: Tests of the shell itself. Anything checkable without a window belongs in core instead.
+- web_host.rs, tests.rs: What the browser build needs; tests of the shell itself.
 
 The editor imports what it needs from core by name, at the top of
 main.rs. That list is a fair summary of the seam between the two
@@ -2707,7 +2712,7 @@ CI checks that repository out beside core, sparse to the fonts.
 ### Conventions
 
 What a change is expected to do:
-- One file, one concern: A module is named for what it does to a font, and its header comment says so in a sentence.
+- One file, one concern: A module is named for what it does to a font, and its header comment says so in a sentence. A directory groups modules by concern, and its mod.rs says what belongs.
 - norad in, norad out: Core functions take norad::Glyph or norad::Font and kurbo geometry, and return the same. No private model.
 - Report what changed: An operation that edits in place returns whether it changed anything, or how many things it changed.
 - Document every public item: Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.
@@ -2717,37 +2722,27 @@ What a change is expected to do:
 
 ### What Is Still Out of Place
 
-The rule holds. The shape inside the editor does not yet.
-
 Known, and in order of cost:
-- impl Workspace: About 5,300 lines in one block in main.rs. It is a document, an edit session, a view state, tool state, and a render, all with methods on one struct.
-- main(): About 1,300 lines. Window setup, key bindings, and file watching share one function.
-- text: The largest module in core, and the least documented. It began as a port of the web editor's text buffer.
-- model/workspace: The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion in path/.
+- panels.rs: About 4,300 lines. The next file to split, by panel.
+- outline/path/hyper_model: The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.
 - Two versions of kurbo: The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and path/hyper.rs converts between them.
-- Missing docs are not enforced: The missing_docs lint is off. Turning it on is the next lint change, after text is documented.
 - No wasm job in CI: The browser build needs a nightly toolchain and a rebuilt standard library, and is checked by hand.
 
-### Where It Is Going
+### Not a Workspace of Crates
 
-Core will become a Cargo workspace of small crates, layered the way
-the Linebender crates are. Each crate is one concept, and depends only
-on the layer below.
+Core stays one crate.
 
-The intended split:
-- path: Contours and points, hyperbeziers, quadratic and cubic conversion. Kurbo only.
-- font: The document model and every lib key.
-- ufo: Reading and writing sources. The only crate that names norad.
-- ops: Every edit: point operations, knife, cleanup, effects, booleans.
-- analysis: Measurement, optical weight, spacing, curvature. Read only.
-- text: Shaping and the text buffer.
-- theme: The token file and its contrast tests.
-- cli: The runebender binary.
+Splitting it into a Linebender-style workspace of small crates was
+considered and rejected. The gains are independent versioning and
+faster incremental builds, and neither matters for a library with one
+consumer and a short build. The costs are real: more manifests, more
+visibility rules to learn, and a dependency graph a new contributor
+reads before they read code.
 
-The two moves that made this possible are done: the font operations
-and the document layer left the editor. The crate boundaries now fall
-out of what is already separated. What is left is the names, and the
-order to do it in.
+The two moves that mattered are done. The font operations and the
+document layer left the editor, and the module map is the crate map.
+A split can be made later from what is already separated, if a
+second consumer ever needs it.
 
 
 ## Configuration
