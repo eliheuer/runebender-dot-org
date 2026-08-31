@@ -125,7 +125,7 @@ paragraphs and knows where to look.
     <tr><th><code>ui/theme</code>, <code>theme_oklch</code></th><td>The token file every editor resolves its colours from. See <a href="/docs/themes.html">Themes</a>.</td></tr>
     <tr><th><code>ui/sidebar</code>, <code>editing/</code></th><td>The glyph grid's filter data; selection, undo, and the viewport.</td></tr>
     <tr><th><code>testing/</code></th><td>What the tests share, compiled only for <code>cargo test</code>: where the fixture fonts are.</td></tr>
-    <tr><th><code>bin/runebender</code></th><td>The command line over all of the above.</td></tr>
+    <tr><th><code>bin/runebender/</code></th><td>The command line over all of the above. See the next section but one.</td></tr>
   </tbody>
 </table>
 
@@ -151,6 +151,39 @@ cache and paints it, and every front-end gets the same cache.
   Two constructors stay in the editor: the ones that build a project
   from fetched or embedded files in the browser. They call
   <code>Project::from_designspace</code> like everything else.
+</Callout>
+
+</DocSection>
+
+<DocSection title="The Command Line">
+
+`src/bin/runebender/` is a front-end like the editors are, and it is
+held to the same rule: it owns argument parsing and printing, and
+calls the library for the work. Four files.
+
+<table>
+  <caption>src/bin/runebender</caption>
+  <tbody>
+    <tr><th><code>main</code></th><td>The command list and the dispatch. Nothing else.</td></tr>
+    <tr><th><code>shell</code></th><td>Exit codes, error reporting, and loading one UFO. A test pins the codes, because a script branches on them.</td></tr>
+    <tr><th><code>read</code></th><td>The commands that answer a question and print it. Nothing here writes.</td></tr>
+    <tr><th><code>edit</code></th><td>The commands that change a font and save it, over one driver they all share.</td></tr>
+    <tr><th><code>sources</code></th><td>Turning the paths given into UFOs: a designspace stands for its sources, and a source two masters share is opened once.</td></tr>
+  </tbody>
+</table>
+
+Every editing command flattens the same `Edit` arguments, so they all
+take any number of sources, `--glyphs`, `--dry-run`, and `--out`, and
+they all go through `edit::run`. That one function decides when a
+source is written, which is what keeps a sweep across a font library
+honest: a source is saved only when the operation changed it, and a
+dry run exits 1 when there is work waiting so a script can tell
+"nothing to do" from "not done yet".
+
+<Callout>
+  Adding a command means wrapping a function that already exists in
+  the library. If the wrapper needs logic of its own, that logic
+  belongs in the library, where the editors can reach it too.
 </Callout>
 
 </DocSection>
