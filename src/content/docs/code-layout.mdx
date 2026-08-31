@@ -59,6 +59,7 @@ crate runs the same gate on Linux and macOS.
     <tr><th><code>cargo test</code></th><td>Core: 299 tests. Editor: 38, all of them about the shell itself.</td></tr>
     <tr><th>wasm32 check</th><td>The editor's browser build compiles on the pinned nightly with a rebuilt standard library.</td></tr>
     <tr><th><code>missing_docs</code></th><td>On in core. A public item without a doc comment fails the build.</td></tr>
+    <tr><th><code>missing_docs_in_private_items</code></th><td>On in the editor, where almost nothing is <code>pub</code>: every item needs a doc comment, fields and variants included.</td></tr>
     <tr><th>Minimum Rust</th><td>Core also builds at the <code>rust-version</code> in its manifest.</td></tr>
   </tbody>
 </table>
@@ -236,7 +237,8 @@ CI checks that repository out beside each crate, sparse to `sources`.
     <tr><th>One file, one concern</th><td>A module is named for what it does to a font, and its header comment says so in a sentence. A directory groups modules by concern, and its <code>mod.rs</code> says what belongs.</td></tr>
     <tr><th>norad in, norad out</th><td>Core functions take <code>norad::Glyph</code> or <code>norad::Font</code> and kurbo geometry, and return the same. No private model.</td></tr>
     <tr><th>Report what changed</th><td>An operation that edits in place returns whether it changed anything, or how many things it changed.</td></tr>
-    <tr><th>Document every public item</th><td>Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.</td></tr>
+    <tr><th>Document every item</th><td>Public in core, everything in the editor. Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.</td></tr>
+    <tr><th>Name your imports</th><td>No glob imports outside test modules. Every name in a file can be followed to its source.</td></tr>
     <tr><th>Keys in one place</th><td>A UFO lib key has one constant, one reader, and one writer, in <code>lib_keys</code> or the module for its format.</td></tr>
     <tr><th>Commit messages say why</th><td>The diff shows what changed. The message records what was wrong and what the change decided.</td></tr>
     <tr><th>Builds anywhere</th><td>No path to a sibling checkout in a committed file. Local overrides live in a <code>.cargo/config.toml</code> above the repositories.</td></tr>

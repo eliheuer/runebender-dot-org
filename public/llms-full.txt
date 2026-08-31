@@ -2611,6 +2611,7 @@ What CI checks:
 - cargo test: Core: 299 tests. Editor: 38, all of them about the shell itself.
 - wasm32 check: The editor's browser build compiles on the pinned nightly with a rebuilt standard library.
 - missing_docs: On in core. A public item without a doc comment fails the build.
+- missing_docs_in_private_items: On in the editor, where almost nothing is pub: every item needs a doc comment, fields and variants included.
 - Minimum Rust: Core also builds at the rust-version in its manifest.
 
 Core forbids unsafe in its manifest. The editor denies it, and the
@@ -2742,7 +2743,8 @@ What a change is expected to do:
 - One file, one concern: A module is named for what it does to a font, and its header comment says so in a sentence. A directory groups modules by concern, and its mod.rs says what belongs.
 - norad in, norad out: Core functions take norad::Glyph or norad::Font and kurbo geometry, and return the same. No private model.
 - Report what changed: An operation that edits in place returns whether it changed anything, or how many things it changed.
-- Document every public item: Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.
+- Document every item: Public in core, everything in the editor. Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.
+- Name your imports: No glob imports outside test modules. Every name in a file can be followed to its source.
 - Keys in one place: A UFO lib key has one constant, one reader, and one writer, in lib_keys or the module for its format.
 - Commit messages say why: The diff shows what changed. The message records what was wrong and what the change decided.
 - Builds anywhere: No path to a sibling checkout in a committed file. Local overrides live in a .cargo/config.toml above the repositories.
