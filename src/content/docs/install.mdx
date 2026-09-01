@@ -60,12 +60,13 @@ a `runebender-core` command alongside the editor.
 <CommandList commands={[
   "cargo install --git https://github.com/eliheuer/runebender-core",
   "runebender-core info Font.ufo",
-  "runebender-core check --a Light.ufo --b Bold.ufo",
   "runebender-core color Font.ufo",
+  "runebender-core clean Family.designspace",
 ]} />
 
-`check` compares two masters for interpolation compatibility. `color`
-finds glyphs that read darker or lighter than the rest of their case.
+`color` finds glyphs that read darker or lighter than the rest of
+their case. `clean` tidies contours, corrects path directions, and
+rounds coordinates across every source it is given.
 Every command takes `--json`, and the exit codes are 0 ok, 1 findings,
 2 usage, 4 failed.
 
