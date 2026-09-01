@@ -125,17 +125,11 @@ theme can draw it differently without changing the font. See
 code, no interface.
 
 <CommandList commands={[
-  "runebender-core glyphs Font.ufo",
-  "runebender-core clean --dry-run Family.designspace",
+  "runebender-core info Font.ufo",
 ]} />
 
 Every command takes `--json`. The exit codes are 0 ok, 1 findings, 2
 usage, 4 failed, so a script can branch without reading text.
-
-The editing commands are the ones worth automating. They take any
-number of UFOs or designspaces, so one invocation sweeps a family,
-and `--dry-run` writes nothing and exits 1 when there is work
-waiting. A source is saved only when the operation changed it.
 
 <Callout>
   Exit code 1 means the command ran and found something. Do not treat

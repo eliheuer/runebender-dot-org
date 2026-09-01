@@ -60,13 +60,7 @@ a `runebender-core` command alongside the editor.
 <CommandList commands={[
   "cargo install --git https://github.com/eliheuer/runebender-core",
   "runebender-core info Font.ufo",
-  "runebender-core clean --dry-run Family.designspace",
-  "runebender-core clean Family.designspace",
 ]} />
-
-`clean` tidies contours, corrects path directions, and rounds
-coordinates across every source it is given. `--dry-run` writes
-nothing and exits 1 when there is work waiting.
 Every command takes `--json`, and the exit codes are 0 ok, 1 findings,
 2 usage, 4 failed.
 
