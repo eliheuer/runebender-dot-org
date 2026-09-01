@@ -125,16 +125,11 @@ theme can draw it differently without changing the font. See
 code, no interface.
 
 <CommandList commands={[
-  "runebender-core info Font.ufo",
+  "runebender-core bolden --from Light.ufo --to Bold.ufo",
 ]} />
 
-Every command takes `--json`. The exit codes are 0 ok, 1 findings, 2
-usage, 4 failed, so a script can branch without reading text.
-
-<Callout>
-  Exit code 1 means the command ran and found something. Do not treat
-  it as an error, or a clean run and a failed run look the same.
-</Callout>
+Every command takes `--json`. The exit codes are 0 ok, 2 usage, 4
+failed, so a script can branch without reading text.
 
 </DocSection>
 
