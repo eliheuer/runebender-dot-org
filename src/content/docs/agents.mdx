@@ -121,13 +121,13 @@ theme can draw it differently without changing the font. See
 
 <DocSection title="The Command Line">
 
-`runebender` runs the editor's own operations without a window. Same
+`runebender-core` runs the editor's own operations without a window. Same
 code, no interface.
 
 <CommandList commands={[
-  "runebender info Font.ufo",
-  "runebender measure Font.ufo --glyph eight",
-  "runebender check --a Light.ufo --b Bold.ufo",
+  "runebender-core info Font.ufo",
+  "runebender-core measure Font.ufo --glyph eight",
+  "runebender-core check --a Light.ufo --b Bold.ufo",
 ]} />
 
 Every command takes `--json`. The exit codes are 0 ok, 1 findings, 2

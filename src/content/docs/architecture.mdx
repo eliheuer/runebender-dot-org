@@ -147,7 +147,7 @@ Runebender's automation lives outside the application.
 There is no scripting runtime in the editor, no plugin API and no
 assistant. Instead the sources sit on disk as UFO, the editor reloads
 what changes, and the same operations run from a shell through
-`runebender`. Whatever you already use for scripting keeps working,
+`runebender-core`. Whatever you already use for scripting keeps working,
 because the interface is the file.
 
 The other approach is to put the runtime inside: an environment, a
@@ -186,7 +186,7 @@ Mostly, and it is worth being exact about where it is not.
 
 Three places it does not hold:
 
-`runebender` takes paths, not stdin, and writes reports rather than
+`runebender-core` takes paths, not stdin, and writes reports rather than
 fonts. You cannot pipe one invocation into the next. That is a real
 limit, not a stylistic one, and it comes from a font source being a
 directory of files.
