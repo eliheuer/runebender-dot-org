@@ -133,6 +133,40 @@ failed, so a script can branch without reading text.
 
 </DocSection>
 
+<DocSection title="MCP">
+
+`runebender-core mcp` is an MCP server over stdio. A chat client that
+speaks the Model Context Protocol, such as Claude Code, connects to it
+and gets the same tools the editor's chat pane and the command line
+have. No tool edits the font. A model reads, proofs, and proposes; a
+proposal is a UFO layer you install or discard in the editor, one
+glyph at a time.
+
+Register it in Claude Code, with the font it works on:
+
+<CommandList commands={[
+  "claude mcp add runebender -- runebender-core mcp --font Family.designspace",
+]} />
+
+For any other client, the same server as a config entry:
+
+```json
+{
+  "mcpServers": {
+    "runebender": {
+      "command": "runebender-core",
+      "args": ["mcp", "--font", "Family.designspace"]
+    }
+  }
+}
+```
+
+The tools: `font_info`, `read_glyph`, `proof`, `propose`, `nodes_run`,
+`proposal_list`, `proposal_discard`, `docs`. `propose` and `nodes_run`
+need `font-ml` on the path. Install is not a tool.
+
+</DocSection>
+
 <DocSection title="Building on the Core">
 
 For a tool rather than a session, `runebender-core` is the editing
