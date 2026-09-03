@@ -1,7 +1,7 @@
 ---
 title: "Agents"
 lede: "Runebender holds no API keys and calls no model service. An agent edits the sources, and the editor follows."
-status: "The file-watching seam works today; there is no in-editor assistant"
+status: "The file-watching seam, the MCP server, and a local chat pane work today"
 stability: "Stable, because it depends on UFO rather than on an editor API"
 order: 17
 description: "Directing an AI agent to do type design work alongside Runebender."
@@ -218,9 +218,11 @@ judging how something looks.
 
 <DocSection title="What Is Not Here">
 
-No assistant in the editor, no chat panel, no prompt box, and no way
-for the application to call a model service. Runebender has no
-account system and stores no keys.
+No way for the application to call a model service. Runebender has no
+account system and stores no keys. The chat pane in the editor runs
+an open-weight model on your machine through font-ml, and its tools
+are the same proposal-only list an agent gets: it can read the font
+and propose, and a person installs.
 
 This is a deliberate limit rather than a missing feature. The parts
 that would need a key are the parts that already work better outside
