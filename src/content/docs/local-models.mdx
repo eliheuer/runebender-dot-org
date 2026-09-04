@@ -28,12 +28,18 @@ no account is needed, and your drawings are not sent anywhere.
 
 <DocSection title="Getting a Model">
 
-There are no models to download yet. You either train one, or you have
-been given a directory by someone who did.
+You train one in the editor (a Train node in the Nodes tab, or
+`font-ml run train` from a shell), or you are given a directory by
+someone who did. The editor downloads nothing.
 
 Put it in `~/.runebender/models` and the editor lists it at startup.
 Installing a model is dropping the folder there. Set
-`RUNEBENDER_MODELS` to keep them somewhere else.
+`RUNEBENDER_MODELS` to keep them somewhere else, or list more
+directories, one per line, in `~/.runebender/model_paths`.
+
+Open-weight language models for the Chat tab are the same: a
+directory holding a `.gguf` file and its `tokenizer.json`, under the
+same roots. They are a few gigabytes; you download them yourself.
 
 A model is three files:
 

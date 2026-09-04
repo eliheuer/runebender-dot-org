@@ -15,7 +15,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 ## Start Here
 
 - [Documentation map](https://runebender.org/docs): every page, grouped.
-- [Install](https://runebender.org/docs/install.html): run it in the browser, or build the native application with cargo.
+- [Install](https://runebender.org/docs/install.html): `cargo +stable install --git` for the editor, the `runebender-core` command line, and `font-ml` (with `--features metal` on a Mac); where models live; the demo font.
 - [Opening and saving](https://runebender.org/docs/opening.html): UFO, designspace, .glyphs conversion, compiled font import, file watching.
 - [Concepts](https://runebender.org/docs/concepts.html): sources, the em and units, outlines, interpolation compatibility, axes, shaping, composites.
 - [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.

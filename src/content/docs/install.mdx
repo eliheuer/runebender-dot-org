@@ -1,6 +1,6 @@
 ---
 title: "Install"
-lede: "Runebender runs in a browser with nothing to install. Build the native application with cargo to open your own files."
+lede: "Build the native application, the command line, and the model runner with cargo. The browser build is experimental."
 status: "Source-first; no packaged release yet"
 stability: "The install command is stable; the browser build is experimental"
 order: 2
@@ -32,8 +32,12 @@ You need a Rust toolchain. Install one from
 Install the editor.
 
 <CommandList commands={[
-  "cargo install --git https://github.com/eliheuer/runebender-gpui",
+  "cargo +stable install --git https://github.com/eliheuer/runebender-gpui",
 ]} />
+
+The `+stable` matters. A repository's `rust-toolchain.toml` pin applies
+to `cargo run` in a clone, not to `cargo install --git`, and the GPUI
+build does not compile on a nightly toolchain.
 
 Then open a font.
 
@@ -47,8 +51,12 @@ window, then use File → Open.
 
 <Callout>
   Every git dependency is pinned to a revision, so a fresh install
-  resolves the same graph every time. No `--locked` needed.
+  resolves the same graph every time. No `--locked` needed. To try an
+  install without touching what is on your PATH, add
+  `--root DIR` to each command and run the binaries from `DIR/bin`.
 </Callout>
+
+A macOS disk image: not yet. When there is one it is linked here.
 
 </DocSection>
 
@@ -58,7 +66,7 @@ The same operations run without a window. Install the core and you get
 a `runebender-core` command alongside the editor.
 
 <CommandList commands={[
-  "cargo install --git https://github.com/eliheuer/runebender-core",
+  "cargo +stable install --git https://github.com/eliheuer/runebender-core",
 ]} />
 Every command takes `--json`, and the exit codes are 0 ok, 2 usage, 4
 failed.
@@ -69,12 +77,42 @@ check in a window cannot disagree. See
 
 </DocSection>
 
+<DocSection title="Local Models">
+
+Models run through `font-ml`, a separate program the editor finds on
+your PATH. On a Mac, build it with the `metal` feature so models run on
+the GPU.
+
+<CommandList commands={[
+  "cargo +stable install --git https://github.com/eliheuer/font-ml --features metal",
+]} />
+
+On Linux, leave the feature off for the CPU, or use `cuda` on a
+machine with an NVIDIA toolkit.
+
+<CommandList commands={[
+  "cargo +stable install --git https://github.com/eliheuer/font-ml",
+]} />
+
+Models are directories under `~/.runebender/models`. Add more
+directories, one per line, in `~/.runebender/model_paths`. Nothing is
+downloaded by the editor: you put a model there, and it appears in the
+Local AI panel. See [Local models](/docs/local-models.html) for what a
+model directory holds and where to get one.
+
+For a font to try it on, with the workflow files the Nodes tab reads,
+clone [runebender-demo](https://github.com/eliheuer/runebender-demo)
+and open `fonts/VirtuaGrotesk.designspace`.
+
+</DocSection>
+
 <DocSection title="Toolchain Notes">
 
 The repository pins a stable Rust toolchain in `rust-toolchain.toml`,
-and cargo respects that pin automatically. Do not force a nightly
-toolchain: a GPUI dependency, `pathfinder_simd`, does not compile on
-current nightlies.
+and cargo respects that pin for `cargo run` and `cargo build` in a
+clone. `cargo install --git` does not read it, so pass `+stable`. Do
+not force a nightly toolchain: a GPUI dependency, `pathfinder_simd`,
+does not compile on current nightlies.
 
 Every dependency comes from crates.io or a public git repository, so a
 plain clone builds with no extra setup.
