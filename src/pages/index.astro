@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
+import gridScreenshot from "../assets/runebender-grid.png";
+import nodesScreenshot from "../assets/runebender-nodes.png";
 ---
 
 <BaseLayout
@@ -32,13 +33,22 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
         </div>
       </div>
 
-      <figure class="screenshot-block">
+      <figure class="screenshot-block screenshot-cycle" data-cycle>
         <Image
-          src={editorScreenshot}
-          alt="The Runebender Xilem editor showing a glyph editing workspace"
+          class="frame is-shown"
+          src={gridScreenshot}
+          alt="Runebender showing the glyph grid of Virtua Grotesk"
           widths={[640, 960, 1280, 1600]}
           sizes="(max-width: 1060px) 100vw, 60vw"
           loading="eager"
+        />
+        <Image
+          class="frame"
+          src={nodesScreenshot}
+          alt="Runebender showing a node workflow: a model boldening a master, compared and installed"
+          widths={[640, 960, 1280, 1600]}
+          sizes="(max-width: 1060px) 100vw, 60vw"
+          loading="lazy"
         />
       </figure>
     </section>
@@ -81,3 +91,47 @@ import editorScreenshot from "../assets/runebender-xilem-screenshot.png";
 
   </main>
 </BaseLayout>
+
+<style>
+  /* Two frames in one figure, cross-fading every few seconds. The
+     first frame is laid out normally; the second sits over it. */
+  .screenshot-cycle {
+    position: relative;
+  }
+  .screenshot-cycle :global(.frame) {
+    transition: opacity 0.8s ease;
+  }
+  .screenshot-cycle :global(.frame + .frame) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  .screenshot-cycle :global(.frame.is-shown) {
+    opacity: 1;
+  }
+  .screenshot-cycle :global(.frame:not(.is-shown)) {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .screenshot-cycle :global(.frame) {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Cycle the frames. With reduced motion on, the first frame stays.
+  const figure = document.querySelector("[data-cycle]");
+  const frames = figure ? Array.from(figure.querySelectorAll(".frame")) : [];
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (frames.length > 1 && !still) {
+    let shown = 0;
+    setInterval(() => {
+      frames[shown].classList.remove("is-shown");
+      shown = (shown + 1) % frames.length;
+      frames[shown].classList.add("is-shown");
+    }, 6000);
+  }
+</script>
