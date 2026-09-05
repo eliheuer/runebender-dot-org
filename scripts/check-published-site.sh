@@ -24,6 +24,8 @@ paths="
 /docs/font-info.html
 /docs/checking.html
 /docs/local-models.html
+/docs/agents.html
+/docs/mcp.html
 /docs/tutorial-first-glyph.html
 /docs/workflows.html
 /docs/shortcuts.html

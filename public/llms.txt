@@ -37,7 +37,8 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 
 ## AI
 
-- [Agents](https://runebender.org/docs/agents.html): how an AI agent works with Runebender. The seam is the filesystem: the agent edits UFO sources, the editor reloads them. No plugin API, no key in the application, no model service called by the editor. `runebender-core mcp` serves the same proposal-only tools to an MCP client.
+- [Agents](https://runebender.org/docs/agents.html): working alongside the editor, using live proposals or saved-file automation. The external client owns model authentication.
+- [MCP](https://runebender.org/docs/mcp.html): OMP is the recommended starting client. Configure `runebender-core mcp --live`, discover and connect to a native editor, inspect unsaved glyphs, and review revision-checked proposals. Includes setup, troubleshooting, tool limits and the distinction from disk mode.
 - [Local models](https://runebender.org/docs/local-models.html): running a machine-learning model on your own machine over your own sources. Experimental; one job so far, proposing a heavier master from a lighter one, and often wrong.
 
 ## Learn
@@ -59,7 +60,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - [File format](https://runebender.org/docs/format.html): the UFO data Runebender reads and writes, including its own namespaced keys.
 - [Exporting](https://runebender.org/docs/exporting.html): build scripts take precedence, otherwise fontc.
 - [Troubleshooting](https://runebender.org/docs/troubleshooting.html): build, open, interpolation, joining, and browser-build limits.
-- [Scripting](https://runebender.org/docs/scripting.html): no plugin API; file watching and the core crate are the two paths.
+- [Scripting](https://runebender.org/docs/scripting.html): live tools, saved-source scripts, and the core Rust library.
 - [FAQ](https://runebender.org/docs/faq.html): short answers about the project, formats, running it, and drawing.
 - [Glossary](https://runebender.org/docs/glossary.html): terms as Runebender uses them.
 
@@ -74,7 +75,7 @@ Entry points usable without a graphical session, for scripted and agent-driven f
 - `font-ml run bolden --model <model> --source Font.ufo --glyph eight` proposes a heavier drawing of one glyph.
 - `font-ml eval --model <model> --regular Light.ufo --bold Bold.ufo` scores a model against a master somebody drew.
 
-Every `font-ml` command takes `--json` for machine-readable output. Exit codes are 0 success, 2 usage error, 3 not implemented, 4 failed. There is no plugin API and no in-editor scripting; file watching and the `runebender-core` crate are the two automation paths.
+Every `font-ml` command takes `--json` for machine-readable output. Exit codes are 0 success, 2 usage error, 3 not implemented, 4 failed. Automation can use live MCP tools, saved-file operations, or the `runebender-core` Rust library.
 
 ## Agent Guidance
 

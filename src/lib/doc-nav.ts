@@ -34,7 +34,7 @@ export const docGroups: DocGroup[] = [
   },
   {
     label: "AI",
-    links: [{ slug: "agents" }, { slug: "local-models" }],
+    links: [{ slug: "agents" }, { slug: "mcp" }, { slug: "local-models" }],
   },
   {
     label: "Learn",

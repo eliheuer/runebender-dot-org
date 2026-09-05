@@ -1,0 +1,212 @@
+---
+title: "MCP"
+lede: "Keep your conversation in OMP and your drawing in Runebender. MCP connects the agent to the live, unsaved font."
+status: "Experimental; available in the native GPUI and Xilem editors on macOS and Linux"
+stability: "The tools and connection protocol are evolving"
+order: 17.5
+description: "Connect OMP to Runebender through MCP, inspect unsaved glyphs, and review agent proposals in the editor."
+---
+
+import DocSection from "../../components/DocSection.astro";
+import Callout from "../../components/Callout.astro";
+
+<DocSection title="Start with OMP">
+
+[OMP (Oh My Pi)](https://github.com/can1357/oh-my-pi) is the recommended
+starting client for this workflow. Choose and authenticate your model in OMP,
+then keep that conversation running beside the editor. Runebender needs no
+model account or API key for the connection.
+
+MCP, the Model Context Protocol, lets an agent discover and call tools.
+Runebender's tools read the open document, including unsaved changes, and
+submit proposed edits. You keep drawing, review the proposals, and decide
+what to install. Other clients that support local stdio MCP can use the same
+server.
+
+The connection is local, but inference depends on your chosen provider.
+With a hosted model, prompts and font data returned to that model are sent
+to its provider. Choosing OMP does not make a hosted model run locally.
+See [Local models](/docs/local-models.html) for local inference.
+
+</DocSection>
+
+<DocSection title="Install and Open the Editor">
+
+Install current versions of both the native editor and the core command line.
+See [Install](/docs/install.html) for prerequisites.
+
+```sh
+cargo +stable install --git https://github.com/eliheuer/runebender-core --force
+cargo +stable install --git https://github.com/eliheuer/runebender-gpui --force
+runebender-gpui path/to/Font.designspace
+```
+
+If an older editor is running, save your work and restart it after updating.
+Updating the executable does not add tools to an already running process.
+The Xilem editor exposes the same live tools. This connection is not yet
+available in the browser editor or on Windows.
+
+Use a copy of a font for your first proposal and undo test. Once connected,
+you do not need to save between an edit in the canvas and a tool read.
+
+</DocSection>
+
+<DocSection title="Configure OMP Once">
+
+In the project directory where you run OMP, add this entry to
+`.omp/mcp.json`. Merge it with any existing `mcpServers` entries.
+The Runebender source repositories already include this configuration.
+
+```json
+{
+  "mcpServers": {
+    "runebender": {
+      "type": "stdio",
+      "command": "runebender-core",
+      "args": ["mcp", "--live"]
+    }
+  }
+}
+```
+
+`runebender-core` must be on OMP's PATH. Otherwise, use the full executable
+path as `command`. A user-level configuration can instead go in
+`~/.omp/agent/mcp.json`; named OMP profiles have their own user configuration.
+
+In your existing OMP session, run:
+
+```text
+/mcp reload
+/mcp test runebender
+```
+
+See OMP's [MCP configuration guide](https://github.com/can1357/oh-my-pi/blob/main/docs/mcp-config.md)
+for configuration discovery and profile details. This setup leaves your
+model, login, and tool approval preferences under OMP's control.
+
+</DocSection>
+
+<DocSection title="Connect to the Right Document">
+
+Ask OMP:
+
+> List the Runebender editor sessions, connect to my font, and confirm the
+> project, active master, and available masters. Do not change anything.
+
+The agent first calls `editor_sessions`, then passes a returned session path
+to `editor_connect`. A successful connection reports `live: true`, the
+project path, the active master index, and the master list. With several
+editors open, identify the font you want before requesting changes.
+
+In a family, font operations require an explicit master index. For example,
+a project might report `0` for Regular and `1` for Bold. Use the returned
+indices; do not assume that order for every font. Switching the active master
+in the editor does not change a tool call's explicit master argument.
+
+Opening another document or restarting the editor replaces its endpoint.
+Ask OMP to list sessions and reconnect. The `--live` configuration stays the
+same; no socket path needs to be pasted into it. A failed connection never
+falls back to editing files on disk.
+
+</DocSection>
+
+<DocSection title="Inspect, Propose, Review">
+
+Start with a read:
+
+> Read n in Regular and Bold. Compare the advance widths and contour counts.
+> Do not make changes.
+
+Then try a small mechanical edit:
+
+> In Regular, read n and propose increasing its advance by 12 font units,
+> without moving its outline. Use a new proposal task name and leave it for
+> me to review.
+
+This is a connection test, not a spacing recommendation. `read_glyph`
+returns a revision of the glyph. `propose_edits` checks that revision before
+creating a proposal, so an intervening manual edit cannot silently be
+replaced by an older suggestion.
+
+The foreground stays unchanged until you install the proposal in the
+editor's Local AI panel. Review the proposed glyph, install it, and undo
+once to check recovery. Installation uses the editor's glyph undo history.
+You can discard a proposal instead. If you edit the glyph after a proposal
+was made, installation rejects that stale proposal; ask for a fresh read
+and proposal.
+
+For a comparison before installation:
+
+> Generate foreground and proposal proofs of n in master 0 at the same
+> scale. Explain what changed and leave the proposal uninstalled.
+
+Proofs currently return SVG content and measurements. How that SVG is shown
+depends on the client; this is not yet a native raster-image tool or a shaped
+text specimen. Judge spacing in real text as well as isolated glyphs.
+
+</DocSection>
+
+<DocSection title="Available Live Tools">
+
+| Tool | Purpose |
+| --- | --- |
+| `editor_sessions` | List local editor endpoints and this client's current connection. |
+| `editor_connect` | Connect to a listed endpoint and return its project information. |
+| `project_info` | Read the project, active master, master indices, and dirty state. |
+| `font_info` | Read a master's names, metrics, glyph count, and proposals. |
+| `read_glyph` | Read a named glyph's points, components, anchors, metrics, and revision. |
+| `proof` | Return SVG and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
+| `propose_edits` | Propose width, existing-point, translation, and anchor edits as one validated batch. |
+| `proposal_list` | List waiting proposals in a master. |
+| `proposal_discard` | Remove a waiting proposal without installing it. |
+
+These tools do not save the document or install foreground edits. File-based
+model jobs and node workflows are not part of the live tool list.
+`mcp --font` is a separate disk workflow and does not see unsaved edits.
+
+</DocSection>
+
+<DocSection title="Can It Redraw a Unicode Character?">
+
+Not yet through these tools. The current interface addresses glyph names,
+not Unicode codepoints, and edits existing geometry. It can move points,
+change an advance, translate a drawing, and add or move a named anchor.
+It cannot create a missing glyph or add, delete, or replace its contours.
+
+For now, identify the glyph name in the editor and ask for a specific
+supported adjustment. Do not interpret a model's claim that it can redraw
+an entire letter as a capability of the tool interface.
+
+Unicode lookup, guarded contour creation and replacement, family compatibility
+checks, and richer visual proofs are directions for further development.
+Explicit geometry tools plus visual review are the intended path to drawing;
+screen control remains useful for inspecting the interface.
+
+</DocSection>
+
+<DocSection title="Connection Problems">
+
+- **“session is required”:** the agent called `editor_connect` too early.
+  Ask it to call `editor_sessions` and pass a returned path. A later successful
+  connection means it recovered; the initial error did not edit the font.
+- **No sessions:** open a current native editor on the same machine and user
+  account. An older running build needs to be restarted after saving your work.
+- **Unknown `--live` option:** update the core executable that OMP is launching.
+- **Server missing in OMP:** check the config in OMP's working directory, then
+  use `/mcp reload` and `/mcp list` to inspect discovery.
+- **Connection closed:** list sessions again and reconnect explicitly. A crash
+  can leave a stale entry in the list.
+- **Stale revision:** read the glyph again and reconsider the edit against its
+  current drawing. Do not reuse an old revision to force acceptance.
+- **Timeout:** inspect `proposal_list` before retrying; a dispatched request
+  can have completed even if the response was lost. Existing task names cannot
+  be overwritten.
+
+The native transport uses a Unix socket in a private directory. Processes
+running as your user can access it. Requests are handled on the editor's UI
+thread; the socket worker does not mutate font data in the background.
+
+For the implementation and development roadmap, see core's
+[AI type-design documentation](https://github.com/eliheuer/runebender-core/blob/main/docs/ai-type-design.md).
+
+</DocSection>

@@ -1,7 +1,7 @@
 ---
 title: "Scripting"
-lede: "There is no plugin API. The editor reloads files changed on disk, so a script can work alongside it."
-status: "No in-editor scripting; the file-watching path works today"
+lede: "Use live tools, saved-source scripts, or the Rust core to automate font work."
+status: "Live MCP tools and file watching are available; no embedded scripting language"
 stability: "The core API is not stable"
 order: 24
 description: "Automating font work alongside Runebender."
@@ -14,11 +14,12 @@ import CommandList from "../../components/CommandList.astro";
 <DocSection title="What Exists">
 
 Runebender does not embed a scripting language, and it has no plugin
-API. Two things stand in for one.
+API. Choose the interface that matches the work.
 
 <table>
-  <caption>The two paths</caption>
+  <caption>Automation paths</caption>
   <tbody>
+    <tr><th>Live MCP tools</th><td>Read unsaved glyphs and submit proposals. Start with <a href="/docs/mcp.html">MCP and OMP</a>.</td></tr>
     <tr><th>File watching</th><td>The editor reloads sources changed on disk. Run any script you like against the UFO and the change appears.</td></tr>
     <tr><th>runebender-core</th><td>The editing model as a Rust library, with no interface attached. Build a tool on it.</td></tr>
   </tbody>
@@ -41,10 +42,10 @@ API. Two things stand in for one.
 This works with anything that writes UFO: fontTools, defcon,
 ufoLib2, a shell script, another editor.
 
-Two cautions. Save in the editor before running a script, or the
-reload will discard what you have not written. And keep the source in
-version control, so a script that goes wrong is one `git checkout`
-away from being undone.
+Save and coordinate writes before running a source-editing script. Native
+editors skip external reloads that conflict with unsaved work; disk scripts
+cannot read those unsaved changes. Keep sources in version control and use
+[MCP](/docs/mcp.html) when an agent needs the live document.
 
 </DocSection>
 

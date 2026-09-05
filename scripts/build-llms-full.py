@@ -48,8 +48,17 @@ def frontmatter(text):
 
 def strip_jsx(body):
     out = []
+    fenced = False
     for line in body.splitlines():
         s = line.strip()
+        # Keep examples intact: JSX filtering must not remove JSON braces.
+        if s.startswith("```"):
+            fenced = not fenced
+            out.append(line)
+            continue
+        if fenced:
+            out.append(line)
+            continue
         if s.startswith("import ") or s in ("<div>", "</div>"):
             continue
         # <DocSection title="X"> becomes a heading
@@ -101,7 +110,7 @@ pages = []
 for path in sorted(DOCS.glob("*.mdx")):
     data, body = frontmatter(path.read_text())
     pages.append((data["order"], path.stem, data, body))
-pages.sort(key=lambda p: int(p[0]))
+pages.sort(key=lambda p: float(p[0]))
 
 parts = [HEAD]
 for _, slug, data, body in pages:

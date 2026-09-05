@@ -1,8 +1,8 @@
 ---
 title: "Agents"
-lede: "Runebender holds no API keys and calls no model service. An agent edits the sources, and the editor follows."
-status: "The file-watching seam, the MCP server, and a local chat pane work today"
-stability: "Stable, because it depends on UFO rather than on an editor API"
+lede: "Keep the agent beside the editor. Live MCP tools expose unsaved font data and offer edits for you to review."
+status: "Live MCP tools, file watching, and a local GPUI chat pane are available"
+stability: "Experimental; live tools and client workflows are evolving"
 order: 17
 description: "Directing an AI agent to do type design work alongside Runebender."
 ---
@@ -11,47 +11,30 @@ import DocSection from "../../components/DocSection.astro";
 import Callout from "../../components/Callout.astro";
 import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="The Seam">
+<DocSection title="Working Together">
 
-An agent does not talk to Runebender. It edits the UFO and
-designspace files on disk, and the editor reloads what changed.
+For interactive type design, start with [MCP and OMP](/docs/mcp.html).
+The agent reads the live document, including unsaved edits, and proposes
+changes. You review and install those proposals in the editor, with undo.
+OMP is the recommended starting client; other local stdio MCP clients can
+use the same tools.
 
-That is the whole integration. It needs no plugin API, no key in the
-application, and no permission from the editor. The agent works with
-files, which is what agents are already good at.
-
-<table>
-  <caption>Where each side works</caption>
-  <tbody>
-    <tr><th>The agent</th><td>Reads and writes UFO sources, runs builds, runs checks, reads the results.</td></tr>
-    <tr><th>The editor</th><td>Reloads changed files, draws them, and saves your edits back.</td></tr>
-    <tr><th>The file</th><td>The only thing both sides touch.</td></tr>
-  </tbody>
-</table>
-
-<Callout>
-  Keep the editor open while an agent works. Changes appear as you
-  watch, which is the fastest way to catch a bad edit early.
-</Callout>
+File-based automation remains useful for builds and batch work. It reads
+saved sources, and the editor can reload external changes when they do not
+conflict with unsaved work. Use the live connection when the agent needs
+the drawing currently on your canvas.
 
 </DocSection>
 
 <DocSection title="Subscriptions and Keys">
 
-Runebender does not store credentials and never sends your work
-anywhere. You bring your own agent, and it uses whatever account you
-already pay for.
+Your external agent handles its own model login. Runebender does not need
+an API key for MCP. When the agent uses a hosted model, prompts and the
+font data returned to that model go to its provider.
 
-<table>
-  <caption>What runs where</caption>
-  <tbody>
-    <tr><th>A coding agent</th><td>Claude Code, Codex, or any other. It signs in through its own tooling, not through Runebender.</td></tr>
-    <tr><th>A local model</th><td>Runs on your machine through <a href="/docs/local-models.html">font-ml</a>. No account, no network.</td></tr>
-  </tbody>
-</table>
-
-Because the seam is the filesystem, changing which service you use
-changes nothing about Runebender.
+The native GPUI chat pane can also run a local model through
+[font-ml](/docs/local-models.html). That is a separate inference choice
+from connecting OMP to the editor.
 
 </DocSection>
 
@@ -135,35 +118,12 @@ failed, so a script can branch without reading text.
 
 <DocSection title="MCP">
 
-`runebender-core mcp` is an MCP server over stdio. A chat client that
-speaks the Model Context Protocol, such as Claude Code, connects to it
-and gets the same tools the editor's chat pane and the command line
-have. No tool edits the font. A model reads, proofs, and proposes; a
-proposal is a UFO layer you install or discard in the editor, one
-glyph at a time.
+The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
+choosing a master, and reviewing proposals. Start with a read-only request,
+then a small proposed edit and an undo test.
 
-Register it in Claude Code, with the font it works on:
-
-<CommandList commands={[
-  "claude mcp add runebender -- runebender-core mcp --font Family.designspace",
-]} />
-
-For any other client, the same server as a config entry:
-
-```json
-{
-  "mcpServers": {
-    "runebender": {
-      "command": "runebender-core",
-      "args": ["mcp", "--font", "Family.designspace"]
-    }
-  }
-}
-```
-
-The tools: `font_info`, `read_glyph`, `proof`, `propose`, `nodes_run`,
-`proposal_list`, `proposal_discard`, `docs`. `propose` and `nodes_run`
-need `font-ml` on the path. Install is not a tool.
+`runebender-core mcp --live` discovers native editor sessions. The separate
+`--font` mode works on saved sources and cannot see unsaved changes.
 
 </DocSection>
 
@@ -207,9 +167,9 @@ what it finds at startup. `RUNEBENDER_MODELS` overrides the location.
 An agent that controls the screen can use Runebender the way a person
 does, because it is an ordinary desktop application.
 
-It is the slowest way to do the work and the easiest to get wrong. A
-click lands or it does not, and neither the agent nor you can see
-which. Editing the source is faster, reviewable, and revertible.
+For precise font edits, prefer the live geometry tools and review their
+proposals. Screen coordinates are a less precise contract for an outline
+than points and measurements in font units.
 
 Reach for screen control only for what has no other path, such as
 judging how something looks.
@@ -224,8 +184,8 @@ an open-weight model on your machine through font-ml, and its tools
 are the same proposal-only list an agent gets: it can read the font
 and propose, and a person installs.
 
-This is a deliberate limit rather than a missing feature. The parts
-that would need a key are the parts that already work better outside
-the editor.
+The current recommended workflow keeps hosted-model conversation in OMP
+and font editing in Runebender. Embedded hosted-model chat is not part of
+this workflow. See [MCP](/docs/mcp.html) for the current tool limits.
 
 </DocSection>
