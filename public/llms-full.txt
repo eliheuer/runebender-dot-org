@@ -1637,10 +1637,11 @@ See [Local models](/docs/local-models.html) for local inference.
 
 ### Install and Open the Editor
 
-Install current versions of both the native editor and the core command line.
+Install current versions of Designbot, the native editor, and the core command line.
 See [Install](/docs/install.html) for prerequisites.
 
 ```sh
+cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
 cargo +stable install --git https://github.com/eliheuer/runebender-core --force
 cargo +stable install --git https://github.com/eliheuer/runebender-gpui --force
 runebender-gpui path/to/Font.designspace
@@ -1739,9 +1740,8 @@ For a comparison before installation:
 > Generate foreground and proposal proofs of n in master 0 at the same
 > scale. Explain what changed and leave the proposal uninstalled.
 
-Proofs currently return SVG content and measurements. How that SVG is shown
-depends on the client; this is not yet a native raster-image tool or a shaped
-text specimen. Judge spacing in real text as well as isolated glyphs.
+MCP proofs return PNG image blocks and measurements. The client must pass
+those images to the model. Use specimen for the MVP basic Latin text proof. Judge spacing in real text as well as isolated glyphs.
 
 ### Available Live Tools
 
@@ -1752,30 +1752,37 @@ text specimen. Judge spacing in real text as well as isolated glyphs.
 | project_info | Read the project, active master, master indices, and dirty state. |
 | font_info | Read a master's names, metrics, glyph count, and proposals. |
 | read_glyph | Read a named glyph's points, components, anchors, metrics, and revision. |
-| proof | Return SVG and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
-| propose_edits | Propose width, existing-point, translation, and anchor edits as one validated batch. |
+| proof | Return a PNG image and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
+| propose_edits | Propose complete outlines, smooth flags, width, point, translation, and anchor edits as one validated batch. |
 | proposal_list | List waiting proposals in a master. |
 | proposal_discard | Remove a waiting proposal without installing it. |
+| glyph_inventory | Find live glyphs by mark label or Unicode scalar. |
+| design_context | Get the type-design workflow and official documentation links. |
+| proposal_install | Install a reviewed proposal with an explicit structure choice and per-glyph undo. |
+| experiment_fork | Fork a live master or an existing version without changing it. |
+| experiment_list | List versions, parents, changes, and recent design intent. |
+| experiment_apply | Apply selected glyphs and/or kerning after conflict checks. |
+| experiment_undo_apply | Undo the last application if affected data is unchanged. |
+| read_kerning | Read pairs, groups, and the kerning revision. |
+| experiment_kern | Set or remove kerning pairs in a branch only. |
+| specimen | Return a Designbot image of live basic Latin text at four sizes. |
+| export_proof | Export a live glyph or text proof to a new PNG/PDF file. |
 
-These tools do not save the document or install foreground edits. File-based
+These tools do not save the document. Installation changes the unsaved foreground. File-based
 model jobs and node workflows are not part of the live tool list.
 mcp --font is a separate disk workflow and does not see unsaved edits.
 
 ### Can It Redraw a Unicode Character?
 
-Not yet through these tools. The current interface addresses glyph names,
-not Unicode codepoints, and edits existing geometry. It can move points,
-change an advance, translate a drawing, and add or move a named anchor.
-It cannot create a missing glyph or add, delete, or replace its contours.
+Yes, for an existing glyph record. Use glyph_inventory to resolve a Unicode
+scalar, read the current revision, and propose set_outline with the new
+contours. An empty record can receive a complete drawing. Create entirely
+absent records in the editor first.
 
-For now, identify the glyph name in the editor and ask for a specific
-supported adjustment. Do not interpret a model's claim that it can redraw
-an entire letter as a capability of the tool interface.
+See [Experiment versions](/docs/experiments.html) for independent A/B workflows.
 
-Unicode lookup, guarded contour creation and replacement, family compatibility
-checks, and richer visual proofs are directions for further development.
-Explicit geometry tools plus visual review are the intended path to drawing;
-screen control remains useful for inspecting the interface.
+Read [Type design with agents](/docs/type-design.html) for reference selection,
+curve diagnostics, visual review, installation, and current limitations.
 
 ### Connection Problems
 
@@ -1801,6 +1808,202 @@ thread; the socket worker does not mutate font data in the background.
 
 For the implementation and development roadmap, see core's
 [AI type-design documentation](https://github.com/eliheuer/runebender-core/blob/main/docs/ai-type-design.md).
+
+
+## Type design with agents
+https://runebender.org/docs/type-design.html
+
+Give an agent references, editable geometry, and a way to see and check its proposals.
+
+### Give the Agent a Design Brief
+
+Connect OMP using the [MCP guide](/docs/mcp.html), then ask it to call
+design_context. This returns the official documentation entry points and
+a review workflow. Ask it to read this page and your font project's
+DESIGN.md. The documentation supplies technique; your brief supplies style.
+A model name alone does not establish that a drawing is good.
+
+Record the font's grid, vertical metrics, stroke construction, terminals,
+contrast, overshoot, spacing goals, and master compatibility requirements.
+List approved references and explain mark colors. Green, orange, and red
+have no universal design meaning. For a project that uses green for approved
+references, orange for revision, and red for replacement, state that explicitly.
+The agent should preserve green glyphs and their marks unless asked to edit them.
+
+Use glyph_inventory separately on each master to resolve mark labels and
+Unicode scalars to actual glyph names. U+0038 is decimal 56; do not assume its
+name is eight. Several glyphs can map to a codepoint. An empty glyph exists
+but has no outlines or components; an absent glyph has no record at all.
+Current drawing proposals require an existing glyph record. Create absent
+records in the editor before requesting outlines.
+
+### Draw a Missing Weight
+
+A useful first prompt is:
+
+> Read the project design brief and Runebender's type-design guide. Confirm
+> the Regular and Bold master indices. Use green Regular glyphs and Bold
+> H, O, n, o as references. Inspect their geometry and proof images, then
+> propose Bold a, b, c, d. Preserve the green references. Leave the drawings
+> as proposals and report any interpolation incompatibilities.
+
+The agent should first check whether the target records exist and whether
+those references are drawn. Compare stem thickness, round-stroke behavior,
+terminal shapes, counters, and spacing. A single offset or scale factor is
+not sufficient evidence that the weight fits the family. References from
+both masters show how the design changes with weight.
+
+propose_edits accepts set_outline: complete contours in UFO point order,
+with font-unit coordinates and y upwards. A cubic endpoint has type curve
+and follows two offcurve controls. Closed contours wrap; open contours
+begin with move. clear_components: true explicitly removes components
+when replacing a composite with outlines. Width, anchors, encoding, and
+marks are preserved unless a separate supported operation changes them.
+
+For interpolating masters, retain compatible contour order, starting points,
+point types, and component structure. The existing structure check is a
+foreground/proposal check, not a complete family compatibility audit. Compare
+the result with the other masters before accepting it.
+
+### Refine Curves and Weight
+
+For curve work, ask the agent to inspect U+0038's direct contours and preserve
+intentional corners. read_glyph includes tangent angles and signed endpoint
+curvatures at connected joins. A smooth flag expresses intent; it does not
+prove continuity. Tangent alignment and matching curvature are separate checks.
+Degenerate handles need special attention. The reported diagnostics exclude
+components and identify nonempty contours, not necessarily original point indices.
+Use the returned point arrays for edits.
+
+The agent can change controls with set_point and smooth intent with
+set_smooth, then measure the proposed layer again. Inspect the whole curve
+as well as its joins: a numerically smooth join can still produce an uneven
+or flat-looking outline. Do not round control points to a preferred grid if
+that damages the intended curve.
+
+For weight corrections, compare target and references at the same scale.
+Inspect straight stems, round strokes, counters, joins, and dense regions
+separately. Do not equate equal black area with equal visual weight. Ask for
+small batches, such as one orange glyph, before applying the same reasoning
+to a whole marked group. For red glyphs, explicitly request complete outline
+replacement and review the resulting structure and spacing.
+
+### See, Propose, Review, Install
+
+1. Read current targets and references, including their revisions.
+2. Request foreground proofs with explicit glyph names and master indices.
+3. Submit a uniquely named proposal with a concrete reason.
+4. Proof its layer, then compare with the foreground and reference glyphs.
+5. Refine by discarding the draft and proposing from current foreground revisions.
+6. Ask for installation only after reviewing the result; re-proof afterward.
+
+MCP proofs contain PNG image blocks and metrics. The client must deliver
+those images to the chosen model; ask it to describe a visible detail as an
+initial check. A text-only client cannot perform visual review just because
+it received an SVG string. Glyph proof sheets show isolated glyphs. The specimen tool adds a bounded
+basic Latin text proof using harfrust and UFO kerning. See
+[Experiment versions](/docs/experiments.html) for A/B comparison and PDF export.
+
+proposal_install requires an explicit keep_structure choice. true skips
+changed point structures. false permits redrawing existing records and can
+break interpolation. Installation checks the foreground revision again and
+records one undo step per glyph. A batch can be partly skipped: inspect the
+returned installed and skipped lists. Installation does not save the font.
+
+### Review a Print Proof
+
+Attach the PDF to OMP using its file input, for example @proof.pdf, and
+ask the agent to use its PDF-reading or rendering tools. Verify that it can
+see the pages before asking for visual corrections. Runebender's MCP server
+does not itself parse PDFs.
+
+Ask for a finding list with page, text or pair, master, observed problem,
+and suggested correction. Separate outline weight from sidebearings and
+kerning. Review affected glyphs in other words and pairs before changing
+spacing globally. Confirm that the PDF corresponds to the current font;
+a stale proof can describe problems already fixed in the live document.
+
+Outline and advance corrections can use current glyph proposals. Independent kerning versions and basic Latin MCP text proofs are available in the
+[experiment MVP](/docs/experiments.html). Automatic creation of absent glyph records
+and broader text-proof layouts are not implemented yet. Do not describe this version as an
+automatic full-proof repair system. Keep unresolved findings visible and
+regenerate the PDF after accepted changes.
+
+
+## Experiment versions
+https://runebender.org/docs/experiments.html
+
+Fork the live font, compare independent designs, and apply selected changes with undo.
+
+The GPUI Nodes workspace includes live version cards above the general graph canvas.
+These are a first version of the experiment graph, not yet arbitrary wired nodes in
+.nodes.json. Xilem exposes the same core operations through MCP; it does not yet
+have the version-card UI.
+
+### Start
+
+Install current designbot, runebender-core, and the native editor. Restart the
+editor after updating. In OMP run /mcp reload and connect to the intended editor.
+Read design_context, the official type-design guide, and the font's DESIGN.md.
+
+The root is the open, unsaved master. Click Fork to capture it. Fork that baseline
+twice to make versions with exactly the same inputs, even if the root changes later.
+Each branch has its own font and proposal layers. Use branch and master on every
+agent operation targeting a version; omitting branch addresses the root.
+
+Example OMP brief:
+
+> In master 0, fork baseline, then kern-a and kern-b from baseline. Use the same
+> approved references and text for both. Work only on kern-a in this conversation.
+> Read its kerning revision, propose your pair values with experiment_kern, and
+> produce a specimen of "AVATAR To Wa". Leave the root unchanged.
+
+A second OMP session can connect to the same editor and work on kern-b. The editor
+serializes calls; the sessions share the named versions. The MVP does not launch
+or select AI providers automatically. Keep the provider and model in OMP, and record
+which model/brief was used in the fork's reason.
+
+### Draw and Kern
+
+- experiment_fork: root snapshot or child of a named parent; unique name and reason.
+- experiment_list: versions, parents, changed glyphs, kerning status and recent intent.
+- read_glyph, glyph_inventory, proof, propose_edits, proposal_install: accept
+branch; install a drawing into that branch before applying it to the root.
+- read_kerning: table, group membership and revision.
+- experiment_kern: branch-only pair changes; numeric value sets a pair, null removes
+it. Existing glyphs or side-specific groups are supported. Group editing is excluded.
+- specimen: a one-page, basic Latin proof at 18, 24, 36 and 48 points. Live outlines
+use harfrust positioning plus UFO kerning; feature kern is disabled to avoid applying
+kerning twice. Other feature positioning remains active. Unsupported feature includes
+or missing characters fail explicitly. This is not a complete compiled-font proof.
+- export_proof (MCP): same snapshot as PNG/PDF, explicit output path, no overwrite.
+
+### Review and Apply
+
+Cards can render a glyph sheet or a fixed kerning specimen. To choose other glyphs
+or text, ask OMP for a proof, then click Show latest agent proof on that card.
+The PNG shown and exported PDF use the same scene. Images are snapshots: refresh after
+edits. Export PNG opens a save dialog for full-size inspection outside the thumbnail.
+
+Apply all accepts that version's changed glyphs and kerning; the label explicitly
+allows changed contour structure. Use experiment_apply through OMP for selective
+existing glyphs or kerning-only application and an explicit keep_structure policy.
+Root changes since the baseline produce conflicts before any mutation. Unrelated edits
+survive. No operation saves the root to disk: inspect, undo if needed, then Save normally.
+
+Undo last application restores the affected glyphs and/or kerning only if they still
+match what was applied. It refuses to overwrite newer work. Glyph edits also enter the
+ordinary glyph undo history; mixing undo routes can cause the transaction undo to refuse,
+which preserves later work rather than guessing intent.
+
+### MVP Limits
+
+Versions are session-only and disappear when the font closes. Normal Save persists
+accepted root changes, not experimental versions. Maximum 16 versions per document.
+The MVP does not persist/reopen experiment graphs, merge overlapping conflicts, create
+absent glyph records, edit groups, or automatically dispatch multiple AI jobs. Family-wide
+interpolation validation remains a separate review. Keep experimental proofs as files
+and record accepted decisions in the font project's design brief.
 
 
 ## Local Models

@@ -88,3 +88,7 @@ Every `font-ml` command takes `--json` for machine-readable output. Exit codes a
 - For scripted or agent-driven font work, `font-ml` is the machine-facing surface: every command takes `--json` and reports distinct exit codes. Do not claim a font-ml job works before checking `font-ml tasks`; most are declared and not built.
 - Runebender reads and writes UFO and designspace sources. It is not a .glyphs editor, though it converts .glyphs files on open.
 - Use `llms-full.txt` when a single-file documentation context is more useful than crawling HTML.
+
+- [Type design with agents](https://runebender.org/docs/type-design.html): references, outline drawing, curve checks, proposal review, and PDF workflow limits.
+
+- [Experiment versions](https://runebender.org/docs/experiments.html): live forks, Designbot proofs, branch kerning, conflict-checked application and undo.

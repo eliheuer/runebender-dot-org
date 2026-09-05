@@ -32,10 +32,11 @@ See [Local models](/docs/local-models.html) for local inference.
 
 <DocSection title="Install and Open the Editor">
 
-Install current versions of both the native editor and the core command line.
+Install current versions of Designbot, the native editor, and the core command line.
 See [Install](/docs/install.html) for prerequisites.
 
 ```sh
+cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
 cargo +stable install --git https://github.com/eliheuer/runebender-core --force
 cargo +stable install --git https://github.com/eliheuer/runebender-gpui --force
 runebender-gpui path/to/Font.designspace
@@ -140,9 +141,8 @@ For a comparison before installation:
 > Generate foreground and proposal proofs of n in master 0 at the same
 > scale. Explain what changed and leave the proposal uninstalled.
 
-Proofs currently return SVG content and measurements. How that SVG is shown
-depends on the client; this is not yet a native raster-image tool or a shaped
-text specimen. Judge spacing in real text as well as isolated glyphs.
+MCP proofs return PNG image blocks and measurements. The client must pass
+those images to the model. Use `specimen` for the MVP basic Latin text proof. Judge spacing in real text as well as isolated glyphs.
 
 </DocSection>
 
@@ -155,12 +155,24 @@ text specimen. Judge spacing in real text as well as isolated glyphs.
 | `project_info` | Read the project, active master, master indices, and dirty state. |
 | `font_info` | Read a master's names, metrics, glyph count, and proposals. |
 | `read_glyph` | Read a named glyph's points, components, anchors, metrics, and revision. |
-| `proof` | Return SVG and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
-| `propose_edits` | Propose width, existing-point, translation, and anchor edits as one validated batch. |
+| `proof` | Return a PNG image and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
+| `propose_edits` | Propose complete outlines, smooth flags, width, point, translation, and anchor edits as one validated batch. |
 | `proposal_list` | List waiting proposals in a master. |
 | `proposal_discard` | Remove a waiting proposal without installing it. |
+| `glyph_inventory` | Find live glyphs by mark label or Unicode scalar. |
+| `design_context` | Get the type-design workflow and official documentation links. |
+| `proposal_install` | Install a reviewed proposal with an explicit structure choice and per-glyph undo. |
+| `experiment_fork` | Fork a live master or an existing version without changing it. |
+| `experiment_list` | List versions, parents, changes, and recent design intent. |
+| `experiment_apply` | Apply selected glyphs and/or kerning after conflict checks. |
+| `experiment_undo_apply` | Undo the last application if affected data is unchanged. |
+| `read_kerning` | Read pairs, groups, and the kerning revision. |
+| `experiment_kern` | Set or remove kerning pairs in a branch only. |
+| `specimen` | Return a Designbot image of live basic Latin text at four sizes. |
+| `export_proof` | Export a live glyph or text proof to a new PNG/PDF file. |
 
-These tools do not save the document or install foreground edits. File-based
+
+These tools do not save the document. Installation changes the unsaved foreground. File-based
 model jobs and node workflows are not part of the live tool list.
 `mcp --font` is a separate disk workflow and does not see unsaved edits.
 
@@ -168,19 +180,15 @@ model jobs and node workflows are not part of the live tool list.
 
 <DocSection title="Can It Redraw a Unicode Character?">
 
-Not yet through these tools. The current interface addresses glyph names,
-not Unicode codepoints, and edits existing geometry. It can move points,
-change an advance, translate a drawing, and add or move a named anchor.
-It cannot create a missing glyph or add, delete, or replace its contours.
+Yes, for an existing glyph record. Use `glyph_inventory` to resolve a Unicode
+scalar, read the current revision, and propose `set_outline` with the new
+contours. An empty record can receive a complete drawing. Create entirely
+absent records in the editor first.
 
-For now, identify the glyph name in the editor and ask for a specific
-supported adjustment. Do not interpret a model's claim that it can redraw
-an entire letter as a capability of the tool interface.
+See [Experiment versions](/docs/experiments.html) for independent A/B workflows.
 
-Unicode lookup, guarded contour creation and replacement, family compatibility
-checks, and richer visual proofs are directions for further development.
-Explicit geometry tools plus visual review are the intended path to drawing;
-screen control remains useful for inspecting the interface.
+Read [Type design with agents](/docs/type-design.html) for reference selection,
+curve diagnostics, visual review, installation, and current limitations.
 
 </DocSection>
 

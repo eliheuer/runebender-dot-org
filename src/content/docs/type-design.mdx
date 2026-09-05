@@ -1,0 +1,134 @@
+---
+title: "Type design with agents"
+lede: "Give an agent references, editable geometry, and a way to see and check its proposals."
+status: "Experimental; start with a copy of your font"
+stability: "Drawing tools and review workflows are evolving"
+order: 17.6
+description: "Use OMP and Runebender to draw missing outlines, refine curves, and compare proposals with approved reference glyphs."
+---
+
+import DocSection from "../../components/DocSection.astro";
+
+<DocSection title="Give the Agent a Design Brief">
+
+Connect OMP using the [MCP guide](/docs/mcp.html), then ask it to call
+`design_context`. This returns the official documentation entry points and
+a review workflow. Ask it to read this page and your font project's
+`DESIGN.md`. The documentation supplies technique; your brief supplies style.
+A model name alone does not establish that a drawing is good.
+
+Record the font's grid, vertical metrics, stroke construction, terminals,
+contrast, overshoot, spacing goals, and master compatibility requirements.
+List approved references and explain mark colors. Green, orange, and red
+have no universal design meaning. For a project that uses green for approved
+references, orange for revision, and red for replacement, state that explicitly.
+The agent should preserve green glyphs and their marks unless asked to edit them.
+
+Use `glyph_inventory` separately on each master to resolve mark labels and
+Unicode scalars to actual glyph names. U+0038 is decimal 56; do not assume its
+name is `eight`. Several glyphs can map to a codepoint. An empty glyph exists
+but has no outlines or components; an absent glyph has no record at all.
+Current drawing proposals require an existing glyph record. Create absent
+records in the editor before requesting outlines.
+
+</DocSection>
+
+<DocSection title="Draw a Missing Weight">
+
+A useful first prompt is:
+
+> Read the project design brief and Runebender's type-design guide. Confirm
+> the Regular and Bold master indices. Use green Regular glyphs and Bold
+> H, O, n, o as references. Inspect their geometry and proof images, then
+> propose Bold a, b, c, d. Preserve the green references. Leave the drawings
+> as proposals and report any interpolation incompatibilities.
+
+The agent should first check whether the target records exist and whether
+those references are drawn. Compare stem thickness, round-stroke behavior,
+terminal shapes, counters, and spacing. A single offset or scale factor is
+not sufficient evidence that the weight fits the family. References from
+both masters show how the design changes with weight.
+
+`propose_edits` accepts `set_outline`: complete contours in UFO point order,
+with font-unit coordinates and y upwards. A cubic endpoint has type `curve`
+and follows two `offcurve` controls. Closed contours wrap; open contours
+begin with `move`. `clear_components: true` explicitly removes components
+when replacing a composite with outlines. Width, anchors, encoding, and
+marks are preserved unless a separate supported operation changes them.
+
+For interpolating masters, retain compatible contour order, starting points,
+point types, and component structure. The existing structure check is a
+foreground/proposal check, not a complete family compatibility audit. Compare
+the result with the other masters before accepting it.
+
+</DocSection>
+
+<DocSection title="Refine Curves and Weight">
+
+For curve work, ask the agent to inspect U+0038's direct contours and preserve
+intentional corners. `read_glyph` includes tangent angles and signed endpoint
+curvatures at connected joins. A smooth flag expresses intent; it does not
+prove continuity. Tangent alignment and matching curvature are separate checks.
+Degenerate handles need special attention. The reported diagnostics exclude
+components and identify nonempty contours, not necessarily original point indices.
+Use the returned point arrays for edits.
+
+The agent can change controls with `set_point` and smooth intent with
+`set_smooth`, then measure the proposed layer again. Inspect the whole curve
+as well as its joins: a numerically smooth join can still produce an uneven
+or flat-looking outline. Do not round control points to a preferred grid if
+that damages the intended curve.
+
+For weight corrections, compare target and references at the same scale.
+Inspect straight stems, round strokes, counters, joins, and dense regions
+separately. Do not equate equal black area with equal visual weight. Ask for
+small batches, such as one orange glyph, before applying the same reasoning
+to a whole marked group. For red glyphs, explicitly request complete outline
+replacement and review the resulting structure and spacing.
+
+</DocSection>
+
+<DocSection title="See, Propose, Review, Install">
+
+1. Read current targets and references, including their revisions.
+2. Request foreground proofs with explicit glyph names and master indices.
+3. Submit a uniquely named proposal with a concrete reason.
+4. Proof its layer, then compare with the foreground and reference glyphs.
+5. Refine by discarding the draft and proposing from current foreground revisions.
+6. Ask for installation only after reviewing the result; re-proof afterward.
+
+MCP proofs contain PNG image blocks and metrics. The client must deliver
+those images to the chosen model; ask it to describe a visible detail as an
+initial check. A text-only client cannot perform visual review just because
+it received an SVG string. Glyph proof sheets show isolated glyphs. The `specimen` tool adds a bounded
+basic Latin text proof using harfrust and UFO kerning. See
+[Experiment versions](/docs/experiments.html) for A/B comparison and PDF export.
+
+`proposal_install` requires an explicit `keep_structure` choice. `true` skips
+changed point structures. `false` permits redrawing existing records and can
+break interpolation. Installation checks the foreground revision again and
+records one undo step per glyph. A batch can be partly skipped: inspect the
+returned installed and skipped lists. Installation does not save the font.
+
+</DocSection>
+
+<DocSection title="Review a Print Proof">
+
+Attach the PDF to OMP using its file input, for example `@proof.pdf`, and
+ask the agent to use its PDF-reading or rendering tools. Verify that it can
+see the pages before asking for visual corrections. Runebender's MCP server
+does not itself parse PDFs.
+
+Ask for a finding list with page, text or pair, master, observed problem,
+and suggested correction. Separate outline weight from sidebearings and
+kerning. Review affected glyphs in other words and pairs before changing
+spacing globally. Confirm that the PDF corresponds to the current font;
+a stale proof can describe problems already fixed in the live document.
+
+Outline and advance corrections can use current glyph proposals. Independent kerning versions and basic Latin MCP text proofs are available in the
+[experiment MVP](/docs/experiments.html). Automatic creation of absent glyph records
+and broader text-proof layouts are not implemented yet. Do not describe this version as an
+automatic full-proof repair system. Keep unresolved findings visible and
+regenerate the PDF after accepted changes.
+
+</DocSection>

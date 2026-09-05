@@ -35,6 +35,8 @@ paths="
 /docs/code-layout.html
 /docs/agents.html
 /docs/mcp.html
+/docs/type-design.html
+/docs/experiments.html
 /docs/architecture.html
 /docs/themes.html
 /docs/configuration.html
