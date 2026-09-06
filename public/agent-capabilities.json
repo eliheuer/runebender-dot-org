@@ -1,0 +1,70 @@
+{
+  "format": "runebender-agent-capability-map",
+  "title": "Runebender agent capability map",
+  "manifest_version": 1,
+  "status": "experimental",
+  "scope": "A compact routing and safety map, not a stable API specification. In a live MCP session, tools/list is authoritative for names, schemas, and availability.",
+  "documentation": {
+    "routing": "https://runebender.org/llms.txt",
+    "full_manual": "https://runebender.org/llms-full.txt",
+    "agents": "https://runebender.org/docs/agents.html",
+    "mcp": "https://runebender.org/docs/mcp.html",
+    "type_design": "https://runebender.org/docs/type-design.html",
+    "experiments": "https://runebender.org/docs/experiments.html",
+    "local_models": "https://runebender.org/docs/local-models.html",
+    "design_brief_template": "https://runebender.org/design-brief-template.md"
+  },
+  "context_contract": {
+    "read_first": [
+      "repository AGENTS.md or equivalent instructions",
+      "repository DESIGN.md, using the public template when absent",
+      "the smallest Runebender documentation page that matches the task"
+    ],
+    "visual_evidence": "Inspect returned proof images before making visual judgments. Report the limitation if the client cannot receive images or render PDFs.",
+    "identity": "Use glyph_inventory to resolve Unicode values and mark labels. Confirm explicit master indices after connecting.",
+    "family_safety": "A live proposal does not replace a family-wide compatibility review. Preserve compatible structure unless an authorized redraw says otherwise."
+  },
+  "surfaces": [
+    {
+      "id": "live_mcp",
+      "use_for": "Interactive work against a native editor, including unsaved geometry and revision-checked proposals.",
+      "availability": "Native GPUI and Xilem editors on macOS and Linux; not the browser editor or Windows.",
+      "connect": ["editor_sessions", "editor_connect", "project_info"],
+      "read": ["font_info", "glyph_inventory", "read_glyph", "proof", "read_kerning", "design_context"],
+      "propose": ["propose_edits", "proposal_list", "proposal_discard"],
+      "experiment": ["experiment_fork", "experiment_list", "experiment_kern", "specimen", "export_proof"],
+      "apply": ["proposal_install", "experiment_apply", "experiment_undo_apply"],
+      "safety": "Read before proposing. Proposals leave the foreground unchanged. Only install or apply when the designer explicitly asks. No live MCP tool saves the font."
+    },
+    {
+      "id": "saved_sources",
+      "use_for": "Repeatable builds, batch automation, and tools that operate on UFO/designspace files.",
+      "access": "Saved files only; cannot read unsaved canvas work.",
+      "safety": "Use version control, state affected paths, and do not overwrite sources without authorization."
+    },
+    {
+      "id": "local_models",
+      "use_for": "Local font-ml inference over local sources.",
+      "entry_points": ["font-ml tasks", "font-ml describe <model>", "font-ml run bolden --model <model> --source Font.ufo --glyph <name>"],
+      "safety": "Check font-ml tasks before claiming that a job is implemented. Treat results as proposals requiring visual review."
+    },
+    {
+      "id": "screen_control",
+      "use_for": "Visual inspection or commands with no structured interface.",
+      "safety": "Do not use screen coordinates for geometry when live MCP or saved-source operations are available."
+    }
+  ],
+  "default_workflow": [
+    "Choose the surface that exposes the needed state with the least ambiguity.",
+    "Confirm document, master, glyph identity, design brief, and approved references.",
+    "Inspect geometry and visual proof evidence.",
+    "Make a small named proposal or isolated branch.",
+    "Proof and report evidence, uncertainty, and compatibility risks.",
+    "Apply only with explicit authorization; re-proof afterward; leave saving to the designer."
+  ],
+  "boundaries": [
+    "Runebender stores no hosted-model credentials; authentication and approval policy belong to the client.",
+    "Experiment versions are session-only. Export an important version as a new UFO before closing.",
+    "A disk-mutating model process must not receive the live root source path."
+  ]
+}

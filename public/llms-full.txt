@@ -1447,6 +1447,23 @@ rules belong. A compact DESIGN.md should name the approved reference glyphs,
 their mark meanings, the target masters, and the acceptance check. Do not make
 the agent infer those facts from the whole source tree.
 
+### Start Every Font with a Small Context Bundle
+
+Copy the public [design brief template](/design-brief-template.md) to a font
+repository as DESIGN.md, then fill in only the rules that matter to that
+family. It keeps the font's evidence—masters, metrics, references, proof
+strings, and acceptance criteria—close to the sources.
+
+The [agent capability map](/agent-capabilities.json) is a compact,
+machine-readable routing and safety guide. It identifies the live MCP,
+saved-source, local-model, and screen-control surfaces without duplicating
+the live API. In a connected MCP session, tools/list remains authoritative
+for exact tool schemas and current availability.
+
+For a new task, an agent should read its repository instructions, DESIGN.md,
+the capability map, and one relevant documentation page. It should not load the
+full manual or inspect the entire source tree unless the task actually needs it.
+
 ### Preserve Font Invariants
 
 Type design has constraints that are invisible in a diff and

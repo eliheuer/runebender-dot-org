@@ -44,6 +44,8 @@ paths="
 /docs/glossary.html
 /llms.txt
 /llms-full.txt
+/design-brief-template.md
+/agent-capabilities.json
 /robots.txt
 /sitemap-index.xml
 /assets/favicon.png
