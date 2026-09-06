@@ -24,8 +24,11 @@ if [ ! -f "$GPUI/Trunk.toml" ]; then
   exit 1
 fi
 
+# Trunk 0.21 parses `NO_COLOR` as a boolean; the desktop environment
+# supplies `1`, which its CLI rejects.
 (cd "$GPUI" && RUSTUP_TOOLCHAIN=nightly-2026-08-01 \
   CARGO_UNSTABLE_BUILD_STD=std,panic_abort \
+  NO_COLOR=false \
   trunk build --release --public-url /gpui/)
 
 rm -rf "$DEST"
