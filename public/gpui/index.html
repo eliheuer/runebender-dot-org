@@ -6,8 +6,8 @@
         <title>Runebender GPUI (web)</title>
         
 <script type="module">
-import init, * as bindings from '/gpui/runebender-gpui-87880cd9c228ff2b.js';
-const wasm = await init({ module_or_path: '/gpui/runebender-gpui-87880cd9c228ff2b_bg.wasm' });
+import init, * as bindings from '/gpui/runebender-gpui-55690109643c1ba0.js';
+const wasm = await init({ module_or_path: '/gpui/runebender-gpui-55690109643c1ba0_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -24,6 +24,6 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
                 touch-action: none; outline: none; user-select: none;
             }
         </style>
-    <link rel="modulepreload" href="/gpui/runebender-gpui-87880cd9c228ff2b.js" crossorigin="anonymous" integrity="sha384-+iJXO82NcliDxATwfL+5LJdSue+oKDEd6dAkN3e9wFd4L3MeAK4bhpWFaj4buy+Z"><link rel="preload" href="/gpui/runebender-gpui-87880cd9c228ff2b_bg.wasm" crossorigin="anonymous" integrity="sha384-t2lzYEFTWtCOYGJ7qgg5+WIC1okbDgTQ7wCYszQXm3Jo7J8inGv/ls/KGYxT0gY5" as="fetch" type="application/wasm"></head>
+    <link rel="modulepreload" href="/gpui/runebender-gpui-55690109643c1ba0.js" crossorigin="anonymous" integrity="sha384-+iJXO82NcliDxATwfL+5LJdSue+oKDEd6dAkN3e9wFd4L3MeAK4bhpWFaj4buy+Z"><link rel="preload" href="/gpui/runebender-gpui-55690109643c1ba0_bg.wasm" crossorigin="anonymous" integrity="sha384-JLB4KOpgij3PP/0ynIaMJKy4zZyM2uvoXFXOE+XiwabSvVP5UCQzLlZ3IN76U786" as="fetch" type="application/wasm"></head>
     <body></body>
 </html>
