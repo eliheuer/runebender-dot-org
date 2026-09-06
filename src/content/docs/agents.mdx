@@ -11,7 +11,7 @@ import DocSection from "../../components/DocSection.astro";
 import Callout from "../../components/Callout.astro";
 import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Working Together">
+<DocSection title="Choose an Agent Surface">
 
 For interactive type design, start with [MCP and OMP](/docs/mcp.html).
 The agent reads the live document, including unsaved edits, and proposes
@@ -24,9 +24,14 @@ saved sources, and the editor can reload external changes when they do not
 conflict with unsaved work. Use the live connection when the agent needs
 the drawing currently on your canvas.
 
+Use screen control only to judge visual output or operate a UI-only command.
+For geometry, metrics, and text data, the live tools are a more exact contract
+than pixels. For a saved build or a repeatable batch change, use the UFO and
+designspace files instead of a live session.
+
 </DocSection>
 
-<DocSection title="Subscriptions and Keys">
+<DocSection title="Model Access and Data">
 
 Your external agent handles its own model login. Runebender does not need
 an API key for MCP. When the agent uses a hosted model, prompts and the
@@ -38,7 +43,7 @@ from connecting OMP to the editor.
 
 </DocSection>
 
-<DocSection title="Setting Up a Repository">
+<DocSection title="Give an Agent Minimum Context">
 
 An agent works better on a font repository than on a loose UFO. Give
 it the same things a new collaborator would need.
@@ -48,8 +53,8 @@ it the same things a new collaborator would need.
 2. Write down the build and check commands where the agent will read
    them.
 3. Say what the font's rules are: the grid, the metrics, the naming.
-4. Point it at `https://runebender.org/llms-full.txt` for the manual
-   in one file.
+4. Point it at the smallest relevant Runebender page first; use
+   `https://runebender.org/llms-full.txt` only when it needs the whole manual.
 
 <CommandList commands={[
   "runebender-gpui sources/Font.designspace",
@@ -58,11 +63,13 @@ it the same things a new collaborator would need.
 
 Agents read a repository's own instructions file, `AGENTS.md` or
 `CLAUDE.md`, before anything else. That file is where the font's
-rules belong.
+rules belong. A compact `DESIGN.md` should name the approved reference glyphs,
+their mark meanings, the target masters, and the acceptance check. Do not make
+the agent infer those facts from the whole source tree.
 
 </DocSection>
 
-<DocSection title="What an Agent Should Not Break">
+<DocSection title="Preserve Font Invariants">
 
 Type design has constraints that are invisible in a diff and
 expensive to undo. State them, because an agent will not infer them.
@@ -86,7 +93,7 @@ expensive to undo. State them, because an agent will not infer them.
 
 </DocSection>
 
-<DocSection title="Grading the Work">
+<DocSection title="Separate Proposals from Accepted Work">
 
 An agent produces more drawings than you can review carefully, so
 separate what it made from what you have accepted.
@@ -102,7 +109,7 @@ theme can draw it differently without changing the font. See
 
 </DocSection>
 
-<DocSection title="The Command Line">
+<DocSection title="Use the Command Line for Saved Sources">
 
 `runebender-core` runs the editor's own operations without a window. Same
 code, no interface.
@@ -116,7 +123,7 @@ failed, so a script can branch without reading text.
 
 </DocSection>
 
-<DocSection title="MCP">
+<DocSection title="Use MCP for the Live Editor">
 
 The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
 choosing a master, and reviewing proposals. Start with a read-only request,
@@ -127,7 +134,7 @@ then a small proposed edit and an undo test.
 
 </DocSection>
 
-<DocSection title="Building on the Core">
+<DocSection title="Build Purpose-Made Tools on Core">
 
 For a tool rather than a session, `runebender-core` is the editing
 model as a Rust library with no interface attached. It carries the
@@ -140,7 +147,7 @@ edit you want, instead of driving a general one. See
 
 </DocSection>
 
-<DocSection title="Local Models">
+<DocSection title="Run Local Models Deliberately">
 
 `font-ml` runs machine-learning models over font sources from the
 command line. Every command takes `--json`. The exit codes separate a
@@ -162,7 +169,7 @@ what it finds at startup. `RUNEBENDER_MODELS` overrides the location.
 
 </DocSection>
 
-<DocSection title="Driving the Interface">
+<DocSection title="Use Screen Control Only for Visual Work">
 
 An agent that controls the screen can use Runebender the way a person
 does, because it is an ordinary desktop application.
@@ -176,7 +183,7 @@ judging how something looks.
 
 </DocSection>
 
-<DocSection title="What Is Not Here">
+<DocSection title="Current Boundaries">
 
 No way for the application to call a model service. Runebender has no
 account system and stores no keys. The chat pane in the editor runs

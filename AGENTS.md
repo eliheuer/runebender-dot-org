@@ -9,7 +9,8 @@ This repository is the website and documentation source for `runebender.org`.
 It is not the main Runebender application source. Current application source lives in the sibling repos:
 
 - https://github.com/eliheuer/runebender-xilem — native Rust/Xilem editor
-- https://github.com/eliheuer/runebender-comfy — ComfyUI/Vue/WASM editor and standalone browser build source
+- https://github.com/eliheuer/runebender-gpui — current native and WebAssembly editor
+- https://github.com/eliheuer/runebender-web — standalone browser editor and the source of the checked-in cloud artifact
 
 The earlier Druid-based Runebender source is:
 
@@ -23,7 +24,7 @@ The earlier Druid-based Runebender source is:
 - Global CSS in `src/styles/global.css`. The Swiss/brutalist visual direction is preserved.
 - Build output goes to `dist/`. URLs preserve the legacy `.html` suffix via `build.format: "preserve"` so existing external links continue to work.
 - `public/` holds raw static files copied verbatim into the build (favicon, og-image, CNAME, `.nojekyll`, robots.txt, llms.txt, llms-full.txt, and the cloud editor build artifact at `public/cloud/editor/`).
-- `/cloud/editor/index.html` is a checked-in static artifact built from `../runebender-comfy/web` by `scripts/build-cloud-editor.sh`; Astro should treat it as opaque release output, not source to refactor during website work.
+- `/cloud/editor/index.html` is a checked-in static artifact built from `../runebender-web` by `scripts/build-cloud-editor.sh`; Astro should treat it as opaque release output, not source to refactor during website work.
 
 ## Local workflow
 
@@ -80,6 +81,7 @@ Avoid:
 
 When updating docs, verify durable facts against:
 
+- `/Users/eli/GH/repos/runebender-gpui/README.md`
 - `/Users/eli/GH/repos/runebender-xilem/README.md`
 - `/Users/eli/GH/repos/runebender-xilem/docs/hyperbezier-ufo-extension.md`
 - relevant source files in `/Users/eli/GH/repos/runebender-xilem/src/`

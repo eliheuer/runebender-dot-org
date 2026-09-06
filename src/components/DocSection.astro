@@ -4,9 +4,17 @@ interface Props {
   id?: string;
 }
 const { title, id } = Astro.props;
+// Every section has a stable fragment, so a person or an agent can request
+// exactly the relevant part of a page instead of loading the whole thing.
+const sectionId = id ?? title
+  .toLowerCase()
+  .normalize("NFKD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/(^-|-$)/g, "");
 ---
 
-<section class="doc-section" id={id}>
+<section class="doc-section" id={sectionId}>
   <h2>{title}</h2>
   <div>
     <slot />

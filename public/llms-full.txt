@@ -1397,7 +1397,7 @@ https://runebender.org/docs/agents.html
 
 Keep the agent beside the editor. Live MCP tools expose unsaved font data and offer edits for you to review.
 
-### Working Together
+### Choose an Agent Surface
 
 For interactive type design, start with [MCP and OMP](/docs/mcp.html).
 The agent reads the live document, including unsaved edits, and proposes
@@ -1410,7 +1410,12 @@ saved sources, and the editor can reload external changes when they do not
 conflict with unsaved work. Use the live connection when the agent needs
 the drawing currently on your canvas.
 
-### Subscriptions and Keys
+Use screen control only to judge visual output or operate a UI-only command.
+For geometry, metrics, and text data, the live tools are a more exact contract
+than pixels. For a saved build or a repeatable batch change, use the UFO and
+designspace files instead of a live session.
+
+### Model Access and Data
 
 Your external agent handles its own model login. Runebender does not need
 an API key for MCP. When the agent uses a hosted model, prompts and the
@@ -1420,7 +1425,7 @@ The native GPUI chat pane can also run a local model through
 [font-ml](/docs/local-models.html). That is a separate inference choice
 from connecting OMP to the editor.
 
-### Setting Up a Repository
+### Give an Agent Minimum Context
 
 An agent works better on a font repository than on a loose UFO. Give
 it the same things a new collaborator would need.
@@ -1430,17 +1435,19 @@ revertible.
 2. Write down the build and check commands where the agent will read
 them.
 3. Say what the font's rules are: the grid, the metrics, the naming.
-4. Point it at https://runebender.org/llms-full.txt for the manual
-in one file.
+4. Point it at the smallest relevant Runebender page first; use
+https://runebender.org/llms-full.txt only when it needs the whole manual.
 
     runebender-gpui sources/Font.designspace
     curl -O https://runebender.org/llms-full.txt
 
 Agents read a repository's own instructions file, AGENTS.md or
 CLAUDE.md, before anything else. That file is where the font's
-rules belong.
+rules belong. A compact DESIGN.md should name the approved reference glyphs,
+their mark meanings, the target masters, and the acceptance check. Do not make
+the agent infer those facts from the whole source tree.
 
-### What an Agent Should Not Break
+### Preserve Font Invariants
 
 Type design has constraints that are invisible in a diff and
 expensive to undo. State them, because an agent will not infer them.
@@ -1456,7 +1463,7 @@ The rules worth writing down:
 Ask for a check after every batch, not at the end. A compatibility
 break found after fifty glyphs costs fifty glyphs.
 
-### Grading the Work
+### Separate Proposals from Accepted Work
 
 An agent produces more drawings than you can review carefully, so
 separate what it made from what you have accepted.
@@ -1470,7 +1477,7 @@ Runebender stores the meaning of a mark, not just its color, so a
 theme can draw it differently without changing the font. See
 [File format](/docs/format.html).
 
-### The Command Line
+### Use the Command Line for Saved Sources
 
 runebender-core runs the editor's own operations without a window. Same
 code, no interface.
@@ -1480,7 +1487,7 @@ code, no interface.
 Every command takes --json. The exit codes are 0 ok, 2 usage, 4
 failed, so a script can branch without reading text.
 
-### MCP
+### Use MCP for the Live Editor
 
 The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
 choosing a master, and reviewing proposals. Start with a read-only request,
@@ -1489,7 +1496,7 @@ then a small proposed edit and an undo test.
 runebender-core mcp --live discovers native editor sessions. The separate
 --font mode works on saved sources and cannot see unsaved changes.
 
-### Building on the Core
+### Build Purpose-Made Tools on Core
 
 For a tool rather than a session, runebender-core is the editing
 model as a Rust library with no interface attached. It carries the
@@ -1500,7 +1507,7 @@ An agent writing Rust can build a tool on it that makes exactly the
 edit you want, instead of driving a general one. See
 [Development](/docs/development.html).
 
-### Local Models
+### Run Local Models Deliberately
 
 font-ml runs machine-learning models over font sources from the
 command line. Every command takes --json. The exit codes separate a
@@ -1518,7 +1525,7 @@ Models live in ~/.runebender/models. A model is a folder holding
 config.json, so installing one is putting it there. The editor lists
 what it finds at startup. RUNEBENDER_MODELS overrides the location.
 
-### Driving the Interface
+### Use Screen Control Only for Visual Work
 
 An agent that controls the screen can use Runebender the way a person
 does, because it is an ordinary desktop application.
@@ -1530,7 +1537,7 @@ than points and measurements in font units.
 Reach for screen control only for what has no other path, such as
 judging how something looks.
 
-### What Is Not Here
+### Current Boundaries
 
 No way for the application to call a model service. Runebender has no
 account system and stores no keys. The chat pane in the editor runs
@@ -1815,7 +1822,7 @@ https://runebender.org/docs/type-design.html
 
 Give an agent references, editable geometry, and a way to see and check its proposals.
 
-### Give the Agent a Design Brief
+### Give the Agent a Small, Specific Design Brief
 
 Connect OMP using the [MCP guide](/docs/mcp.html), then ask it to call
 design_context. This returns the official documentation entry points and
@@ -1837,7 +1844,26 @@ but has no outlines or components; an absent glyph has no record at all.
 Current drawing proposals require an existing glyph record. Create absent
 records in the editor before requesting outlines.
 
-### Draw a Missing Weight
+### Use a Type-Design Decision Framework
+
+Good type design is controlled comparison, not point-by-point similarity. An
+agent should treat the project brief and approved glyphs as evidence, then make
+one claim at a time and test it in context.
+
+| Inspect | Decide | Check |
+| --- | --- | --- |
+| Baseline, x-height, cap height, overshoot, and grid | Which alignments are structural and which rounds must overshoot | Compare straight and round glyphs at the same size |
+| Stems, joins, contrast, and terminals | How stroke logic changes between vertical, horizontal, diagonal, and curved strokes | Compare H, O, n, o, and the target at text and display sizes |
+| Counters, apertures, and dense joins | Whether interior space is still open enough for the intended size and weight | Look at black and white together; equal black area is not equal visual weight |
+| Widths, sidebearings, and recurring pairs | Whether a glyph belongs in words, not merely as an isolated drawing | Proof it in representative words before changing kerning globally |
+| Master structure and component use | Which visual correction can preserve interpolation and which needs an explicit redesign | Run structure checks and compare every affected master |
+
+Optical correction is normal: rounds overshoot, joins often need relief, and
+mathematically equal distances can look unequal. It is not permission to make
+arbitrary exceptions. Reuse a demonstrated correction from comparable glyphs,
+state the reason, and leave unusual decisions for human review.
+
+### Propose a Missing Weight from Approved References
 
 A useful first prompt is:
 
@@ -1865,7 +1891,7 @@ point types, and component structure. The existing structure check is a
 foreground/proposal check, not a complete family compatibility audit. Compare
 the result with the other masters before accepting it.
 
-### Refine Curves and Weight
+### Refine Curves, Weight, and Spacing
 
 For curve work, ask the agent to inspect U+0038's direct contours and preserve
 intentional corners. read_glyph includes tangent angles and signed endpoint
@@ -1888,7 +1914,7 @@ small batches, such as one orange glyph, before applying the same reasoning
 to a whole marked group. For red glyphs, explicitly request complete outline
 replacement and review the resulting structure and spacing.
 
-### See, Propose, Review, Install
+### Inspect, Propose, Proof, Review, Install
 
 1. Read current targets and references, including their revisions.
 2. Request foreground proofs with explicit glyph names and master indices.
@@ -1910,7 +1936,7 @@ break interpolation. Installation checks the foreground revision again and
 records one undo step per glyph. A batch can be partly skipped: inspect the
 returned installed and skipped lists. Installation does not save the font.
 
-### Review a Print Proof
+### Review a Text or Print Proof
 
 Attach the PDF to OMP using its file input, for example @proof.pdf, and
 ask the agent to use its PDF-reading or rendering tools. Verify that it can

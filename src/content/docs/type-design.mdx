@@ -9,7 +9,7 @@ description: "Use OMP and Runebender to draw missing outlines, refine curves, an
 
 import DocSection from "../../components/DocSection.astro";
 
-<DocSection title="Give the Agent a Design Brief">
+<DocSection title="Give the Agent a Small, Specific Design Brief">
 
 Connect OMP using the [MCP guide](/docs/mcp.html), then ask it to call
 `design_context`. This returns the official documentation entry points and
@@ -33,7 +33,28 @@ records in the editor before requesting outlines.
 
 </DocSection>
 
-<DocSection title="Draw a Missing Weight">
+<DocSection title="Use a Type-Design Decision Framework">
+
+Good type design is controlled comparison, not point-by-point similarity. An
+agent should treat the project brief and approved glyphs as evidence, then make
+one claim at a time and test it in context.
+
+| Inspect | Decide | Check |
+| --- | --- | --- |
+| Baseline, x-height, cap height, overshoot, and grid | Which alignments are structural and which rounds must overshoot | Compare straight and round glyphs at the same size |
+| Stems, joins, contrast, and terminals | How stroke logic changes between vertical, horizontal, diagonal, and curved strokes | Compare `H`, `O`, `n`, `o`, and the target at text and display sizes |
+| Counters, apertures, and dense joins | Whether interior space is still open enough for the intended size and weight | Look at black and white together; equal black area is not equal visual weight |
+| Widths, sidebearings, and recurring pairs | Whether a glyph belongs in words, not merely as an isolated drawing | Proof it in representative words before changing kerning globally |
+| Master structure and component use | Which visual correction can preserve interpolation and which needs an explicit redesign | Run structure checks and compare every affected master |
+
+Optical correction is normal: rounds overshoot, joins often need relief, and
+mathematically equal distances can look unequal. It is not permission to make
+arbitrary exceptions. Reuse a demonstrated correction from comparable glyphs,
+state the reason, and leave unusual decisions for human review.
+
+</DocSection>
+
+<DocSection title="Propose a Missing Weight from Approved References">
 
 A useful first prompt is:
 
@@ -63,7 +84,7 @@ the result with the other masters before accepting it.
 
 </DocSection>
 
-<DocSection title="Refine Curves and Weight">
+<DocSection title="Refine Curves, Weight, and Spacing">
 
 For curve work, ask the agent to inspect U+0038's direct contours and preserve
 intentional corners. `read_glyph` includes tangent angles and signed endpoint
@@ -88,7 +109,7 @@ replacement and review the resulting structure and spacing.
 
 </DocSection>
 
-<DocSection title="See, Propose, Review, Install">
+<DocSection title="Inspect, Propose, Proof, Review, Install">
 
 1. Read current targets and references, including their revisions.
 2. Request foreground proofs with explicit glyph names and master indices.
@@ -112,7 +133,7 @@ returned installed and skipped lists. Installation does not save the font.
 
 </DocSection>
 
-<DocSection title="Review a Print Proof">
+<DocSection title="Review a Text or Print Proof">
 
 Attach the PDF to OMP using its file input, for example `@proof.pdf`, and
 ask the agent to use its PDF-reading or rendering tools. Verify that it can
