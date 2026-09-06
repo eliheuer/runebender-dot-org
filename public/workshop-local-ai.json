@@ -1,0 +1,33 @@
+{
+  "format": "runebender-workshop-local-ai-profile",
+  "profile_version": 1,
+  "status": "model bundle pending publication",
+  "model_root": "~/.runebender/models",
+  "toolchain": {
+    "editor": "runebender-gpui",
+    "core": "runebender-core",
+    "inference": "font-ml"
+  },
+  "model_directories": {
+    "chat": {
+      "name": "runebender-workshop-4b",
+      "required_files": ["*.gguf", "tokenizer.json"],
+      "purpose": "Local proposal-only chat in the native editor"
+    },
+    "outline": {
+      "name": "runebender-workshop-bolden",
+      "required_files": ["config.json", "weights.safetensors", "vocab.txt"],
+      "purpose": "Local outline proposals through font-ml"
+    }
+  },
+  "bundle": {
+    "url": null,
+    "sha256": null,
+    "instruction": "The organizer must publish a verified bundle URL and SHA-256 before the workshop. An assistant must stop and ask for them when either is null."
+  },
+  "verification": {
+    "tasks": "font-ml tasks --json",
+    "chat": "Read one known glyph and produce a proof without installation or saving.",
+    "outline": "Run bolden with --write on one glyph in a disposable source, then inspect the proposal."
+  }
+}

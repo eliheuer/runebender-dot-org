@@ -1542,6 +1542,11 @@ Models live in ~/.runebender/models. A model is a folder holding
 config.json, so installing one is putting it there. The editor lists
 what it finds at startup. RUNEBENDER_MODELS overrides the location.
 
+For a one-shot assistant-guided installation, see
+[Set up local AI](/docs/local-ai-setup.html). It uses the same default root for
+chat and outline models, verifies the installed capabilities, and keeps the
+first smoke test away from a real font.
+
 ### Use Screen Control Only for Visual Work
 
 An agent that controls the screen can use Runebender the way a person
@@ -2112,6 +2117,10 @@ What a model directory holds:
 Nothing else is read, and the directory is inspectable: cat the
 config to see what you have.
 
+For a first local setup, use [Set up local AI](/docs/local-ai-setup.html).
+It defines the shared model root, separates chat and outline-model artifacts,
+and verifies a model bundle before an assistant touches a font.
+
 ### Boldening
 
 Open the Local AI section of the left panel, then click the model row
@@ -2210,6 +2219,80 @@ external conversation connected to the live editor, start with
 [MCP and OMP](/docs/mcp.html). Neither workflow currently provides
 complete glyph generation from a description. Kerning and spacing models
 are named in font-ml and not built.
+
+
+## Set up local AI
+https://runebender.org/docs/local-ai-setup.html
+
+A one-shot, local-first setup path for Runebender's chat and font models.
+
+### Give Your Assistant One Starting URL
+
+Tell a local or cloud assistant to read the [local-AI setup prompt](/local-ai-setup-prompt.md), then this page. It will inspect the machine, install only missing tools, use the common model location, and stop before an unknown download or a font mutation. The setup itself is local: a hosted assistant may see the commands and paths you show it, but Runebender does not send model weights or font sources to a service.
+
+For an agent already connected to Runebender, the [capability map](/agent-capabilities.json) remains the compact routing guide.
+
+### Use One Model Root
+
+The native editors, font-ml, the local Chat panel, and local outline-model workflows all use ~/.runebender/models by default. This is the workshop location: put each model in its own direct child directory and restart the editor after adding one.
+
+    mkdir -p ~/.runebender/models
+    font-ml models ~/.runebender/models --json
+
+Do not set a config file or environment variable for the workshop default. RUNEBENDER_MODELS is a per-run override, and models = \"/path\" in the Runebender config is a persistent override; use either only when a shared or external disk is intentional. Extra read-only locations can go in ~/.runebender/model_paths, one path per line.
+
+### Install the Native Tools
+
+This workflow needs the native editor, runebender-core, and font-ml on the same machine. The browser editor cannot run local processes. Have the assistant first check whether each command exists and report its version or help output; then install only the missing or explicitly outdated tools.
+
+On macOS, build font-ml with Metal support. On Linux, CPU is the conservative default; use the CUDA build only on a machine with a working NVIDIA toolkit.
+
+    cargo +stable install --git https://github.com/eliheuer/runebender-gpui
+    cargo +stable install --git https://github.com/eliheuer/runebender-core
+    cargo +stable install --git https://github.com/eliheuer/font-ml --features metal
+    cargo +stable install --git https://github.com/eliheuer/font-ml --features cuda
+
+The last two commands are alternatives, not a pair: use metal on macOS, cuda only when its toolkit is available, or omit --features for CPU. --device auto chooses a supported GPU and otherwise uses CPU. Do not promise a particular speed before running a short test on the workshop machine.
+
+### Install Only a Verified Model Bundle
+
+Runebender deliberately does not download arbitrary models. The workshop organizer supplies a model archive or directory plus a checksum. An assistant must verify that checksum before extracting it into the model root and must ask for the bundle location if it is not supplied. The current published workshop profile records that source when one is available; it is not safe to substitute a similarly named model from the internet.
+
+Use these directory shapes:
+
+| Purpose | Directory under ~/.runebender/models | Required files |
+| --- | --- | --- |
+| Local chat | runebender-workshop-4b | one .gguf file and tokenizer.json |
+| Outline model | runebender-workshop-bolden | config.json, weights.safetensors, vocab.txt |
+
+The Chat panel prefers a directory whose name contains 4b, then falls back to the first compatible chat model. Names are not a quality claim; the workshop bundle, checksum, and a real smoke test are the source of truth.
+
+An outline model and a chat model are different artifacts. Installing a .gguf does not make the Bolden task available, and installing an outline model does not create a chat assistant.
+
+### Verify Before Editing a Real Font
+
+Use the supplied demo font or a disposable copy. First confirm what this build can actually do, then start the native editor. font-ml tasks is authoritative: only tasks with implemented: true are usable.
+
+    font-ml tasks --json
+    font-ml describe ~/.runebender/models/runebender-workshop-bolden --json
+    runebender-gpui path/to/WorkshopDemo.designspace
+
+For chat, open the same font, choose the runebender-workshop-4b model in the native Chat panel, and ask it to read one known glyph and produce a proof. It may read, proof, and propose, but it must not install or save unless asked. For an outline model, run one small proposal against the disposable source with --write; it writes a proposal layer and leaves the foreground alone.
+
+    font-ml run bolden --model runebender-workshop-bolden --source path/to/WorkshopDemo-Regular.ufo --glyph n --write --json
+
+Inspect the proof and proposal, then discard the copy. A successful process exit is not proof that the drawing is good.
+
+### Recover from Common Setup Failures
+
+- **No model in the editor:** confirm the directory is an immediate child of ~/.runebender/models, has the required files, and restart the native editor.
+- **font-ml is missing:** ensure Cargo's bin directory is on PATH, or set RUNEBENDER_FONT_ML to the installed executable for that run.
+- **The chat panel says core is missing:** install runebender-core, put it on PATH, or set RUNEBENDER_CORE for that run.
+- **A GPU request fails:** use --device auto or cpu; rebuild font-ml with the relevant feature only after checking the platform toolchain.
+- **A task is named but does not run:** inspect font-ml tasks --json; declared tasks with implemented: false are not workshop exercises.
+- **A model response is bad or slow:** record the model, device, prompt, and speed. Do not compensate by applying its proposal more aggressively.
+
+After setup, copy the [design brief template](/design-brief-template.md) into the font repository and continue with [Type design with agents](/docs/type-design.html).
 
 
 ## Tutorial: Draw a Glyph

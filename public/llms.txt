@@ -27,8 +27,10 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 - **Compare two candidate designs or kernings:** [Experiment versions](https://runebender.org/docs/experiments.html). Versions are session-only; Run never applies changes, and explicit application is conflict-checked and undoable.
 - **Automate saved sources or a build:** [Agents](https://runebender.org/docs/agents.html) and [Scripting](https://runebender.org/docs/scripting.html). Use the UFO/designspace files or `runebender-core`; this cannot see unsaved canvas work.
 - **Run a local ML model:** [Local models](https://runebender.org/docs/local-models.html). Check `font-ml tasks` before claiming that a job exists.
+- **Set up the complete local-AI workshop stack:** [Set up local AI](https://runebender.org/docs/local-ai-setup.html), then give an assistant the [one-shot setup prompt](https://runebender.org/local-ai-setup-prompt.md). Both chat and outline models use `~/.runebender/models` by default.
 - **Set up a font project for an agent:** copy the [design brief template](https://runebender.org/design-brief-template.md) to the repository as `DESIGN.md`.
 - **Need a machine-readable routing and safety map:** [agent-capabilities.json](https://runebender.org/agent-capabilities.json). In a live connection, `tools/list` is authoritative for tool schemas and availability.
+- **Need the workshop's verified model source:** [workshop-local-ai.json](https://runebender.org/workshop-local-ai.json). Do not download or substitute a model while its bundle URL or SHA-256 is null.
 - **Need the complete manual in one fetch:** [llms-full.txt](https://runebender.org/llms-full.txt). Prefer the specific pages above when context is limited.
 
 ## Live-Agent Contract

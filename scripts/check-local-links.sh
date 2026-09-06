@@ -24,6 +24,7 @@ paths="
 /docs/font-info.html
 /docs/checking.html
 /docs/local-models.html
+/docs/local-ai-setup.html
 /docs/tutorial-first-glyph.html
 /docs/workflows.html
 /docs/shortcuts.html
@@ -46,6 +47,8 @@ paths="
 /llms-full.txt
 /design-brief-template.md
 /agent-capabilities.json
+/local-ai-setup-prompt.md
+/workshop-local-ai.json
 /robots.txt
 /sitemap-index.xml
 /assets/favicon.png

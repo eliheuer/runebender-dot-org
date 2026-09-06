@@ -12,6 +12,9 @@
     "type_design": "https://runebender.org/docs/type-design.html",
     "experiments": "https://runebender.org/docs/experiments.html",
     "local_models": "https://runebender.org/docs/local-models.html",
+    "local_ai_setup": "https://runebender.org/docs/local-ai-setup.html",
+    "local_ai_setup_prompt": "https://runebender.org/local-ai-setup-prompt.md",
+    "workshop_profile": "https://runebender.org/workshop-local-ai.json",
     "design_brief_template": "https://runebender.org/design-brief-template.md"
   },
   "context_contract": {
@@ -45,6 +48,8 @@
     {
       "id": "local_models",
       "use_for": "Local font-ml inference over local sources.",
+      "default_root": "~/.runebender/models",
+      "workshop_profile": "https://runebender.org/workshop-local-ai.json",
       "entry_points": ["font-ml tasks", "font-ml describe <model>", "font-ml run bolden --model <model> --source Font.ufo --glyph <name>"],
       "safety": "Check font-ml tasks before claiming that a job is implemented. Treat results as proposals requiring visual review."
     },
