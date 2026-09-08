@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import outlineScreenshot from "../assets/runebender-outline.png";
 import gridScreenshot from "../assets/runebender-grid.png";
 import nodesScreenshot from "../assets/runebender-nodes.png";
 ---
@@ -36,8 +37,8 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
       <figure class="screenshot-block screenshot-cycle" data-cycle>
         <Image
           class="frame is-shown"
-          src={gridScreenshot}
-          alt="Runebender showing the glyph grid of Virtua Grotesk"
+          src={outlineScreenshot}
+          alt="Runebender editing an outlined letter R with curvature combs and continuity markers"
           widths={[640, 960, 1280, 1600]}
           sizes="(max-width: 1060px) 100vw, 60vw"
           loading="eager"
@@ -46,6 +47,14 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
           class="frame"
           src={nodesScreenshot}
           alt="Runebender showing a node workflow: a model boldening a master, compared and installed"
+          widths={[640, 960, 1280, 1600]}
+          sizes="(max-width: 1060px) 100vw, 60vw"
+          loading="lazy"
+        />
+        <Image
+          class="frame"
+          src={gridScreenshot}
+          alt="Runebender showing the Virtua Grotesk glyph grid"
           widths={[640, 960, 1280, 1600]}
           sizes="(max-width: 1060px) 100vw, 60vw"
           loading="lazy"
