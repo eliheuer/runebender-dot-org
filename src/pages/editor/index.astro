@@ -1,3 +1,7 @@
+---
+import build from "../../../public/app/build-info.json";
+const { release } = build;
+---
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,7 +12,7 @@
     <link rel="icon" href="/assets/favicon.png" />
   </head>
   <body>
-    <iframe src="/app/index.html" title="Runebender font editor"></iframe>
+    <iframe src={`/app/index.html?v=${release}`} title="Runebender font editor"></iframe>
   </body>
 </html>
 <style is:global>

@@ -91,5 +91,8 @@ pnpm run build
 
 The application repository's `web/README.md` covers prerequisites and browser
 interaction checks. `public/app/build-info.json` records the source commit and
-WASM checksum. Historical bundles under `public/cloud/` remain opaque artifacts;
+WASM checksum. Builds use a committed source snapshot, so concurrent desktop
+edits are excluded. Loader, bindings, and WASM requests share a release identifier
+to prevent incompatible cached files from being mixed. Historical bundles under
+`public/cloud/` remain opaque artifacts;
 they are not the Launch App entry point. Homepage screenshots are independent.

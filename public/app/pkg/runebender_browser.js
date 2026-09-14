@@ -12,10 +12,32 @@ export class BrowserEditor {
         wasm.__wbg_browsereditor_free(ptr, 0);
     }
     /**
+     * @returns {string}
+     */
+    feedback() {
+        let deferred1_0;
+        let deferred1_1;
+        try {
+            const ret = wasm.browsereditor_feedback(this.__wbg_ptr);
+            deferred1_0 = ret[0];
+            deferred1_1 = ret[1];
+            return getStringFromWasm0(ret[0], ret[1]);
+        } finally {
+            wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+        }
+    }
+    /**
+     * @param {boolean} focused
+     */
+    focus(focused) {
+        wasm.browsereditor_focus(this.__wbg_ptr, focused);
+    }
+    /**
+     * @param {number} elapsed_ms
      * @returns {Uint8Array}
      */
-    frame() {
-        const ret = wasm.browsereditor_frame(this.__wbg_ptr);
+    frame(elapsed_ms) {
+        const ret = wasm.browsereditor_frame(this.__wbg_ptr, elapsed_ms);
         var v1 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
         wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
         return v1;
@@ -37,9 +59,10 @@ export class BrowserEditor {
     /**
      * @param {number} width
      * @param {number} height
+     * @param {number} scale
      */
-    constructor(width, height) {
-        const ret = wasm.browsereditor_new(width, height);
+    constructor(width, height, scale) {
+        const ret = wasm.browsereditor_new(width, height, scale);
         this.__wbg_ptr = ret;
         BrowserEditorFinalization.register(this, this.__wbg_ptr, this);
         return this;
@@ -61,9 +84,10 @@ export class BrowserEditor {
     /**
      * @param {number} width
      * @param {number} height
+     * @param {number} scale
      */
-    resize(width, height) {
-        wasm.browsereditor_resize(this.__wbg_ptr, width, height);
+    resize(width, height, scale) {
+        wasm.browsereditor_resize(this.__wbg_ptr, width, height, scale);
     }
     /**
      * @returns {string}
@@ -79,6 +103,15 @@ export class BrowserEditor {
         } finally {
             wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
         }
+    }
+    /**
+     * @param {number} kind
+     * @param {string} text
+     */
+    text(kind, text) {
+        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.browsereditor_text(this.__wbg_ptr, kind, ptr0, len0);
     }
 }
 if (Symbol.dispose) BrowserEditor.prototype[Symbol.dispose] = BrowserEditor.prototype.free;
@@ -322,7 +355,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('runebender_browser_bg.wasm', import.meta.url);
+        module_or_path = new URL('runebender_browser_bg.wasm?v=bd223e98e35c8443', import.meta.url);
     }
     const imports = __wbg_get_imports();
 

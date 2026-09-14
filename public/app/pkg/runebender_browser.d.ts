@@ -4,12 +4,15 @@
 export class BrowserEditor {
     free(): void;
     [Symbol.dispose](): void;
-    frame(): Uint8Array;
+    feedback(): string;
+    focus(focused: boolean): void;
+    frame(elapsed_ms: number): Uint8Array;
     key(down: boolean, key: string, code: string, mods: number, repeat: boolean): void;
-    constructor(width: number, height: number);
+    constructor(width: number, height: number, scale: number);
     pointer(kind: number, x: number, y: number, button: number, buttons: number, count: number, mods: number, dx: number, dy: number): void;
-    resize(width: number, height: number): void;
+    resize(width: number, height: number, scale: number): void;
     state(): string;
+    text(kind: number, text: string): void;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -17,12 +20,15 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_browsereditor_free: (a: number, b: number) => void;
-    readonly browsereditor_frame: (a: number) => [number, number];
+    readonly browsereditor_feedback: (a: number) => [number, number];
+    readonly browsereditor_focus: (a: number, b: number) => void;
+    readonly browsereditor_frame: (a: number, b: number) => [number, number];
     readonly browsereditor_key: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
-    readonly browsereditor_new: (a: number, b: number) => number;
+    readonly browsereditor_new: (a: number, b: number, c: number) => number;
     readonly browsereditor_pointer: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => void;
-    readonly browsereditor_resize: (a: number, b: number, c: number) => void;
+    readonly browsereditor_resize: (a: number, b: number, c: number, d: number) => void;
     readonly browsereditor_state: (a: number) => [number, number];
+    readonly browsereditor_text: (a: number, b: number, c: number, d: number) => void;
     readonly __wbindgen_free: (a: number, b: number, c: number) => void;
     readonly __wbindgen_exn_store: (a: number) => void;
     readonly __externref_table_alloc: () => number;
