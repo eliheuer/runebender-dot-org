@@ -1,4 +1,4 @@
-import init, { BrowserEditor } from './pkg/runebender_browser.js?v=bd223e98e35c8443';
+import init, { BrowserEditor } from './pkg/runebender_browser.js?v=b3d372ad292791df';
 const canvas = document.querySelector('#app');
 const context = canvas.getContext('2d', { alpha: false });
 const textInput = document.querySelector('#text-input');

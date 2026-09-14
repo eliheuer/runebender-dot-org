@@ -6,7 +6,7 @@ https://runebender.org/docs, generated from the same pages.
 Runebender is a free, open-source font editor for UFO and designspace
 sources, built with Xilem and the Linebender ecosystem of Rust crates.
 The desktop application is available from runebender-xilem. An interactive WebAssembly
-demo is available at https://runebender.org/editor/index.html with a bundled
+demo is available at https://runebender.org/wasm-editor/ with a bundled
 font. Browser edits stay in memory; use the desktop to open and save files.
 
 It is alpha software. Treat this as an orientation map, not a stable
@@ -82,7 +82,7 @@ Cargo uses the repository's pinned toolchain. See
 
 ### In the Browser
 
-[Launch App](/editor/index.html) to try the real Runebender interface in your
+[Launch App](/wasm-editor/) to try the real Runebender interface in your
 browser. Explore the bundled Virtua Grotesk font, open a glyph, drag outline
 points, undo and redo edits, zoom, and resize the panels.
 
@@ -335,9 +335,9 @@ state and submit proposals. Coordinate disk writes with the editor. See
 ### Platform Integration
 
 The desktop application supplies file dialogs, menus, clipboard access, and
-file watching. A browser port must supply browser equivalents and verify the
-rendering and input path. The current [UI demo](/editor/index.html) uses
-static desktop captures and does not run the editor in WebAssembly.
+file watching. The [WASM editor](/wasm-editor/) runs the Xilem interface in
+WebAssembly with an editable bundled font. Browser edits stay in the tab;
+opening and saving local files and running workflows require the desktop.
 
 
 ## The Interface
@@ -2834,8 +2834,9 @@ the expected convention.
 
 ### The Browser Build
 
-The [UI demo](/editor/index.html) is a static preview. Only its view selector
-is interactive; use the desktop application to edit fonts.
+The [WASM editor](/wasm-editor/) supports editing the bundled font in memory.
+Reloading resets those edits. Use the desktop application to open and save
+your own fonts.
 See [Development](/docs/development.html) for the current browser milestone.
 
 ### Reporting a Problem
@@ -2899,7 +2900,7 @@ command methods. Keep reusable font operations independent of UI state.
 
 ### The Browser Build
 
-The [browser demo](/editor/index.html) compiles the desktop Xilem/Masonry widget
+The [browser demo](/wasm-editor/) compiles the desktop Xilem/Masonry widget
 tree to WebAssembly. A small browser host forwards input and draws the retained
 scene to a canvas with Vello CPU. It opens a bundled font in memory; filesystem
 access, saving, and local AI execution remain desktop features.
@@ -3081,7 +3082,7 @@ Formats:
 
 Install and launch:
 - Is there a download?: Not yet. Build runebender-xilem with cargo. See Install.
-- Can I use it in a browser?: A read-only UI demo previews the interface. Install the desktop application to edit fonts.
+- Can I use it in a browser?: The WASM editor lets you edit a bundled font. Edits stay in the tab; use the desktop application to open and save your own fonts.
 - Windows and Linux?: The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.
 
 ### Drawing

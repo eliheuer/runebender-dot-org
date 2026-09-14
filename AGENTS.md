@@ -35,10 +35,10 @@ After building and starting preview, link-check the generated site:
 pnpm run check-links
 ```
 
-The primary action is Launch App, linking to `/editor/index.html`.
+The primary action is Launch App, linking to `/wasm-editor/`.
 Keep the homepage compact: one launch button, a short install command, and the
 full GitHub URL. Keep the existing screenshot files and rotation.
-`/editor/index.html` embeds the real Xilem WebAssembly editor from `public/app/`.
+`/wasm-editor/` embeds the real Xilem WebAssembly editor from `public/app/`.
 Its source and interaction test live in runebender-xilem's `web/` directory.
 Use `scripts/build-xilem-editor.sh /path/to/runebender-xilem` to update these
 release artifacts. Verify actual browser interactions before publishing.

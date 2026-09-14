@@ -1,21 +1,12 @@
----
-import build from "../../../public/app/build-info.json";
-const { release } = build;
----
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Runebender</title>
-    <meta name="description" content="Try Runebender in your browser. Explore and edit the bundled font with the real Xilem interface." />
-    <link rel="icon" href="/assets/favicon.png" />
+    <meta http-equiv="refresh" content="0;url=/wasm-editor/" />
+    <link rel="canonical" href="https://runebender.org/wasm-editor/" />
+    <meta name="robots" content="noindex" />
+    <title>Runebender WASM editor</title>
+    <script is:inline>location.replace("/wasm-editor/" + location.search + location.hash);</script>
   </head>
-  <body>
-    <iframe src={`/app/index.html?v=${release}`} title="Runebender font editor"></iframe>
-  </body>
+  <body><a href="/wasm-editor/">Launch Runebender</a></body>
 </html>
-<style is:global>
-  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #aaa; }
-  iframe { display: block; width: 100%; height: 100%; border: 0; }
-</style>

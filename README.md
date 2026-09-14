@@ -78,7 +78,7 @@ The deploy workflow is intentionally manual-only until launch. To publish:
 
 ## Browser editor
 
-Launch App at `/editor/index.html` embeds the actual Xilem/Masonry interface,
+Launch App at `/wasm-editor/` embeds the actual Xilem/Masonry interface,
 compiled to WebAssembly from runebender-xilem. The bundled font can be browsed
 and edited in memory. Saving files and local AI execution require the desktop.
 

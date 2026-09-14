@@ -5,6 +5,7 @@ BASE_URL="${1:-https://runebender.org}"
 
 paths="
 /
+/wasm-editor/
 /editor/index.html
 /app/index.html
 /app/app.js
