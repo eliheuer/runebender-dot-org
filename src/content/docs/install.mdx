@@ -31,6 +31,36 @@ build instructions are in the [repository](https://github.com/eliheuer/runebende
 
 </DocSection>
 
+<DocSection title="Windows Status">
+
+The Windows build and headless commands pass basic checks, but the native
+application currently crashes during startup in CI. Windows desktop support
+is not ready to claim yet.
+
+For development, use 64-bit Windows with Rust's MSVC toolchain. Install the
+[Visual Studio C++ prerequisites](https://rust-lang.github.io/rustup/installation/windows-msvc.html),
+then use the Cargo install command above.
+
+Open directory-based sources from PowerShell:
+
+```powershell
+runebender 'C:\Fonts\Font-Regular.ufo'
+```
+
+The Windows file picker currently selects files, so pass UFO, Glyphs Package,
+and Babelfont directory paths on the command line. The
+[Windows checks](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml)
+cover compilation, font inspection, SVG proof, editor rendering, and native
+window startup and shutdown; the native check is currently failing.
+Editing, dialogs, input methods, and graphics
+drivers still need hands-on Windows testing. No installer or ARM build is
+available yet.
+
+Live MCP connections and the live chat bridge currently require macOS or Linux.
+Headless `info` and `proof` do not need those services.
+
+</DocSection>
+
 <DocSection title="Build from Source">
 
 ```sh

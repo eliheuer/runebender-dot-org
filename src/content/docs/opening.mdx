@@ -1,6 +1,6 @@
 ---
 title: "Opening and Saving"
-lede: "Runebender edits UFO and designspace sources in place. Glyphs files and compiled fonts are converted on the way in."
+lede: "Runebender edits UFO and designspace sources in place. Glyphs, Babelfont, and compiled fonts are converted on the way in."
 status: "Implemented"
 stability: "Stable"
 order: 4
@@ -20,6 +20,7 @@ import CommandList from "../../components/CommandList.astro";
     <tr><th><code>.ufo</code></th><td>Opens as a single master.</td></tr>
     <tr><th>A directory</th><td>Opens the sources it holds.</td></tr>
     <tr><th><code>.glyphs</code>, <code>.glyphspackage</code></th><td>Converted to UFO and designspace files in a sibling directory, then opened. See below.</td></tr>
+    <tr><th><code>.babelfont</code></th><td>Basic single-master packages open as an unsaved UFO copy. See below.</td></tr>
     <tr><th><code>.ttf</code>, <code>.otf</code></th><td>A compiled font opens as an editable UFO in memory. See below.</td></tr>
   </tbody>
 </table>
@@ -53,6 +54,24 @@ file as a starting point.
   survive the conversion, because Runebender stores them in the same
   glyphsLib keys. See <a href="/docs/format.html">File Format</a>.
 </Callout>
+
+</DocSection>
+
+<DocSection title="Babelfont Packages">
+
+Basic import supports single-master `.babelfont` directories in the native
+Babelfont package format. Open one with `runebender Font.babelfont`.
+No Python installation is needed.
+
+Outlines, components, anchors, widths, Unicode, family/style names, basic
+metrics, kerning groups and pairs, export flags, and self-contained features
+are imported. Save writes a new sibling UFO, choosing an unused name if
+necessary. It leaves the original package untouched.
+
+This is import only. Multiple masters, axes, instances, extra or background
+layers, and external feature includes are not supported. Guides, hints,
+production names, and application-specific metadata are not imported.
+Runebender does not save back to Babelfont.
 
 </DocSection>
 

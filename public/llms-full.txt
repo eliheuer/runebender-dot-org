@@ -41,6 +41,34 @@ Runebender is alpha software. Keep your sources in version control.
 There is no packaged desktop release yet. Platform prerequisites and
 build instructions are in the [repository](https://github.com/eliheuer/runebender-xilem).
 
+### Windows Status
+
+The Windows build and headless commands pass basic checks, but the native
+application currently crashes during startup in CI. Windows desktop support
+is not ready to claim yet.
+
+For development, use 64-bit Windows with Rust's MSVC toolchain. Install the
+[Visual Studio C++ prerequisites](https://rust-lang.github.io/rustup/installation/windows-msvc.html),
+then use the Cargo install command above.
+
+Open directory-based sources from PowerShell:
+
+```powershell
+runebender 'C:\Fonts\Font-Regular.ufo'
+```
+
+The Windows file picker currently selects files, so pass UFO, Glyphs Package,
+and Babelfont directory paths on the command line. The
+[Windows checks](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml)
+cover compilation, font inspection, SVG proof, editor rendering, and native
+window startup and shutdown; the native check is currently failing.
+Editing, dialogs, input methods, and graphics
+drivers still need hands-on Windows testing. No installer or ARM build is
+available yet.
+
+Live MCP connections and the live chat bridge currently require macOS or Linux.
+Headless info and proof do not need those services.
+
 ### Build from Source
 
 ```sh
@@ -69,7 +97,7 @@ These tools are optional; they are not needed to install the editor.
 ## Opening and Saving
 https://runebender.org/docs/opening.html
 
-Runebender edits UFO and designspace sources in place. Glyphs files and compiled fonts are converted on the way in.
+Runebender edits UFO and designspace sources in place. Glyphs, Babelfont, and compiled fonts are converted on the way in.
 
 ### What Opens
 
@@ -78,6 +106,7 @@ Formats:
 - .ufo: Opens as a single master.
 - A directory: Opens the sources it holds.
 - .glyphs, .glyphspackage: Converted to UFO and designspace files in a sibling directory, then opened. See below.
+- .babelfont: Basic single-master packages open as an unsaved UFO copy. See below.
 - .ttf, .otf: A compiled font opens as an editable UFO in memory. See below.
 
 FontLab and FontForge sources are not read.
@@ -101,6 +130,22 @@ file as a starting point.
 Smart components, metric keys, and the other Glyphs constructs
 survive the conversion, because Runebender stores them in the same
 glyphsLib keys. See File Format.
+
+### Babelfont Packages
+
+Basic import supports single-master .babelfont directories in the native
+Babelfont package format. Open one with runebender Font.babelfont.
+No Python installation is needed.
+
+Outlines, components, anchors, widths, Unicode, family/style names, basic
+metrics, kerning groups and pairs, export flags, and self-contained features
+are imported. Save writes a new sibling UFO, choosing an unused name if
+necessary. It leaves the original package untouched.
+
+This is import only. Multiple masters, axes, instances, extra or background
+layers, and external feature includes are not supported. Guides, hints,
+production names, and application-specific metadata are not imported.
+Runebender does not save back to Babelfont.
 
 ### Compiled Fonts
 
@@ -2396,6 +2441,10 @@ Runebender edits UFO in place. It writes standard data where a standard exists, 
 
 Runebender opens .designspace files, .ufo directories, and folders
 that hold them. It saves in the same format, in place.
+
+It can also import Glyphs, Glyphs Package, compiled fonts, and basic
+single-master Babelfont packages into UFO. See
+[Opening and Saving](/docs/opening.html) for the supported data and limitations.
 
 UFO is a directory of files, so a font source works with version
 control. Commit your sources and you can see, review, and undo a day's
