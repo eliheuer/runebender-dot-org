@@ -3,13 +3,25 @@
 Checked 2026-09-13 against runebender-xilem `892f7fb`, upstream Xilem
 `b81d8d7a`, and the application's lockfile (Tokio 1.53.1).
 
-## Decision and current release boundary
+## Current scope: UI demo, desktop first
 
-Runebender's public identity and installation point to runebender-xilem.
-The browser replacement is required. Keep existing screenshots unchanged
-at the user's request. The main action links to desktop installation until
-there is a verified Xilem browser artifact. Existing browser bundles remain
-available at their old URLs but are not linked as the current editor.
+On 2026-09-13 the user explicitly reduced browser scope to a visual demo.
+A working editor is unnecessary for this milestone. Full browser runtime,
+file, and input work is deferred to keep desktop development the priority.
+
+`/editor/index.html` switches between three static captures rendered by the
+Xilem desktop application: glyph overview, outline, and Nodes. HTML radio
+controls and CSS select a view; no JavaScript or WebAssembly runtime is needed.
+The page explicitly labels the images as noninteractive previews. It provides
+no file loading, font saving, model execution, or editor simulation.
+
+Homepage screenshots remain unchanged. Separate demo assets are copied without
+modification from the visual audit; `src/assets/xilem-demo/provenance.json`
+records the source paths and checksums. To refresh them later, take new approved
+headless Xilem captures and update the demo assets and provenance together.
+
+The earlier framework investigation below remains relevant only to a future
+working browser port; it does not block the static demo.
 
 ## Verified first blocker
 
@@ -56,7 +68,7 @@ also failed at Tokio. The checks were run offline with cached dependencies;
 the application lockfile seeded the probe's resolution. This proves the
 first compile blocker, not an exhaustive list of failures.
 
-## Next implementation milestone
+## Deferred: working browser port
 
 Establish a supported browser runtime and window/rendering path in upstream
 Xilem/Masonry. The pinned Xilem startup constructs `TokioRuntime::new()`;
@@ -69,7 +81,7 @@ Then adapt Runebender's native dialogs, menus, clipboard, file watching, and
 process integrations. Prefer reusing the existing Masonry interface; a DOM
 backend is a different implementation decision, not a drop-in widget port.
 
-## Replacement acceptance
+## Deferred: working editor acceptance
 
 - Render the existing interface in an actual browser with a bundled sample font.
 - Edit a glyph, undo/redo, export it, and reopen the exported source.
@@ -81,5 +93,5 @@ backend is a different implementation decision, not a drop-in widget port.
 - Build a reproducible artifact for `/editor/`, update the site action, and only
   then redirect old editor URLs. Do not infer browser parity from native captures.
 
-No application source, dependency pins, screenshots, or published artifacts
-were changed by this investigation.
+The demo does not change application source, dependency pins, or the existing
+homepage screenshots. The native editor is unaffected.

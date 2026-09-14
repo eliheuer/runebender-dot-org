@@ -20,7 +20,7 @@ const {
 // rule as the sitemap serializer in astro.config.mjs.
 const canonicalPath = (p: string) => {
   if (p === "/") return "/";
-  if (p === "/docs" || p === "/cloud") return `${p}/index.html`;
+  if (p === "/docs" || p === "/cloud" || p === "/editor") return `${p}/index.html`;
   if (p.startsWith("/docs/") && !p.endsWith(".html")) return `${p}.html`;
   return p;
 };

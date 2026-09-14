@@ -8,7 +8,7 @@ const htmlSitemapUrl = (item) => {
   const url = new URL(item.url);
   if (url.pathname === "/") {
     url.pathname = "/";
-  } else if (url.pathname === "/docs" || url.pathname === "/cloud") {
+  } else if (url.pathname === "/docs" || url.pathname === "/cloud" || url.pathname === "/editor") {
     url.pathname = `${url.pathname}/index.html`;
   } else if (url.pathname.startsWith("/docs/") && !url.pathname.endsWith(".html")) {
     url.pathname = `${url.pathname}.html`;

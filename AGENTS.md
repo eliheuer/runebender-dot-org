@@ -35,8 +35,9 @@ After building and starting preview, link-check the generated site:
 pnpm run check-links
 ```
 
-The primary action currently links to installation instructions. The Xilem browser
-port is not available yet. Do not wire Launch Editor to an older artifact or label
+The primary action links to installation instructions. `/editor/index.html` is
+a read-only UI demo of static Xilem captures with a view selector. It is not a
+WebAssembly build. Desktop work is the priority; the full browser port is deferred. Do not wire Launch Editor to an older artifact or label
 an existing bundle as Xilem. Checked-in browser artifacts remain opaque release
 output until the replacement passes browser validation.
 

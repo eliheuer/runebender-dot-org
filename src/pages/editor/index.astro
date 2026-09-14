@@ -1,0 +1,67 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import glyphs from "../../assets/xilem-demo/glyphs.png";
+import outline from "../../assets/xilem-demo/outline.png";
+import nodes from "../../assets/xilem-demo/nodes.png";
+
+const views = [
+  { id: "glyphs", label: "Glyphs", image: glyphs, alt: "Xilem glyph overview: colored Virtua Grotesk glyph tiles, category filters, and a glyph inspector." },
+  { id: "outline", label: "Outline", image: outline, alt: "Xilem outline view: the letter R with editable points, sidebearings, transformations, and a proof preview." },
+  { id: "nodes", label: "Nodes", image: nodes, alt: "Xilem Nodes view: a sample workflow connecting font, model, master, bolden, compare, and install nodes." },
+];
+---
+
+<BaseLayout title="UI demo / Runebender" description="Explore a read-only preview of the Runebender Xilem interface. Install the desktop application to edit fonts.">
+  <main class="ui-demo">
+    <div class="demo-toolbar">
+      <h1>Runebender <span>UI demo</span></h1>
+      <fieldset aria-label="Preview view">
+        <legend class="visually-hidden">Choose a view</legend>
+        {views.map((view, index) => (
+          <label>
+            <input type="radio" name="demo-view" value={view.id} checked={index === 0} aria-controls={`screen-${view.id}`} />
+            <span>{view.label}</span>
+          </label>
+        ))}
+      </fieldset>
+    </div>
+    <p class="demo-note">Static previews of the Xilem desktop interface. The controls inside each preview are not interactive. <a href="/docs/install.html">Install Runebender to edit fonts.</a></p>
+    <div class="demo-stage">
+      {views.map((view, index) => (
+        <figure id={`screen-${view.id}`} class={`demo-screen screen-${view.id}`}>
+          <Image src={view.image} alt={view.alt} widths={[640, 1100, 1280]} sizes="100vw" loading={index === 0 ? "eager" : "lazy"} />
+        </figure>
+      ))}
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .ui-demo { background: var(--g-73); }
+  .demo-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 12px 20px; border-bottom: 1px solid var(--g-25); }
+  h1 { font-size: 1rem; font-weight: 400; letter-spacing: normal; margin: 0; }
+  h1 span { margin-left: 12px; padding: 3px 8px; border: 1px solid var(--g-25); font-size: .8rem; }
+  fieldset { display: flex; gap: 0; padding: 0; margin: 0; border: 1px solid var(--g-25); }
+  label { position: relative; cursor: pointer; }
+  label + label { border-left: 1px solid var(--g-25); }
+  label span { display: block; padding: 6px 16px; font-size: .8rem; }
+  input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  input:checked + span { background: var(--g-25); color: var(--g-87); }
+  input:focus-visible + span { outline: 3px solid var(--g-16); outline-offset: 3px; }
+  .demo-note { margin: 0; padding: 10px 20px; font-size: .8rem; border-bottom: 1px solid var(--g-25); }
+  .demo-stage { display: grid; min-height: 55vh; align-items: start; }
+  .demo-screen { display: none; margin: 0; }
+  .ui-demo:has(input[value="glyphs"]:checked) .screen-glyphs,
+  .ui-demo:has(input[value="outline"]:checked) .screen-outline,
+  .ui-demo:has(input[value="nodes"]:checked) .screen-nodes { display: block; }
+  .demo-screen :global(img) { display: block; width: 100%; height: auto; max-height: calc(100svh - 210px); object-fit: contain; object-position: top center; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 600px) {
+    .demo-toolbar { padding: 12px; }
+    .demo-note { padding: 12px; }
+    .demo-stage { min-height: 0; overflow-x: auto; }
+    .demo-screen { min-width: 900px; }
+    .demo-screen :global(img) { max-height: none; }
+  }
+</style>

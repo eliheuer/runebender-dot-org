@@ -5,8 +5,9 @@ https://runebender.org/docs, generated from the same pages.
 
 Runebender is a free, open-source font editor for UFO and designspace
 sources, built with Xilem and the Linebender ecosystem of Rust crates.
-The desktop application is available from runebender-xilem. A browser
-port is planned and is not available yet.
+The desktop application is available from runebender-xilem. A static UI
+demo is available at https://runebender.org/editor/index.html; a working
+browser port is deferred.
 
 It is alpha software. Treat this as an orientation map, not a stable
 API contract, and verify behaviour against the source.
@@ -49,8 +50,10 @@ Cargo uses the repository's pinned toolchain. See
 
 ### In the Browser
 
-A browser version of runebender-xilem is planned. It is not available yet.
-Use the desktop application for now.
+Open the [UI demo](/editor/index.html) to switch between static previews of
+the Xilem interface. It does not load, edit, or save fonts.
+
+Use the desktop application for editing. A working browser port is deferred.
 
 ### Optional Tools
 
@@ -282,7 +285,8 @@ state and submit proposals. Coordinate disk writes with the editor. See
 
 The desktop application supplies file dialogs, menus, clipboard access, and
 file watching. A browser port must supply browser equivalents and verify the
-rendering and input path. It is not available yet.
+rendering and input path. The current [UI demo](/editor/index.html) uses
+static desktop captures and does not run the editor in WebAssembly.
 
 
 ## The Interface
@@ -2777,7 +2781,8 @@ the expected convention.
 
 ### The Browser Build
 
-The Xilem browser port is not available yet. Use the desktop application.
+The [UI demo](/editor/index.html) is a static preview. Only its view selector
+is interactive; use the desktop application to edit fonts.
 See [Development](/docs/development.html) for the current browser milestone.
 
 ### Reporting a Problem
@@ -2841,7 +2846,11 @@ command methods. Keep reusable font operations independent of UI state.
 
 ### The Browser Build
 
-There is no working browser build of runebender-xilem yet. The first milestone
+The [UI demo](/editor/index.html) displays static Xilem captures with a view
+selector. It is a website preview, not a WebAssembly build of the editor.
+Desktop development is the priority; the full browser port is deferred.
+
+When browser implementation resumes, the first milestone
 is running the existing Xilem/Masonry interface in WebAssembly, then opening a
 sample font, editing a glyph, and exporting the result.
 
@@ -3020,7 +3029,7 @@ Formats:
 
 Install and launch:
 - Is there a download?: Not yet. Build runebender-xilem with cargo. See Install.
-- Can I use it in a browser?: A browser port is planned. For now, install the desktop application.
+- Can I use it in a browser?: A read-only UI demo previews the interface. Install the desktop application to edit fonts.
 - Windows and Linux?: The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.
 
 ### Drawing

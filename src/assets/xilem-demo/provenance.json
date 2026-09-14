@@ -1,0 +1,20 @@
+[
+  {
+    "view": "glyphs",
+    "source_repository": "eliheuer/runebender-xilem",
+    "source_path": "docs/visual-audit/2026-09-11/65-xilem-overview-fit-1100-gray.png",
+    "sha256": "68afbea438cceecb86f44f4ce5c2dec3c569ab8b454a7062eaea589996974470"
+  },
+  {
+    "view": "outline",
+    "source_repository": "eliheuer/runebender-xilem",
+    "source_path": "docs/visual-audit/2026-09-11/66-xilem-search-controls-gray.png",
+    "sha256": "ee4a2049c5cb29e955e6dc82a992bfeacfdf440e884a7446e9b25eb286172c20"
+  },
+  {
+    "view": "nodes",
+    "source_repository": "eliheuer/runebender-xilem",
+    "source_path": "docs/visual-audit/2026-09-11/70-xilem-default-nodes-gray.png",
+    "sha256": "1a792f581974de88af36ef650057c50ba1e4662cd3370bab003289c20c211269"
+  }
+]

@@ -5,6 +5,7 @@ BASE_URL="${1:-https://runebender.org}"
 
 paths="
 /
+/editor/index.html
 /gpui/index.html
 /cloud/editor/index.html
 /docs
