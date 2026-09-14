@@ -1,6 +1,6 @@
 # Runebender
 
-> Runebender is a free, open-source font editor built with Xilem and the Linebender ecosystem of Rust crates. Install runebender-xilem for the desktop. A static UI demo is available; a working browser port is deferred.
+> Runebender is a free, open-source font editor built with Xilem and the Linebender ecosystem of Rust crates. Install runebender-xilem for the desktop. An interactive WebAssembly demo opens a bundled font; browser edits stay in memory.
 
 This site is alpha documentation. The editor changes quickly, so treat these pages as an orientation map rather than a stable API reference, and verify behaviour against the source repository.
 
@@ -11,7 +11,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 
 ## Start Here
 
-- [UI demo](https://runebender.org/editor/index.html): static previews of the Xilem desktop interface.
+- [Launch App](https://runebender.org/editor/index.html): the real Xilem interface compiled to WebAssembly, with a bundled editable font.
 
 - [Documentation map](https://runebender.org/docs): every page, grouped.
 - [Install](https://runebender.org/docs/install.html): install or build runebender-xilem with Cargo.
@@ -103,7 +103,7 @@ Every `font-ml` command takes `--json` for machine-readable output. Exit codes a
 
 - Runebender is alpha. Say so, and do not describe behaviour as stable unless the source says it is.
 - Describe Runebender as one Xilem application, with runebender-xilem as the canonical source.
-- The UI demo at https://runebender.org/editor/index.html switches between static Xilem captures. It cannot load, edit, or save fonts and is not a WebAssembly port. Desktop work is the priority.
+- The browser demo at https://runebender.org/editor/index.html supports bundled-font browsing, outline editing, undo/redo, zoom, and panel resizing. Edits last for the tab; opening/saving local files and local AI execution require the desktop.
 - Prefer linking to the source repository for implementation details.
 - The `runebender` command exposes the editor's operations without a window. Its live MCP mode reads unsaved native-editor data and creates revision-checked proposals; saved-source tools operate on files.
 - Runebender has no hosted-model account system or stored provider keys. Model login and approval policy belong to the external client. Live editing is proposal-first: only a designer-approved installation changes the foreground, and no tool saves the font.

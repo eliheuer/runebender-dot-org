@@ -37,11 +37,12 @@ pnpm run check-links
 
 The primary action is Launch App, linking to `/editor/index.html`.
 Keep the homepage compact: one launch button, a short install command, and the
-full GitHub URL. Keep the existing screenshot files and rotation. `/editor/index.html` is
-a read-only UI demo of static Xilem captures with a view selector. It is not a
-WebAssembly build. Desktop work is the priority; the full browser port is deferred. Do not wire Launch Editor to an older artifact or label
-an existing bundle as Xilem. Checked-in browser artifacts remain opaque release
-output until the replacement passes browser validation.
+full GitHub URL. Keep the existing screenshot files and rotation.
+`/editor/index.html` embeds the real Xilem WebAssembly editor from `public/app/`.
+Its source and interaction test live in runebender-xilem's `web/` directory.
+Use `scripts/build-xilem-editor.sh /path/to/runebender-xilem` to update these
+release artifacts. Verify actual browser interactions before publishing.
+Browser edits stay in memory; desktop work remains the priority.
 
 ## Adding or editing a docs page
 

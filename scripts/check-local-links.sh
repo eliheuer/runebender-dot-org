@@ -6,6 +6,10 @@ BASE_URL="${1:-http://127.0.0.1:4321}"
 paths="
 /
 /editor/index.html
+/app/index.html
+/app/app.js
+/app/pkg/runebender_browser.js
+/app/pkg/runebender_browser_bg.wasm
 /gpui/index.html
 /cloud/editor/index.html
 /docs

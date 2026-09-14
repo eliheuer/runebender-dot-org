@@ -61,18 +61,16 @@ command methods. Keep reusable font operations independent of UI state.
 
 <DocSection title="The Browser Build">
 
-The [UI demo](/editor/index.html) displays static Xilem captures with a view
-selector. It is a website preview, not a WebAssembly build of the editor.
-Desktop development is the priority; the full browser port is deferred.
+The [browser demo](/editor/index.html) compiles the desktop Xilem/Masonry widget
+tree to WebAssembly. A small browser host forwards input and draws the retained
+scene to a canvas with Vello CPU. It opens a bundled font in memory; filesystem
+access, saving, and local AI execution remain desktop features.
 
-When browser implementation resumes, the first milestone
-is running the existing Xilem/Masonry interface in WebAssembly, then opening a
-sample font, editing a glyph, and exporting the result.
-
-The pinned UI framework currently enables a desktop-only async runtime feature
-that fails on `wasm32-unknown-unknown`. Browser startup, rendering, file access,
-clipboard, and text input need separate verification. A native build or a
-headless screenshot does not establish browser support.
+Build instructions and an interaction smoke test live in
+[`web/`](https://github.com/eliheuer/runebender-xilem/tree/main/web).
+The separate browser Cargo workspace adapts the pinned Xilem adapter's manifest
+to a single-thread runtime without changing its Rust source or native dependencies.
+Desktop development remains the priority.
 
 </DocSection>
 

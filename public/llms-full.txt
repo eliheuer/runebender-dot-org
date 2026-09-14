@@ -5,9 +5,9 @@ https://runebender.org/docs, generated from the same pages.
 
 Runebender is a free, open-source font editor for UFO and designspace
 sources, built with Xilem and the Linebender ecosystem of Rust crates.
-The desktop application is available from runebender-xilem. A static UI
-demo is available at https://runebender.org/editor/index.html; a working
-browser port is deferred.
+The desktop application is available from runebender-xilem. An interactive WebAssembly
+demo is available at https://runebender.org/editor/index.html with a bundled
+font. Browser edits stay in memory; use the desktop to open and save files.
 
 It is alpha software. Treat this as an orientation map, not a stable
 API contract, and verify behaviour against the source.
@@ -82,10 +82,12 @@ Cargo uses the repository's pinned toolchain. See
 
 ### In the Browser
 
-Open the [UI demo](/editor/index.html) to switch between static previews of
-the Xilem interface. It does not load, edit, or save fonts.
+[Launch App](/editor/index.html) to try the real Runebender interface in your
+browser. Explore the bundled Virtua Grotesk font, open a glyph, drag outline
+points, undo and redo edits, zoom, and resize the panels.
 
-Use the desktop application for editing. A working browser port is deferred.
+Edits stay in this tab and are discarded on reload. Use the desktop application
+to open or save your own fonts and run local AI workflows.
 
 ### Optional Tools
 
@@ -2897,18 +2899,16 @@ command methods. Keep reusable font operations independent of UI state.
 
 ### The Browser Build
 
-The [UI demo](/editor/index.html) displays static Xilem captures with a view
-selector. It is a website preview, not a WebAssembly build of the editor.
-Desktop development is the priority; the full browser port is deferred.
+The [browser demo](/editor/index.html) compiles the desktop Xilem/Masonry widget
+tree to WebAssembly. A small browser host forwards input and draws the retained
+scene to a canvas with Vello CPU. It opens a bundled font in memory; filesystem
+access, saving, and local AI execution remain desktop features.
 
-When browser implementation resumes, the first milestone
-is running the existing Xilem/Masonry interface in WebAssembly, then opening a
-sample font, editing a glyph, and exporting the result.
-
-The pinned UI framework currently enables a desktop-only async runtime feature
-that fails on wasm32-unknown-unknown. Browser startup, rendering, file access,
-clipboard, and text input need separate verification. A native build or a
-headless screenshot does not establish browser support.
+Build instructions and an interaction smoke test live in
+[web/](https://github.com/eliheuer/runebender-xilem/tree/main/web).
+The separate browser Cargo workspace adapts the pinned Xilem adapter's manifest
+to a single-thread runtime without changing its Rust source or native dependencies.
+Desktop development remains the priority.
 
 ### License
 

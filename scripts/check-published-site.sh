@@ -6,6 +6,10 @@ BASE_URL="${1:-https://runebender.org}"
 paths="
 /
 /editor/index.html
+/app/index.html
+/app/app.js
+/app/pkg/runebender_browser.js
+/app/pkg/runebender_browser_bg.wasm
 /gpui/index.html
 /cloud/editor/index.html
 /docs
