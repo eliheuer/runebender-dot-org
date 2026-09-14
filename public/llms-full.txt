@@ -23,12 +23,16 @@ Build and run runebender-xilem with Cargo.
 
 ### Install Runebender
 
-Install Rust with [rustup](https://rustup.rs), then install the editor:
+Install Rust with [rustup](https://rustup.rs), then install Runebender:
 
 ```sh
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
-runebender-xilem path/to/Font.designspace
+cargo install --git https://github.com/eliheuer/runebender-xilem
+runebender path/to/Font.designspace
 ```
+
+The package and executable are runebender. Run it without arguments to
+open the editor. Subcommands such as runebender info Font.ufo --json
+and runebender mcp --live run without opening a window.
 
 Use Rust 1.96 or newer. Runebender opens UFO and designspace sources.
 Start without a path to open a font through File → Open.
@@ -80,7 +84,7 @@ FontLab and FontForge sources are not read.
 
 Use File → Open, or start the editor with a path.
 
-    runebender-xilem path/to/Font.designspace
+    runebender path/to/Font.designspace
 
 ### Glyphs Files
 
@@ -1256,7 +1260,7 @@ them.
 4. Point it at the smallest relevant Runebender page first; use
 https://runebender.org/llms-full.txt only when it needs the whole manual.
 
-    runebender-xilem sources/Font.designspace
+    runebender sources/Font.designspace
     curl -O https://runebender.org/llms-full.txt
 
 Agents read a repository's own instructions file, AGENTS.md or
@@ -1314,10 +1318,10 @@ theme can draw it differently without changing the font. See
 
 ### Use the Command Line for Saved Sources
 
-runebender-core runs the editor's own operations without a window. Same
+runebender runs the editor's own operations without a window. Same
 code, no interface.
 
-    runebender-core bolden --from Light.ufo --to Bold.ufo
+    runebender bolden --from Light.ufo --to Bold.ufo
 
 Every command takes --json. The exit codes are 0 ok, 2 usage, 4
 failed, so a script can branch without reading text.
@@ -1328,12 +1332,12 @@ The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
 choosing a master, and reviewing proposals. Start with a read-only request,
 then a small proposed edit and an undo test.
 
-runebender-core mcp --live discovers native editor sessions. The separate
+runebender mcp --live discovers native editor sessions. The separate
 --font mode works on saved sources and cannot see unsaved changes.
 
 ### Build Purpose-Made Tools on Core
 
-For a tool rather than a session, runebender-core is the editing
+For a tool rather than a session, runebender is the editing
 model as a Rust library with no interface attached. It carries the
 operations the editor itself uses: point edits, components, curve
 analysis, measurement, shaping, kerning with group fallback.
@@ -1484,14 +1488,13 @@ See [Local models](/docs/local-models.html) for local inference.
 
 ### Install and Open the Editor
 
-Install current versions of Designbot, the native editor, and the core command line.
+Install current versions of Designbot and Runebender.
 See [Install](/docs/install.html) for prerequisites.
 
 ```sh
 cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core --force
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem --force
-runebender-xilem path/to/Font.designspace
+cargo install --git https://github.com/eliheuer/runebender-xilem
+runebender path/to/Font.designspace
 ```
 
 If an older editor is running, save your work and restart it after updating.
@@ -1513,14 +1516,14 @@ The Runebender source repositories already include this configuration.
   "mcpServers": {
     "runebender": {
       "type": "stdio",
-      "command": "runebender-core",
+      "command": "runebender",
       "args": ["mcp", "--live"]
     }
   }
 }
 ```
 
-runebender-core must be on OMP's PATH. Otherwise, use the full executable
+runebender must be on OMP's PATH. Otherwise, use the full executable
 path as command. A user-level configuration can instead go in
 ~/.omp/agent/mcp.json; named OMP profiles have their own user configuration.
 
@@ -1807,7 +1810,7 @@ MCP client for this workflow.
 
 ### Start
 
-Install current designbot, runebender-core, and the native editor. Restart the
+Install current designbot and runebender. Restart the
 editor after updating. In OMP run /mcp reload and connect to the intended editor.
 Read design_context, the official type-design guide, and the font's DESIGN.md.
 
@@ -2043,12 +2046,11 @@ Do not set a config file or environment variable for the workshop default. RUNEB
 
 ### Install the Native Tools
 
-This workflow needs the native editor, runebender-core, and font-ml on the same machine. The browser editor cannot run local processes. Have the assistant first check whether each command exists and report its version or help output; then install only the missing or explicitly outdated tools.
+This workflow needs runebender and font-ml on the same machine. The browser editor cannot run local processes. Have the assistant first check whether each command exists and report its version or help output; then install only the missing or explicitly outdated tools.
 
 On macOS, build font-ml with Metal support. On Linux, CPU is the conservative default; use the CUDA build only on a machine with a working NVIDIA toolkit.
 
-    cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
-    cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core
+    cargo install --git https://github.com/eliheuer/runebender-xilem
     cargo +stable install --git https://github.com/eliheuer/font-ml --features metal
     cargo +stable install --git https://github.com/eliheuer/font-ml --features cuda
 
@@ -2075,7 +2077,7 @@ Use the supplied demo font or a disposable copy. First confirm what this build c
 
     font-ml tasks --json
     font-ml describe ~/.runebender/models/runebender-workshop-bolden --json
-    runebender-xilem path/to/WorkshopDemo.designspace
+    runebender path/to/WorkshopDemo.designspace
 
 For chat, open the same font, choose the runebender-workshop-4b model in the native Chat panel, and ask it to read one known glyph and produce a proof. It may read, proof, and propose, but it must not install or save unless asked. For an outline model, run one small proposal against the disposable source with --write; it writes a proposal layer and leaves the foreground alone.
 
@@ -2087,7 +2089,7 @@ Inspect the proof and proposal, then discard the copy. A successful process exit
 
 - **No model in the editor:** confirm the directory is an immediate child of ~/.runebender/models, has the required files, and restart the native editor.
 - **font-ml is missing:** ensure Cargo's bin directory is on PATH, or set RUNEBENDER_FONT_ML to the installed executable for that run.
-- **The chat panel says core is missing:** install runebender-core, put it on PATH, or set RUNEBENDER_CORE for that run.
+- **An old MCP configuration fails:** change its command from runebender-core to runebender. The Chat panel uses the running application for its headless tools.
 - **A GPU request fails:** use --device auto or cpu; rebuild font-ml with the relevant feature only after checking the platform toolchain.
 - **A task is named but does not run:** inspect font-ml tasks --json; declared tasks with implemented: false are not workshop exercises.
 - **A model response is bad or slow:** record the model, device, prompt, and speed. Do not compensate by applying its proposal more aggressively.
@@ -2744,7 +2746,7 @@ Runebender requires Rust 1.96 or newer. Check the repository README for your
 platform's system libraries.
 
 ```sh
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
+cargo install --git https://github.com/eliheuer/runebender-xilem
 ```
 
 If it still fails, include the first compiler error, Rust version, operating
@@ -2872,7 +2874,7 @@ The application, font operations, and checks in the runebender-xilem workspace.
 ### One Workspace
 
 Work in [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
-The root package is the editor. Its font library is included under crates/;
+The root package, runebender, provides the editor and headless subcommands. Its font library is included under crates/;
 no separate library checkout is needed. The repository's AGENTS.md records
 build commands and conventions; DESIGN.md covers interface changes.
 
@@ -2880,6 +2882,7 @@ build commands and conventions; DESIGN.md covers interface changes.
 
 Application source under src/:
 - main.rs: Entry point and module list.
+- cli.rs: Argument parsing and headless font commands.
 - workspace.rs: Editor state.
 - actions.rs: Actions, native menus, and keyboard shortcuts.
 - launch.rs: Event loop, window setup, and first frame.
@@ -2954,7 +2957,7 @@ Environment first, then the file, then the built-in default.
 A variable set for one run has to beat a setting meant for every run.
 Otherwise putting one in front of the command would do nothing.
 
-    RUNEBENDER_MODELS=./scratch-models runebender-xilem Font.designspace
+    RUNEBENDER_MODELS=./scratch-models runebender Font.designspace
 
 The variables:
 - RUNEBENDER_MODELS: Overrides models.

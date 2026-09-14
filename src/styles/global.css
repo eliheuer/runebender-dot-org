@@ -1267,3 +1267,8 @@ th {
 .doc-page .doc-section:nth-of-type(even) {
   background: var(--g-76);
 }
+
+/* The home page fits a desktop viewport; small or zoomed views retain scrolling. */
+@media (min-width: 801px) and (min-height: 581px) {
+  body.compact-home { height: 100svh; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+}

@@ -32,14 +32,13 @@ See [Local models](/docs/local-models.html) for local inference.
 
 <DocSection title="Install and Open the Editor">
 
-Install current versions of Designbot, the native editor, and the core command line.
+Install current versions of Designbot and Runebender.
 See [Install](/docs/install.html) for prerequisites.
 
 ```sh
 cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core --force
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem --force
-runebender-xilem path/to/Font.designspace
+cargo install --git https://github.com/eliheuer/runebender-xilem
+runebender path/to/Font.designspace
 ```
 
 If an older editor is running, save your work and restart it after updating.
@@ -63,14 +62,14 @@ The Runebender source repositories already include this configuration.
   "mcpServers": {
     "runebender": {
       "type": "stdio",
-      "command": "runebender-core",
+      "command": "runebender",
       "args": ["mcp", "--live"]
     }
   }
 }
 ```
 
-`runebender-core` must be on OMP's PATH. Otherwise, use the full executable
+`runebender` must be on OMP's PATH. Otherwise, use the full executable
 path as `command`. A user-level configuration can instead go in
 `~/.omp/agent/mcp.json`; named OMP profiles have their own user configuration.
 

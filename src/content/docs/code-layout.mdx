@@ -12,7 +12,7 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="One Workspace">
 
 Work in [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
-The root package is the editor. Its font library is included under `crates/`;
+The root package, `runebender`, provides the editor and headless subcommands. Its font library is included under `crates/`;
 no separate library checkout is needed. The repository's `AGENTS.md` records
 build commands and conventions; `DESIGN.md` covers interface changes.
 
@@ -24,6 +24,7 @@ build commands and conventions; `DESIGN.md` covers interface changes.
   <caption>Application source under src/</caption>
   <tbody>
     <tr><th><code>main.rs</code></th><td>Entry point and module list.</td></tr>
+    <tr><th><code>cli.rs</code></th><td>Argument parsing and headless font commands.</td></tr>
     <tr><th><code>workspace.rs</code></th><td>Editor state.</td></tr>
     <tr><th><code>actions.rs</code></th><td>Actions, native menus, and keyboard shortcuts.</td></tr>
     <tr><th><code>launch.rs</code></th><td>Event loop, window setup, and first frame.</td></tr>

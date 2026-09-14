@@ -7,10 +7,12 @@ interface Props {
   title: string;
   description?: string;
   ogTitle?: string;
+  compact?: boolean;
 }
 
 const {
   title,
+  compact = false,
   description = "Runebender is a free, open-source font editor for UFO and designspace sources, written in Rust. Built with Xilem for the desktop.",
   ogTitle = "Runebender",
 } = Astro.props;
@@ -73,7 +75,7 @@ const schema = {
     <link rel="icon" href="/assets/favicon.png" type="image/png" sizes="512x512" />
     <link rel="apple-touch-icon" href="/assets/favicon.png" />
   </head>
-  <body>
+  <body class:list={{ "compact-home": compact }}>
     <Header />
     <slot />
     <Footer />

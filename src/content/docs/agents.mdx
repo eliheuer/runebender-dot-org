@@ -57,7 +57,7 @@ it the same things a new collaborator would need.
    `https://runebender.org/llms-full.txt` only when it needs the whole manual.
 
 <CommandList commands={[
-  "runebender-xilem sources/Font.designspace",
+  "runebender sources/Font.designspace",
   "curl -O https://runebender.org/llms-full.txt",
 ]} />
 
@@ -130,11 +130,11 @@ theme can draw it differently without changing the font. See
 
 <DocSection title="Use the Command Line for Saved Sources">
 
-`runebender-core` runs the editor's own operations without a window. Same
+`runebender` runs the editor's own operations without a window. Same
 code, no interface.
 
 <CommandList commands={[
-  "runebender-core bolden --from Light.ufo --to Bold.ufo",
+  "runebender bolden --from Light.ufo --to Bold.ufo",
 ]} />
 
 Every command takes `--json`. The exit codes are 0 ok, 2 usage, 4
@@ -148,14 +148,14 @@ The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
 choosing a master, and reviewing proposals. Start with a read-only request,
 then a small proposed edit and an undo test.
 
-`runebender-core mcp --live` discovers native editor sessions. The separate
+`runebender mcp --live` discovers native editor sessions. The separate
 `--font` mode works on saved sources and cannot see unsaved changes.
 
 </DocSection>
 
 <DocSection title="Build Purpose-Made Tools on Core">
 
-For a tool rather than a session, `runebender-core` is the editing
+For a tool rather than a session, `runebender` is the editing
 model as a Rust library with no interface attached. It carries the
 operations the editor itself uses: point edits, components, curve
 analysis, measurement, shaping, kerning with group fallback.

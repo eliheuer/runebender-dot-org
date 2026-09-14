@@ -11,12 +11,16 @@ import DocSection from "../../components/DocSection.astro";
 
 <DocSection title="Install Runebender">
 
-Install Rust with [rustup](https://rustup.rs), then install the editor:
+Install Rust with [rustup](https://rustup.rs), then install Runebender:
 
 ```sh
-cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
-runebender-xilem path/to/Font.designspace
+cargo install --git https://github.com/eliheuer/runebender-xilem
+runebender path/to/Font.designspace
 ```
+
+The package and executable are `runebender`. Run it without arguments to
+open the editor. Subcommands such as `runebender info Font.ufo --json`
+and `runebender mcp --live` run without opening a window.
 
 Use Rust 1.96 or newer. Runebender opens UFO and designspace sources.
 Start without a path to open a font through File → Open.

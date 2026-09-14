@@ -7,6 +7,7 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
 ---
 
 <BaseLayout
+  compact
   title="Runebender"
   description="Runebender is a free, open-source font editor built on the Linebender ecosystem of Rust crates."
 >
@@ -19,15 +20,10 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
             <a href="https://linebender.org">Linebender</a> ecosystem of
             <a href="https://www.rust-lang.org">Rust</a> crates.
           </p>
-          <p>
-            The interface is built with
-            <a href="https://github.com/linebender/xilem">Xilem</a>.
-            Runebender is alpha software, available as a native desktop application.
-          </p>
+          <p>Built with <a href="https://github.com/linebender/xilem">Xilem</a>. Alpha software.</p>
         </div>
-        <div class="hero-actions" aria-label="Install Runebender">
-          <a class="button primary" href="/docs/install.html">Install Runebender</a>
-          <a class="button" href="/editor/index.html">UI demo</a>
+        <div class="hero-actions" aria-label="Launch Runebender">
+          <a class="button primary" href="/editor/index.html">Launch App</a>
         </div>
       </div>
 
@@ -64,10 +60,7 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
         <h2 class="section-kicker" id="install-title">Quick Install</h2>
       </div>
       <div class="install-steps">
-        <p>Install the editor with cargo.</p>
-        <pre><code>cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem</code></pre>
-        <p>Then open a font from anywhere.</p>
-        <pre><code>runebender-xilem path/to/Font.designspace</code></pre>
+        <pre><code>cargo install --git https://github.com/eliheuer/runebender-xilem</code></pre>
       </div>
     </section>
 
@@ -75,11 +68,8 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
       <div>
         <h2 class="section-kicker" id="source-title">Source Code</h2>
       </div>
-      <div class="resource-links">
-        <a href="https://github.com/eliheuer/runebender-xilem">
-          <strong>runebender-xilem</strong>
-          <span>The Runebender font editor.</span>
-        </a>
+      <div class="source-url">
+        <a href="https://github.com/eliheuer/runebender-xilem">https://github.com/eliheuer/runebender-xilem</a>
       </div>
     </section>
 
@@ -87,27 +77,29 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
 </BaseLayout>
 
 <style>
-  /* Two frames stacked in one grid cell, so each keeps its own aspect
-     and the figure takes the taller one; they cross-fade. The frames
-     are transparent PNGs with the window's own shadow, so the figure
-     draws no border around them and the picture's margin is its own. */
-  .screenshot-cycle {
-    display: grid;
-    padding: 0;
-  }
-  .screenshot-cycle :global(.frame) {
-    grid-area: 1 / 1;
-    border: 0;
-    transition: opacity 0.8s ease;
-    opacity: 0;
-  }
-  .screenshot-cycle :global(.frame.is-shown) {
-    opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .screenshot-cycle :global(.frame) {
-      transition: none;
-    }
+  #top { display: grid; grid-template-rows: minmax(240px, 1fr) auto auto; min-height: 0; }
+  .hero { grid-template-columns: minmax(260px, .7fr) minmax(0, 1.3fr); gap: 0; padding: 0; min-height: 0; }
+  .hero-copy { min-height: 0; padding: 24px; justify-content: flex-start; gap: 20px; }
+  .lede p { margin-bottom: 0; }
+  .button { padding: 10px 18px; }
+  .screenshot-cycle { position: relative; display: grid; min-height: 0; margin: 0; padding: 0; }
+  .screenshot-cycle :global(.frame) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 16px; border: 0; opacity: 0; transition: opacity .8s ease; }
+  .screenshot-cycle :global(.frame.is-shown) { opacity: 1; }
+  .section { display: grid; grid-template-columns: 160px minmax(0, 1fr); align-items: center; gap: 24px; padding: 16px 24px; }
+  .section-kicker { margin: 0; }
+  pre { margin: 0; padding: 12px 16px; font-size: 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .install-steps pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .source-url { min-width: 0; }
+  .source-url a { overflow-wrap: anywhere; }
+  @media (prefers-reduced-motion: reduce) { .screenshot-cycle :global(.frame) { transition: none; } }
+  @media (max-width: 800px), (max-height: 580px) {
+    #top { display: block; }
+    .hero { display: grid; grid-template-columns: 1fr; overflow: visible; }
+    .hero-copy { max-width: none; width: auto; padding: 20px; }
+    .hero-actions, .button { width: auto; }
+    .screenshot-cycle { width: 100%; aspect-ratio: 16 / 10; border-left: 0; border-top: 2px solid var(--g-25); }
+    .section { grid-template-columns: 1fr; gap: 8px; padding: 16px 20px; }
+    pre { font-size: 14px; }
   }
 </style>
 

@@ -34,13 +34,12 @@ Do not set a config file or environment variable for the workshop default. `RUNE
 
 <DocSection title="Install the Native Tools">
 
-This workflow needs the native editor, `runebender-core`, and `font-ml` on the same machine. The browser editor cannot run local processes. Have the assistant first check whether each command exists and report its version or help output; then install only the missing or explicitly outdated tools.
+This workflow needs `runebender` and `font-ml` on the same machine. The browser editor cannot run local processes. Have the assistant first check whether each command exists and report its version or help output; then install only the missing or explicitly outdated tools.
 
 On macOS, build `font-ml` with Metal support. On Linux, CPU is the conservative default; use the CUDA build only on a machine with a working NVIDIA toolkit.
 
 <CommandList commands={[
-  "cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem",
-  "cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core",
+  "cargo install --git https://github.com/eliheuer/runebender-xilem",
   "cargo +stable install --git https://github.com/eliheuer/font-ml --features metal",
   "cargo +stable install --git https://github.com/eliheuer/font-ml --features cuda",
 ]} />
@@ -75,7 +74,7 @@ Use the supplied demo font or a disposable copy. First confirm what this build c
 <CommandList commands={[
   "font-ml tasks --json",
   "font-ml describe ~/.runebender/models/runebender-workshop-bolden --json",
-  "runebender-xilem path/to/WorkshopDemo.designspace",
+  "runebender path/to/WorkshopDemo.designspace",
 ]} />
 
 For chat, open the same font, choose the `runebender-workshop-4b` model in the native Chat panel, and ask it to read one known glyph and produce a proof. It may read, proof, and propose, but it must not install or save unless asked. For an outline model, run one small proposal against the disposable source with `--write`; it writes a proposal layer and leaves the foreground alone.
@@ -92,7 +91,7 @@ Inspect the proof and proposal, then discard the copy. A successful process exit
 
 - **No model in the editor:** confirm the directory is an immediate child of `~/.runebender/models`, has the required files, and restart the native editor.
 - **`font-ml` is missing:** ensure Cargo's bin directory is on `PATH`, or set `RUNEBENDER_FONT_ML` to the installed executable for that run.
-- **The chat panel says core is missing:** install `runebender-core`, put it on `PATH`, or set `RUNEBENDER_CORE` for that run.
+- **An old MCP configuration fails:** change its command from `runebender-core` to `runebender`. The Chat panel uses the running application for its headless tools.
 - **A GPU request fails:** use `--device auto` or `cpu`; rebuild `font-ml` with the relevant feature only after checking the platform toolchain.
 - **A task is named but does not run:** inspect `font-ml tasks --json`; declared tasks with `implemented: false` are not workshop exercises.
 - **A model response is bad or slow:** record the model, device, prompt, and speed. Do not compensate by applying its proposal more aggressively.
