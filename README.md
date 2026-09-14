@@ -38,7 +38,7 @@ scripts/
   check-local-links.sh         HTTP 200 sweep against built preview output
   check-external-links.sh      HTTP sweep for public off-site links
   check-published-site.sh      HTTP sweep for live runebender.org after deploy
-  build-cloud-editor.sh        Builds the standalone Comfy/Vue editor into public/cloud/editor/
+  build-cloud-editor.sh        Maintains a historical browser artifact; not the current product entry point
   vite.comfy-standalone.config.mjs
 .github/workflows/deploy.yml   Build and deploy to GitHub Pages
 AGENTS.md                      Agent guidance for editing this repo
@@ -78,7 +78,10 @@ The deploy workflow is intentionally manual-only until launch. To publish:
 
 ## Cloud editor
 
-The standalone Vue/WASM editor at `/cloud/editor/` is a checked-in static artifact built from `~/GH/repos/runebender-comfy/web`. This keeps the website launch simple: Astro does not import the editor source, it only copies `public/cloud/editor/` into `dist/`.
+The public site describes runebender-xilem and links to its desktop installation.
+The Xilem browser port is not ready. Existing browser bundles under `public/`
+are retained as opaque artifacts; they are not the current product entry point.
+Do not publish an older bundle as the Xilem editor.
 
 Rebuild the artifact before a site release, from the exact `runebender-comfy` checkout intended for launch:
 

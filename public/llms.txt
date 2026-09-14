@@ -1,21 +1,18 @@
 # Runebender
 
-> Runebender is a free, open-source font editor for UFO and designspace sources, built on the Linebender ecosystem of Rust crates. A headless core does the font work, and a GPUI front-end runs both in the browser as WebAssembly and as a native application from the same code.
+> Runebender is a free, open-source font editor built with Xilem and the Linebender ecosystem of Rust crates. Install runebender-xilem for the desktop. A browser port is planned and is not available yet.
 
 This site is alpha documentation. The editor changes quickly, so treat these pages as an orientation map rather than a stable API reference, and verify behaviour against the source repository.
 
 ## Canonical Sources
 
-- [runebender-gpui](https://github.com/eliheuer/runebender-gpui): the editor. Browser and native from one codebase.
-- [runebender-core](https://github.com/eliheuer/runebender-core): the shared headless library. Editing model, shaping, measurement, curve analysis.
-- [runebender-xilem](https://github.com/eliheuer/runebender-xilem): the same editor on Xilem, the Linebender UI stack.
-- [runebender-druid](https://github.com/linebender/runebender): the original implementation, kept as project history.
+- [runebender-xilem](https://github.com/eliheuer/runebender-xilem): the Runebender application and font library in one workspace.
 - [font-ml](https://github.com/eliheuer/font-ml): a Rust library and CLI for running machine-learning models on font sources. Built to be driven by agents as well as people.
 
 ## Start Here
 
 - [Documentation map](https://runebender.org/docs): every page, grouped.
-- [Install](https://runebender.org/docs/install.html): `cargo +stable install --git` for the editor, the `runebender-core` command line, and `font-ml` (with `--features metal` on a Mac); where models live; the demo font.
+- [Install](https://runebender.org/docs/install.html): install or build runebender-xilem with Cargo.
 - [Opening and saving](https://runebender.org/docs/opening.html): UFO, designspace, .glyphs conversion, compiled font import, file watching.
 - [Concepts](https://runebender.org/docs/concepts.html): sources, the em and units, outlines, interpolation compatibility, axes, shaping, composites.
 - [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.
@@ -71,9 +68,9 @@ For multiple masters, preserve contour count, point order and types, contour dir
 
 ## Architecture and code
 
-- [Architecture](https://runebender.org/docs/architecture.html): one headless core (runebender-core) plus interchangeable front-ends (gpui, xilem, web). The rule is that anything changing a font lives in core, so it can be tested without a window and reused by every shell.
-- [Code layout](https://runebender.org/docs/code-layout.html): the reference for how the code is organized. Core modules by concern, the document layer (Master, Project), the editor's files, tests and fixtures, conventions, the CI gate, what is still out of place, and why core stays one crate.
-- [Development](https://runebender.org/docs/development.html): build from source, work on core alongside, build the wasm bundle.
+- [Architecture](https://runebender.org/docs/architecture.html): the Xilem application, font operations, and platform integration in one workspace.
+- [Code layout](https://runebender.org/docs/code-layout.html): the runebender-xilem workspace, application files, font operations, and validation.
+- [Development](https://runebender.org/docs/development.html): build and check the workspace; current browser port status.
 
 ## Reference
 
@@ -91,7 +88,7 @@ For multiple masters, preserve contour count, point order and types, contour dir
 
 Entry points usable without a graphical session, for scripted and agent-driven font work.
 
-- `runebender-gpui path/to/Font.designspace` opens a source. The editor reloads files changed on disk, so a script can edit sources while a session is open.
+- `runebender-xilem path/to/Font.designspace` opens a source. The editor reloads files changed on disk, so a script can edit sources while a session is open.
 - `font-ml models <dir>` lists the model directories under a path.
 - `font-ml describe <model>` reports what a model is and which jobs it can do.
 - `font-ml tasks` lists the jobs font-ml defines and which are implemented.
@@ -103,8 +100,8 @@ Every `font-ml` command takes `--json` for machine-readable output. Exit codes a
 ## Agent Guidance
 
 - Runebender is alpha. Say so, and do not describe behaviour as stable unless the source says it is.
-- Describe Runebender as one editor. GPUI is the current front-end; the Xilem port and the earlier Druid implementation are context, not separate products a user must choose between.
-- The browser build has known gaps: text fields cannot take focus, in-window menus do not activate, paste is unavailable, and export is not possible. Native is unaffected.
+- Describe Runebender as one Xilem application, with runebender-xilem as the canonical source.
+- The Xilem browser port is not available yet. Do not claim desktop or headless checks establish browser support.
 - Prefer linking to the source repository for implementation details.
 - The `runebender-core` command exposes the editor's operations without a window. Its live MCP mode reads unsaved native-editor data and creates revision-checked proposals; saved-source tools operate on files.
 - Runebender has no hosted-model account system or stored provider keys. Model login and approval policy belong to the external client. Live editing is proposal-first: only a designer-approved installation changes the foreground, and no tool saves the font.

@@ -1,128 +1,56 @@
 ---
 title: "Install"
-lede: "Build the native application, the command line, and the model runner with cargo. The browser build is experimental."
-status: "Source-first; no packaged release yet"
-stability: "The install command is stable; the browser build is experimental"
+lede: "Build and run runebender-xilem with Cargo."
+status: "Alpha"
+stability: "Verify implementation details against the current source"
 order: 2
-description: "Install and run the Runebender font editor."
+description: "Build and run runebender-xilem with Cargo."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
-import CommandList from "../../components/CommandList.astro";
+
+<DocSection title="Install Runebender">
+
+Install Rust with [rustup](https://rustup.rs), then install the editor:
+
+```sh
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
+runebender-xilem path/to/Font.designspace
+```
+
+Use Rust 1.96 or newer. Runebender opens UFO and designspace sources.
+Start without a path to open a font through File → Open.
+
+Runebender is alpha software. Keep your sources in version control.
+There is no packaged desktop release yet. Platform prerequisites and
+build instructions are in the [repository](https://github.com/eliheuer/runebender-xilem).
+
+</DocSection>
+
+<DocSection title="Build from Source">
+
+```sh
+git clone https://github.com/eliheuer/runebender-xilem
+cd runebender-xilem
+cargo run --release -- path/to/Font.designspace
+```
+
+Cargo uses the repository's pinned toolchain. See
+[Development](/docs/development.html) for checks and the code layout.
+
+</DocSection>
 
 <DocSection title="In the Browser">
 
-Open [runebender.org/gpui](/gpui/index.html). The editor loads as
-WebAssembly and runs on WebGPU. Nothing is installed and nothing is
-uploaded.
-
-The browser build is experimental. Some parts do not work there yet:
-text fields outside the glyph search box cannot take focus, in-window
-menu items do not activate, and paste is unavailable. Use the native
-application for real work.
+A browser version of runebender-xilem is planned. It is not available yet.
+Use the desktop application for now.
 
 </DocSection>
 
-<DocSection title="Native">
+<DocSection title="Optional Tools">
 
-You need a Rust toolchain. Install one from
-[rustup.rs](https://rustup.rs) if you do not have it.
-
-Install the editor.
-
-<CommandList commands={[
-  "cargo +stable install --git https://github.com/eliheuer/runebender-gpui",
-]} />
-
-The `+stable` matters. A repository's `rust-toolchain.toml` pin applies
-to `cargo run` in a clone, not to `cargo install --git`, and the GPUI
-build does not compile on a nightly toolchain.
-
-Then open a font.
-
-<CommandList commands={[
-  "runebender-gpui path/to/Font.designspace",
-]} />
-
-Runebender opens `.designspace` files, `.ufo` directories, and a
-directory that holds them. Start it without a path to get an empty
-window, then use File → Open.
-
-<Callout>
-  Every git dependency is pinned to a revision, so a fresh install
-  resolves the same graph every time. No `--locked` needed. To try an
-  install without touching what is on your PATH, add
-  `--root DIR` to each command and run the binaries from `DIR/bin`.
-</Callout>
-
-A macOS disk image: not yet. When there is one it is linked here.
-
-</DocSection>
-
-<DocSection title="The Command Line">
-
-The same operations run without a window. Install the core and you get
-a `runebender-core` command alongside the editor.
-
-<CommandList commands={[
-  "cargo +stable install --git https://github.com/eliheuer/runebender-core",
-]} />
-Every command takes `--json`, and the exit codes are 0 ok, 2 usage, 4
-failed.
-
-This is the same code the editor runs, so a check in a build and a
-check in a window cannot disagree. See
-[Agents](/docs/agents.html) for driving it from a script.
-
-</DocSection>
-
-<DocSection title="Local Models">
-
-Models run through `font-ml`, a separate program the editor finds on
-your PATH. On a Mac, build it with the `metal` feature so models run on
-the GPU.
-
-<CommandList commands={[
-  "cargo +stable install --git https://github.com/eliheuer/font-ml --features metal",
-]} />
-
-On Linux, leave the feature off for the CPU, or use `cuda` on a
-machine with an NVIDIA toolkit.
-
-<CommandList commands={[
-  "cargo +stable install --git https://github.com/eliheuer/font-ml",
-]} />
-
-Models are directories under `~/.runebender/models`. Add more
-directories, one per line, in `~/.runebender/model_paths`. Nothing is
-downloaded by the editor: you put a model there, and it appears in the
-Local AI panel. See [Local models](/docs/local-models.html) for what a
-model directory holds and where to get one.
-
-For a font to try it on, with the workflow files the Nodes tab reads,
-clone [runebender-demo](https://github.com/eliheuer/runebender-demo)
-and open `fonts/VirtuaGrotesk.designspace`.
-
-</DocSection>
-
-<DocSection title="Toolchain Notes">
-
-The repository pins a stable Rust toolchain in `rust-toolchain.toml`,
-and cargo respects that pin for `cargo run` and `cargo build` in a
-clone. `cargo install --git` does not read it, so pass `+stable`. Do
-not force a nightly toolchain: a GPUI dependency, `pathfinder_simd`,
-does not compile on current nightlies.
-
-Every dependency comes from crates.io or a public git repository, so a
-plain clone builds with no extra setup.
-
-</DocSection>
-
-<DocSection title="A New Font">
-
-Press <code>Cmd+N</code> to start a new font. Runebender creates an
-untitled UFO with Google Fonts metrics and the Latin Core glyph set as
-empty encoded glyphs, then asks where to save it.
+For automation, see [MCP](/docs/mcp.html) and [Scripting](/docs/scripting.html).
+For model setup, see [Set up local AI](/docs/local-ai-setup.html).
+These tools are optional; they are not needed to install the editor.
 
 </DocSection>

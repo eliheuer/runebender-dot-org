@@ -1,277 +1,72 @@
 ---
 title: "Code Layout"
-lede: "Where each piece of code lives, why it lives there, and the checks that keep it that way. Read this before changing the repositories."
-status: "Current. This page is the reference for how the code is organized"
-stability: "The rule is settled. Core stays one crate"
+lede: "The application, font operations, and checks in the runebender-xilem workspace."
+status: "Alpha"
+stability: "Verify implementation details against the current source"
 order: 27
-description: "How the Runebender code is organized across runebender-core and runebender-gpui, the conventions, and what is still out of place."
+description: "The application, font operations, and checks in the runebender-xilem workspace."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
-import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="The Three Repositories">
+<DocSection title="One Workspace">
 
-Runebender is one library, two editors, and one website. Each Rust
-repository has an `AGENTS.md` at its root: the short guide for
-anyone arriving cold, human or agent, with the layout, how to build
-and test, the CI gate, and the conventions. This page is the long
-version.
-
-<table>
-  <caption>What each repository is for</caption>
-  <tbody>
-    <tr><th><a href="https://github.com/eliheuer/runebender-core">runebender-core</a></th><td>Every operation on a font, the document model, and the <code>runebender</code> command line. No window.</td></tr>
-    <tr><th><a href="https://github.com/eliheuer/runebender-gpui">runebender-gpui</a></th><td>The editor. The window, the input, the drawing, and nothing that changes a font.</td></tr>
-    <tr><th><a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a></th><td>The same editor on Xilem, laid out to mirror the GPUI one.</td></tr>
-    <tr><th><a href="https://github.com/eliheuer/runebender-dot-org">runebender-dot-org</a></th><td>This site: the documentation, and the browser build of the editor.</td></tr>
-  </tbody>
-</table>
-
-The library depends on [norad](https://github.com/linebender/norad)
-and [kurbo](https://github.com/linebender/kurbo). The editor depends
-on the library and on GPUI. The site depends on neither, and copies
-the browser build in as a static asset.
+Work in [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
+The root package is the editor. Its font library is included under `crates/`;
+no separate library checkout is needed. The repository's `AGENTS.md` records
+build commands and conventions; `DESIGN.md` covers interface changes.
 
 </DocSection>
 
-<DocSection title="One Rule, and How It Is Kept">
-
-If an operation changes a font, or reads one to answer a question, it
-lives in core.
-
-The test is whether another front-end needs it. Where a click
-lands is the editor's business. What that click does to the outline
-is core's. An operation in core can be tested in milliseconds without
-a window. It can also run from the command line, from a script, or
-from an agent.
-
-Continuous integration keeps the rule honest. Every push to either
-crate runs the same gate on Linux and macOS.
+<DocSection title="The Interface">
 
 <table>
-  <caption>What CI checks</caption>
+  <caption>Application source under src/</caption>
   <tbody>
-    <tr><th><code>cargo fmt --check</code></th><td>Formatting is not a review topic.</td></tr>
-    <tr><th><code>cargo clippy --all-targets</code></th><td>With warnings denied. Both crates are clean today.</td></tr>
-    <tr><th><code>cargo doc --no-deps</code></th><td>With warnings denied, so a broken doc link fails the build.</td></tr>
-    <tr><th><code>cargo test</code></th><td>Core: 299 tests. Editor: 38, all of them about the shell itself.</td></tr>
-    <tr><th>wasm32 check</th><td>The editor's browser build compiles on the pinned nightly with a rebuilt standard library.</td></tr>
-    <tr><th><code>missing_docs</code></th><td>On in core. A public item without a doc comment fails the build.</td></tr>
-    <tr><th><code>missing_docs_in_private_items</code></th><td>On in the editor, where almost nothing is <code>pub</code>: every item needs a doc comment, fields and variants included.</td></tr>
-    <tr><th>Minimum Rust</th><td>Core also builds at the <code>rust-version</code> in its manifest.</td></tr>
+    <tr><th><code>main.rs</code></th><td>Entry point and module list.</td></tr>
+    <tr><th><code>workspace.rs</code></th><td>Editor state.</td></tr>
+    <tr><th><code>actions.rs</code></th><td>Actions, native menus, and keyboard shortcuts.</td></tr>
+    <tr><th><code>launch.rs</code></th><td>Event loop, window setup, and first frame.</td></tr>
+    <tr><th><code>view/</code></th><td>Canvas, panels, chrome, themes, design tokens, and reusable view functions.</td></tr>
+    <tr><th><code>edit/</code></th><td>Commands, inspector edits, sessions, sidebar actions, and text editing.</td></tr>
+    <tr><th><code>platform/</code></th><td>Files, dialogs, exports, watching, live connections, and headless captures.</td></tr>
+    <tr><th><code>widgets/</code></th><td>Application-specific controls and input handling.</td></tr>
   </tbody>
 </table>
 
-Core forbids `unsafe` in its manifest. The editor denies it, and the
-two tests that set an environment variable allow it explicitly.
-
-<Callout>
-  A change that moves font logic into the editor will compile. Nothing
-  stops it mechanically. The rule is kept by review, and by this page
-  saying what the rule is.
-</Callout>
+Xilem views read state. Commands describe complete user actions, shared by
+menu items and shortcuts. Reuse theme accessors and design tokens when
+changing a view.
 
 </DocSection>
 
-<DocSection title="runebender-core, by Directory">
+<DocSection title="Font Operations">
 
-Six directories under `src/`, one per concern. Each has a `mod.rs`
-whose comment says what belongs there, so a newcomer reads six
-paragraphs and knows where to look.
+The workspace library groups source into six concerns:
 
 <table>
-  <caption>src/outline: what changes a shape</caption>
+  <caption>Font library modules</caption>
   <tbody>
-    <tr><th><code>glyph_ops</code></th><td>Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, remove overlap.</td></tr>
-    <tr><th><code>component_ops</code></th><td>Components inside a glyph: resolve, hit test, move, add, duplicate, delete, decompose.</td></tr>
-    <tr><th><code>point_ops</code>, <code>segment_ops</code></th><td>Hit testing and insertion on points and segments.</td></tr>
-    <tr><th><code>knife</code></th><td>Slicing.</td></tr>
-    <tr><th><code>cleanup</code></th><td>Operations that keep the shape and fix its points: tidy, direction, rounding, extremes, handle fitting.</td></tr>
-    <tr><th><code>effects</code></th><td>Operations that make a new shape: offset, extrude, roughen, expand stroke, corner components, bolden.</td></tr>
-    <tr><th><code>convert</code>, <code>embolden</code></th><td>Quadratic to cubic and back; a learned per-point offset.</td></tr>
-    <tr><th><code>glyph_paths</code>, <code>path/</code></th><td>norad to kurbo outlines, and the segment maths: cubic, quadratic, hyperbezier.</td></tr>
+    <tr><th><code>outline/</code></th><td>Shape editing and curve mathematics.</td></tr>
+    <tr><th><code>analysis/</code></th><td>Measurements, curve analysis, and search.</td></tr>
+    <tr><th><code>formats/</code></th><td>File formats, import, and metadata keys.</td></tr>
+    <tr><th><code>document/</code></th><td>Masters, projects, interpolation, and composites.</td></tr>
+    <tr><th><code>text/</code></th><td>Shaping, joining rules, and the text buffer.</td></tr>
+    <tr><th><code>ui/</code></th><td>Colors, themes, sidebar data, selection, undo, and viewport state.</td></tr>
   </tbody>
 </table>
 
-<table>
-  <caption>src/analysis: what reads a font</caption>
-  <tbody>
-    <tr><th><code>measure</code></th><td>Stems, sidebearings, joining bands.</td></tr>
-    <tr><th><code>curve</code></th><td>Curvature: continuity, kinks, extrema.</td></tr>
-    <tr><th><code>category</code>, <code>search</code></th><td>Unicode categories, and the glyph search query language.</td></tr>
-  </tbody>
-</table>
-
-<table>
-  <caption>src/formats: keys and file formats</caption>
-  <tbody>
-    <tr><th><code>lib_keys</code></th><td>Every <code>com.runebender.*</code> key: masks, annotations, saved filters, HOI intermediates. One reader and one writer per key.</td></tr>
-    <tr><th><code>metrics_keys</code>, <code>mark_color</code>, <code>color_font</code></th><td>The Glyphs and ufo2ft keys the editor shares with other tools.</td></tr>
-    <tr><th><code>svg</code>, <code>binary_import</code>, <code>glyphs_import</code>, <code>image_trace</code></th><td>Other formats in and out: SVG, compiled fonts, .glyphs, images.</td></tr>
-  </tbody>
-</table>
-
-<table>
-  <caption>src/document, src/text, src/ui</caption>
-  <tbody>
-    <tr><th><code>document/project</code></th><td>The open document: <code>Master</code> and <code>Project</code>. See the next section.</td></tr>
-    <tr><th><code>document/font_ops</code></th><td>Edits to the font rather than an outline: kerning pairs and groups, glyph names and unicodes.</td></tr>
-    <tr><th><code>document/var_model</code>, <code>composites</code></th><td>Interpolation across a designspace, and components with anchors.</td></tr>
-    <tr><th><code>document/font_memory</code>, <code>new_font</code>, <code>model/</code></th><td>Fonts without a filesystem, a new font from the template, kerning lookup, glyph metadata.</td></tr>
-    <tr><th><code>text/shape</code>, <code>joining</code>, <code>buffer/</code></th><td>Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer in five files: types and edits, layout, shaping, bidi, kerning.</td></tr>
-    <tr><th><code>ui/theme</code>, <code>theme_oklch</code></th><td>The token file every editor resolves its colours from. See <a href="/docs/themes.html">Themes</a>.</td></tr>
-    <tr><th><code>ui/sidebar</code>, <code>editing/</code></th><td>The glyph grid's filter data; selection, undo, and the viewport.</td></tr>
-    <tr><th><code>testing/</code></th><td>What the tests share, compiled only for <code>cargo test</code>: where the fixture fonts are.</td></tr>
-    <tr><th><code>bin/runebender.rs</code></th><td>The command line over all of the above.</td></tr>
-  </tbody>
-</table>
+Each directory's `mod.rs` explains its scope. Operations use norad types and
+kurbo geometry. Public items have doc comments; editing operations report
+whether or how much they changed.
 
 </DocSection>
 
-<DocSection title="The Document Layer">
+<DocSection title="Validation">
 
-`src/project.rs` holds what the editor used to hold on its own.
-
-A `Master` is one UFO with its bookkeeping and a paint-ready cache.
-The bookkeeping is which glyphs changed since the last save, and
-whether kerning did. The cache is a `GlyphEntry` per glyph, in the
-order the grid shows. An entry holds the outline as a kurbo path, its
-points, its anchors, and its ink box. A `Project` holds the masters, the axes and
-their locations, the variation model, the named instances, and the
-sparse brace sources.
-
-Nothing in this layer knows how a glyph is drawn. Names are
-`Arc<str>`, not the toolkit's string type. The front-end reads the
-cache and paints it, and every front-end gets the same cache.
-
-<Callout>
-  Two constructors stay in the editor: the ones that build a project
-  from fetched or embedded files in the browser. They call
-  <code>Project::from_designspace</code> like everything else.
-</Callout>
-
-</DocSection>
-
-<DocSection title="runebender-gpui">
-
-The editor is one `Workspace` struct. Its methods are split across
-files by concern, each file an `impl Workspace` block with a module
-comment, and the files sit in three directories that each say what
-belongs in them.
-
-<table>
-  <caption>src/</caption>
-  <tbody>
-    <tr><th><code>main.rs</code></th><td><code>main()</code> and the module list. About 300 lines.</td></tr>
-    <tr><th><code>workspace.rs</code></th><td>The <code>Workspace</code> struct and the types it is made of. Its state is five named groups: <code>grid</code>, <code>sidebar</code>, <code>preview</code>, <code>models</code>, and <code>inputs</code>, plus the tools, drags, and sessions.</td></tr>
-    <tr><th><code>actions.rs</code></th><td>The action list and the menus. One menu definition serves the native bar and the in-window one.</td></tr>
-    <tr><th><code>wiring.rs</code></th><td><code>Workspace::new</code>: every input widget and the subscription that writes it through to the font.</td></tr>
-    <tr><th><code>launch.rs</code></th><td>The keymap, the keystroke router, argument handling, and the interface font. Everything <code>main()</code> calls before the window opens.</td></tr>
-    <tr><th><code>view/</code></th><td>What the window shows. <code>canvas/</code> (the grid views, and the editing view as an <code>EditorScene</code> plus one paint function per layer), <code>grid</code>, <code>chrome</code>, <code>panels/</code> with one file per region, <code>render</code>, <code>paint</code>, <code>blur</code>, and the <code>theme</code> accessors.</td></tr>
-    <tr><th><code>edit/</code></th><td>What the user does. <code>commands/</code> (one method per user-facing command, one file per menu), <code>editing</code>, <code>input</code>, <code>inspector</code>, <code>session</code>, <code>sidebar</code>, <code>text_tool</code>, <code>local_ai</code>.</td></tr>
-    <tr><th><code>platform/</code></th><td>The world outside the window. <code>config</code>, <code>journal</code>, <code>host</code> (files and watching), <code>web_host</code>.</td></tr>
-    <tr><th><code>widgets/</code></th><td>The controls the editor owns: text input, slider, resizable split, and the in-window menu bar for platforms without a native one.</td></tr>
-    <tr><th><code>tests.rs</code></th><td>Tests of the shell itself. Anything checkable without a window belongs in core instead.</td></tr>
-  </tbody>
-</table>
-
-The `use runebender_core::...` list at the top of `main.rs` is the
-seam between the two crates.
-
-</DocSection>
-
-<DocSection title="runebender-xilem">
-
-The Xilem editor mirrors the GPUI layout file for file where the two
-share a concern, so a change in one is easy to carry to the other.
-
-<table>
-  <caption>src/, and how it maps</caption>
-  <tbody>
-    <tr><th><code>main.rs</code>, <code>workspace.rs</code>, <code>actions.rs</code>, <code>launch.rs</code></th><td>The same four roles as in GPUI. <code>actions.rs</code> also holds the native menu bar and the keymap behind it.</td></tr>
-    <tr><th><code>view/</code></th><td><code>canvas/</code> (editor, grid), <code>panels/</code>, <code>chrome</code>, <code>render</code>, <code>theme</code>, plus two Xilem has to carry itself: <code>design</code>, the design system, and <code>recipes</code>, the view functions that repeat.</td></tr>
-    <tr><th><code>edit/</code></th><td><code>commands</code>, <code>inspector</code>, <code>session</code>, <code>sidebar</code>, <code>text_tool</code>.</td></tr>
-    <tr><th><code>platform/</code></th><td><code>host</code>, <code>watch</code>, and <code>screenshot</code>, which renders a frame with no window.</td></tr>
-    <tr><th><code>widgets/</code></th><td>Icon tiles, text labels, the context menu, the shortcut host.</td></tr>
-    <tr><th><code>model.rs</code></th><td>Its own font model, older than core's. Replacing it with core's <code>Master</code> and <code>Project</code> is the next change.</td></tr>
-  </tbody>
-</table>
-
-Where the two differ, the difference is the framework. GPUI builds
-its input widgets once in <code>wiring.rs</code>; Xilem rebuilds
-views from state every frame, so there is no wiring step.
-
-</DocSection>
-
-<DocSection title="Tests and Fixtures">
-
-Tests live next to the code they test, in a `tests` module at the
-bottom of the file.
-
-Tests that need a real font load Virtua Grotesk from the font's own
-repository, [virtua-grotesk](https://github.com/eliheuer/virtua-grotesk),
-so the crate stays small and the tests run against the current font.
-`src/testing/fonts.rs` is the one place that knows where. It reads
-`RUNEBENDER_TEST_FONTS`, or looks for `../virtua-grotesk/sources`
-beside the checkout, and fails with the expected path when neither
-exists. The editor's browser build embeds the same sources as its
-demo font.
-
-<CommandList commands={[
-  "git clone https://github.com/eliheuer/virtua-grotesk",
-  "cd runebender-core && cargo test",
-]} />
-
-CI checks that repository out beside each crate, sparse to `sources`.
-
-</DocSection>
-
-<DocSection title="Conventions">
-
-<table>
-  <caption>What a change is expected to do</caption>
-  <tbody>
-    <tr><th>One file, one concern</th><td>A module is named for what it does to a font, and its header comment says so in a sentence. A directory groups modules by concern, and its <code>mod.rs</code> says what belongs.</td></tr>
-    <tr><th>norad in, norad out</th><td>Core functions take <code>norad::Glyph</code> or <code>norad::Font</code> and kurbo geometry, and return the same. No private model.</td></tr>
-    <tr><th>Report what changed</th><td>An operation that edits in place returns whether it changed anything, or how many things it changed.</td></tr>
-    <tr><th>Document every item</th><td>Public in core, everything in the editor. Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.</td></tr>
-    <tr><th>Name your imports</th><td>No glob imports outside test modules. Every name in a file can be followed to its source.</td></tr>
-    <tr><th>Keys in one place</th><td>A UFO lib key has one constant, one reader, and one writer, in <code>lib_keys</code> or the module for its format.</td></tr>
-    <tr><th>Commit messages say why</th><td>The diff shows what changed. The message records what was wrong and what the change decided.</td></tr>
-    <tr><th>Builds anywhere</th><td>No path to a sibling checkout in a committed file. Local overrides live in a <code>.cargo/config.toml</code> above the repositories.</td></tr>
-  </tbody>
-</table>
-
-</DocSection>
-
-<DocSection title="What Is Still Out of Place">
-
-<table>
-  <caption>Known, and in order of cost</caption>
-  <tbody>
-    <tr><th><code>outline/path/hyper_model</code></th><td>The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.</td></tr>
-    <tr><th>Two versions of kurbo</th><td>The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and <code>path/hyper.rs</code> converts between them.</td></tr>
-      </tbody>
-</table>
-
-</DocSection>
-
-<DocSection title="Not a Workspace of Crates">
-
-Core stays one crate.
-
-Splitting it into a Linebender-style workspace of small crates was
-considered and rejected. The gains are independent versioning and
-faster incremental builds, and neither matters for a library with one
-consumer and a short build. The costs are real: more manifests, more
-visibility rules to learn, and a dependency graph a new contributor
-reads before they read code.
-
-The two moves that mattered are done. The font operations and the
-document layer left the editor, and the module map is the crate map.
-A split can be made later from what is already separated, if a
-second consumer ever needs it.
+Follow [Development](/docs/development.html) for workspace checks. Tests live
+beside the code they exercise. Set `RUNEBENDER_TEST_FONTS` for font fixtures.
+Check interface changes with matching-size screenshots and native interaction;
+headless captures alone cannot verify keyboard, pointer, or browser behavior.
 
 </DocSection>

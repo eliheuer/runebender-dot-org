@@ -31,7 +31,7 @@
     {
       "id": "live_mcp",
       "use_for": "Interactive work against a native editor, including unsaved geometry and revision-checked proposals.",
-      "availability": "Native GPUI and Xilem editors on macOS and Linux; not the browser editor or Windows.",
+      "availability": "Native Runebender editor on macOS and Linux; not the browser editor or Windows.",
       "connect": ["editor_sessions", "editor_connect", "project_info"],
       "read": ["font_info", "glyph_inventory", "read_glyph", "proof", "read_kerning", "design_context"],
       "propose": ["propose_edits", "proposal_list", "proposal_discard"],

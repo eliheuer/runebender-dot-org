@@ -1,7 +1,7 @@
 ---
 title: "Agents"
 lede: "Keep the agent beside the editor. Live MCP tools expose unsaved font data and offer edits for you to review."
-status: "Live MCP tools, file watching, and a local GPUI chat pane are available"
+status: "Live MCP tools, file watching, and a local chat pane are available"
 stability: "Experimental; live tools and client workflows are evolving"
 order: 17
 description: "Directing an AI agent to do type design work alongside Runebender."
@@ -37,7 +37,7 @@ Your external agent handles its own model login. Runebender does not need
 an API key for MCP. When the agent uses a hosted model, prompts and the
 font data returned to that model go to its provider.
 
-The native GPUI chat pane can also run a local model through
+The native Runebender chat pane can also run a local model through
 [font-ml](/docs/local-models.html). That is a separate inference choice
 from connecting OMP to the editor.
 
@@ -57,7 +57,7 @@ it the same things a new collaborator would need.
    `https://runebender.org/llms-full.txt` only when it needs the whole manual.
 
 <CommandList commands={[
-  "runebender-gpui sources/Font.designspace",
+  "runebender-xilem sources/Font.designspace",
   "curl -O https://runebender.org/llms-full.txt",
 ]} />
 

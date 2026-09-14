@@ -6,15 +6,9 @@ Guidance for coding agents working on this repository.
 
 This repository is the website and documentation source for `runebender.org`.
 
-It is not the main Runebender application source. Current application source lives in the sibling repos:
-
-- https://github.com/eliheuer/runebender-xilem — native Rust/Xilem editor
-- https://github.com/eliheuer/runebender-gpui — current native and WebAssembly editor
-- https://github.com/eliheuer/runebender-web — standalone browser editor and the source of the checked-in cloud artifact
-
-The earlier Druid-based Runebender source is:
-
-- https://github.com/linebender/runebender
+The application source is https://github.com/eliheuer/runebender-xilem.
+Public product copy describes one Runebender application. Do not restore a
+frontend comparison or separate library product listing.
 
 ## Technical shape
 
@@ -41,13 +35,10 @@ After building and starting preview, link-check the generated site:
 pnpm run check-links
 ```
 
-Before a website release that should include the latest browser editor, rebuild the editor artifact first:
-
-```sh
-pnpm run build-cloud-editor
-```
-
-Keep the website launch on this static artifact path. Editor package extraction or monorepo work belongs after launch, once the website needs real host-specific behavior beyond linking to `/cloud/editor/index.html`.
+The primary action currently links to installation instructions. The Xilem browser
+port is not available yet. Do not wire Launch Editor to an older artifact or label
+an existing bundle as Xilem. Checked-in browser artifacts remain opaque release
+output until the replacement passes browser validation.
 
 ## Adding or editing a docs page
 
@@ -81,7 +72,6 @@ Avoid:
 
 When updating docs, verify durable facts against:
 
-- `/Users/eli/GH/repos/runebender-gpui/README.md`
 - `/Users/eli/GH/repos/runebender-xilem/README.md`
 - `/Users/eli/GH/repos/runebender-xilem/docs/hyperbezier-ufo-extension.md`
 - relevant source files in `/Users/eli/GH/repos/runebender-xilem/src/`

@@ -1,154 +1,74 @@
 ---
 title: "Development"
-lede: "Build from source, work on the shared core alongside, and build the browser bundle."
-status: "Reference"
-stability: "The wasm toolchain pin moves"
+lede: "Build and contribute to runebender-xilem."
+status: "Alpha"
+stability: "Verify implementation details against the current source"
 order: 26
-description: "Building and contributing to Runebender."
+description: "Build and contribute to runebender-xilem."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
-import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Repositories">
+<DocSection title="Source">
 
-<table>
-  <caption>Where the code lives</caption>
-  <tbody>
-    <tr><th><a href="https://github.com/eliheuer/runebender-gpui">runebender-gpui</a></th><td>The editor. Runs in the browser and as a native application from one codebase.</td></tr>
-    <tr><th><a href="https://github.com/eliheuer/runebender-core">runebender-core</a></th><td>The shared library: editing model, shaping, measurement, curve analysis. No interface.</td></tr>
-    <tr><th><a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a></th><td>The same editor on Xilem, the Linebender UI stack. It exists to compare the two GUI stacks on one application.</td></tr>
-    <tr><th><a href="https://github.com/linebender/runebender">runebender-druid</a></th><td>The original implementation, kept as project history.</td></tr>
-  </tbody>
-</table>
-
-The core crate holds everything that does not need a window, so the
-same font logic serves any front-end put on top of it.
+[runebender-xilem](https://github.com/eliheuer/runebender-xilem) contains the
+application and its font library in one Cargo workspace. Start with its
+`AGENTS.md` and read `DESIGN.md` before changing the interface.
 
 </DocSection>
 
 <DocSection title="Build and Run">
 
-<CommandList commands={[
-  "git clone https://github.com/eliheuer/runebender-gpui",
-  "cd runebender-gpui",
-  "cargo run",
-]} />
+```sh
+git clone https://github.com/eliheuer/runebender-xilem
+cd runebender-xilem
+cargo run --release -- path/to/Font.designspace
+```
 
-The repository pins a stable Rust toolchain in `rust-toolchain.toml`.
-Cargo applies it on its own.
+The repository pins its Rust toolchain and upstream Xilem revision.
+Use the platform prerequisites in its README.
 
 </DocSection>
 
-<DocSection title="Working on Core Too">
+<DocSection title="Checks">
 
-Clone the core crate beside the editor, then add a cargo `paths`
-override so the local copy replaces the published one.
+From the workspace root:
 
-<CommandList commands={[
-  "git clone https://github.com/eliheuer/runebender-core",
-]} />
-
-```toml
-# .cargo/config.toml, in the directory that holds both checkouts
-paths = ["runebender-core"]
+```sh
+cargo fmt --all --check
+cargo clippy --workspace --all-targets
+cargo doc --workspace --no-deps
+cargo test --workspace -- --test-threads=1
+cargo build --workspace --release
 ```
 
-<Callout>
-  Put that file above the two repositories, not inside either one. The
-  override is a local development setting, and committing it would
-  break the build on every other machine.
-</Callout>
+Font-based tests use Virtua Grotesk. Set `RUNEBENDER_TEST_FONTS` to its
+`sources` directory. CI runs on Linux and macOS with warnings denied.
+Dependency changes also need the repository's supply-chain checks.
 
 </DocSection>
 
 <DocSection title="Where Things Live">
 
-The split is the thing to learn first. Font work lives in
-`runebender-core` and has no interface attached. The front-end draws
-and handles input, and calls core for anything that changes a glyph.
+The interface lives under `src/`. Font operations live in the workspace's
+library under `crates/`, where they can be tested without opening a window.
+Both are changed in the same checkout. See [Code Layout](/docs/code-layout.html).
 
-[Code Layout](/docs/code-layout.html) is the reference: every module
-in core by concern, every file in the editor, the conventions, and
-the checks CI runs.
-
-<Callout>
-  If an edit changes a glyph, it belongs in core, where it can be
-  tested without a window and reused by the other front-ends.
-</Callout>
-
-</DocSection>
-
-<DocSection title="Adding a Tool">
-
-The knife is the shortest complete example. Its geometry is
-`knife_cut_glyph`, `slice_paths` and `knife_hit_points` in core, and
-the editor touches it in four places.
-
-1. Add a variant to the `Tool` enum in `main.rs`.
-2. Add an icon to `themes/toolbar-icons.json` in core, and a tile for
-   it beside the other tools.
-3. Handle the pointer in the canvas, under a check for your variant.
-4. Give it a keyboard shortcut in the key handler.
-
-<CommandList commands={[
-  "rg 'Tool::Knife' src/main.rs",
-  "rg 'knife' ../runebender-core/src",
-]} />
-
-Reading those two searches side by side shows the division. Four call
-sites in the front-end, and the cutting itself in core with tests
-around it.
-
-Write the geometry in core first and test it there. A tool whose
-maths only runs when a window is open is one you cannot check.
+Use Xilem and Masonry controls, the existing theme tokens, and the editor's
+command methods. Keep reusable font operations independent of UI state.
 
 </DocSection>
 
 <DocSection title="The Browser Build">
 
-The browser build needs a different toolchain from the native one.
+There is no working browser build of runebender-xilem yet. The first milestone
+is running the existing Xilem/Masonry interface in WebAssembly, then opening a
+sample font, editing a glyph, and exporting the result.
 
-```sh
-RUSTUP_TOOLCHAIN=nightly-2026-08-01 \
-CARGO_UNSTABLE_BUILD_STD="std,panic_abort" \
-trunk build --release --public-url /gpui/
-```
-
-Two constraints decide that line. The web backend needs wasm atomics
-and shared memory, and the prebuilt `wasm32-unknown-unknown` standard
-library has neither, so std must be rebuilt. That is `-Z build-std`,
-which is nightly only. The nightly must also be newer than the pinned
-stable, because gpui uses library features that stable already has.
-
-Install `rust-src` and the wasm target for whichever nightly you use.
-
-To deploy, copy `dist/` into this site's `public/gpui/`. Keep
-`coi-serviceworker.min.js` and its script tag at the top of `<head>`.
-GitHub Pages cannot send the COOP and COEP headers that shared memory
-requires, so the worker sets them in the browser instead.
-
-</DocSection>
-
-<DocSection title="Dependencies">
-
-Every dependency comes from crates.io or a public git repository, so a
-plain clone builds with no local paths.
-
-GPUI and `gpui_platform` come from the Zed git repository, which does
-not publish to crates.io. Both are pinned to a revision, so a fresh
-resolve lands on the same graph.
-
-`gpui_platform` needs its `font-kit` feature. Without it the platform
-falls back to a small embedded font list and no interface text renders
-at all, while everything else draws normally. Run
-`runebender-gpui --fonts` to see what it can resolve.
-
-The widgets are the editor's own, under `src/widgets`: text fields on
-[parley](https://github.com/linebender/parley), a slider, resizable
-panel groups, and an in-window menu bar for platforms without a native
-one.
+The pinned UI framework currently enables a desktop-only async runtime feature
+that fails on `wasm32-unknown-unknown`. Browser startup, rendering, file access,
+clipboard, and text input need separate verification. A native build or a
+headless screenshot does not establish browser support.
 
 </DocSection>
 

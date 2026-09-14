@@ -17,7 +17,7 @@ import DocSection from "../../components/DocSection.astro";
     <tr><th>Is it ready for production work?</th><td>No. It is alpha. It writes to your sources in place, so keep them in version control and work on copies.</td></tr>
     <tr><th>What does it cost?</th><td>Nothing. Apache-2.0 or MIT.</td></tr>
     <tr><th>Is this an official Linebender project?</th><td>No. It is built on Linebender crates and aims at the Linebender stack, but the site and the editor are maintained independently.</td></tr>
-    <tr><th>Why are there several front-ends?</th><td>One editing core with interchangeable interfaces. GPUI is the current default; the Xilem port exists to compare the two on the same application. See <a href="/docs/development.html">Development</a>.</td></tr>
+    <tr><th>Where is the source?</th><td><a href="https://github.com/eliheuer/runebender-xilem">runebender-xilem</a> contains the application.</td></tr>
   </tbody>
 </table>
 
@@ -43,9 +43,8 @@ import DocSection from "../../components/DocSection.astro";
 <table>
   <caption>Install and launch</caption>
   <tbody>
-    <tr><th>Is there a download?</th><td>Not yet. Build it with cargo, or use the browser build. See <a href="/docs/install.html">Install</a>.</td></tr>
-    <tr><th>Does the browser version upload my font?</th><td>No. It runs entirely in the browser. Nothing is sent anywhere.</td></tr>
-    <tr><th>Why is the browser version limited?</th><td>Its platform layer is younger than the native one. The gaps are listed in <a href="/docs/troubleshooting.html">Troubleshooting</a>.</td></tr>
+    <tr><th>Is there a download?</th><td>Not yet. Build runebender-xilem with cargo. See <a href="/docs/install.html">Install</a>.</td></tr>
+    <tr><th>Can I use it in a browser?</th><td>A browser port is planned. For now, install the desktop application.</td></tr>
     <tr><th>Windows and Linux?</th><td>The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.</td></tr>
   </tbody>
 </table>
@@ -70,7 +69,7 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="Getting Help">
 
 Open an issue on
-[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+[the repository](https://github.com/eliheuer/runebender-xilem/issues).
 A useful report says what you did, what happened, and what you
 expected, and names the file and whether you were in the browser or
 the native application. If the editor wrote something wrong into a

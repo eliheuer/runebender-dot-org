@@ -13,17 +13,16 @@ import CommandList from "../../components/CommandList.astro";
 
 <DocSection title="It Will Not Build">
 
-If the build fails inside `pathfinder_simd`, you are on a nightly
-toolchain. The repository pins a stable one in `rust-toolchain.toml`.
-Remove any override and let the pin apply.
+Build in a clone to use the pinned toolchain, or pass `+stable` when installing.
+Runebender requires Rust 1.96 or newer. Check the repository README for your
+platform's system libraries.
 
-If the build fails in a dependency you did not change, install again.
-Every git dependency is pinned to a revision, so the graph is the same
-every time.
+```sh
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
+```
 
-<CommandList commands={[
-  "cargo install --git https://github.com/eliheuer/runebender-gpui",
-]} />
+If it still fails, include the first compiler error, Rust version, operating
+system, and application revision in your report.
 
 </DocSection>
 
@@ -64,33 +63,15 @@ the expected convention.
 
 <DocSection title="The Browser Build">
 
-<Callout>
-  These limits are in the browser build only. The native application
-  is unaffected. Use it for real work.
-</Callout>
-
-<table>
-  <caption>Known browser limits</caption>
-  <tbody>
-    <tr><th>Text fields</th><td>Cannot take focus, except the glyph search box. Metrics fields and the Glyph panel fields do not accept typing.</td></tr>
-    <tr><th>Menus</th><td>In-window menu items do not activate. Use the keyboard commands.</td></tr>
-    <tr><th>Paste</th><td>Reading the clipboard is not implemented.</td></tr>
-    <tr><th>Script icons</th><td>Show as empty boxes. The bundled interface font has no Arabic or Hebrew.</td></tr>
-    <tr><th>Export</th><td>Not available. The browser cannot write to your disk.</td></tr>
-  </tbody>
-</table>
-
-The browser build also needs cross-origin isolation, because it uses
-shared memory. On runebender.org that is arranged by a service worker,
-since GitHub Pages cannot send the headers itself. A browser that
-blocks service workers will not load the editor.
+The Xilem browser port is not available yet. Use the desktop application.
+See [Development](/docs/development.html) for the current browser milestone.
 
 </DocSection>
 
 <DocSection title="Reporting a Problem">
 
 Open an issue on
-[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+[the repository](https://github.com/eliheuer/runebender-xilem/issues).
 
 A useful report says what you did, what happened, and what you
 expected. Name the file you had open and whether you were in the

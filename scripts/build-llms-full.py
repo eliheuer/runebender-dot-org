@@ -20,15 +20,14 @@ A plain-text bundle of the Runebender documentation at
 https://runebender.org/docs, generated from the same pages.
 
 Runebender is a free, open-source font editor for UFO and designspace
-sources, built on the Linebender ecosystem of Rust crates. A headless
-core does the font work, and a GPUI front-end runs both in the browser
-as WebAssembly and as a native application from the same code.
+sources, built with Xilem and the Linebender ecosystem of Rust crates.
+The desktop application is available from runebender-xilem. A browser
+port is planned and is not available yet.
 
 It is alpha software. Treat this as an orientation map, not a stable
 API contract, and verify behaviour against the source.
 
-Source: https://github.com/eliheuer/runebender-gpui
-Shared core: https://github.com/eliheuer/runebender-core
+Source: https://github.com/eliheuer/runebender-xilem
 License: Apache-2.0 or MIT
 """
 

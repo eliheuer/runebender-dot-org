@@ -1,221 +1,53 @@
 ---
 title: "Architecture"
-lede: "One headless core does the font work. Several front-ends put an interface on it. This is why, and what belongs where."
-status: "Current, and the reason for most of the code's shape"
-stability: "The split is settled; which front-end is default is not"
+lede: "One Runebender application, built with Xilem and the Linebender stack."
+status: "Alpha"
+stability: "Verify implementation details against the current source"
 order: 6
-description: "How Runebender is put together: the shared core, the front-ends, and the decisions behind them."
+description: "One Runebender application, built with Xilem and the Linebender stack."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
-import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="The Shape">
+<DocSection title="The Application">
 
-Runebender is one font library with interchangeable interfaces.
+[runebender-xilem](https://github.com/eliheuer/runebender-xilem) is the Runebender
+application. Xilem describes the interface from application state; Masonry
+provides widgets and event handling. The rendering and text stack uses
+Linebender libraries.
 
-<table>
-  <caption>The pieces</caption>
-  <tbody>
-    <tr><th><code>runebender-core</code></th><td>Every operation that changes a font. No window, no toolkit, no drawing.</td></tr>
-    <tr><th><code>runebender-gpui</code></th><td>The current editor. Native on desktop and in the browser from one codebase.</td></tr>
-    <tr><th><code>runebender-xilem</code></th><td>The same editor on Xilem, the Linebender UI stack. More experimental.</td></tr>
-    <tr><th><code>runebender-web</code></th><td>Vello and Kurbo in WebAssembly with a Vue interface around them.</td></tr>
-    <tr><th><code>runebender-druid</code></th><td>The original, kept as project history.</td></tr>
-  </tbody>
-</table>
-
-Each front-end owns its window, input and drawing, and calls core for
-anything that changes a glyph.
+The repository contains the interface and font operations in one workspace.
+Users install one application.
 
 </DocSection>
 
-<DocSection title="The Rule">
+<DocSection title="Font Operations and Interface">
 
-If an edit changes a font, it belongs in core.
+The interface owns the window, input, and drawing. Font operations belong in
+the workspace's library so they can be tested without a window and used by
+command-line tools. Moving a point and updating a UFO are font operations;
+turning a pointer position into an editing command belongs to the interface.
 
-That single rule explains most of the layout. Core can be tested
-without opening a window, which means the hard parts (segment surgery,
-overlap removal, interpolation) have tests that run in milliseconds.
-It also means a second front-end is a new interface rather than a
-second editor.
-
-<Callout>
-  The test is not "is this about drawing" but "would another front-end
-  need it". Where a click lands is the shell's business. What that
-  click does to the outline is core's.
-</Callout>
+The file map is on [Code Layout](/docs/code-layout.html).
 
 </DocSection>
 
-<DocSection title="Why More Than One Front-End">
+<DocSection title="Sources and Documents">
 
-Because the interesting question is not settled.
+Runebender uses [norad](https://github.com/linebender/norad) for UFO data and
+[kurbo](https://github.com/linebender/kurbo) for geometry. Designspaces describe
+masters and axes. Font sources remain available to other tools.
 
-GPUI is Zed's toolkit. It is fast, it ships in a real application, and
-it compiles to WebAssembly, so one codebase serves desktop and
-browser. That is why it is the default today.
-
-Xilem is the Linebender stack, which is where this project's
-sympathies are and where its dependencies already live. It is younger.
-The port exists so the comparison is made on a real application rather
-than a demo. It also keeps the editor ready if the answer changes.
-
-<Callout>
-  A shell that is hard to write on one stack and easy on another is
-  evidence. Keeping two honest is the cost of collecting it.
-</Callout>
+A script can work on saved sources; live MCP tools can inspect unsaved editor
+state and submit proposals. Coordinate disk writes with the editor. See
+[Opening and Saving](/docs/opening.html) and [Agents](/docs/agents.html).
 
 </DocSection>
 
-<DocSection title="What Sits in Core">
+<DocSection title="Platform Integration">
 
-Everything that changes a font or reads one to answer a question,
-plus the document model and the command line.
-
-Modules are named for what they do: `glyph_ops`, `cleanup`,
-`effects`, `measure`, `lib_keys`, `project`, and so on. The full map,
-by concern, is on [Code Layout](/docs/code-layout.html).
-
-</DocSection>
-
-<DocSection title="The Format Is the Model">
-
-Runebender edits UFO through [norad](https://github.com/linebender/norad)
-rather than reading a font into a private model and writing it back.
-
-The gain is that nothing is lost in translation, and any other tool can
-read the sources mid-session. The cost is that the file's shape is the
-editor's shape, including the parts of UFO that are awkward.
-
-This is also why an agent or a script can work alongside the editor at
-all. See [Agents](/docs/agents.html).
-
-</DocSection>
-
-<DocSection title="Two Versions of Kurbo">
-
-Core carries `kurbo` twice, as `kurbo_09` and through its consumers.
-
-Front-ends are pinned to their toolkit's version, and a library can
-only declare one. Rather than hold every front-end to the oldest, core
-keeps the geometry types it needs at a pinned version and converts at
-the boundary.
-
-It is a real cost. Every consumer is on kurbo 0.13 now, so the only
-conversion left is around the hyperbezier solver.
-
-</DocSection>
-
-<DocSection title="Inside a Front-End">
-
-`runebender-gpui` is one `Workspace` struct, split across files by
-concern: commands, canvas, panels, input, theme accessors, and the
-widgets the editor owns. Font logic is not among them. The editor
-imports what it needs from core by name, at the top of `main.rs`.
-
-A command is the whole of one intent. The menu item, the shortcut and
-the context menu all land on the same method. There is one place to
-read, and one place to fix.
-
-The file-by-file map is on [Code Layout](/docs/code-layout.html).
-
-</DocSection>
-
-<DocSection title="Decisions Worth Knowing">
-
-Small choices that look odd until you know why.
-
-<table>
-  <caption>The ones that surprise people</caption>
-  <tbody>
-    <tr><th>One canvas, not one per cell</th><td>Outlines in the grid are painted by a single canvas over the whole grid. gpui ends its render pass at every run of paths, so a canvas per cell meant a pass switch per cell.</td></tr>
-    <tr><th>Themes are compiled in</th><td>One token file, resolved at startup. It is what keeps the editors from drifting apart. See <a href="/docs/themes.html">Themes</a>.</td></tr>
-    <tr><th>The editor owns its widgets</th><td>Text fields are built on parley. A dependency that themes itself is a second design system to keep in step.</td></tr>
-    <tr><th>Undo snapshots the glyph</th><td>Simpler to reason about than a command log, and a glyph is small.</td></tr>
-    <tr><th>Files are watched</th><td>Sources changed on disk reload. This is the whole integration surface for scripts and agents.</td></tr>
-  </tbody>
-</table>
-
-</DocSection>
-
-<DocSection title="Files, Not a Runtime">
-
-Runebender's automation lives outside the application.
-
-There is no scripting runtime in the editor, no plugin API and no
-assistant. Instead the sources sit on disk as UFO, the editor reloads
-what changes, and the same operations run from a shell through
-`runebender-core`. Whatever you already use for scripting keeps working,
-because the interface is the file.
-
-The other approach is to put the runtime inside: an environment, a
-language and an assistant that all ship with the editor. Counterpunch
-does that, with Python in the browser and an assistant that writes
-scripts for it.
-
-<table>
-  <caption>What each choice buys</caption>
-  <tbody>
-    <tr><th>A runtime inside</th><td>Nothing to set up, and an assistant that knows the editor's own API.</td></tr>
-    <tr><th>Files outside</th><td>Your git history, your build, your existing scripts and your own agent all keep working.</td></tr>
-  </tbody>
-</table>
-
-<Callout>
-  Neither approach sends your font anywhere. That is a separate
-  question from where the automation runs, and both answers can be
-  private.
-</Callout>
-
-</DocSection>
-
-<DocSection title="How Unix-Shaped It Actually Is">
-
-Mostly, and it is worth being exact about where it is not.
-
-<table>
-  <caption>Against the old rules</caption>
-  <tbody>
-    <tr><th>Do one thing well</th><td>Held. Core does font work, the CLI exposes it, the front-end draws. None of the three needs the others to be tested.</td></tr>
-    <tr><th>Work together</th><td>Held. Files on disk are the interface, the editor reloads them, and exit codes let a script branch without reading prose.</td></tr>
-    <tr><th>Text as the universal interface</th><td>Partly. Output is JSON on request and UFO is XML on disk, but a font source is a directory, not a stream.</td></tr>
-  </tbody>
-</table>
-
-Three places it does not hold:
-
-`runebender-core` takes paths, not stdin, and writes reports rather than
-fonts. You cannot pipe one invocation into the next. That is a real
-limit, not a stylistic one, and it comes from a font source being a
-directory of files.
-
-Configuration is thin. There is a file, at
-`~/.config/runebender/config.toml`, and it sets three things. Themes
-are still compiled in, so the file names one rather than defining one.
-
-A window is not a filter. The editor is a normal desktop application,
-and no amount of architecture changes that.
-
-<Callout>
-  The claim that holds is narrower than "it is a Unix tool". The parts
-  are separable, the interface is a file, and the shell can reach the
-  operations the window can.
-</Callout>
-
-</DocSection>
-
-<DocSection title="The Browser Build">
-
-The same code compiles to WebAssembly. What changes is what the
-platform allows, not the editing model.
-
-Text fields cannot take focus, in-window menus do not activate, paste
-is unavailable, and export is not possible. Those are limits of the
-build, and the native application has none of them.
-
-See [Development](/docs/development.html) for building it, and
-[Troubleshooting](/docs/troubleshooting.html) for what to expect.
+The desktop application supplies file dialogs, menus, clipboard access, and
+file watching. A browser port must supply browser equivalents and verify the
+rendering and input path. It is not available yet.
 
 </DocSection>

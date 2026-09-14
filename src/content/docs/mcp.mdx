@@ -1,7 +1,7 @@
 ---
 title: "MCP"
 lede: "Keep your conversation in OMP and your drawing in Runebender. MCP connects the agent to the live, unsaved font."
-status: "Experimental; available in the native GPUI and Xilem editors on macOS and Linux"
+status: "Experimental; available in the native Runebender editor on macOS and Linux"
 stability: "The tools and connection protocol are evolving"
 order: 17.5
 description: "Connect OMP to Runebender through MCP, inspect unsaved glyphs, and review agent proposals in the editor."
@@ -37,15 +37,15 @@ See [Install](/docs/install.html) for prerequisites.
 
 ```sh
 cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
-cargo +stable install --git https://github.com/eliheuer/runebender-core --force
-cargo +stable install --git https://github.com/eliheuer/runebender-gpui --force
-runebender-gpui path/to/Font.designspace
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core --force
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem --force
+runebender-xilem path/to/Font.designspace
 ```
 
 If an older editor is running, save your work and restart it after updating.
 Updating the executable does not add tools to an already running process.
-The Xilem editor exposes the same live tools. This connection is not yet
-available in the browser editor or on Windows.
+Live connections are available on macOS and Linux. Windows support and
+the browser port are not available yet.
 
 Use a copy of a font for your first proposal and undo test. Once connected,
 you do not need to save between an edit in the canvas and a tool read.
@@ -215,6 +215,6 @@ running as your user can access it. Requests are handled on the editor's UI
 thread; the socket worker does not mutate font data in the background.
 
 For the implementation and development roadmap, see core's
-[AI type-design documentation](https://github.com/eliheuer/runebender-core/blob/main/docs/ai-type-design.md).
+[AI type-design documentation](https://github.com/eliheuer/runebender-xilem/blob/main/crates/runebender-core/docs/ai-type-design.md).
 
 </DocSection>

@@ -21,7 +21,7 @@ API. Choose the interface that matches the work.
   <tbody>
     <tr><th>Live MCP tools</th><td>Read unsaved glyphs and submit proposals. Start with <a href="/docs/mcp.html">MCP and OMP</a>.</td></tr>
     <tr><th>File watching</th><td>The editor reloads sources changed on disk. Run any script you like against the UFO and the change appears.</td></tr>
-    <tr><th>runebender-core</th><td>The editing model as a Rust library, with no interface attached. Build a tool on it.</td></tr>
+    <tr><th>Rust library</th><td>The editing model as a Rust library, with no interface attached. Build a tool on it.</td></tr>
   </tbody>
 </table>
 
@@ -49,19 +49,14 @@ cannot read those unsaved changes. Keep sources in version control and use
 
 </DocSection>
 
-<DocSection title="Building on the Core">
+<DocSection title="Rust Tools">
 
-[runebender-core](https://github.com/eliheuer/runebender-core) is the
-crate every front-end shares: the editing model, shaping through
-harfrust, measurement, curve analysis, path operations, and the Glyphs
-importer. It has no window and no interface.
+The font library is part of the
+[runebender-xilem workspace](https://github.com/eliheuer/runebender-xilem).
+It provides shaping, measurement, curve analysis, and path operations without
+a window. See [Code Layout](/docs/code-layout.html).
 
-<CommandList commands={[
-  "cargo add --git https://github.com/eliheuer/runebender-core",
-]} />
-
-It is not a stable API. It changes when the editor needs it to, and
-there are no release notes yet. Pin a revision.
+Its Rust API is experimental; verify against the source and pin a revision.
 
 </DocSection>
 

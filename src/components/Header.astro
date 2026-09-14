@@ -4,15 +4,12 @@ type NavLink = { href: string; label: string; external?: boolean; action?: boole
 const links: NavLink[] = [
   { href: "/docs", label: "Documentation" },
   { href: "/#source", label: "Source Code" },
-  { href: "/gpui/index.html", label: "Launch Editor" },
+  { href: "/docs/install.html", label: "Install" },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";
-// On the home page the brand launches the editor; everywhere else it
-// goes home.
-const isHome = current === "/";
-const brandHref = isHome ? "/gpui/index.html" : "/";
-const brandLabel = isHome ? "Launch the Runebender editor" : "Runebender home";
+const brandHref = "/";
+const brandLabel = "Runebender home";
 
 const isCurrent = (href: string) => {
   if (href.startsWith("http")) return false;

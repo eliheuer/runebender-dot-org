@@ -11,7 +11,7 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
   description="Runebender is a free, open-source font editor built on the Linebender ecosystem of Rust crates."
 >
   <main id="top">
-    <section class="hero" aria-label="Runebender Web Editor">
+    <section class="hero" aria-label="Runebender font editor">
       <div class="hero-copy">
         <div class="lede">
           <p>
@@ -20,17 +20,13 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
             <a href="https://www.rust-lang.org">Rust</a> crates.
           </p>
           <p>
-            There are currently two maintained front-ends,
-            <a href="https://github.com/linebender/xilem">Xilem</a> and
-            <a href="https://www.gpui.rs">GPUI</a>. The default front-end for now uses
-            GPUI and runs both cross-platform natively on desktop and in the browser.
-            The <a href="https://github.com/eliheuer/runebender-xilem">Xilem version</a>
-            is more experimental and less usable, but could be interesting as an example
-            of a Xilem application.
+            The interface is built with
+            <a href="https://github.com/linebender/xilem">Xilem</a>.
+            Runebender is alpha software, available as a native desktop application.
           </p>
         </div>
-        <div class="hero-actions" aria-label="Launch Runebender">
-          <a class="button primary" href="/gpui/index.html">Launch Editor</a>
+        <div class="hero-actions" aria-label="Install Runebender">
+          <a class="button primary" href="/docs/install.html">Install Runebender</a>
         </div>
       </div>
 
@@ -68,9 +64,9 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
       </div>
       <div class="install-steps">
         <p>Install the editor with cargo.</p>
-        <pre><code>cargo install --git https://github.com/eliheuer/runebender-gpui</code></pre>
+        <pre><code>cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem</code></pre>
         <p>Then open a font from anywhere.</p>
-        <pre><code>runebender-gpui path/to/Font.designspace</code></pre>
+        <pre><code>runebender-xilem path/to/Font.designspace</code></pre>
       </div>
     </section>
 
@@ -79,21 +75,9 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
         <h2 class="section-kicker" id="source-title">Source Code</h2>
       </div>
       <div class="resource-links">
-        <a href="https://github.com/eliheuer/runebender-gpui">
-          <strong>runebender-gpui</strong>
-          <span>The current main editor.</span>
-        </a>
         <a href="https://github.com/eliheuer/runebender-xilem">
           <strong>runebender-xilem</strong>
-          <span>Xilem-based version, more experimental and less usable.</span>
-        </a>
-        <a href="https://github.com/eliheuer/runebender-core">
-          <strong>runebender-core</strong>
-          <span>The headless Rust core of both editors.</span>
-        </a>
-        <a href="https://github.com/linebender/runebender">
-          <strong>runebender-druid</strong>
-          <span>The original implementation, kept as project history.</span>
+          <span>The Runebender font editor.</span>
         </a>
       </div>
     </section>

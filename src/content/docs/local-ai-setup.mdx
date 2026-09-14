@@ -39,8 +39,8 @@ This workflow needs the native editor, `runebender-core`, and `font-ml` on the s
 On macOS, build `font-ml` with Metal support. On Linux, CPU is the conservative default; use the CUDA build only on a machine with a working NVIDIA toolkit.
 
 <CommandList commands={[
-  "cargo +stable install --git https://github.com/eliheuer/runebender-gpui",
-  "cargo +stable install --git https://github.com/eliheuer/runebender-core",
+  "cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem",
+  "cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core",
   "cargo +stable install --git https://github.com/eliheuer/font-ml --features metal",
   "cargo +stable install --git https://github.com/eliheuer/font-ml --features cuda",
 ]} />
@@ -75,7 +75,7 @@ Use the supplied demo font or a disposable copy. First confirm what this build c
 <CommandList commands={[
   "font-ml tasks --json",
   "font-ml describe ~/.runebender/models/runebender-workshop-bolden --json",
-  "runebender-gpui path/to/WorkshopDemo.designspace",
+  "runebender-xilem path/to/WorkshopDemo.designspace",
 ]} />
 
 For chat, open the same font, choose the `runebender-workshop-4b` model in the native Chat panel, and ask it to read one known glyph and produce a proof. It may read, proof, and propose, but it must not install or save unless asked. For an outline model, run one small proposal against the disposable source with `--write`; it writes a proposal layer and leaves the foreground alone.

@@ -30,9 +30,9 @@ and the status line names the theme you moved to.
 
 <DocSection title="One File">
 
-Every theme comes from `themes/runebender.theme.json` in
-runebender-core. The editors read the same file, so a change lands in
-all of them at once and none of them can drift.
+Every theme comes from `crates/runebender-core/themes/runebender.theme.json`
+in the runebender-xilem workspace. The interface resolves its colors from
+this token file.
 
 Colour is authored in OKLCH rather than hex. Lightness and chroma mean
 the same thing at every hue there, so a set of colours reads as one
@@ -170,24 +170,24 @@ Themes are compiled into the editor. There is no folder to drop a
 theme into, and no setting that points at one. A theme of your own
 means editing the token file and building from source.
 
-1. Clone `runebender-core` and `runebender-gpui` side by side.
-2. Add a block under `themes` in `themes/runebender.theme.json`. Copy
+1. Clone `runebender-xilem`.
+2. Add a block under `themes` in `crates/runebender-core/themes/runebender.theme.json`. Copy
    the theme closest to what you want and change what differs.
 3. Add the theme to the editor's theme list and give it a menu action.
 4. Build and switch to it from View → Theme.
 
 <CommandList commands={[
-  "git clone https://github.com/eliheuer/runebender-core",
-  "git clone https://github.com/eliheuer/runebender-gpui",
+  "git clone https://github.com/eliheuer/runebender-xilem",
+  "cd runebender-xilem",
   "cargo run --release -- path/to/Font.designspace",
 ]} />
 
-The tests in runebender-core check a new theme for the mistakes that
+The workspace theme tests check a new theme for the mistakes that
 are hard to see. A mark that does not clear its background. An
 emphasis ring lighter than the ordinary rule. A theme in the menu with
 no action behind it. Run them before trusting a theme you wrote.
 
-<CommandList commands={["cargo test"]} />
+<CommandList commands={["cargo test --workspace -- --test-threads=1"]} />
 
 </DocSection>
 
@@ -195,6 +195,6 @@ no action behind it. Run them before trusting a theme you wrote.
 
 No theme editor, no live reload of a theme, no per-font or per-window
 theme, and no way to load one at runtime. The palette is one file
-compiled in, which is what keeps the editors from drifting apart.
+compiled in.
 
 </DocSection>

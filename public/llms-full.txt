@@ -4,114 +4,59 @@ A plain-text bundle of the Runebender documentation at
 https://runebender.org/docs, generated from the same pages.
 
 Runebender is a free, open-source font editor for UFO and designspace
-sources, built on the Linebender ecosystem of Rust crates. A headless
-core does the font work, and a GPUI front-end runs both in the browser
-as WebAssembly and as a native application from the same code.
+sources, built with Xilem and the Linebender ecosystem of Rust crates.
+The desktop application is available from runebender-xilem. A browser
+port is planned and is not available yet.
 
 It is alpha software. Treat this as an orientation map, not a stable
 API contract, and verify behaviour against the source.
 
-Source: https://github.com/eliheuer/runebender-gpui
-Shared core: https://github.com/eliheuer/runebender-core
+Source: https://github.com/eliheuer/runebender-xilem
 License: Apache-2.0 or MIT
 
 
 ## Install
 https://runebender.org/docs/install.html
 
-Build the native application, the command line, and the model runner with cargo. The browser build is experimental.
+Build and run runebender-xilem with Cargo.
+
+### Install Runebender
+
+Install Rust with [rustup](https://rustup.rs), then install the editor:
+
+```sh
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
+runebender-xilem path/to/Font.designspace
+```
+
+Use Rust 1.96 or newer. Runebender opens UFO and designspace sources.
+Start without a path to open a font through File → Open.
+
+Runebender is alpha software. Keep your sources in version control.
+There is no packaged desktop release yet. Platform prerequisites and
+build instructions are in the [repository](https://github.com/eliheuer/runebender-xilem).
+
+### Build from Source
+
+```sh
+git clone https://github.com/eliheuer/runebender-xilem
+cd runebender-xilem
+cargo run --release -- path/to/Font.designspace
+```
+
+Cargo uses the repository's pinned toolchain. See
+[Development](/docs/development.html) for checks and the code layout.
 
 ### In the Browser
 
-Open [runebender.org/gpui](/gpui/index.html). The editor loads as
-WebAssembly and runs on WebGPU. Nothing is installed and nothing is
-uploaded.
+A browser version of runebender-xilem is planned. It is not available yet.
+Use the desktop application for now.
 
-The browser build is experimental. Some parts do not work there yet:
-text fields outside the glyph search box cannot take focus, in-window
-menu items do not activate, and paste is unavailable. Use the native
-application for real work.
+### Optional Tools
 
-### Native
-
-You need a Rust toolchain. Install one from
-[rustup.rs](https://rustup.rs) if you do not have it.
-
-Install the editor.
-
-    cargo +stable install --git https://github.com/eliheuer/runebender-gpui
-
-The +stable matters. A repository's rust-toolchain.toml pin applies
-to cargo run in a clone, not to cargo install --git, and the GPUI
-build does not compile on a nightly toolchain.
-
-Then open a font.
-
-    runebender-gpui path/to/Font.designspace
-
-Runebender opens .designspace files, .ufo directories, and a
-directory that holds them. Start it without a path to get an empty
-window, then use File → Open.
-
-Every git dependency is pinned to a revision, so a fresh install
-resolves the same graph every time. No --locked needed. To try an
-install without touching what is on your PATH, add
---root DIR to each command and run the binaries from DIR/bin.
-
-A macOS disk image: not yet. When there is one it is linked here.
-
-### The Command Line
-
-The same operations run without a window. Install the core and you get
-a runebender-core command alongside the editor.
-
-    cargo +stable install --git https://github.com/eliheuer/runebender-core
-Every command takes --json, and the exit codes are 0 ok, 2 usage, 4
-failed.
-
-This is the same code the editor runs, so a check in a build and a
-check in a window cannot disagree. See
-[Agents](/docs/agents.html) for driving it from a script.
-
-### Local Models
-
-Models run through font-ml, a separate program the editor finds on
-your PATH. On a Mac, build it with the metal feature so models run on
-the GPU.
-
-    cargo +stable install --git https://github.com/eliheuer/font-ml --features metal
-
-On Linux, leave the feature off for the CPU, or use cuda on a
-machine with an NVIDIA toolkit.
-
-    cargo +stable install --git https://github.com/eliheuer/font-ml
-
-Models are directories under ~/.runebender/models. Add more
-directories, one per line, in ~/.runebender/model_paths. Nothing is
-downloaded by the editor: you put a model there, and it appears in the
-Local AI panel. See [Local models](/docs/local-models.html) for what a
-model directory holds and where to get one.
-
-For a font to try it on, with the workflow files the Nodes tab reads,
-clone [runebender-demo](https://github.com/eliheuer/runebender-demo)
-and open fonts/VirtuaGrotesk.designspace.
-
-### Toolchain Notes
-
-The repository pins a stable Rust toolchain in rust-toolchain.toml,
-and cargo respects that pin for cargo run and cargo build in a
-clone. cargo install --git does not read it, so pass +stable. Do
-not force a nightly toolchain: a GPUI dependency, pathfinder_simd,
-does not compile on current nightlies.
-
-Every dependency comes from crates.io or a public git repository, so a
-plain clone builds with no extra setup.
-
-### A New Font
-
-Press Cmd+N to start a new font. Runebender creates an
-untitled UFO with Google Fonts metrics and the Latin Core glyph set as
-empty encoded glyphs, then asks where to save it.
+For automation, see [MCP](/docs/mcp.html) and [Scripting](/docs/scripting.html).
+For model setup, see [Set up local AI](/docs/local-ai-setup.html).
+These tools are optional; they are not needed to install the editor.
 
 
 ## Opening and Saving
@@ -132,7 +77,7 @@ FontLab and FontForge sources are not read.
 
 Use File → Open, or start the editor with a path.
 
-    runebender-gpui path/to/Font.designspace
+    runebender-xilem path/to/Font.designspace
 
 ### Glyphs Files
 
@@ -302,170 +247,42 @@ dozen drawings this way. See
 ## Architecture
 https://runebender.org/docs/architecture.html
 
-One headless core does the font work. Several front-ends put an interface on it. This is why, and what belongs where.
+One Runebender application, built with Xilem and the Linebender stack.
 
-### The Shape
+### The Application
 
-Runebender is one font library with interchangeable interfaces.
+[runebender-xilem](https://github.com/eliheuer/runebender-xilem) is the Runebender
+application. Xilem describes the interface from application state; Masonry
+provides widgets and event handling. The rendering and text stack uses
+Linebender libraries.
 
-The pieces:
-- runebender-core: Every operation that changes a font. No window, no toolkit, no drawing.
-- runebender-gpui: The current editor. Native on desktop and in the browser from one codebase.
-- runebender-xilem: The same editor on Xilem, the Linebender UI stack. More experimental.
-- runebender-web: Vello and Kurbo in WebAssembly with a Vue interface around them.
-- runebender-druid: The original, kept as project history.
+The repository contains the interface and font operations in one workspace.
+Users install one application.
 
-Each front-end owns its window, input and drawing, and calls core for
-anything that changes a glyph.
+### Font Operations and Interface
 
-### The Rule
+The interface owns the window, input, and drawing. Font operations belong in
+the workspace's library so they can be tested without a window and used by
+command-line tools. Moving a point and updating a UFO are font operations;
+turning a pointer position into an editing command belongs to the interface.
 
-If an edit changes a font, it belongs in core.
+The file map is on [Code Layout](/docs/code-layout.html).
 
-That single rule explains most of the layout. Core can be tested
-without opening a window, which means the hard parts (segment surgery,
-overlap removal, interpolation) have tests that run in milliseconds.
-It also means a second front-end is a new interface rather than a
-second editor.
+### Sources and Documents
 
-The test is not "is this about drawing" but "would another front-end
-need it". Where a click lands is the shell's business. What that
-click does to the outline is core's.
+Runebender uses [norad](https://github.com/linebender/norad) for UFO data and
+[kurbo](https://github.com/linebender/kurbo) for geometry. Designspaces describe
+masters and axes. Font sources remain available to other tools.
 
-### Why More Than One Front-End
+A script can work on saved sources; live MCP tools can inspect unsaved editor
+state and submit proposals. Coordinate disk writes with the editor. See
+[Opening and Saving](/docs/opening.html) and [Agents](/docs/agents.html).
 
-Because the interesting question is not settled.
+### Platform Integration
 
-GPUI is Zed's toolkit. It is fast, it ships in a real application, and
-it compiles to WebAssembly, so one codebase serves desktop and
-browser. That is why it is the default today.
-
-Xilem is the Linebender stack, which is where this project's
-sympathies are and where its dependencies already live. It is younger.
-The port exists so the comparison is made on a real application rather
-than a demo. It also keeps the editor ready if the answer changes.
-
-A shell that is hard to write on one stack and easy on another is
-evidence. Keeping two honest is the cost of collecting it.
-
-### What Sits in Core
-
-Everything that changes a font or reads one to answer a question,
-plus the document model and the command line.
-
-Modules are named for what they do: glyph_ops, cleanup,
-effects, measure, lib_keys, project, and so on. The full map,
-by concern, is on [Code Layout](/docs/code-layout.html).
-
-### The Format Is the Model
-
-Runebender edits UFO through [norad](https://github.com/linebender/norad)
-rather than reading a font into a private model and writing it back.
-
-The gain is that nothing is lost in translation, and any other tool can
-read the sources mid-session. The cost is that the file's shape is the
-editor's shape, including the parts of UFO that are awkward.
-
-This is also why an agent or a script can work alongside the editor at
-all. See [Agents](/docs/agents.html).
-
-### Two Versions of Kurbo
-
-Core carries kurbo twice, as kurbo_09 and through its consumers.
-
-Front-ends are pinned to their toolkit's version, and a library can
-only declare one. Rather than hold every front-end to the oldest, core
-keeps the geometry types it needs at a pinned version and converts at
-the boundary.
-
-It is a real cost. Every consumer is on kurbo 0.13 now, so the only
-conversion left is around the hyperbezier solver.
-
-### Inside a Front-End
-
-runebender-gpui is one Workspace struct, split across files by
-concern: commands, canvas, panels, input, theme accessors, and the
-widgets the editor owns. Font logic is not among them. The editor
-imports what it needs from core by name, at the top of main.rs.
-
-A command is the whole of one intent. The menu item, the shortcut and
-the context menu all land on the same method. There is one place to
-read, and one place to fix.
-
-The file-by-file map is on [Code Layout](/docs/code-layout.html).
-
-### Decisions Worth Knowing
-
-Small choices that look odd until you know why.
-
-The ones that surprise people:
-- One canvas, not one per cell: Outlines in the grid are painted by a single canvas over the whole grid. gpui ends its render pass at every run of paths, so a canvas per cell meant a pass switch per cell.
-- Themes are compiled in: One token file, resolved at startup. It is what keeps the editors from drifting apart. See Themes.
-- The editor owns its widgets: Text fields are built on parley. A dependency that themes itself is a second design system to keep in step.
-- Undo snapshots the glyph: Simpler to reason about than a command log, and a glyph is small.
-- Files are watched: Sources changed on disk reload. This is the whole integration surface for scripts and agents.
-
-### Files, Not a Runtime
-
-Runebender's automation lives outside the application.
-
-There is no scripting runtime in the editor, no plugin API and no
-assistant. Instead the sources sit on disk as UFO, the editor reloads
-what changes, and the same operations run from a shell through
-runebender-core. Whatever you already use for scripting keeps working,
-because the interface is the file.
-
-The other approach is to put the runtime inside: an environment, a
-language and an assistant that all ship with the editor. Counterpunch
-does that, with Python in the browser and an assistant that writes
-scripts for it.
-
-What each choice buys:
-- A runtime inside: Nothing to set up, and an assistant that knows the editor's own API.
-- Files outside: Your git history, your build, your existing scripts and your own agent all keep working.
-
-Neither approach sends your font anywhere. That is a separate
-question from where the automation runs, and both answers can be
-private.
-
-### How Unix-Shaped It Actually Is
-
-Mostly, and it is worth being exact about where it is not.
-
-Against the old rules:
-- Do one thing well: Held. Core does font work, the CLI exposes it, the front-end draws. None of the three needs the others to be tested.
-- Work together: Held. Files on disk are the interface, the editor reloads them, and exit codes let a script branch without reading prose.
-- Text as the universal interface: Partly. Output is JSON on request and UFO is XML on disk, but a font source is a directory, not a stream.
-
-Three places it does not hold:
-
-runebender-core takes paths, not stdin, and writes reports rather than
-fonts. You cannot pipe one invocation into the next. That is a real
-limit, not a stylistic one, and it comes from a font source being a
-directory of files.
-
-Configuration is thin. There is a file, at
-~/.config/runebender/config.toml, and it sets three things. Themes
-are still compiled in, so the file names one rather than defining one.
-
-A window is not a filter. The editor is a normal desktop application,
-and no amount of architecture changes that.
-
-The claim that holds is narrower than "it is a Unix tool". The parts
-are separable, the interface is a file, and the shell can reach the
-operations the window can.
-
-### The Browser Build
-
-The same code compiles to WebAssembly. What changes is what the
-platform allows, not the editing model.
-
-Text fields cannot take focus, in-window menus do not activate, paste
-is unavailable, and export is not possible. Those are limits of the
-build, and the native application has none of them.
-
-See [Development](/docs/development.html) for building it, and
-[Troubleshooting](/docs/troubleshooting.html) for what to expect.
+The desktop application supplies file dialogs, menus, clipboard access, and
+file watching. A browser port must supply browser equivalents and verify the
+rendering and input path. It is not available yet.
 
 
 ## The Interface
@@ -700,9 +517,6 @@ Renaming updates every place the old name was used: components in other
 glyphs, group membership, kerning pairs, the open text session, and the
 selection. You do not have to go and fix
 references by hand.
-
-Renaming and Unicode editing need the native application. Text
-fields cannot take focus in the browser build yet.
 
 Kerning groups and metric keys are covered in
 [Spacing and Kerning](/docs/spacing.html).
@@ -1421,7 +1235,7 @@ Your external agent handles its own model login. Runebender does not need
 an API key for MCP. When the agent uses a hosted model, prompts and the
 font data returned to that model go to its provider.
 
-The native GPUI chat pane can also run a local model through
+The native Runebender chat pane can also run a local model through
 [font-ml](/docs/local-models.html). That is a separate inference choice
 from connecting OMP to the editor.
 
@@ -1438,7 +1252,7 @@ them.
 4. Point it at the smallest relevant Runebender page first; use
 https://runebender.org/llms-full.txt only when it needs the whole manual.
 
-    runebender-gpui sources/Font.designspace
+    runebender-xilem sources/Font.designspace
     curl -O https://runebender.org/llms-full.txt
 
 Agents read a repository's own instructions file, AGENTS.md or
@@ -1671,15 +1485,15 @@ See [Install](/docs/install.html) for prerequisites.
 
 ```sh
 cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
-cargo +stable install --git https://github.com/eliheuer/runebender-core --force
-cargo +stable install --git https://github.com/eliheuer/runebender-gpui --force
-runebender-gpui path/to/Font.designspace
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core --force
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem --force
+runebender-xilem path/to/Font.designspace
 ```
 
 If an older editor is running, save your work and restart it after updating.
 Updating the executable does not add tools to an already running process.
-The Xilem editor exposes the same live tools. This connection is not yet
-available in the browser editor or on Windows.
+Live connections are available on macOS and Linux. Windows support and
+the browser port are not available yet.
 
 Use a copy of a font for your first proposal and undo test. Once connected,
 you do not need to save between an edit in the canvas and a tool read.
@@ -1836,7 +1650,7 @@ running as your user can access it. Requests are handled on the editor's UI
 thread; the socket worker does not mutate font data in the background.
 
 For the implementation and development roadmap, see core's
-[AI type-design documentation](https://github.com/eliheuer/runebender-core/blob/main/docs/ai-type-design.md).
+[AI type-design documentation](https://github.com/eliheuer/runebender-xilem/blob/main/crates/runebender-core/docs/ai-type-design.md).
 
 
 ## Type design with agents
@@ -1983,10 +1797,9 @@ https://runebender.org/docs/experiments.html
 
 Fork the live font, compare independent designs, and apply selected changes with undo.
 
-The native GPUI Nodes workspace uses connected nodes for the live font, independent
-versions, Designbot proofs, and explicit application to the root. Controls and preview
-images live inside the canvas. Xilem exposes experiments through MCP; its canvas does
-not yet implement these live node controls.
+Runebender exposes experiment versions through MCP. The Nodes canvas does not
+yet provide live version controls or embedded experiment proofs. Use a connected
+MCP client for this workflow.
 
 ### Start
 
@@ -1994,12 +1807,9 @@ Install current designbot, runebender-core, and the native editor. Restart the
 editor after updating. In OMP run /mcp reload and connect to the intended editor.
 Read design_context, the official type-design guide, and the font's DESIGN.md.
 
-Open Nodes (or click New if an older workflow is open). The starter graph connects
-Current font to two Font version nodes, each with its own Designbot proof. Run creates
-unrun versions in connection order and renders the proofs; it never executes Apply.
-Create version snapshots a connected input once. Repeating it preserves the result.
-Fork direction adds another connected version and proof. A created version retains
-its original input connection; fork another direction to try a different input.
+Use experiment_fork to create named versions and experiment_list to inspect
+them. Creating a version snapshots its input; edits stay in the version until
+explicitly applied to the root.
 
 The root is the open, unsaved master. For comparisons made at different times, create
 a baseline version and fork that twice, so both directions have exactly the same input.
@@ -2035,18 +1845,11 @@ or missing characters fail explicitly. This is not a complete compiled-font proo
 
 ### Review and apply
 
-The Font version node displays the branch name to give OMP. Branches created through
-MCP also appear as connected version and proof nodes in the open live graph.
+Use proof, specimen, or export_proof through MCP to compare versions.
+Proofs are snapshots: regenerate them after edits.
 
-Designbot proof nodes render selected glyphs (up to 256; six drawn glyphs when there
-is no selection), or the fixed kerning specimen "AVATAR To Wa". For custom text or
-reference sets, ask OMP for a proof, then click Latest OMP proof in that proof node.
-The PNG shown and exported PDF use the same scene. Images are snapshots: refresh after
-edits. Export PNG opens a save dialog for full-size inspection outside the thumbnail.
-
-Add apply node creates a connected output. Clicking Apply changes accepts the input
-version's changed glyph outlines and kerning, including contour-structure changes. Use experiment_apply through OMP for selective
-existing glyphs or kerning-only application and an explicit keep_structure policy.
+Use experiment_apply for selective existing glyphs or kerning-only application,
+with an explicit keep_structure policy.
 Root changes since the baseline produce conflicts before any mutation. Unrelated edits
 survive. No operation saves the root to disk: inspect, undo if needed, then Save normally.
 
@@ -2057,19 +1860,12 @@ which preserves later work rather than guessing intent.
 
 ### Limits
 
-Save as new UFO exports a version's complete master to a new .ufo directory and
-refuses existing destinations. Discard version removes a leaf experiment without
-changing the root; discard its children first if it has any.
+Versions are session-only and disappear when the font closes. Use the available
+MCP export tools to preserve a version before closing. Confirm exact schemas
+with tools/list. Normal font Save persists accepted root changes.
 
-Versions are session-only and disappear when the font closes. The Nodes Save action
-stores layout and connections in .nodes.json, but does not persist version contents.
-Reopening that workflow requires creating new versions; it cannot restore old AI
-results. Save important versions as new UFOs before closing. Normal font Save persists
-accepted root changes. Maximum 16 versions per document.
-
-Live font ports deliberately cannot connect to the older disk-based model-task ports.
 OMP remains the AI client for this increment. Local/cloud process nodes, persistent
-version bundles, and comparison controls beyond adjacent proof previews remain future
+version bundles, and canvas comparison controls remain future
 work. The MVP does not merge overlapping conflicts, create absent glyph records,
 edit groups, or automatically dispatch multiple AI jobs. Family-wide
 interpolation validation remains a separate review. Keep experimental proofs as files
@@ -2214,7 +2010,7 @@ command takes --json.
 
 ### What Is Not Here
 
-The native GPUI editor has a local chat pane through font-ml. For an
+The native Runebender editor has a local chat pane through font-ml. For an
 external conversation connected to the live editor, start with
 [MCP and OMP](/docs/mcp.html). Neither workflow currently provides
 complete glyph generation from a description. Kerning and spacing models
@@ -2247,8 +2043,8 @@ This workflow needs the native editor, runebender-core, and font-ml on the same 
 
 On macOS, build font-ml with Metal support. On Linux, CPU is the conservative default; use the CUDA build only on a machine with a working NVIDIA toolkit.
 
-    cargo +stable install --git https://github.com/eliheuer/runebender-gpui
-    cargo +stable install --git https://github.com/eliheuer/runebender-core
+    cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
+    cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-core
     cargo +stable install --git https://github.com/eliheuer/font-ml --features metal
     cargo +stable install --git https://github.com/eliheuer/font-ml --features cuda
 
@@ -2275,7 +2071,7 @@ Use the supplied demo font or a disposable copy. First confirm what this build c
 
     font-ml tasks --json
     font-ml describe ~/.runebender/models/runebender-workshop-bolden --json
-    runebender-gpui path/to/WorkshopDemo.designspace
+    runebender-xilem path/to/WorkshopDemo.designspace
 
 For chat, open the same font, choose the runebender-workshop-4b model in the native Chat panel, and ask it to read one known glyph and produce a proof. It may read, proof, and propose, but it must not install or save unless asked. For an outline model, run one small proposal against the disposable source with --write; it writes a proposal layer and leaves the foreground alone.
 
@@ -2584,9 +2380,6 @@ and Filter menus hold many operations that do not: booleans,
 extremes, rounding, harmonize, balance, optimize, curve conversion,
 offset, extrude, roughen, round corners, and slant.
 
-In the browser build, in-window menu items do not activate yet. Use
-the keyboard commands there.
-
 
 ## File Format
 https://runebender.org/docs/format.html
@@ -2718,9 +2511,6 @@ Glyph → Export Glyph as SVG writes the current glyph as an SVG file
 beside the source. It is for a drawing you want outside the font, not
 part of the font build.
 
-Export and SVG export are native only. The browser build cannot
-write to your disk.
-
 
 ## Scripting
 https://runebender.org/docs/scripting.html
@@ -2735,7 +2525,7 @@ API. Choose the interface that matches the work.
 Automation paths:
 - Live MCP tools: Read unsaved glyphs and submit proposals. Start with MCP and OMP.
 - File watching: The editor reloads sources changed on disk. Run any script you like against the UFO and the change appears.
-- runebender-core: The editing model as a Rust library, with no interface attached. Build a tool on it.
+- Rust library: The editing model as a Rust library, with no interface attached. Build a tool on it.
 
 If you script fonts in Python today, keep doing that. UFO is the
 interchange, and Runebender is one of the tools around it rather
@@ -2755,17 +2545,14 @@ editors skip external reloads that conflict with unsaved work; disk scripts
 cannot read those unsaved changes. Keep sources in version control and use
 [MCP](/docs/mcp.html) when an agent needs the live document.
 
-### Building on the Core
+### Rust Tools
 
-[runebender-core](https://github.com/eliheuer/runebender-core) is the
-crate every front-end shares: the editing model, shaping through
-harfrust, measurement, curve analysis, path operations, and the Glyphs
-importer. It has no window and no interface.
+The font library is part of the
+[runebender-xilem workspace](https://github.com/eliheuer/runebender-xilem).
+It provides shaping, measurement, curve analysis, and path operations without
+a window. See [Code Layout](/docs/code-layout.html).
 
-    cargo add --git https://github.com/eliheuer/runebender-core
-
-It is not a stable API. It changes when the editor needs it to, and
-there are no release notes yet. Pin a revision.
+Its Rust API is experimental; verify against the source and pin a revision.
 
 ### Building a Font
 
@@ -2807,9 +2594,9 @@ What ships:
 
 ### One File
 
-Every theme comes from themes/runebender.theme.json in
-runebender-core. The editors read the same file, so a change lands in
-all of them at once and none of them can drift.
+Every theme comes from crates/runebender-core/themes/runebender.theme.json
+in the runebender-xilem workspace. The interface resolves its colors from
+this token file.
 
 Colour is authored in OKLCH rather than hex. Lightness and chroma mean
 the same thing at every hue there, so a set of colours reads as one
@@ -2919,17 +2706,17 @@ Themes are compiled into the editor. There is no folder to drop a
 theme into, and no setting that points at one. A theme of your own
 means editing the token file and building from source.
 
-1. Clone runebender-core and runebender-gpui side by side.
-2. Add a block under themes in themes/runebender.theme.json. Copy
+1. Clone runebender-xilem.
+2. Add a block under themes in crates/runebender-core/themes/runebender.theme.json. Copy
 the theme closest to what you want and change what differs.
 3. Add the theme to the editor's theme list and give it a menu action.
 4. Build and switch to it from View → Theme.
 
-    git clone https://github.com/eliheuer/runebender-core
-    git clone https://github.com/eliheuer/runebender-gpui
+    git clone https://github.com/eliheuer/runebender-xilem
+    cd runebender-xilem
     cargo run --release -- path/to/Font.designspace
 
-The tests in runebender-core check a new theme for the mistakes that
+The workspace theme tests check a new theme for the mistakes that
 are hard to see. A mark that does not clear its background. An
 emphasis ring lighter than the ordinary rule. A theme in the menu with
 no action behind it. Run them before trusting a theme you wrote.
@@ -2938,7 +2725,7 @@ no action behind it. Run them before trusting a theme you wrote.
 
 No theme editor, no live reload of a theme, no per-font or per-window
 theme, and no way to load one at runtime. The palette is one file
-compiled in, which is what keeps the editors from drifting apart.
+compiled in.
 
 
 ## Troubleshooting
@@ -2948,15 +2735,16 @@ What to check when the editor will not build, will not open a font, or does some
 
 ### It Will Not Build
 
-If the build fails inside pathfinder_simd, you are on a nightly
-toolchain. The repository pins a stable one in rust-toolchain.toml.
-Remove any override and let the pin apply.
+Build in a clone to use the pinned toolchain, or pass +stable when installing.
+Runebender requires Rust 1.96 or newer. Check the repository README for your
+platform's system libraries.
 
-If the build fails in a dependency you did not change, install again.
-Every git dependency is pinned to a revision, so the graph is the same
-every time.
+```sh
+cargo +stable install --locked --git https://github.com/eliheuer/runebender-xilem runebender-xilem
+```
 
-    cargo install --git https://github.com/eliheuer/runebender-gpui
+If it still fails, include the first compiler error, Rust version, operating
+system, and application revision in your report.
 
 ### A Font Will Not Open
 
@@ -2989,25 +2777,13 @@ the expected convention.
 
 ### The Browser Build
 
-These limits are in the browser build only. The native application
-is unaffected. Use it for real work.
-
-Known browser limits:
-- Text fields: Cannot take focus, except the glyph search box. Metrics fields and the Glyph panel fields do not accept typing.
-- Menus: In-window menu items do not activate. Use the keyboard commands.
-- Paste: Reading the clipboard is not implemented.
-- Script icons: Show as empty boxes. The bundled interface font has no Arabic or Hebrew.
-- Export: Not available. The browser cannot write to your disk.
-
-The browser build also needs cross-origin isolation, because it uses
-shared memory. On runebender.org that is arranged by a service worker,
-since GitHub Pages cannot send the headers itself. A browser that
-blocks service workers will not load the editor.
+The Xilem browser port is not available yet. Use the desktop application.
+See [Development](/docs/development.html) for the current browser milestone.
 
 ### Reporting a Problem
 
 Open an issue on
-[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+[the repository](https://github.com/eliheuer/runebender-xilem/issues).
 
 A useful report says what you did, what happened, and what you
 expected. Name the file you had open and whether you were in the
@@ -3019,120 +2795,60 @@ evidence there is.
 ## Development
 https://runebender.org/docs/development.html
 
-Build from source, work on the shared core alongside, and build the browser bundle.
+Build and contribute to runebender-xilem.
 
-### Repositories
+### Source
 
-Where the code lives:
-- runebender-gpui: The editor. Runs in the browser and as a native application from one codebase.
-- runebender-core: The shared library: editing model, shaping, measurement, curve analysis. No interface.
-- runebender-xilem: The same editor on Xilem, the Linebender UI stack. It exists to compare the two GUI stacks on one application.
-- runebender-druid: The original implementation, kept as project history.
-
-The core crate holds everything that does not need a window, so the
-same font logic serves any front-end put on top of it.
+[runebender-xilem](https://github.com/eliheuer/runebender-xilem) contains the
+application and its font library in one Cargo workspace. Start with its
+AGENTS.md and read DESIGN.md before changing the interface.
 
 ### Build and Run
 
-    git clone https://github.com/eliheuer/runebender-gpui
-    cd runebender-gpui
-    cargo run
-
-The repository pins a stable Rust toolchain in rust-toolchain.toml.
-Cargo applies it on its own.
-
-### Working on Core Too
-
-Clone the core crate beside the editor, then add a cargo paths
-override so the local copy replaces the published one.
-
-    git clone https://github.com/eliheuer/runebender-core
-
-```toml
-# .cargo/config.toml, in the directory that holds both checkouts
-paths = ["runebender-core"]
+```sh
+git clone https://github.com/eliheuer/runebender-xilem
+cd runebender-xilem
+cargo run --release -- path/to/Font.designspace
 ```
 
-Put that file above the two repositories, not inside either one. The
-override is a local development setting, and committing it would
-break the build on every other machine.
+The repository pins its Rust toolchain and upstream Xilem revision.
+Use the platform prerequisites in its README.
+
+### Checks
+
+From the workspace root:
+
+```sh
+cargo fmt --all --check
+cargo clippy --workspace --all-targets
+cargo doc --workspace --no-deps
+cargo test --workspace -- --test-threads=1
+cargo build --workspace --release
+```
+
+Font-based tests use Virtua Grotesk. Set RUNEBENDER_TEST_FONTS to its
+sources directory. CI runs on Linux and macOS with warnings denied.
+Dependency changes also need the repository's supply-chain checks.
 
 ### Where Things Live
 
-The split is the thing to learn first. Font work lives in
-runebender-core and has no interface attached. The front-end draws
-and handles input, and calls core for anything that changes a glyph.
+The interface lives under src/. Font operations live in the workspace's
+library under crates/, where they can be tested without opening a window.
+Both are changed in the same checkout. See [Code Layout](/docs/code-layout.html).
 
-[Code Layout](/docs/code-layout.html) is the reference: every module
-in core by concern, every file in the editor, the conventions, and
-the checks CI runs.
-
-If an edit changes a glyph, it belongs in core, where it can be
-tested without a window and reused by the other front-ends.
-
-### Adding a Tool
-
-The knife is the shortest complete example. Its geometry is
-knife_cut_glyph, slice_paths and knife_hit_points in core, and
-the editor touches it in four places.
-
-1. Add a variant to the Tool enum in main.rs.
-2. Add an icon to themes/toolbar-icons.json in core, and a tile for
-it beside the other tools.
-3. Handle the pointer in the canvas, under a check for your variant.
-4. Give it a keyboard shortcut in the key handler.
-
-    rg 'Tool::Knife' src/main.rs
-    rg 'knife' ../runebender-core/src
-
-Reading those two searches side by side shows the division. Four call
-sites in the front-end, and the cutting itself in core with tests
-around it.
-
-Write the geometry in core first and test it there. A tool whose
-maths only runs when a window is open is one you cannot check.
+Use Xilem and Masonry controls, the existing theme tokens, and the editor's
+command methods. Keep reusable font operations independent of UI state.
 
 ### The Browser Build
 
-The browser build needs a different toolchain from the native one.
+There is no working browser build of runebender-xilem yet. The first milestone
+is running the existing Xilem/Masonry interface in WebAssembly, then opening a
+sample font, editing a glyph, and exporting the result.
 
-```sh
-RUSTUP_TOOLCHAIN=nightly-2026-08-01 \
-CARGO_UNSTABLE_BUILD_STD="std,panic_abort" \
-trunk build --release --public-url /gpui/
-```
-
-Two constraints decide that line. The web backend needs wasm atomics
-and shared memory, and the prebuilt wasm32-unknown-unknown standard
-library has neither, so std must be rebuilt. That is -Z build-std,
-which is nightly only. The nightly must also be newer than the pinned
-stable, because gpui uses library features that stable already has.
-
-Install rust-src and the wasm target for whichever nightly you use.
-
-To deploy, copy dist/ into this site's public/gpui/. Keep
-coi-serviceworker.min.js and its script tag at the top of .
-GitHub Pages cannot send the COOP and COEP headers that shared memory
-requires, so the worker sets them in the browser instead.
-
-### Dependencies
-
-Every dependency comes from crates.io or a public git repository, so a
-plain clone builds with no local paths.
-
-GPUI and gpui_platform come from the Zed git repository, which does
-not publish to crates.io. Both are pinned to a revision, so a fresh
-resolve lands on the same graph.
-
-gpui_platform needs its font-kit feature. Without it the platform
-falls back to a small embedded font list and no interface text renders
-at all, while everything else draws normally. Run
-runebender-gpui --fonts to see what it can resolve.
-
-The widgets are the editor's own, under src/widgets: text fields on
-[parley](https://github.com/linebender/parley), a slider, resizable
-panel groups, and an in-window menu bar for platforms without a native
-one.
+The pinned UI framework currently enables a desktop-only async runtime feature
+that fails on wasm32-unknown-unknown. Browser startup, rendering, file access,
+clipboard, and text input need separate verification. A native build or a
+headless screenshot does not establish browser support.
 
 ### License
 
@@ -3142,206 +2858,53 @@ Apache-2.0 or MIT.
 ## Code Layout
 https://runebender.org/docs/code-layout.html
 
-Where each piece of code lives, why it lives there, and the checks that keep it that way. Read this before changing the repositories.
+The application, font operations, and checks in the runebender-xilem workspace.
 
-### The Three Repositories
+### One Workspace
 
-Runebender is one library, two editors, and one website. Each Rust
-repository has an AGENTS.md at its root: the short guide for
-anyone arriving cold, human or agent, with the layout, how to build
-and test, the CI gate, and the conventions. This page is the long
-version.
+Work in [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
+The root package is the editor. Its font library is included under crates/;
+no separate library checkout is needed. The repository's AGENTS.md records
+build commands and conventions; DESIGN.md covers interface changes.
 
-What each repository is for:
-- runebender-core: Every operation on a font, the document model, and the runebender command line. No window.
-- runebender-gpui: The editor. The window, the input, the drawing, and nothing that changes a font.
-- runebender-xilem: The same editor on Xilem, laid out to mirror the GPUI one.
-- runebender-dot-org: This site: the documentation, and the browser build of the editor.
+### The Interface
 
-The library depends on [norad](https://github.com/linebender/norad)
-and [kurbo](https://github.com/linebender/kurbo). The editor depends
-on the library and on GPUI. The site depends on neither, and copies
-the browser build in as a static asset.
+Application source under src/:
+- main.rs: Entry point and module list.
+- workspace.rs: Editor state.
+- actions.rs: Actions, native menus, and keyboard shortcuts.
+- launch.rs: Event loop, window setup, and first frame.
+- view/: Canvas, panels, chrome, themes, design tokens, and reusable view functions.
+- edit/: Commands, inspector edits, sessions, sidebar actions, and text editing.
+- platform/: Files, dialogs, exports, watching, live connections, and headless captures.
+- widgets/: Application-specific controls and input handling.
 
-### One Rule, and How It Is Kept
+Xilem views read state. Commands describe complete user actions, shared by
+menu items and shortcuts. Reuse theme accessors and design tokens when
+changing a view.
 
-If an operation changes a font, or reads one to answer a question, it
-lives in core.
+### Font Operations
 
-The test is whether another front-end needs it. Where a click
-lands is the editor's business. What that click does to the outline
-is core's. An operation in core can be tested in milliseconds without
-a window. It can also run from the command line, from a script, or
-from an agent.
+The workspace library groups source into six concerns:
 
-Continuous integration keeps the rule honest. Every push to either
-crate runs the same gate on Linux and macOS.
+Font library modules:
+- outline/: Shape editing and curve mathematics.
+- analysis/: Measurements, curve analysis, and search.
+- formats/: File formats, import, and metadata keys.
+- document/: Masters, projects, interpolation, and composites.
+- text/: Shaping, joining rules, and the text buffer.
+- ui/: Colors, themes, sidebar data, selection, undo, and viewport state.
 
-What CI checks:
-- cargo fmt --check: Formatting is not a review topic.
-- cargo clippy --all-targets: With warnings denied. Both crates are clean today.
-- cargo doc --no-deps: With warnings denied, so a broken doc link fails the build.
-- cargo test: Core: 299 tests. Editor: 38, all of them about the shell itself.
-- wasm32 check: The editor's browser build compiles on the pinned nightly with a rebuilt standard library.
-- missing_docs: On in core. A public item without a doc comment fails the build.
-- missing_docs_in_private_items: On in the editor, where almost nothing is pub: every item needs a doc comment, fields and variants included.
-- Minimum Rust: Core also builds at the rust-version in its manifest.
+Each directory's mod.rs explains its scope. Operations use norad types and
+kurbo geometry. Public items have doc comments; editing operations report
+whether or how much they changed.
 
-Core forbids unsafe in its manifest. The editor denies it, and the
-two tests that set an environment variable allow it explicitly.
+### Validation
 
-A change that moves font logic into the editor will compile. Nothing
-stops it mechanically. The rule is kept by review, and by this page
-saying what the rule is.
-
-### runebender-core, by Directory
-
-Six directories under src/, one per concern. Each has a mod.rs
-whose comment says what belongs there, so a newcomer reads six
-paragraphs and knows where to look.
-
-src/outline: what changes a shape:
-- glyph_ops: Point moves, deletion with segment surgery, smooth constraints, pen primitives, shapes, remove overlap.
-- component_ops: Components inside a glyph: resolve, hit test, move, add, duplicate, delete, decompose.
-- point_ops, segment_ops: Hit testing and insertion on points and segments.
-- knife: Slicing.
-- cleanup: Operations that keep the shape and fix its points: tidy, direction, rounding, extremes, handle fitting.
-- effects: Operations that make a new shape: offset, extrude, roughen, expand stroke, corner components, bolden.
-- convert, embolden: Quadratic to cubic and back; a learned per-point offset.
-- glyph_paths, path/: norad to kurbo outlines, and the segment maths: cubic, quadratic, hyperbezier.
-
-src/analysis: what reads a font:
-- measure: Stems, sidebearings, joining bands.
-- curve: Curvature: continuity, kinks, extrema.
-- category, search: Unicode categories, and the glyph search query language.
-
-src/formats: keys and file formats:
-- lib_keys: Every com.runebender.* key: masks, annotations, saved filters, HOI intermediates. One reader and one writer per key.
-- metrics_keys, mark_color, color_font: The Glyphs and ufo2ft keys the editor shares with other tools.
-- svg, binary_import, glyphs_import, image_trace: Other formats in and out: SVG, compiled fonts, .glyphs, images.
-
-src/document, src/text, src/ui:
-- document/project: The open document: Master and Project. See the next section.
-- document/font_ops: Edits to the font rather than an outline: kerning pairs and groups, glyph names and unicodes.
-- document/var_model, composites: Interpolation across a designspace, and components with anchors.
-- document/font_memory, new_font, model/: Fonts without a filesystem, a new font from the template, kerning lookup, glyph metadata.
-- text/shape, joining, buffer/: Shaping through the font's own features, the Arabic joining rules, and the Text tool's buffer in five files: types and edits, layout, shaping, bidi, kerning.
-- ui/theme, theme_oklch: The token file every editor resolves its colours from. See Themes.
-- ui/sidebar, editing/: The glyph grid's filter data; selection, undo, and the viewport.
-- testing/: What the tests share, compiled only for cargo test: where the fixture fonts are.
-- bin/runebender.rs: The command line over all of the above.
-
-### The Document Layer
-
-src/project.rs holds what the editor used to hold on its own.
-
-A Master is one UFO with its bookkeeping and a paint-ready cache.
-The bookkeeping is which glyphs changed since the last save, and
-whether kerning did. The cache is a GlyphEntry per glyph, in the
-order the grid shows. An entry holds the outline as a kurbo path, its
-points, its anchors, and its ink box. A Project holds the masters, the axes and
-their locations, the variation model, the named instances, and the
-sparse brace sources.
-
-Nothing in this layer knows how a glyph is drawn. Names are
-Arc, not the toolkit's string type. The front-end reads the
-cache and paints it, and every front-end gets the same cache.
-
-Two constructors stay in the editor: the ones that build a project
-from fetched or embedded files in the browser. They call
-Project::from_designspace like everything else.
-
-### runebender-gpui
-
-The editor is one Workspace struct. Its methods are split across
-files by concern, each file an impl Workspace block with a module
-comment, and the files sit in three directories that each say what
-belongs in them.
-
-src/:
-- main.rs: main() and the module list. About 300 lines.
-- workspace.rs: The Workspace struct and the types it is made of. Its state is five named groups: grid, sidebar, preview, models, and inputs, plus the tools, drags, and sessions.
-- actions.rs: The action list and the menus. One menu definition serves the native bar and the in-window one.
-- wiring.rs: Workspace::new: every input widget and the subscription that writes it through to the font.
-- launch.rs: The keymap, the keystroke router, argument handling, and the interface font. Everything main() calls before the window opens.
-- view/: What the window shows. canvas/ (the grid views, and the editing view as an EditorScene plus one paint function per layer), grid, chrome, panels/ with one file per region, render, paint, blur, and the theme accessors.
-- edit/: What the user does. commands/ (one method per user-facing command, one file per menu), editing, input, inspector, session, sidebar, text_tool, local_ai.
-- platform/: The world outside the window. config, journal, host (files and watching), web_host.
-- widgets/: The controls the editor owns: text input, slider, resizable split, and the in-window menu bar for platforms without a native one.
-- tests.rs: Tests of the shell itself. Anything checkable without a window belongs in core instead.
-
-The use runebender_core::... list at the top of main.rs is the
-seam between the two crates.
-
-### runebender-xilem
-
-The Xilem editor mirrors the GPUI layout file for file where the two
-share a concern, so a change in one is easy to carry to the other.
-
-src/, and how it maps:
-- main.rs, workspace.rs, actions.rs, launch.rs: The same four roles as in GPUI. actions.rs also holds the native menu bar and the keymap behind it.
-- view/: canvas/ (editor, grid), panels/, chrome, render, theme, plus two Xilem has to carry itself: design, the design system, and recipes, the view functions that repeat.
-- edit/: commands, inspector, session, sidebar, text_tool.
-- platform/: host, watch, and screenshot, which renders a frame with no window.
-- widgets/: Icon tiles, text labels, the context menu, the shortcut host.
-- model.rs: Its own font model, older than core's. Replacing it with core's Master and Project is the next change.
-
-Where the two differ, the difference is the framework. GPUI builds
-its input widgets once in wiring.rs; Xilem rebuilds
-views from state every frame, so there is no wiring step.
-
-### Tests and Fixtures
-
-Tests live next to the code they test, in a tests module at the
-bottom of the file.
-
-Tests that need a real font load Virtua Grotesk from the font's own
-repository, [virtua-grotesk](https://github.com/eliheuer/virtua-grotesk),
-so the crate stays small and the tests run against the current font.
-src/testing/fonts.rs is the one place that knows where. It reads
-RUNEBENDER_TEST_FONTS, or looks for ../virtua-grotesk/sources
-beside the checkout, and fails with the expected path when neither
-exists. The editor's browser build embeds the same sources as its
-demo font.
-
-    git clone https://github.com/eliheuer/virtua-grotesk
-    cd runebender-core && cargo test
-
-CI checks that repository out beside each crate, sparse to sources.
-
-### Conventions
-
-What a change is expected to do:
-- One file, one concern: A module is named for what it does to a font, and its header comment says so in a sentence. A directory groups modules by concern, and its mod.rs says what belongs.
-- norad in, norad out: Core functions take norad::Glyph or norad::Font and kurbo geometry, and return the same. No private model.
-- Report what changed: An operation that edits in place returns whether it changed anything, or how many things it changed.
-- Document every item: Public in core, everything in the editor. Say what it does and what the caller is responsible for. A doc comment that names a type wraps it in backticks, because rustdoc treats an angle bracket as HTML.
-- Name your imports: No glob imports outside test modules. Every name in a file can be followed to its source.
-- Keys in one place: A UFO lib key has one constant, one reader, and one writer, in lib_keys or the module for its format.
-- Commit messages say why: The diff shows what changed. The message records what was wrong and what the change decided.
-- Builds anywhere: No path to a sibling checkout in a committed file. Local overrides live in a .cargo/config.toml above the repositories.
-
-### What Is Still Out of Place
-
-Known, and in order of cost:
-- outline/path/hyper_model: The old Xilem-era glyph types. They survive only as the intermediate form for hyperbezier conversion, next to their one user.
-- Two versions of kurbo: The hyperbezier solver is on kurbo 0.9, the rest on 0.13, and path/hyper.rs converts between them.
-
-### Not a Workspace of Crates
-
-Core stays one crate.
-
-Splitting it into a Linebender-style workspace of small crates was
-considered and rejected. The gains are independent versioning and
-faster incremental builds, and neither matters for a library with one
-consumer and a short build. The costs are real: more manifests, more
-visibility rules to learn, and a dependency graph a new contributor
-reads before they read code.
-
-The two moves that mattered are done. The font operations and the
-document layer left the editor, and the module map is the crate map.
-A split can be made later from what is already separated, if a
-second consumer ever needs it.
+Follow [Development](/docs/development.html) for workspace checks. Tests live
+beside the code they exercise. Set RUNEBENDER_TEST_FONTS for font fixtures.
+Check interface changes with matching-size screenshots and native interaction;
+headless captures alone cannot verify keyboard, pointer, or browser behavior.
 
 
 ## Configuration
@@ -3382,7 +2945,7 @@ Environment first, then the file, then the built-in default.
 A variable set for one run has to beat a setting meant for every run.
 Otherwise putting one in front of the command would do nothing.
 
-    RUNEBENDER_MODELS=./scratch-models runebender-gpui Font.designspace
+    RUNEBENDER_MODELS=./scratch-models runebender-xilem Font.designspace
 
 The variables:
 - RUNEBENDER_MODELS: Overrides models.
@@ -3442,7 +3005,7 @@ What it is:
 - Is it ready for production work?: No. It is alpha. It writes to your sources in place, so keep them in version control and work on copies.
 - What does it cost?: Nothing. Apache-2.0 or MIT.
 - Is this an official Linebender project?: No. It is built on Linebender crates and aims at the Linebender stack, but the site and the editor are maintained independently.
-- Why are there several front-ends?: One editing core with interchangeable interfaces. GPUI is the current default; the Xilem port exists to compare the two on the same application. See Development.
+- Where is the source?: runebender-xilem contains the application.
 
 ### Files
 
@@ -3456,9 +3019,8 @@ Formats:
 ### Running It
 
 Install and launch:
-- Is there a download?: Not yet. Build it with cargo, or use the browser build. See Install.
-- Does the browser version upload my font?: No. It runs entirely in the browser. Nothing is sent anywhere.
-- Why is the browser version limited?: Its platform layer is younger than the native one. The gaps are listed in Troubleshooting.
+- Is there a download?: Not yet. Build runebender-xilem with cargo. See Install.
+- Can I use it in a browser?: A browser port is planned. For now, install the desktop application.
 - Windows and Linux?: The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.
 
 ### Drawing
@@ -3473,7 +3035,7 @@ Common confusions:
 ### Getting Help
 
 Open an issue on
-[the repository](https://github.com/eliheuer/runebender-gpui/issues).
+[the repository](https://github.com/eliheuer/runebender-xilem/issues).
 A useful report says what you did, what happened, and what you
 expected, and names the file and whether you were in the browser or
 the native application. If the editor wrote something wrong into a
