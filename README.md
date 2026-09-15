@@ -31,7 +31,7 @@ src/
   styles/         global.css
   assets/         Source images processed by Astro <Image>
 public/           Raw static files copied verbatim into the build:
-                    favicon, og-image, CNAME, .nojekyll,
+                    favicon, CNAME, .nojekyll,
                     robots.txt, llms.txt, llms-full.txt,
                     cloud/editor/ (Vite build artifact, see below)
 scripts/

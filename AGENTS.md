@@ -17,7 +17,7 @@ frontend comparison or separate library product listing.
 - Shared layout and chrome live in `src/layouts/` and `src/components/` — there is one header, one footer, one sidebar, and one source of truth for each.
 - Global CSS in `src/styles/global.css`. The Swiss/brutalist visual direction is preserved.
 - Build output goes to `dist/`. URLs preserve the legacy `.html` suffix via `build.format: "preserve"` so existing external links continue to work.
-- `public/` holds raw static files copied verbatim into the build (favicon, og-image, CNAME, `.nojekyll`, robots.txt, llms.txt, llms-full.txt, and the cloud editor build artifact at `public/cloud/editor/`).
+- `public/` holds raw static files copied verbatim into the build (favicon, CNAME, `.nojekyll`, robots.txt, llms.txt, llms-full.txt, and the cloud editor build artifact at `public/cloud/editor/`).
 - `/cloud/editor/index.html` is a checked-in static artifact built from `../runebender-web` by `scripts/build-cloud-editor.sh`; Astro should treat it as opaque release output, not source to refactor during website work.
 
 ## Local workflow

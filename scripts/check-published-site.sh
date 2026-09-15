@@ -47,7 +47,6 @@ paths="
 /robots.txt
 /sitemap-index.xml
 /assets/favicon.png
-/assets/og-image.svg
 "
 
 for path in $paths; do
