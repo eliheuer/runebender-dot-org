@@ -355,7 +355,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('runebender_browser_bg.wasm?v=b3d372ad292791df', import.meta.url);
+        module_or_path = new URL('runebender_browser_bg.wasm?v=4b7c72a3292db1cf', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
