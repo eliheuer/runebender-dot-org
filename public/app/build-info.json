@@ -1,6 +1,6 @@
 {
   "repository": "https://github.com/eliheuer/runebender-xilem",
-  "commit": "999398e2797fac5433337f37e39b9dcf48ab4be1",
-  "wasm_sha256": "1c55023a3d4900db265ab6b9bffaa11b7bef676da1639e667fb107d6f4b208de",
-  "release": "4b7c72a3292db1cf"
+  "commit": "26bf2e226137e580682a14481001f32f0380f013",
+  "wasm_sha256": "c7e689a1cd3bae87272dc9cb34cec25718f205600dd8af42a6e30fb67c2c02ee",
+  "release": "b7bc56cc04e9c62a"
 }

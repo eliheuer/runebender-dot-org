@@ -1,4 +1,4 @@
-import init, { BrowserEditor } from './pkg/runebender_browser.js?v=4b7c72a3292db1cf';
+import init, { BrowserEditor } from './pkg/runebender_browser.js?v=b7bc56cc04e9c62a';
 const canvas = document.querySelector('#app');
 const context = canvas.getContext('2d', { alpha: false });
 const textInput = document.querySelector('#text-input');
@@ -168,9 +168,6 @@ watchResolution();
 setInterval(() => {
   if (!document.hidden && (window.devicePixelRatio || 1) !== scale) resize();
 }, 250);
-document.querySelector('#reset').addEventListener('click', () => {
-  if (confirm('Discard this tab’s edits and reload the sample font?')) location.reload();
-});
 try {
   await init();
   resize();
