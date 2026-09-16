@@ -1,9 +1,5 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import outlineScreenshot from "../assets/runebender-outline.png";
-import gridScreenshot from "../assets/runebender-grid.png";
-import nodesScreenshot from "../assets/runebender-nodes.png";
 ---
 
 <BaseLayout
@@ -39,29 +35,32 @@ import nodesScreenshot from "../assets/runebender-nodes.png";
       </div>
 
       <figure class="screenshot-block screenshot-cycle" data-cycle>
-        <Image
+        <img
           class="frame is-shown"
-          src={outlineScreenshot}
+          src="/images/runebender-xilem-outline.png"
           alt="Runebender editing an outlined letter R with curvature combs and continuity markers"
-          widths={[640, 960, 1280, 1600]}
-          sizes="(max-width: 1060px) 100vw, 60vw"
+          width="2624"
+          height="1824"
           loading="eager"
+          decoding="async"
         />
-        <Image
+        <img
           class="frame"
-          src={nodesScreenshot}
+          src="/images/runebender-xilem-nodes.png"
           alt="Runebender showing a node workflow: a model boldening a master, compared and installed"
-          widths={[640, 960, 1280, 1600]}
-          sizes="(max-width: 1060px) 100vw, 60vw"
+          width="2624"
+          height="1824"
           loading="lazy"
+          decoding="async"
         />
-        <Image
+        <img
           class="frame"
-          src={gridScreenshot}
+          src="/images/runebender-xilem-grid.png"
           alt="Runebender showing the Virtua Grotesk glyph grid"
-          widths={[640, 960, 1280, 1600]}
-          sizes="(max-width: 1060px) 100vw, 60vw"
+          width="2624"
+          height="1824"
           loading="lazy"
+          decoding="async"
         />
       </figure>
     </section>
