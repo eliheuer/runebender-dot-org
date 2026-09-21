@@ -35,7 +35,7 @@ After building and starting preview, link-check the generated site:
 pnpm run check-links
 ```
 
-The primary action is Launch App, linking to `/wasm-editor/`.
+The primary action is Launch Application, linking to `/wasm-editor/`.
 Keep the homepage compact: one launch button, a short install command, and the
 full GitHub URL. Keep the existing screenshot files and rotation.
 `/wasm-editor/` embeds the real Xilem WebAssembly editor from `public/app/`.

@@ -138,6 +138,15 @@ a {
   text-decoration: none;
 }
 
+/* Content links use one quiet underline. Navigation and button links keep
+   their shape-based treatments instead of receiving this text decoration. */
+main a:not(.button) {
+  text-decoration: underline;
+  text-decoration-color: var(--g-68);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
 a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--g-25);
@@ -947,6 +956,7 @@ th {
 
 .footer-note a {
   text-decoration: underline;
+  text-decoration-color: var(--g-68);
   text-underline-offset: 3px;
 }
 

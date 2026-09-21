@@ -11,7 +11,7 @@ This site is alpha documentation. The editor changes quickly, so treat these pag
 
 ## Start Here
 
-- [Launch App](https://runebender.org/wasm-editor/): the real Xilem interface compiled to WebAssembly, with a bundled editable font.
+- [Launch Application](https://runebender.org/wasm-editor/): the real Xilem interface compiled to WebAssembly, with a bundled editable font.
 
 - [Documentation map](https://runebender.org/docs): every page, grouped.
 - [Install](https://runebender.org/docs/install.html): install or build runebender-xilem with Cargo.

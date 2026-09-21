@@ -78,7 +78,7 @@ The deploy workflow is intentionally manual-only until launch. To publish:
 
 ## Browser editor
 
-Launch App at `/wasm-editor/` embeds the actual Xilem/Masonry interface,
+Launch Application at `/wasm-editor/` embeds the actual Xilem/Masonry interface,
 compiled to WebAssembly from runebender-xilem. The bundled font can be browsed
 and edited in memory. Saving files and local AI execution require the desktop.
 
@@ -95,4 +95,4 @@ WASM checksum. Builds use a committed source snapshot, so concurrent desktop
 edits are excluded. Loader, bindings, and WASM requests share a release identifier
 to prevent incompatible cached files from being mixed. Historical bundles under
 `public/cloud/` remain opaque artifacts;
-they are not the Launch App entry point. Homepage screenshots are independent.
+they are not the Launch Application entry point. Homepage screenshots are independent.

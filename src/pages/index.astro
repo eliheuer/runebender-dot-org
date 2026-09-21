@@ -14,14 +14,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <p>
             Runebender is a cross-platform, free and open-source font editor built on the
             <a href="https://linebender.org">Linebender</a> ecosystem of
-            <a href="https://www.rust-lang.org">Rust</a> crates. It runs on Linux
-            and macOS, with <a href="/docs/install.html">Windows support in development</a>.
+            <a href="https://www.rust-lang.org">Rust</a> crates. The desktop application
+            runs on Linux and macOS, and an experimental
+            <a href="/wasm-editor/">WebAssembly version is available in the browser</a>,
+            though it is not fully functional yet.
           </p>
           <p>
             It is designed to be an extensible and flexible base to build custom
             tools and workflows on top of, and uses the UFO and Designspace font
-            source formats by default. It also supports importing Glyphs, Glyphs
-            Package, and single-master Babelfont sources.
+            source formats by default. It can also import Glyphs files, Glyphs
+            packages, Babelfont packages, and compiled TTF and OTF fonts.
           </p>
           <p>
             Included is a ComfyUI-like node editor for non-destructive workflows
@@ -30,7 +32,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </p>
         </div>
         <div class="hero-actions" aria-label="Launch Runebender">
-          <a class="button primary" href="/wasm-editor/">Launch App</a>
+          <a class="button primary" href="/wasm-editor/">Launch Application</a>
         </div>
       </div>
 
@@ -95,7 +97,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .screenshot-cycle { position: relative; display: grid; min-height: 0; margin: 0; padding: 0; }
   .screenshot-cycle :global(.frame) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 16px; border: 0; opacity: 0; transition: opacity .8s ease; }
   .screenshot-cycle :global(.frame.is-shown) { opacity: 1; }
-  .section { display: grid; grid-template-columns: 160px minmax(0, 1fr); align-items: center; gap: 24px; padding: 16px 24px; }
+  .section { display: grid; grid-template-columns: minmax(260px, .7fr) minmax(0, 1.3fr); align-items: center; gap: 0; padding: 16px 24px; }
   .section-kicker { margin: 0; }
   pre { margin: 0; padding: 12px 16px; font-size: 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
   .install-steps pre code { white-space: pre-wrap; overflow-wrap: anywhere; }

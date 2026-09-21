@@ -82,7 +82,7 @@ Cargo uses the repository's pinned toolchain. See
 
 ### In the Browser
 
-[Launch App](/wasm-editor/) to try the real Runebender interface in your
+[Launch Application](/wasm-editor/) to try the real Runebender interface in your
 browser. Explore the bundled Virtua Grotesk font, open a glyph, drag outline
 points, undo and redo edits, zoom, and resize the panels.
 
