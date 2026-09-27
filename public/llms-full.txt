@@ -298,48 +298,6 @@ dozen drawings this way. See
 [Components and Anchors](/docs/components.html).
 
 
-## Architecture
-https://runebender.org/docs/architecture.html
-
-One Runebender application, built with Xilem and the Linebender stack.
-
-### The Application
-
-[runebender-xilem](https://github.com/eliheuer/runebender-xilem) is the Runebender
-application. Xilem describes the interface from application state; Masonry
-provides widgets and event handling. The rendering and text stack uses
-Linebender libraries.
-
-The repository contains the interface and font operations in one workspace.
-Users install one application.
-
-### Font Operations and Interface
-
-The interface owns the window, input, and drawing. Font operations belong in
-the workspace's library so they can be tested without a window and used by
-command-line tools. Moving a point and updating a UFO are font operations;
-turning a pointer position into an editing command belongs to the interface.
-
-The file map is on [Code Layout](/docs/code-layout.html).
-
-### Sources and Documents
-
-Runebender uses [norad](https://github.com/linebender/norad) for UFO data and
-[kurbo](https://github.com/linebender/kurbo) for geometry. Designspaces describe
-masters and axes. Font sources remain available to other tools.
-
-A script can work on saved sources; live MCP tools can inspect unsaved editor
-state and submit proposals. Coordinate disk writes with the editor. See
-[Opening and Saving](/docs/opening.html) and [Agents](/docs/agents.html).
-
-### Platform Integration
-
-The desktop application supplies file dialogs, menus, clipboard access, and
-file watching. The [WASM editor](/wasm-editor/) runs the Xilem interface in
-WebAssembly with an editable bundled font. Browser edits stay in the tab;
-opening and saving local files and running workflows require the desktop.
-
-
 ## The Interface
 https://runebender.org/docs/interface.html
 
@@ -1014,6 +972,35 @@ The Compare section lists differing advance widths between masters,
 along with structural incompatibilities and kerning pair counts.
 
 
+## Metaballs
+https://runebender.org/docs/metaballs.html
+
+Editable source shapes that blend before explicit contour conversion.
+
+Metaballs remain editable source objects until explicit conversion.
+Previewing or saving them does not add ordinary contour points.
+Choose the paired-circle tool to place and move centers; use the inspector for position, Radius, Strength, and Threshold.
+Centers in a group blend together, while **Start a new group** prepares an independent group.
+
+Use **Groups to cubic** or **Glyph to cubic** in the inspector or Path menu to create ordinary outlines.
+The overview can convert a font's current source as one undoable batch.
+Convert before using an external compiler that does not understand Runebender's metaball metadata.
+
+For a separate output UFO, run:
+
+```sh
+runebender collapse-metaballs Source.ufo --out Cubic.ufo
+```
+
+The destination must not exist, and the input is not overwritten.
+--resolution controls field sampling and --accuracy controls curve fitting.
+Conversion prepares the result before publishing it and reports a failure rather than replacing an unresolved shape.
+
+Metaball metadata uses the versioned com.runebender.metaballs glyph-lib key.
+The outline engine locates the field boundary, extrema, and curvature features, then uses [img2bez](https://github.com/eliheuer/img2bez) for constrained cubic fitting.
+This preserves type-design structure such as extrema and on-axis handles in the converted contour.
+
+
 ## Feature Code
 https://runebender.org/docs/features.html
 
@@ -1264,181 +1251,66 @@ than to one master, so they live in the Axes section. See
 ## Agents
 https://runebender.org/docs/agents.html
 
-Keep the agent beside the editor. Live MCP tools expose unsaved font data and offer edits for you to review.
+Give an agent the right Runebender context for the font and task at hand.
 
-### Choose an Agent Surface
+### If You Were Given Only runebender.org
 
-For interactive type design, start with [MCP and OMP](/docs/mcp.html).
-The agent reads the live document, including unsaved edits, and proposes
-changes. You review and install those proposals in the editor, with undo.
-OMP is the recommended starting client; other local stdio MCP clients can
-use the same tools.
+Read [llms.txt](/llms.txt) for a short task map.
+It points to installation, the editor manual, the live MCP connection, theme creation, and the code architecture.
+Read the smallest page that matches the request.
+For complete text in one fetch, use [llms-full.txt](/llms-full.txt).
+The [capability map](/agent-capabilities.json) gives clients a machine-readable routing summary.
 
-File-based automation remains useful for builds and batch work. It reads
-saved sources, and the editor can reload external changes when they do not
-conflict with unsaved work. Use the live connection when the agent needs
-the drawing currently on your canvas.
+For coding work, also read the checked-out repository's AGENTS.md and the relevant module header.
+For type design, read the font project's DESIGN.md and ask the designer for approved references and acceptance criteria.
+This website explains Runebender; it cannot supply the private design rules of an arbitrary font.
 
-Use screen control only to judge visual output or operate a UI-only command.
-For geometry, metrics, and text data, the live tools are a more exact contract
-than pixels. For a saved build or a repeatable batch change, use the UFO and
-designspace files instead of a live session.
+### Choose the Right Surface
 
-### Model Access and Data
+| Need | Start here |
+| --- | --- |
+| Install or run the application | [Install](/docs/install.html) |
+| Inspect unsaved work in the native editor | [MCP](/docs/mcp.html) |
+| Make a guarded live edit | [MCP](/docs/mcp.html), then inspect the connected tool schemas |
+| Compare a compiled specimen | [MCP proof workflow](/docs/mcp.html) |
+| Automate saved UFO or Designspace files | [Scripting](/docs/scripting.html) |
+| Work on UI or theme code | [Design principles](/docs/design-principles.html), [themes](/docs/themes.html), and [architecture](/docs/architecture.html) |
+| Check source preservation | [Source format preservation](/docs/source-format-allowlist.html) |
 
-Your external agent handles its own model login. Runebender does not need
-an API key for MCP. When the agent uses a hosted model, prompts and the
-font data returned to that model go to its provider.
+Use exact identities and revisions from live reads for geometry changes.
+Use saved files for repeatable batch work.
+Use visual inspection for design judgments and report when the client cannot receive proof images.
 
-The native Runebender chat pane can also run a local model through
-[font-ml](/docs/local-models.html). That is a separate inference choice
-from connecting OMP to the editor.
+### Connect to an Open Editor
 
-### Give an Agent Minimum Context
+The repository root .mcp.json declares the client-neutral runebender mcp --live command.
+The same command can be registered in a client's own settings.
+The repository's .codex/config.toml mirrors it for Codex in a trusted checkout.
+See [MCP](/docs/mcp.html) for setup, session selection, and a read-only first request.
 
-An agent works better on a font repository than on a loose UFO. Give
-it the same things a new collaborator would need.
+A live connection reads the unsaved canonical document through the native editor.
+The browser demo has an in-memory font and does not expose the native Unix endpoint.
+mcp --font is a separate saved-file workflow.
+Neither route grants permission to apply a change merely because a tool is available.
 
-1. Put the sources in a repository, so every edit is reviewable and
-revertible.
-2. Write down the build and check commands where the agent will read
-them.
-3. Say what the font's rules are: the grid, the metrics, the naming.
-4. Point it at the smallest relevant Runebender page first; use
-https://runebender.org/llms-full.txt only when it needs the whole manual.
+### Preserve Font Intent
 
-    runebender sources/Font.designspace
-    curl -O https://runebender.org/llms-full.txt
+Keep source files in version control.
+Confirm the font, source, glyph name, and any approved reference glyphs before editing.
+Across masters, check contour structure, point order and types, start points, component structure, and spacing before accepting a change.
+Proof the result at matching scale and in text, then report what was changed and what remains uncertain.
 
-Agents read a repository's own instructions file, AGENTS.md or
-CLAUDE.md, before anything else. That file is where the font's
-rules belong. A compact DESIGN.md should name the approved reference glyphs,
-their mark meanings, the target masters, and the acceptance check. Do not make
-the agent infer those facts from the whole source tree.
-
-### Start Every Font with a Small Context Bundle
-
-Copy the public [design brief template](/design-brief-template.md) to a font
-repository as DESIGN.md, then fill in only the rules that matter to that
-family. It keeps the font's evidence—masters, metrics, references, proof
-strings, and acceptance criteria—close to the sources.
-
-The [agent capability map](/agent-capabilities.json) is a compact,
-machine-readable routing and safety guide. It identifies the live MCP,
-saved-source, local-model, and screen-control surfaces without duplicating
-the live API. In a connected MCP session, tools/list remains authoritative
-for exact tool schemas and current availability.
-
-For a new task, an agent should read its repository instructions, DESIGN.md,
-the capability map, and one relevant documentation page. It should not load the
-full manual or inspect the entire source tree unless the task actually needs it.
-
-### Preserve Font Invariants
-
-Type design has constraints that are invisible in a diff and
-expensive to undo. State them, because an agent will not infer them.
-
-The rules worth writing down:
-- Point compatibility: Masters must keep the same contours, the same points, in the same order. Break it and the family stops interpolating.
-- Contour direction: Outer contours run one way and counters the other. A reversed contour fills a hole.
-- Start points: Rotating where a contour starts is invisible in one master and fatal across two.
-- The grid: If the family is drawn on a unit grid, say the number. Off-grid points survive every check and ruin the drawing.
-- Components: Decomposing is easy and rarely reversible. Say when it is allowed.
-- Sidebearings: Preserving an advance width is not the same as preserving spacing.
-
-Ask for a check after every batch, not at the end. A compatibility
-break found after fifty glyphs costs fifty glyphs.
-
-### Separate Proposals from Accepted Work
-
-An agent produces more drawings than you can review carefully, so
-separate what it made from what you have accepted.
-
-Mark colors do this. The glyph grid shows them, and the mark travels
-in the source, so the state survives a restart and a git clone. One
-workable protocol: the agent marks everything it touches with one
-color, and only you may set the color that means done.
-
-Runebender stores the meaning of a mark, not just its color, so a
-theme can draw it differently without changing the font. See
-[File format](/docs/format.html).
-
-### Use the Command Line for Saved Sources
-
-runebender runs the editor's own operations without a window. Same
-code, no interface.
-
-    runebender bolden --from Light.ufo --to Bold.ufo
-
-Every command takes --json. The exit codes are 0 ok, 2 usage, 4
-failed, so a script can branch without reading text.
-
-### Use MCP for the Live Editor
-
-The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
-choosing a master, and reviewing proposals. Start with a read-only request,
-then a small proposed edit and an undo test.
-
-runebender mcp --live discovers native editor sessions. The separate
---font mode works on saved sources and cannot see unsaved changes.
-
-### Build Purpose-Made Tools on Core
-
-For a tool rather than a session, runebender is the editing
-model as a Rust library with no interface attached. It carries the
-operations the editor itself uses: point edits, components, curve
-analysis, measurement, shaping, kerning with group fallback.
-
-An agent writing Rust can build a tool on it that makes exactly the
-edit you want, instead of driving a general one. See
-[Development](/docs/development.html).
-
-### Run Local Models Deliberately
-
-font-ml runs machine-learning models over font sources from the
-command line. Every command takes --json. The exit codes separate a
-usage mistake from an unimplemented job from a real failure, so an
-agent can tell what went wrong.
-
-    font-ml tasks
-    font-ml describe <model>
-    font-ml run bolden --model <model> --source Font.ufo --glyph eight
-
-Run font-ml tasks before trusting a job exists. Most are declared
-and not built. See [Local models](/docs/local-models.html).
-
-Models live in ~/.runebender/models. A model is a folder holding
-config.json, so installing one is putting it there. The editor lists
-what it finds at startup. RUNEBENDER_MODELS overrides the location.
-
-For a one-shot assistant-guided installation, see
-[Set up local AI](/docs/local-ai-setup.html). It uses the same default root for
-chat and outline models, verifies the installed capabilities, and keeps the
-first smoke test away from a real font.
-
-### Use Screen Control Only for Visual Work
-
-An agent that controls the screen can use Runebender the way a person
-does, because it is an ordinary desktop application.
-
-For precise font edits, prefer the live geometry tools and review their
-proposals. Screen coordinates are a less precise contract for an outline
-than points and measurements in font units.
-
-Reach for screen control only for what has no other path, such as
-judging how something looks.
+Glyph Grid mark names have semantic meaning and are stored as simple UFO compatibility colors; the active theme chooses how they appear.
+Do not infer a designer's review state from a display hue alone.
+See [themes](/docs/themes.html) and [file format](/docs/format.html).
 
 ### Current Boundaries
 
-No way for the application to call a model service. Runebender has no
-account system and stores no keys. The chat pane in the editor runs
-an open-weight model on your machine through font-ml, and its tools
-are the same proposal-only list an agent gets: it can read the font
-and propose, and a person installs.
-
-The current recommended workflow keeps hosted-model conversation in OMP
-and font editing in Runebender. Embedded hosted-model chat is not part of
-this workflow. See [MCP](/docs/mcp.html) for the current tool limits.
+Runebender is alpha software.
+Live receipts are in memory for one document lifetime, so they do not replace saving or version control.
+The native editor's live endpoint is Unix-only.
+The website's implementation pages may lag a new commit; for exact API names and parameters, use MCP tools/list in the connected session and inspect the current source.
+See [Known limitations](/docs/known-limitations.html).
 
 
 ## Checking a Font
@@ -1513,56 +1385,17 @@ the Shaping section shows which characters produced which glyphs.
 ## MCP
 https://runebender.org/docs/mcp.html
 
-Keep your conversation in OMP and your drawing in Runebender. MCP connects the agent to the live, unsaved font.
+Connect an agent to the open native editor and its unsaved font.
 
-### Start with OMP
+### Set Up a Local Client
 
-[OMP (Oh My Pi)](https://github.com/can1357/oh-my-pi) is the recommended
-starting client for this workflow. Choose and authenticate your model in OMP,
-then keep that conversation running beside the editor. Runebender needs no
-model account or API key for the connection.
-
-MCP, the Model Context Protocol, lets an agent discover and call tools.
-Runebender's tools read the open document, including unsaved changes, and
-submit proposed edits. You keep drawing, review the proposals, and decide
-what to install. Other clients that support local stdio MCP can use the same
-server.
-
-The connection is local, but inference depends on your chosen provider.
-With a hosted model, prompts and font data returned to that model are sent
-to its provider. Choosing OMP does not make a hosted model run locally.
-See [Local models](/docs/local-models.html) for local inference.
-
-### Install and Open the Editor
-
-Install current versions of Designbot and Runebender.
-See [Install](/docs/install.html) for prerequisites.
-
-```sh
-cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
-cargo install --git https://github.com/eliheuer/runebender-xilem
-runebender path/to/Font.designspace
-```
-
-If an older editor is running, save your work and restart it after updating.
-Updating the executable does not add tools to an already running process.
-Live connections are available on macOS and Linux. Windows support and
-the browser port are not available yet.
-
-Use a copy of a font for your first proposal and undo test. Once connected,
-you do not need to save between an edit in the canvas and a tool read.
-
-### Configure OMP Once
-
-In the project directory where you run OMP, add this entry to
-.omp/mcp.json. Merge it with any existing mcpServers entries.
-The Runebender source repositories already include this configuration.
+Install the current runebender binary and open a UFO or Designspace in the native editor.
+In the project where your agent runs, configure this stdio server:
 
 ```json
 {
   "mcpServers": {
     "runebender": {
-      "type": "stdio",
       "command": "runebender",
       "args": ["mcp", "--live"]
     }
@@ -1570,141 +1403,53 @@ The Runebender source repositories already include this configuration.
 }
 ```
 
-runebender must be on OMP's PATH. Otherwise, use the full executable
-path as command. A user-level configuration can instead go in
-~/.omp/agent/mcp.json; named OMP profiles have their own user configuration.
+The Runebender source repository includes that command in .mcp.json and a matching .codex/config.toml adapter.
+Clients that do not read those files can register the same command in their own settings.
+The client owns model authentication, provider selection, and tool approval preferences.
+A hosted model may receive font data returned to the client.
 
-In your existing OMP session, run:
+### Connect Read Only First
 
-```text
-/mcp reload
-/mcp test runebender
-```
+Ask the agent to list editor_sessions, connect with editor_connect, confirm the project and source, then inspect a named glyph without changing it.
+If more than one editor is open, identify the intended font before calling edit tools.
+A successful connection reports a document epoch, stable source identities, and the current document revision.
+A source's display index can change after reorder; use the returned source identity for guarded work.
+Opening another document replaces its endpoint, so list and connect again.
+A failed live connection never falls back to disk editing.
 
-See OMP's [MCP configuration guide](https://github.com/can1357/oh-my-pi/blob/main/docs/mcp-config.md)
-for configuration discovery and profile details. This setup leaves your
-model, login, and tool approval preferences under OMP's control.
+editor_context reports the active source, glyph, mode, selection identities, text settings, and busy-gesture state.
+These opaque identities are scoped to the document epoch and are not persistent IDs across save and reopen.
 
-### Connect to the Right Document
+### Choose an Edit Contract
 
-Ask OMP:
-
-> List the Runebender editor sessions, connect to my font, and confirm the
-> project, active master, and available masters. Do not change anything.
-
-The agent first calls editor_sessions, then passes a returned session path
-to editor_connect. A successful connection reports live: true, the
-project path, the active master index, and the master list. With several
-editors open, identify the font you want before requesting changes.
-
-In a family, font operations require an explicit master index. For example,
-a project might report 0 for Regular and 1 for Bold. Use the returned
-indices; do not assume that order for every font. Switching the active master
-in the editor does not change a tool call's explicit master argument.
-
-Opening another document or restarting the editor replaces its endpoint.
-Ask OMP to list sessions and reconnect. The --live configuration stays the
-same; no socket path needs to be pasted into it. A failed connection never
-falls back to editing files on disk.
-
-### Inspect, Propose, Review
-
-Start with a read:
-
-> Read n in Regular and Bold. Compare the advance widths and contour counts.
-> Do not make changes.
-
-Then try a small mechanical edit:
-
-> In Regular, read n and propose increasing its advance by 12 font units,
-> without moving its outline. Use a new proposal task name and leave it for
-> me to review.
-
-This is a connection test, not a spacing recommendation. read_glyph
-returns a revision of the glyph. propose_edits checks that revision before
-creating a proposal, so an intervening manual edit cannot silently be
-replaced by an older suggestion.
-
-The foreground stays unchanged until you install the proposal in the
-editor's Local AI panel. Review the proposed glyph, install it, and undo
-once to check recovery. Installation uses the editor's glyph undo history.
-You can discard a proposal instead. If you edit the glyph after a proposal
-was made, installation rejects that stale proposal; ask for a fresh read
-and proposal.
-
-For a comparison before installation:
-
-> Generate foreground and proposal proofs of n in master 0 at the same
-> scale. Explain what changed and leave the proposal uninstalled.
-
-MCP proofs return PNG image blocks and measurements. The client must pass
-those images to the model. Use specimen for the MVP basic Latin text proof. Judge spacing in real text as well as isolated glyphs.
-
-### Available Live Tools
-
-| Tool | Purpose |
+| Contract | Behavior |
 | --- | --- |
-| editor_sessions | List local editor endpoints and this client's current connection. |
-| editor_connect | Connect to a listed endpoint and return its project information. |
-| project_info | Read the project, active master, master indices, and dirty state. |
-| font_info | Read a master's names, metrics, glyph count, and proposals. |
-| read_glyph | Read a named glyph's points, components, anchors, metrics, and revision. |
-| proof | Return a PNG image and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
-| propose_edits | Propose complete outlines, smooth flags, width, point, translation, and anchor edits as one validated batch. |
-| proposal_list | List waiting proposals in a master. |
-| proposal_discard | Remove a waiting proposal without installing it. |
-| glyph_inventory | Find live glyphs by mark label or Unicode scalar. |
-| design_context | Get the type-design workflow and official documentation links. |
-| proposal_install | Install a reviewed proposal with an explicit structure choice and per-glyph undo. |
-| experiment_fork | Fork a live master or an existing version without changing it. |
-| experiment_list | List versions, parents, changes, and recent design intent. |
-| experiment_apply | Apply selected glyphs and/or kerning after conflict checks. |
-| experiment_undo_apply | Undo the last application if affected data is unchanged. |
-| read_kerning | Read pairs, groups, and the kerning revision. |
-| experiment_kern | Set or remove kerning pairs in a branch only. |
-| specimen | Return a Designbot image of live basic Latin text at four sizes. |
-| export_proof | Export a live glyph or text proof to a new PNG/PDF file. |
+| propose_edits and proposal_install | Prepare a revision-checked proposal, review it, then explicitly install it. |
+| agent_apply, agent_receipt, and agent_history | Apply a bounded, authorized edit atomically, reconcile a lost response, and share ordinary Undo/Redo history. |
+| Experiment tools | Fork session-only versions, compare them, and explicitly apply selected results. |
 
-These tools do not save the document. Installation changes the unsaved foreground. File-based
-model jobs and node workflows are not part of the live tool list.
-mcp --font is a separate disk workflow and does not see unsaved edits.
+agent_apply requires an expected document epoch, exact glyph and layer identities, revisions from prior reads, an actor, and an operation key.
+Its current batch limit is one source, 64 target and dependency entries, and 256 operations.
+A request carrying authorization: "user-approved" is only valid when the user actually authorized that mutation.
+The actor string and operation key do not grant authority.
+After an uncertain apply response, inspect agent_receipt or retry the exact request; never invent a new key and assume the first call failed.
+Legacy proposal and experiment mutations do not have that idempotent receipt contract.
 
-### Can It Redraw a Unicode Character?
+### Proof What the Agent Changed
 
-Yes, for an existing glyph record. Use glyph_inventory to resolve a Unicode
-scalar, read the current revision, and propose set_outline with the new
-contours. An empty record can receive a complete drawing. Create entirely
-absent records in the editor first.
+The ordinary proof tool produces a source-geometry image.
+For an asynchronous proof from one captured compiled font, use proof_start and proof_status.
+The latter can return a PNG image and explicit captured epoch and revision, allowing the agent to see whether a proof is stale.
+Use proof_cancel for queued work and proof_release when a retained artifact is no longer needed.
+A successful image transport does not prove the model inspected it; verify that the client actually presents the image before making visual claims.
 
-See [Experiment versions](/docs/experiments.html) for independent A/B workflows.
+### Saved Files and Limits
 
-Read [Type design with agents](/docs/type-design.html) for reference selection,
-curve diagnostics, visual review, installation, and current limitations.
-
-### Connection Problems
-
-- **“session is required”:** the agent called editor_connect too early.
-Ask it to call editor_sessions and pass a returned path. A later successful
-connection means it recovered; the initial error did not edit the font.
-- **No sessions:** open a current native editor on the same machine and user
-account. An older running build needs to be restarted after saving your work.
-- **Unknown --live option:** update the core executable that OMP is launching.
-- **Server missing in OMP:** check the config in OMP's working directory, then
-use /mcp reload and /mcp list to inspect discovery.
-- **Connection closed:** list sessions again and reconnect explicitly. A crash
-can leave a stale entry in the list.
-- **Stale revision:** read the glyph again and reconsider the edit against its
-current drawing. Do not reuse an old revision to force acceptance.
-- **Timeout:** inspect proposal_list before retrying; a dispatched request
-can have completed even if the response was lost. Existing task names cannot
-be overwritten.
-
-The native transport uses a Unix socket in a private directory. Processes
-running as your user can access it. Requests are handled on the editor's UI
-thread; the socket worker does not mutate font data in the background.
-
-For the implementation and development roadmap, see core's
-[AI type-design documentation](https://github.com/eliheuer/runebender-xilem/blob/main/crates/runebender-core/docs/ai-type-design.md).
+runebender mcp --font /absolute/path/Font.designspace works on saved sources and cannot see an unsaved canvas edit.
+The browser editor does not host the native live endpoint.
+MCP tool schemas and availability are authoritative through tools/list in the current connection.
+For implementation details, inspect the current [automation source](https://github.com/eliheuer/runebender-xilem/tree/main/src/automation) and [application live adapter](https://github.com/eliheuer/runebender-xilem/tree/main/src/application/platform).
+The [known limitations](/docs/known-limitations.html) page records platform and validation boundaries.
 
 
 ## Type design with agents
@@ -2518,6 +2263,82 @@ them if the receiving tool will re-save the file.
 subtraction is real in the outlines.
 
 
+## Source format preservation
+https://runebender.org/docs/source-format-allowlist.html
+
+The UFO and Designspace fields preserved or explicitly rejected by the editor.
+
+This reference lists the source-format fields accepted by the filesystem UFO/Designspace adapter and their authoritative owners.
+Anything not listed here must either remain opaque under the listed boundary payload or fail before Project construction.
+It must never disappear during load, canonical edit, save, Save As or reopen.
+
+## Ownership labels
+
+- **Canonical** means the live document owns the editable value and export reconstructs its UFO or Designspace representation.
+- **Layer preservation** means the value is attached to a stable glyph-layer or object identity because Babelfont cannot represent it faithfully.
+- **SourceFormatData** means the value is source-wide format data required for lossless serialization but is not editable canonical state.
+The record is glyph-free and does not retain a complete Norad font.
+- **Filesystem preservation** means raw bytes or exact paths outside Norad's supported object model.
+
+## UFO allowlist
+
+| UFO field family | Current authoritative owner | Export rule |
+|---|---|---|
+| Source destination and dirty/save status | Project source shell | Save and Save As publish only to checked destinations; source removal never deletes the UFO. |
+| metainfo.plist: creator, format version and minor version | SourceFormatData | Preserve the decoded values exactly. |
+| fontinfo.plist: family/style, copyright/trademark, designer/manufacturer/license/description/version/unique/sample/PostScript/typographic/WWS names | Canonical CanonicalFontInfo::names | Clear from the preservation payload and reconstruct from the canonical value. |
+| fontinfo.plist: units per em, ascender, descender, x-height, cap height and italic angle | Canonical CanonicalFontInfo::metrics | Retain exact f64 values and reject nonfinite values or negative units per em. |
+| fontinfo.plist: supported hhea and OS/2 metrics, head flags, embedding and selection flags, weight/width class, vendor ID, note and major/minor version | Canonical CanonicalFontInfo OpenType fields | Clear from the preservation payload and reconstruct from the canonical value. |
+| Every other field represented by Norad 0.18.4 FontInfo | SourceFormatData | Preserve the typed value unchanged; representative unowned name and PostScript fields are exercised by the allowlist regression. |
+| features.fea | Canonical per-source metadata | Preserve exact text; Save As also relocates recursively resolved relative include files. |
+| groups.plist and kerning.plist | Canonical per-source metadata | Preserve all valid groups, member order, typed pair spelling and exact finite f64 values. |
+| lib.plist entries for public.skipExportGlyphs and public.openTypeCategories that name loaded glyphs | Canonical per-source glyph metadata for semantics; SourceFormatData for source ordering | Canonical values control edits; the glyph-free boundary record preserves list order, source spelling and unknown-name entries. |
+| Entries in those two standard dictionaries that do not name a loaded glyph, plus every other font-lib key | SourceFormatData | Preserve exact plist values and merge canonical entries without overwriting residual entries. |
+| Layer order, layer names, glyph-directory paths, layer color and layer lib | SourceFormatData, addressed by canonical LayerId | Preserve order and exact persistence paths while canonical source/layer structure owns editable association. |
+| Glyph name and layer membership | Canonical Project glyph/source structure | Structural operations update stable identities and rebuild the corresponding GLIF set. |
+| Contours, point coordinates/types/smooth state, components, anchors and their paint order | Canonical Babelfont geometry | Export from canonical geometry without a persistent UFO glyph owner. |
+| Horizontal and vertical advances, Unicode order, note, guidelines, image placement and residual glyph lib | Layer preservation | Retain exact values beside the stable layer identity and merge known keys only at export. |
+| Contour, point, component, anchor and guideline identifiers, names, colors, transforms and object libs | Layer preservation keyed by stable object identity | Reorder moves metadata with identity; replacement retains metadata only through an explicit mapping. |
+| Mark color, metrics formulas, composition recipe, metaballs, smart-component values and poles, HOI intermediates, editable hyperbezier kind and mask encoding | Typed or validated layer preservation | Decode known keys once, retain their exact supported source representation and write each key once at export. |
+| images/ and data/ resource names and bytes | SourceFormatData | Preserve exact relative names and bytes; image placement is a separate layer value. |
+| Exact contents.plist GLIF filenames | Filesystem preservation | Restore validated relative paths after staging and verify the staged font reloads with them. |
+| Regular files outside Norad-managed UFO files, images/ and data/ | Filesystem preservation | Copy bytes unchanged into the staged UFO. |
+
+## Designspace allowlist
+
+Every accepted Designspace field is canonical; there is no opaque XML fallback.
+The checked XML reader rejects unknown structure before Norad can ignore it.
+
+| Designspace field family | Canonical owner |
+|---|---|
+| Format version | CanonicalDesignspace |
+| Continuous axes: name, tag, explicit or implicit minimum/maximum, default, hidden flag, ordered map and localized labels | CanonicalAxis |
+| Full sources: order, family/style/name, filename and sparse user-or-design location | SourceDescriptor plus CanonicalLocation |
+| Layer-only sparse sources: order, owning UFO/layer, family/style/name and location | SparseSourceDescriptor plus SourceOrderEntry |
+| Instances: order, family/style/name, filename, PostScript name, style-map names, location and instance lib | CanonicalInstance |
+| Rules: processing order, names, ordered condition sets, bounds and substitutions | CanonicalRule |
+| Top-level lib | CanonicalDesignspace opaque plist dictionary |
+| Presence of an empty axis-mappings container | CanonicalDesignspace preservation flag |
+
+formats::designspace validates the XML element and attribute allowlist before typed decoding, and every persisted coordinate must round-trip through Norad's f32 representation.
+
+## Intentional rejection boundary
+
+The adapter intentionally returns an error for these inputs instead of attempting a lossy save:
+
+- unknown Designspace elements or attributes outside plist lib contents;
+- nonempty cross-axis mappings and discrete-axis values;
+- anisotropic or ambiguous locations, unknown or duplicate dimensions, missing values and nonfinite coordinates;
+- Designspace numeric spellings that cannot round-trip through the current Norad codec;
+- duplicate axis names/tags, duplicate full-source files or locations, a missing mapped-default source, and layer sources without their owning UFO/layer;
+- malformed canonical UFO metadata, including invalid group or kerning names, nonfinite kerning, invalid font metrics, duplicate/non-string skip-export values and non-string OpenType category values;
+- UFO symbolic links, non-regular filesystem entries, unsafe preserved GLIF paths and overlapping or aliased export destinations;
+- unsupported imported-format fields already documented by the Glyphs, compiled-font and Python Babelfont adapters.
+
+Rust Babelfont JSON remains unsupported.
+The Python Babelfont directory importer is a separate checked conversion contract and never rewrites its source package.
+
+
 ## Exporting
 https://runebender.org/docs/exporting.html
 
@@ -2569,220 +2390,157 @@ beside the source. It is for a drawing you want outside the font, not
 part of the font build.
 
 
-## Scripting
-https://runebender.org/docs/scripting.html
-
-Use live tools, saved-source scripts, or the Rust core to automate font work.
-
-### What Exists
-
-Runebender does not embed a scripting language, and it has no plugin
-API. Choose the interface that matches the work.
-
-Automation paths:
-- Live MCP tools: Read unsaved glyphs and submit proposals. Start with MCP and OMP.
-- File watching: The editor reloads sources changed on disk. Run any script you like against the UFO and the change appears.
-- Rust library: The editing model as a Rust library, with no interface attached. Build a tool on it.
-
-If you script fonts in Python today, keep doing that. UFO is the
-interchange, and Runebender is one of the tools around it rather
-than the centre of the workflow.
-
-### Working Alongside a Script
-
-1. Keep the editor open on the designspace.
-2. Run your script over the UFO.
-3. The editor picks the change up.
-
-This works with anything that writes UFO: fontTools, defcon,
-ufoLib2, a shell script, another editor.
-
-Save and coordinate writes before running a source-editing script. Native
-editors skip external reloads that conflict with unsaved work; disk scripts
-cannot read those unsaved changes. Keep sources in version control and use
-[MCP](/docs/mcp.html) when an agent needs the live document.
-
-### Rust Tools
-
-The font library is part of the
-[runebender-xilem workspace](https://github.com/eliheuer/runebender-xilem).
-It provides shaping, measurement, curve analysis, and path operations without
-a window. See [Code Layout](/docs/code-layout.html).
-
-Its Rust API is experimental; verify against the source and pin a revision.
-
-### Building a Font
-
-For compiling, use the tools that already do it. Export runs your
-project's build-fontc.sh or build.sh if it finds one, and compiles
-with fontc otherwise, so a project that already builds a specific way
-keeps building that way. See
-[Exporting](/docs/exporting.html).
-
-### Models
-
-Running a machine-learning model over a font is a separate path with
-its own page: see [Local Models](/docs/local-models.html). It needs no
-scripting, and the same models run outside the editor through
-[font-ml](https://github.com/eliheuer/font-ml).
-
-### What Is Not Here
-
-Being plain about the gap: there is no equivalent of RoboFont's
-extensions, FontForge's scripting language, or a plugin manager. If
-you need to automate inside the editor, it is not the right tool yet.
-
-
 ## Themes
 https://runebender.org/docs/themes.html
 
-Four themes ship with the editor. Each one decides its greys, its corner radii, its rule weight, and how a glyph mark is drawn.
+Make, install, and share Runebender themes with the Base UI and Glyph Grid palettes.
 
-### Switching
+A Runebender theme is one portable .theme.json file.
+Built-in examples are in [builtin](https://github.com/eliheuer/runebender-xilem/tree/main/themes/builtin).
+The native editor reads installed files at startup; the browser bundles the three built-in themes.
+The format has formatVersion: 1 so future versions can change without guessing how to read an older file.
 
-View → Theme switches the palette. The menu tick follows the choice,
-and the status line names the theme you moved to.
+## The two palettes
 
-What ships:
-- Dark: Near-black canvas, hues at full strength.
-- Midnight: Darker still, with the panels at the canvas tone.
-- Gray: The default. Mid grey with dark ink, square corners, and rules in the text colour.
-- Light: Near-white, with the hues stepped down to hold up on it.
+| Name | JSON section | What to say when requesting a change |
+| --- | --- | --- |
+| **Base UI** | baseUi | “Make Base UI 20 warmer.” Numbered stops progress from darkest to lightest in the built-in themes. A custom theme can tint or replace each stop. |
+| **Glyph Grid** | glyphGrid | “Change Glyph Grid red.” Red, orange, yellow, green, blue, purple, and pink are stable mark categories; teal is also available for editor roles. Each hue has dim, base, bright, and deep steps. |
 
-### One File
+surfaces, text, and roles say where those palette colors are used.
+For example, gray.roles.pointSmooth is glyphGrid.blue.base, while gray.surfaces.panel is baseUi.20.
+A role can also use an explicit color such as #AABBCC.
+The theme's markStep chooses which Glyph Grid step appears on glyph cells.
 
-Every theme comes from crates/runebender-core/themes/runebender.theme.json
-in the runebender-xilem workspace. The interface resolves its colors from
-this token file.
+Runebender writes simple canonical public.markColor values to UFO files (1,0,0,1 for red, for example).
+These values are compatibility tags, not display colors; each theme controls the visible Glyph Grid palette.
+The editor still recognizes older values already saved in UFOs.
 
-Colour is authored in OKLCH rather than hex. Lightness and chroma mean
-the same thing at every hue there, so a set of colours reads as one
-family instead of a pile. A theme names a token, never a colour:
+## Make and use a theme
 
-```json
-"surfaces": { "canvas": "neutral.15", "outline": "neutral.23" },
-"roles":    { "accent": "green.dim", "danger": "red.dim" }
+```sh
+runebender theme init --from gray --id my-theme --name "My Theme" --out my-theme.theme.json
+runebender theme validate my-theme.theme.json
+RUNEBENDER_THEME_PATH="$PWD/my-theme.theme.json" RUNEBENDER_THEME=my-theme runebender
 ```
 
-A token is a family and a step. neutral.15 is the grey ramp at 15%
-lightness. green.dim is the green hue at its dim step.
+The init command creates a new file and never overwrites an existing one.
+Use --from light or --from dark to start from those built-in themes.
+runebender theme list and runebender --json theme list show discovered themes.
+The native View → Theme menu includes installed themes, and Cycle Theme visits them after the built-ins.
+Restart the editor after editing a theme file.
 
-### What a Theme Decides
+The native editor searches $XDG_CONFIG_HOME/runebender/themes/, or ~/.config/runebender/themes/ when XDG_CONFIG_HOME is unset.
+It reads files ending in .theme.json directly in that directory.
+RUNEBENDER_THEME_PATH adds one file or a platform-separated list of files and directories.
+These paths can point into a Git checkout or a dotfiles repository; a symlink in the config directory works too.
+RUNEBENDER_THEME selects an installed theme by its id.
+An unknown ID uses Gray and prints a diagnostic.
+Invalid files are skipped with a path and error message; they do not prevent the editor from opening.
+Installed IDs must be unique, use only ASCII letters, digits, - or _, and contain at most 64 characters.
+Display names must contain 1–80 visible characters.
 
-The blocks of a theme:
-- surfaces: The grounds: app, panel, control, button, buttonHover, field, outline, divider, canvas.
-- text: primary, secondary, muted, subdued, overlay, glyph.
-- roles: The meanings: accent, danger, selection, the point types, curvature, kerning. Around thirty.
-- geometry: Corner radii and rule weights.
-- markStep, markStyle: How a glyph mark is coloured and drawn.
+## Edit the file
 
-Every block is optional except the colours. A theme names only what it
-changes, and the rest falls back to the file's defaults.
+Each theme file owns its Base UI stops, Glyph Grid hues and steps, surface colors, text colors, semantic roles, point and mark styles, and geometry.
+It does not depend on another theme file, so one file is enough to share a theme.
+The built-ins use oklch(L C H) values, with lightness L from 0 to 1 and hue H in degrees.
+You can also use #RRGGBB or #RRGGBBAA for a Base UI stop or a direct surface, text, or role value.
+References use baseUi.01 or glyphGrid.red.base syntax.
+The parser reports missing roles, bad references, unsupported format versions, and invalid colors by theme and key.
+Unknown JSON fields are rejected so misspelled settings do not silently disappear.
 
-### Shape Is Themed Too
+The shape fields in geometry are pixel measurements: radius, radiusControl, stroke, and strokeEmphasis.
+markStyle is fill or border; pointStyle is fill or ring.
+markOutline, markInk, and pointOutline are optional colors; pointHalo is a boolean.
+All seven named Glyph Grid marks must remain in glyphGrid.marks exactly once, because glyph mark names are saved font metadata.
 
-A theme sets its own corners and rule weights, because those carry as
-much of a look as colour does. The same palette at radius 0 with a 2px rule reads as a drawing tool.
-At radius 6 with a hairline it reads as a document application.
+Start a color change at the use site under src/application/view/, then follow its named color in src/application/view/theme.rs to the file's surfaces, text, or roles section.
+src/ui/theme.rs is the toolkit-independent parser and resolver.
+src/application/platform/themes.rs discovers native files.
+Check Gray and Light captures at the same size after a built-in change.
 
-geometry:
-- radius: The default corner, on small chrome.
-- radiusControl: Pressable tiles: toolbar tiles, sidebar tabs, toggles.
-- stroke: The ordinary rule, on panels and chrome.
-- strokeEmphasis: Rings that mark a thing selected or grabbable.
+## Sharing and external desktop themes
 
-The tokens are named for what they are used on, not for their size. A
-theme that disagrees about the sizes still knows what each one is for.
+A theme repository can contain its .theme.json file, a preview image, and a README; Runebender needs only the JSON file.
+This is enough to share through GitHub or dotfiles and gives a future gallery a stable file to index.
+Do not download and execute code to install a color theme.
 
-Gray names only the two radii, at 0, and lets both rule weights fall
-back. Naming part of the geometry is the normal case: it wanted square
-corners, not heavier rules.
+An Omarchy theme repository can keep a Runebender .theme.json beside its colors.toml, then expose that file through RUNEBENDER_THEME_PATH or a config-directory symlink.
+The two formats are separate today; Runebender does not automatically read colors.toml or follow Omarchy theme switches.
+A small generator or Omarchy template can translate its color values into Runebender's Base UI stops later, without changing Runebender's file format.
 
-strokeEmphasis is its own value rather than stroke doubled.
-Doubling works from a 1px base and breaks from a 2px one, where it
-puts a 4px ring on an 18px swatch.
 
-### Marks
+## Scripting
+https://runebender.org/docs/scripting.html
 
-A glyph stores what its mark means, not the colour you see. The colour
-comes from the theme, so the same font reads correctly in all of them.
+Use Python recipes, live MCP tools, saved-source scripts, or the Rust font engine.
 
-How a mark is drawn is also the theme's choice, and it has to be.
-Tinting the cell's rule works where the ground is far from mid
-lightness. On a mid grey it cannot. A colour saturated enough to read as a hue
-sits at mid lightness too, and mid on mid is invisible.
+### Choose an Automation Surface
 
-markStyle:
-- border: Tint the cell's rule and label. Dark, Midnight and Light.
-- fill: Fill the cell with the hue and key it with a rule. Gray, with markOutline and markInk naming the keyline and the label on top.
+| Surface | Use it for |
+| --- | --- |
+| Python recipes | Explicit single-source edits and proofs from the native Scripts workflow. |
+| [Live MCP](/docs/mcp.html) | Inspecting unsaved editor state, proposals, receipt-backed edits, and proof jobs. |
+| Saved-source scripts | Repeatable batch work on UFO and Designspace files. |
+| Rust font engine | Purpose-built tools that use the editor's canonical operations without a window. |
 
-markStep picks which step of each hue the theme uses. Dark takes
-base, Gray takes base under a keyline, Light takes deep.
+The editor has an optional external Python interpreter for recipes.
+The editor itself does not require Python, and the subprocess boundary is not an operating-system sandbox.
+For a guarded live edit, use the receipt and revision rules in [MCP](/docs/mcp.html).
 
-A theme switch never rewrites a font. The public.markColor other
-editors read is frozen in the token file, so it does not follow the
-display tuning.
+### Saved Sources
 
-### The Ideas Behind It
+A script can write UFO files while the native editor is open.
+The editor watches files and reloads changes when they do not conflict with unsaved work.
+Coordinate writes and keep sources in version control.
+A disk script cannot read an unsaved outline on the canvas; use the live connection for that state.
 
-Five decisions explain most of what the file does, and why a theme
-that ignores them stops looking like one thing.
+### Current Limits
 
-**Author in OKLCH, not hex.** Lightness and chroma mean the same thing
-at every hue there. That is what makes a set of colours read as one
-family. The palette this replaced ran from L 0.56 to L 0.94 and had
-three greens nobody had compared.
+Python recipes currently mutate one explicit source at a time with bounded guarded operations.
+Cross-source and whole-font atomic recipes are not implemented.
+Live MCP capabilities differ from saved-source commands, and exact tool availability comes from tools/list in the connected session.
 
-**Give each hue its own pair.** A flat ramp holds every hue to the
-chroma only blue and green want. The result looks washed out.
-Yellow is light and red is not, so yellow sits at L 0.82 and red at
-0.61. Steps are offsets from a hue's own pair, never absolutes.
 
-**One text colour.** There is no second, lighter grey for secondary
-text. Hierarchy comes from rules and fills, not from greying words
-out. The Gray theme goes further. Its rules are drawn in the text colour,
-so the borders draw the layout instead of tints doing it.
+## Known limitations
+https://runebender.org/docs/known-limitations.html
 
-**Shape carries as much as colour.** Corners and rule weights are part
-of a theme, not constants in the frontend. A palette can be right and
-the thing still look wrong because everything is rounded.
+What Runebender currently supports and what its checks do not prove.
 
-**Name a token for its use, not its size.** radiusControl tells a
-frontend what to do with a button. radiusMedium makes it guess. The
-same goes for strokeEmphasis, which exists because a selection ring
-is a decision, not arithmetic on another token.
+Runebender is experimental.
+Keep font sources in version control and work on copies when evaluating a new build.
 
-The hard case is the mid grey. On a near-black or near-white ground
-a hue can always go the other way. On a mid grey it cannot, and no
-amount of palette tuning fixes it. That is why the treatment is a
-theme's decision and not just its colours.
+## Platforms and input
 
-### Writing One
+Native Linux and macOS compile, lint, document, and test in CI.
+Most hands-on interaction work has been on macOS; Linux pointer, IME, file-dialog, accessibility, and GPU combinations need more supervised checks.
+The Windows build and headless commands have passed basic checks, but native startup has failed in the [Windows workflow](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml).
+The live editor endpoint uses Unix sockets and is unavailable on Windows.
+Headless file commands remain portable.
 
-Themes are compiled into the editor. There is no folder to drop a
-theme into, and no setting that points at one. A theme of your own
-means editing the token file and building from source.
+## Browser
 
-1. Clone runebender-xilem.
-2. Add a block under themes in crates/runebender-core/themes/runebender.theme.json. Copy
-the theme closest to what you want and change what differs.
-3. Add the theme to the editor's theme list and give it a menu action.
-4. Build and switch to it from View → Theme.
+The browser build reuses the Xilem/Masonry interface and edits a bundled font in memory.
+Reloading discards edits.
+Opening or saving arbitrary user sources, native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
+Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
 
-    git clone https://github.com/eliheuer/runebender-xilem
-    cd runebender-xilem
-    cargo run --release -- path/to/Font.designspace
+## Font formats
 
-The workspace theme tests check a new theme for the mistakes that
-are hard to see. A mark that does not clear its background. An
-emphasis ring lighter than the ordinary rule. A theme in the menu with
-no action behind it. Run them before trusting a theme you wrote.
+The canonical Project owns editable glyph and source data, with UFO-only values preserved at explicit adapter boundaries.
+Unsupported Designspace extensions, discrete axes, cross-axis mappings, anisotropic locations, and layer-only UFOs without a full source fail explicitly.
+Interpolation requires compatible contours, components, and anchors.
+Auxiliary layers are editable but do not automatically become interpolation sources.
+The compiler emits TrueType variations; VARC and exhaustive UFO/OpenType metadata parity are not claimed.
+See [Source format preservation](/docs/source-format-allowlist.html) for the accepted field families.
 
-### What Is Not Here
+## Agent and proof checks
 
-No theme editor, no live reload of a theme, no per-font or per-window
-theme, and no way to load one at runtime. The palette is one file
-compiled in.
+The live endpoint reads the unsaved canonical document, but unfinished pointer gestures are private until committed.
+Receipt-backed edits are bounded to one explicit source and their receipts last only for that document lifetime.
+A successful proof transport does not establish that a particular model received or interpreted the image.
+Use connected MCP tools/list for exact tool schemas and [MCP](/docs/mcp.html) for the workflow.
 
 
 ## Troubleshooting
@@ -2851,18 +2609,72 @@ wrong into a source, the diff from version control is the best
 evidence there is.
 
 
+## Architecture
+https://runebender.org/docs/architecture.html
+
+One application package with a reusable font engine and a shared browser view tree.
+
+Runebender's root runebender Cargo package builds the native editor, headless commands, and font-engine library.
+The separate web/ Cargo workspace reuses the application view tree with an in-memory browser host.
+Sibling repositories are independent projects.
+
+## Source map
+
+| Path | Responsibility |
+| --- | --- |
+| src/lib.rs | Font-engine module root. |
+| src/main.rs | Executable composition root. |
+| src/font/ | Canonical Project, source operations, history, persistence, interpolation, and compilation. |
+| src/outline/, src/text/, src/analysis/ | Reusable geometry, shaping, and measurement. |
+| src/formats/ | Source-format adapters and persistent metadata. |
+| src/automation/ | Agent and live-editor operation contracts. |
+| src/workflows/, src/ui/ | Saved workflows and toolkit-independent editor data. |
+| src/application/editor/ | User intent, commands, sessions, and tools. |
+| src/application/view/ | Xilem views, panels, canvas, themes, and design tokens. |
+| src/application/platform/ | Files, dialogs, watching, live IPC, and screenshots. |
+| web/ | Browser host for the shared widgets. |
+
+Read the relevant module header before changing code.
+The repository's AGENTS.md carries local working rules and validation constraints.
+
+## Ownership
+
+font::project::Project is the authoritative in-memory document.
+Babelfont owns canonical glyph geometry.
+Stable layer and object identities retain exact UFO-only values that Babelfont cannot express.
+Norad values are constructed at explicit import, export, and serialization boundaries; they are not a second live font model.
+
+Views read workspace state and dispatch commands.
+Application editor code interprets gestures and user intent.
+Reusable font behavior belongs in the engine, which has no Xilem, Masonry, dialog, or window dependency.
+Native and browser editing use the same canonical operations.
+
+## Change routing
+
+| Change | Start with |
+| --- | --- |
+| Editor tool or shortcut | src/application/editor/tools/, src/application/actions.rs |
+| Canvas or panel | src/application/view/canvas/, src/application/view/panels/ |
+| Theme or reusable control | themes/builtin/, src/application/view/theme.rs, design.rs, recipes.rs |
+| Glyph outline or interpolation | src/outline/, src/font/ |
+| UFO or Designspace preservation | src/font/persistence/, src/formats/ |
+| Live agent tool | src/automation/, src/application/platform/live*.rs |
+| Browser behavior | web/, then the shared application source |
+
+The full file tree is in the [source repository](https://github.com/eliheuer/runebender-xilem).
+For build checks and interface work, see [Development](/docs/development.html) and [Design principles](/docs/design-principles.html).
+
+
 ## Development
 https://runebender.org/docs/development.html
 
 Build and contribute to runebender-xilem.
 
-### Source
+### Source and Build
 
-[runebender-xilem](https://github.com/eliheuer/runebender-xilem) contains the
-application and its font library in one Cargo workspace. Start with its
-AGENTS.md and read DESIGN.md before changing the interface.
-
-### Build and Run
+[runebender-xilem](https://github.com/eliheuer/runebender-xilem) contains the editor and its font engine in the root Cargo package.
+The repository pins its Rust toolchain.
+Start with its AGENTS.md, then use [Code Layout](/docs/code-layout.html) and the [architecture guide](/docs/architecture.html) to find the right module.
 
 ```sh
 git clone https://github.com/eliheuer/runebender-xilem
@@ -2870,46 +2682,32 @@ cd runebender-xilem
 cargo run --release -- path/to/Font.designspace
 ```
 
-The repository pins its Rust toolchain and upstream Xilem revision.
-Use the platform prerequisites in its README.
-
 ### Checks
 
-From the workspace root:
+Use focused checks while iterating and run broader checks relevant to the change before finishing.
+The full native CI suite is:
 
 ```sh
 cargo fmt --all --check
-cargo clippy --workspace --all-targets
-cargo doc --workspace --no-deps
-cargo test --workspace -- --test-threads=1
-cargo build --workspace --release
+bash .github/scripts/copyright.sh
+cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo doc --workspace --no-deps --locked
+cargo test --workspace --locked -- --test-threads=1
+cargo build --workspace --release --locked
+cargo deny --locked check advisories
 ```
 
-Font-based tests use Virtua Grotesk. Set RUNEBENDER_TEST_FONTS to its
-sources directory. CI runs on Linux and macOS with warnings denied.
-Dependency changes also need the repository's supply-chain checks.
+The root toolchain is pinned in rust-toolchain.toml.
+CI runs on Linux and macOS with warnings denied.
+Windows has a diagnostic workflow; see [Known limitations](/docs/known-limitations.html).
+Some tests need the adjacent Virtua Grotesk checkout or RUNEBENDER_TEST_FONTS pointing to a source directory.
+Do not count ignored model tests as passing model coverage.
 
-### Where Things Live
+### Interface Work
 
-The interface lives under src/. Font operations live in the workspace's
-library under crates/, where they can be tested without opening a window.
-Both are changed in the same checkout. See [Code Layout](/docs/code-layout.html).
-
-Use Xilem and Masonry controls, the existing theme tokens, and the editor's
-command methods. Keep reusable font operations independent of UI state.
-
-### The Browser Build
-
-The [browser demo](/wasm-editor/) compiles the desktop Xilem/Masonry widget
-tree to WebAssembly. A small browser host forwards input and draws the retained
-scene to a canvas with Vello CPU. It opens a bundled font in memory; filesystem
-access, saving, and local AI execution remain desktop features.
-
-Build instructions and an interaction smoke test live in
-[web/](https://github.com/eliheuer/runebender-xilem/tree/main/web).
-The separate browser Cargo workspace adapts the pinned Xilem adapter's manifest
-to a single-thread runtime without changing its Rust source or native dependencies.
-Desktop development remains the priority.
+Read the [design principles](/docs/design-principles.html) and [themes](/docs/themes.html) before changing a view.
+Use headless captures in Gray and Light for visual checks, then perform native interaction checks when the change needs pointer, keyboard, IME, accessibility, or GPU evidence.
+The browser reuses the desktop widget tree; changes that affect it need the checks in the repository's web/README.md.
 
 ### License
 
@@ -2919,141 +2717,66 @@ Apache-2.0 or MIT.
 ## Code Layout
 https://runebender.org/docs/code-layout.html
 
-The application, font operations, and checks in the runebender-xilem workspace.
+Find the current implementation in runebender-xilem.
 
-### One Workspace
+### One Application Package
 
-Work in [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
-The root package, runebender, provides the editor and headless subcommands. Its font library is included under crates/;
-no separate library checkout is needed. The repository's AGENTS.md records
-build commands and conventions; DESIGN.md covers interface changes.
+The root runebender Cargo package contains the native editor, headless commands, and reusable font engine.
+The browser host is a separate Cargo workspace under web/ and reuses the editor sources.
+The complete [architecture guide](/docs/architecture.html) is the source map and change-routing guide.
 
-### The Interface
+### Where to Start
 
-Application source under src/:
-- main.rs: Entry point and module list.
-- cli.rs: Argument parsing and headless font commands.
-- workspace.rs: Editor state.
-- actions.rs: Actions, native menus, and keyboard shortcuts.
-- launch.rs: Event loop, window setup, and first frame.
-- view/: Canvas, panels, chrome, themes, design tokens, and reusable view functions.
-- edit/: Commands, inspector edits, sessions, sidebar actions, and text editing.
-- platform/: Files, dialogs, exports, watching, live connections, and headless captures.
-- widgets/: Application-specific controls and input handling.
+| Area | Source |
+| --- | --- |
+| Executable and CLI | src/main.rs, src/application/cli.rs |
+| Native application state and editing | src/application/workspace.rs, src/application/editor/ |
+| Views, canvas, and controls | src/application/view/, src/application/widgets/ |
+| Platform adapters | src/application/platform/ |
+| Canonical document and persistence | src/font/ |
+| Agent and live editing contracts | src/automation/ |
+| Outline, text, formats, and analysis | src/outline/, src/text/, src/formats/, src/analysis/ |
+| Toolkit-independent UI data and workflows | src/ui/, src/workflows/ |
+| Browser host | web/ |
 
-Xilem views read state. Commands describe complete user actions, shared by
-menu items and shortcuts. Reuse theme accessors and design tokens when
-changing a view.
+The in-memory document is font::project::Project.
+Babelfont owns canonical glyph geometry; UFO and Designspace adapters preserve values that are not represented there.
 
-### Font Operations
+### Before Editing
 
-The workspace library groups source into six concerns:
-
-Font library modules:
-- outline/: Shape editing and curve mathematics.
-- analysis/: Measurements, curve analysis, and search.
-- formats/: File formats, import, and metadata keys.
-- document/: Masters, projects, interpolation, and composites.
-- text/: Shaping, joining rules, and the text buffer.
-- ui/: Colors, themes, sidebar data, selection, undo, and viewport state.
-
-Each directory's mod.rs explains its scope. Operations use norad types and
-kurbo geometry. Public items have doc comments; editing operations report
-whether or how much they changed.
-
-### Validation
-
-Follow [Development](/docs/development.html) for workspace checks. Tests live
-beside the code they exercise. Set RUNEBENDER_TEST_FONTS for font fixtures.
-Check interface changes with matching-size screenshots and native interaction;
-headless captures alone cannot verify keyboard, pointer, or browser behavior.
+Read the repository's AGENTS.md for local working rules.
+For interface changes, read [interface design principles](/docs/design-principles.html) and [themes](/docs/themes.html).
+Use [Development](/docs/development.html) for build and validation commands.
 
 
 ## Configuration
 https://runebender.org/docs/configuration.html
 
-One optional file sets the theme, where models live, and whether a session is logged.
+Choose a theme and local model directory with environment variables.
 
-### Where It Lives
+### Themes
 
-$XDG_CONFIG_HOME/runebender/config.toml, or
-~/.config/runebender/config.toml when that variable is unset.
+RUNEBENDER_THEME selects a built-in or installed theme by ID.
+RUNEBENDER_THEME_PATH adds one theme file or a platform-separated list of files and directories.
+The native editor also discovers .theme.json files in $XDG_CONFIG_HOME/runebender/themes/, or ~/.config/runebender/themes/ when that variable is unset.
+An unknown theme ID falls back to Gray with a diagnostic.
+See [Themes](/docs/themes.html) for the format, installation, and sharing workflow.
 
-There is no file until you write one, and every key in it is optional.
-
-    mkdir -p ~/.config/runebender
-    printf 'theme = \"gray\"\\n' > ~/.config/runebender/config.toml
-
-### What It Sets
-
-config.toml:
-- theme: Which theme to start in: dark, midnight, gray (the default), light.
-- models: Where to look for local models. Defaults to ~/.runebender/models.
-- journal: A file to append a record of each edit to. Unset means no journal.
-
-```toml
-theme = "gray"
-models = "/srv/fonts/models"
-journal = "/tmp/runebender.jsonl"
+```sh
+RUNEBENDER_THEME_PATH="$PWD/my-theme.theme.json" RUNEBENDER_THEME=my-theme runebender
 ```
 
-The file is read once, before the window opens, so a change takes
-effect on the next launch.
+### Local Models
 
-### What Wins
+RUNEBENDER_MODELS overrides the local model directory.
+Without it, the local model tools use ~/.runebender/models.
+See [Local Models](/docs/local-models.html) for setup and current capabilities.
 
-Environment first, then the file, then the built-in default.
+### What Is Not a Config File
 
-A variable set for one run has to beat a setting meant for every run.
-Otherwise putting one in front of the command would do nothing.
-
-    RUNEBENDER_MODELS=./scratch-models runebender Font.designspace
-
-The variables:
-- RUNEBENDER_MODELS: Overrides models.
-- RUNEBENDER_JOURNAL: Overrides journal.
-- XDG_CONFIG_HOME: Moves the file itself.
-
-### When It Is Wrong
-
-A misspelled key or a value of the wrong type is an error. A setting
-that never took effect should not look like a bug in the editor.
-
-A file that fails to parse is treated as no file at all. Nobody should
-be locked out of their font by a stray comma. A theme name that does
-not exist prints a line and starts in the default.
-
-### Following a System Theme
-
-Runebender has no code for any particular desktop, and does not need
-any. The file is four lines of TOML, so anything that can write a file
-can set the theme.
-
-[Omarchy](https://omarchy.org) is the useful case, because it already
-works this way. It keeps the active theme at ~/.config/omarchy/current/theme, a
-symlink its theme switcher repoints. For applications it does not
-support directly, it renders templates from
-~/.config/omarchy/themed/.
-
-So a template writes this file:
-
-    ~/.config/omarchy/themed/runebender.toml.tpl  ->  ~/.config/runebender/config.toml
-
-Runebender learns nothing about Omarchy, and Omarchy needs no support
-for Runebender. Both sides already agree on a file.
-
-Runebender has four themes, so a template maps a system theme onto
-the nearest one rather than reproducing its colours. Light desktops
-to light or gray, dark ones to dark or midnight.
-
-### What Is Not Here
-
-No settings window and no way to change the file from inside the
-editor. Nothing writes it but you.
-
-Themes are compiled in, so the file names one rather than defining
-one. See [Themes](/docs/themes.html) for what a theme decides and how
-to add one.
+Runebender currently does not read the ~/.config/runebender/config.toml settings previously described here.
+Use the documented environment variables and theme files.
+For exact available options, inspect the current [application source](https://github.com/eliheuer/runebender-xilem/tree/main/src/application) or run the executable's help command.
 
 
 ## FAQ
@@ -3091,7 +2814,7 @@ Common confusions:
 - Why will my glyph not interpolate?: The masters disagree about contour count, point count, point order, or start point. See Concepts and Checking a Font.
 - What is a hyperbezier?: A curve defined by the points you place, with the handles solved rather than positioned. Convert to cubics before handing the source to a tool that expects them.
 - Why does my Arabic not join?: Usually glyph names. Shaping engines find joining forms by name. Run Glyph → Check Joining. See Text and Shaping.
-- Can I script it?: Not from inside the editor. It reloads files changed on disk, so a script and the editor can share a font. See Scripting.
+- Can I script it?: Yes. The native Scripts workflow supports optional Python recipes, and saved-source scripts can work beside the editor. See Scripting.
 - Does it use AI?: It can run a model on your machine, over your sources, with nothing sent anywhere. One job so far: proposing a heavier master from a lighter one. It is experimental and often wrong. See Local Models.
 
 ### Getting Help
@@ -3102,6 +2825,40 @@ A useful report says what you did, what happened, and what you
 expected, and names the file and whether you were in the browser or
 the native application. If the editor wrote something wrong into a
 source, the diff from version control is the best evidence there is.
+
+
+## Interface design principles
+https://runebender.org/docs/design-principles.html
+
+Keep the glyph primary and the application state legible.
+
+Runebender is a dense working tool for type design.
+Controls should remain stable while values change, and decoration should never obscure the active glyph.
+Other editors are references to evaluate, not feature lists to copy.
+
+## Use named roles
+
+Colors come from installed .theme.json files and are resolved through src/application/view/theme.rs.
+The [theme guide](/docs/themes.html) names the Base UI and Glyph Grid palettes.
+Spacing, sizes, radii, strokes, and type come from src/application/view/design.rs.
+Repeated controls belong in src/application/view/recipes.rs.
+A new color needs a named role in every built-in theme.
+
+## Keep the interface steady
+
+- Align controls to shared sizes and keep sibling spacing in one place.
+- Do not make panels jump or reorder under the pointer as content changes.
+- Keep canvas marks thin and relevant to the active edit.
+- Let chrome describe application state without covering the drawing.
+- Use sentence case; commands are verbs and labels are nouns.
+- Error text says what failed and what the user can do next.
+
+## Check the actual result
+
+Inspect Gray and Light at the same size after an interface change.
+A headless capture shows the rendered widget tree but does not prove pointer, keyboard, IME, accessibility, or GPU behavior.
+Run a native interaction check when the change affects those paths.
+The repository's AGENTS.md and CI define the current code checks.
 
 
 ## Glossary

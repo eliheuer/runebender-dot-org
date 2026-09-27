@@ -1,121 +1,40 @@
 ---
 title: "Configuration"
-lede: "One optional file sets the theme, where models live, and whether a session is logged."
-status: "The file works; the settings in it are few"
-stability: "Adding a key is safe; renaming one is not, so few exist"
+lede: "Choose a theme and local model directory with environment variables."
+status: "Alpha"
+stability: "Check current source for additional settings"
 order: 27
-description: "The Runebender config file, and following a system theme."
+description: "Runebender's current theme and model configuration."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
-import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Where It Lives">
+<DocSection title="Themes">
 
-`$XDG_CONFIG_HOME/runebender/config.toml`, or
-`~/.config/runebender/config.toml` when that variable is unset.
+`RUNEBENDER_THEME` selects a built-in or installed theme by ID.
+`RUNEBENDER_THEME_PATH` adds one theme file or a platform-separated list of files and directories.
+The native editor also discovers `.theme.json` files in `$XDG_CONFIG_HOME/runebender/themes/`, or `~/.config/runebender/themes/` when that variable is unset.
+An unknown theme ID falls back to Gray with a diagnostic.
+See [Themes](/docs/themes.html) for the format, installation, and sharing workflow.
 
-There is no file until you write one, and every key in it is optional.
-
-<CommandList commands={[
-  "mkdir -p ~/.config/runebender",
-  "printf 'theme = \"gray\"\\n' > ~/.config/runebender/config.toml",
-]} />
-
-</DocSection>
-
-<DocSection title="What It Sets">
-
-<table>
-  <caption>config.toml</caption>
-  <tbody>
-    <tr><th><code>theme</code></th><td>Which theme to start in: <code>dark</code>, <code>midnight</code>, <code>gray</code> (the default), <code>light</code>.</td></tr>
-    <tr><th><code>models</code></th><td>Where to look for local models. Defaults to <code>~/.runebender/models</code>.</td></tr>
-    <tr><th><code>journal</code></th><td>A file to append a record of each edit to. Unset means no journal.</td></tr>
-  </tbody>
-</table>
-
-```toml
-theme = "gray"
-models = "/srv/fonts/models"
-journal = "/tmp/runebender.jsonl"
+```sh
+RUNEBENDER_THEME_PATH="$PWD/my-theme.theme.json" RUNEBENDER_THEME=my-theme runebender
 ```
 
-The file is read once, before the window opens, so a change takes
-effect on the next launch.
+</DocSection>
+
+<DocSection title="Local Models">
+
+`RUNEBENDER_MODELS` overrides the local model directory.
+Without it, the local model tools use `~/.runebender/models`.
+See [Local Models](/docs/local-models.html) for setup and current capabilities.
 
 </DocSection>
 
-<DocSection title="What Wins">
+<DocSection title="What Is Not a Config File">
 
-Environment first, then the file, then the built-in default.
-
-A variable set for one run has to beat a setting meant for every run.
-Otherwise putting one in front of the command would do nothing.
-
-<CommandList commands={[
-  "RUNEBENDER_MODELS=./scratch-models runebender Font.designspace",
-]} />
-
-<table>
-  <caption>The variables</caption>
-  <tbody>
-    <tr><th><code>RUNEBENDER_MODELS</code></th><td>Overrides <code>models</code>.</td></tr>
-    <tr><th><code>RUNEBENDER_JOURNAL</code></th><td>Overrides <code>journal</code>.</td></tr>
-    <tr><th><code>XDG_CONFIG_HOME</code></th><td>Moves the file itself.</td></tr>
-  </tbody>
-</table>
-
-</DocSection>
-
-<DocSection title="When It Is Wrong">
-
-A misspelled key or a value of the wrong type is an error. A setting
-that never took effect should not look like a bug in the editor.
-
-A file that fails to parse is treated as no file at all. Nobody should
-be locked out of their font by a stray comma. A theme name that does
-not exist prints a line and starts in the default.
-
-</DocSection>
-
-<DocSection title="Following a System Theme">
-
-Runebender has no code for any particular desktop, and does not need
-any. The file is four lines of TOML, so anything that can write a file
-can set the theme.
-
-[Omarchy](https://omarchy.org) is the useful case, because it already
-works this way. It keeps the active theme at `~/.config/omarchy/current/theme`, a
-symlink its theme switcher repoints. For applications it does not
-support directly, it renders templates from
-`~/.config/omarchy/themed/`.
-
-So a template writes this file:
-
-<CommandList commands={[
-  "~/.config/omarchy/themed/runebender.toml.tpl  ->  ~/.config/runebender/config.toml",
-]} />
-
-Runebender learns nothing about Omarchy, and Omarchy needs no support
-for Runebender. Both sides already agree on a file.
-
-<Callout>
-  Runebender has four themes, so a template maps a system theme onto
-  the nearest one rather than reproducing its colours. Light desktops
-  to `light` or `gray`, dark ones to `dark` or `midnight`.
-</Callout>
-
-</DocSection>
-
-<DocSection title="What Is Not Here">
-
-No settings window and no way to change the file from inside the
-editor. Nothing writes it but you.
-
-Themes are compiled in, so the file names one rather than defining
-one. See [Themes](/docs/themes.html) for what a theme decides and how
-to add one.
+Runebender currently does not read the `~/.config/runebender/config.toml` settings previously described here.
+Use the documented environment variables and theme files.
+For exact available options, inspect the current [application source](https://github.com/eliheuer/runebender-xilem/tree/main/src/application) or run the executable's help command.
 
 </DocSection>

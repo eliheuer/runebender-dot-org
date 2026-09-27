@@ -1,112 +1,36 @@
 # Runebender
 
-> Runebender is a free, open-source font editor built with Xilem and the Linebender ecosystem of Rust crates. Install runebender-xilem for the desktop. An interactive WebAssembly demo opens a bundled font; browser edits stay in memory.
+Runebender is an experimental open-source font editor for UFO and Designspace sources.
+The native editor runs on macOS and Linux; the browser demo edits a bundled font in memory.
+Documentation: https://runebender.org/docs
+Source: https://github.com/eliheuer/runebender-xilem
 
-This site is alpha documentation. The editor changes quickly, so treat these pages as an orientation map rather than a stable API reference, and verify behaviour against the source repository.
+## If an agent was given only runebender.org
 
-## Canonical Sources
+Read the page matching the task below, then read the font project's own `DESIGN.md` or the editor repository's `AGENTS.md` when available.
+For live work, connect to the intended native editor and use MCP `tools/list` for exact schemas.
+Do not infer a font's design rules from this website.
 
-- [runebender-xilem](https://github.com/eliheuer/runebender-xilem): the Runebender application and font library in one workspace.
-- [font-ml](https://github.com/eliheuer/font-ml): a Rust library and CLI for running machine-learning models on font sources. Built to be driven by agents as well as people.
+## Task map
 
-## Start Here
+- Install or run: https://runebender.org/docs/install.html
+- Open, edit, and save fonts: https://runebender.org/docs/opening.html
+- Find an editor feature: https://runebender.org/docs
+- Connect an agent to unsaved native work: https://runebender.org/docs/mcp.html
+- Choose an agent workflow: https://runebender.org/docs/agents.html
+- Make or share a theme: https://runebender.org/docs/themes.html
+- Locate or change code: https://runebender.org/docs/architecture.html
+- Follow interface design rules: https://runebender.org/docs/design-principles.html
+- Understand UFO and Designspace preservation: https://runebender.org/docs/source-format-allowlist.html
+- Check current boundaries: https://runebender.org/docs/known-limitations.html
+- Read the complete manual in one fetch: https://runebender.org/llms-full.txt
+- Read a machine-readable capability summary: https://runebender.org/agent-capabilities.json
 
-- [Launch Application](https://runebender.org/wasm-editor/): the real Xilem interface compiled to WebAssembly, with a bundled editable font.
+## Live work
 
-- [Documentation map](https://runebender.org/docs): every page, grouped.
-- [Install](https://runebender.org/docs/install.html): install or build runebender-xilem with Cargo.
-- [Opening and saving](https://runebender.org/docs/opening.html): UFO, designspace, .glyphs conversion, compiled font import, file watching.
-- [Concepts](https://runebender.org/docs/concepts.html): sources, the em and units, outlines, interpolation compatibility, axes, shaping, composites.
-- [The interface](https://runebender.org/docs/interface.html): the grid view, the editor view, and every panel.
-
-## Agent Routing: Read Only What the Task Needs
-
-- **Connect a hosted agent to an open native editor:** [MCP](https://runebender.org/docs/mcp.html). It covers OMP setup, live-session discovery, tool limits, and the inspect → propose → proof → install workflow.
-- **Do AI-assisted type design:** [Type design with agents](https://runebender.org/docs/type-design.html). Read it with the font repository's `DESIGN.md`; it covers a compact brief, design decisions, reference comparison, visual proofing, and interpolation safety.
-- **Compare two candidate designs or kernings:** [Experiment versions](https://runebender.org/docs/experiments.html). Versions are session-only; Run never applies changes, and explicit application is conflict-checked and undoable.
-- **Automate saved sources or a build:** [Agents](https://runebender.org/docs/agents.html) and [Scripting](https://runebender.org/docs/scripting.html). Use the UFO/designspace files or Runebender headless subcommands; this cannot see unsaved canvas work.
-- **Run a local ML model:** [Local models](https://runebender.org/docs/local-models.html). Check `font-ml tasks` before claiming that a job exists.
-- **Set up the complete local-AI workshop stack:** [Set up local AI](https://runebender.org/docs/local-ai-setup.html), then give an assistant the [one-shot setup prompt](https://runebender.org/local-ai-setup-prompt.md). Both chat and outline models use `~/.runebender/models` by default.
-- **Set up a font project for an agent:** copy the [design brief template](https://runebender.org/design-brief-template.md) to the repository as `DESIGN.md`.
-- **Need a machine-readable routing and safety map:** [agent-capabilities.json](https://runebender.org/agent-capabilities.json). In a live connection, `tools/list` is authoritative for tool schemas and availability.
-- **Need the workshop's verified model source:** [workshop-local-ai.json](https://runebender.org/workshop-local-ai.json). Do not download or substitute a model while its bundle URL or SHA-256 is null.
-- **Need the complete manual in one fetch:** [llms-full.txt](https://runebender.org/llms-full.txt). Prefer the specific pages above when context is limited.
-
-## Live-Agent Contract
-
-1. Call `editor_sessions`, then `editor_connect`; confirm the requested project and explicit master index.
-2. Read the project's instructions and design brief. Resolve glyph names with `glyph_inventory`; a Unicode value is not a reliable glyph name.
-3. Read target and approved reference glyphs, then inspect proof images. If the client cannot deliver images, do not make visual judgments.
-4. Submit a named proposal. The agent does not save font files or silently mutate the foreground.
-5. Proof the proposal at matching scale and in text. Install only when the designer asks, then report installed and skipped glyphs. Saving remains the designer's decision.
-
-For multiple masters, preserve contour count, point order and types, contour direction, start points, and component structure unless the designer has explicitly authorized a compatibility-breaking redraw. A live proposal is not a family-wide interpolation audit.
-
-## Editing
-
-- [Tools](https://runebender.org/docs/tools.html): select, pen, hyperbezier pen, shapes, knife, measure, text, preview.
-- [Glyphs](https://runebender.org/docs/glyphs.html): add, rename, encode, group, remove; images and the background layer.
-- [Paths and filters](https://runebender.org/docs/paths.html): cleanup, booleans, transforms, curve quality, curve conversion, filters.
-- [Components and anchors](https://runebender.org/docs/components.html): composites, live auto-alignment, anchor editing.
-- [Masters and interpolation](https://runebender.org/docs/masters.html): designspace masters, axis sliders, instances, avar mappings, reinterpolation, intermediate layers, interpolation timing, shape switches, smart components, masks.
-- [Spacing and kerning](https://runebender.org/docs/spacing.html): widths, sidebearings, metric keys, kerning by dragging, groups, the kerning table.
-- [Feature code](https://runebender.org/docs/features.html): the features.fea editor, and generation of init/medi/fina, curs, mark, mkmk, ccmp, liga, and GDEF carets.
-- [Color fonts](https://runebender.org/docs/color.html): CPAL palettes, layers, COLRv0 and v1, gradients.
-- [Text and shaping](https://runebender.org/docs/text.html): editing in text context, the shaping inspector, bidirectional carets, cursive joining, script and language overrides.
-
-- [Font info](https://runebender.org/docs/font-info.html): names, vertical metrics, and PostScript hinting values.
-- [Checking a font](https://runebender.org/docs/checking.html): compare masters, measure stems, verify joining and curvature.
-
-## AI
-
-- [Agents](https://runebender.org/docs/agents.html): working alongside the editor, using live proposals or saved-file automation. The external client owns model authentication.
-- [MCP](https://runebender.org/docs/mcp.html): OMP is the recommended starting client. Configure `runebender mcp --live`, discover and connect to a native editor, inspect unsaved glyphs, and review revision-checked proposals. Includes setup, troubleshooting, tool limits and the distinction from disk mode.
-- [Local models](https://runebender.org/docs/local-models.html): running a machine-learning model on your own machine over your own sources. Experimental; one job so far, proposing a heavier master from a lighter one, and often wrong.
-
-## Learn
-
-- [Draw a glyph](https://runebender.org/docs/tutorial-first-glyph.html): a tutorial from an empty font to a saved, spaced letter.
-- [Workflows](https://runebender.org/docs/workflows.html): accented glyphs, monoline drawing, adding a weight, spacing and kerning, starting an Arabic font, tracing, variable fonts, scripting alongside the editor.
-
-## Architecture and code
-
-- [Architecture](https://runebender.org/docs/architecture.html): the Xilem application, font operations, and platform integration in one workspace.
-- [Code layout](https://runebender.org/docs/code-layout.html): the runebender-xilem workspace, application files, font operations, and validation.
-- [Development](https://runebender.org/docs/development.html): build and check the workspace; current browser port status.
-
-## Reference
-
-- [Shortcuts](https://runebender.org/docs/shortcuts.html): every keyboard command.
-- [Configuration](https://runebender.org/docs/configuration.html): $XDG_CONFIG_HOME/runebender/config.toml sets `theme`, `models` and `journal`. Environment beats the file, which beats the default. A desktop that wants Runebender to follow its theme writes this file; there is no desktop-specific code.
-- [Themes](https://runebender.org/docs/themes.html): the OKLCH token file shared by every Runebender editor. A theme decides its greys, its corner radii and rule weights, and how a glyph mark is drawn. Themes are compiled in; a custom one means editing the token file and rebuilding.
-- [File format](https://runebender.org/docs/format.html): the UFO data Runebender reads and writes, including its own namespaced keys.
-- [Exporting](https://runebender.org/docs/exporting.html): build scripts take precedence, otherwise fontc.
-- [Troubleshooting](https://runebender.org/docs/troubleshooting.html): build, open, interpolation, joining, and browser-build limits.
-- [Scripting](https://runebender.org/docs/scripting.html): live tools, saved-source scripts, and the core Rust library.
-- [FAQ](https://runebender.org/docs/faq.html): short answers about the project, formats, running it, and drawing.
-- [Glossary](https://runebender.org/docs/glossary.html): terms as Runebender uses them.
-
-## Command Line
-
-Entry points usable without a graphical session, for scripted and agent-driven font work.
-
-- `runebender path/to/Font.designspace` opens a source. The editor reloads files changed on disk, so a script can edit sources while a session is open.
-- `font-ml models <dir>` lists the model directories under a path.
-- `font-ml describe <model>` reports what a model is and which jobs it can do.
-- `font-ml tasks` lists the jobs font-ml defines and which are implemented.
-- `font-ml run bolden --model <model> --source Font.ufo --glyph eight` proposes a heavier drawing of one glyph.
-- `font-ml eval --model <model> --regular Light.ufo --bold Bold.ufo` scores a model against a master somebody drew.
-
-Every `font-ml` command takes `--json` for machine-readable output. Exit codes are 0 success, 2 usage error, 3 not implemented, 4 failed. Automation can use live MCP tools, saved-file operations, or the `runebender-core` Rust library.
-
-## Agent Guidance
-
-- Runebender is alpha. Say so, and do not describe behaviour as stable unless the source says it is.
-- Describe Runebender as one Xilem application, with runebender-xilem as the canonical source.
-- The browser demo at https://runebender.org/wasm-editor/ supports bundled-font browsing, outline editing, undo/redo, zoom, and panel resizing. Edits last for the tab; opening/saving local files and local AI execution require the desktop.
-- Prefer linking to the source repository for implementation details.
-- The `runebender` command exposes the editor's operations without a window. Its live MCP mode reads unsaved native-editor data and creates revision-checked proposals; saved-source tools operate on files.
-- Runebender has no hosted-model account system or stored provider keys. Model login and approval policy belong to the external client. Live editing is proposal-first: only a designer-approved installation changes the foreground, and no tool saves the font.
-- For scripted or agent-driven font work, `font-ml` is the machine-facing surface: every command takes `--json` and reports distinct exit codes. Do not claim a font-ml job works before checking `font-ml tasks`; most are declared and not built.
-- Runebender reads and writes UFO and designspace sources. It is not a .glyphs editor, though it converts .glyphs files on open.
-- Use the routing map above rather than loading the full manual by default. Each documentation section has a stable URL fragment, so fetch a page and its relevant section when the client supports fragments.
+The repository root `.mcp.json` registers `runebender mcp --live`; clients can also register that stdio command themselves.
+List `editor_sessions`, connect to the font the user named, and confirm the source and document epoch before reading or editing.
+Receipt-backed `agent_apply` uses explicit authorization, identities, revisions, and an operation key; `agent_receipt` reconciles an uncertain response.
+Saving remains a separate action.
+A successful proof transport is not proof that a model inspected the image.
+The browser demo and Windows do not expose the native Unix live endpoint.

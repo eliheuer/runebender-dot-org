@@ -1,67 +1,23 @@
 ---
 title: "MCP"
-lede: "Keep your conversation in OMP and your drawing in Runebender. MCP connects the agent to the live, unsaved font."
-status: "Experimental; available in the native Runebender editor on macOS and Linux"
-stability: "The tools and connection protocol are evolving"
-order: 17.5
-description: "Connect OMP to Runebender through MCP, inspect unsaved glyphs, and review agent proposals in the editor."
+lede: "Connect an agent to the open native editor and its unsaved font."
+status: "Experimental; native macOS and Linux"
+stability: "Use tools/list for exact live schemas"
+order: 17.1
+description: "Set up Runebender's live MCP connection and choose the right editing contract."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
 
-<DocSection title="Start with OMP">
+<DocSection title="Set Up a Local Client">
 
-[OMP (Oh My Pi)](https://github.com/can1357/oh-my-pi) is the recommended
-starting client for this workflow. Choose and authenticate your model in OMP,
-then keep that conversation running beside the editor. Runebender needs no
-model account or API key for the connection.
-
-MCP, the Model Context Protocol, lets an agent discover and call tools.
-Runebender's tools read the open document, including unsaved changes, and
-submit proposed edits. You keep drawing, review the proposals, and decide
-what to install. Other clients that support local stdio MCP can use the same
-server.
-
-The connection is local, but inference depends on your chosen provider.
-With a hosted model, prompts and font data returned to that model are sent
-to its provider. Choosing OMP does not make a hosted model run locally.
-See [Local models](/docs/local-models.html) for local inference.
-
-</DocSection>
-
-<DocSection title="Install and Open the Editor">
-
-Install current versions of Designbot and Runebender.
-See [Install](/docs/install.html) for prerequisites.
-
-```sh
-cargo +stable install --git https://github.com/eliheuer/designbot designbot-cli --force
-cargo install --git https://github.com/eliheuer/runebender-xilem
-runebender path/to/Font.designspace
-```
-
-If an older editor is running, save your work and restart it after updating.
-Updating the executable does not add tools to an already running process.
-Live connections are available on macOS and Linux. Windows support and
-the browser port are not available yet.
-
-Use a copy of a font for your first proposal and undo test. Once connected,
-you do not need to save between an edit in the canvas and a tool read.
-
-</DocSection>
-
-<DocSection title="Configure OMP Once">
-
-In the project directory where you run OMP, add this entry to
-`.omp/mcp.json`. Merge it with any existing `mcpServers` entries.
-The Runebender source repositories already include this configuration.
+Install the current `runebender` binary and open a UFO or Designspace in the native editor.
+In the project where your agent runs, configure this stdio server:
 
 ```json
 {
   "mcpServers": {
     "runebender": {
-      "type": "stdio",
       "command": "runebender",
       "args": ["mcp", "--live"]
     }
@@ -69,151 +25,60 @@ The Runebender source repositories already include this configuration.
 }
 ```
 
-`runebender` must be on OMP's PATH. Otherwise, use the full executable
-path as `command`. A user-level configuration can instead go in
-`~/.omp/agent/mcp.json`; named OMP profiles have their own user configuration.
-
-In your existing OMP session, run:
-
-```text
-/mcp reload
-/mcp test runebender
-```
-
-See OMP's [MCP configuration guide](https://github.com/can1357/oh-my-pi/blob/main/docs/mcp-config.md)
-for configuration discovery and profile details. This setup leaves your
-model, login, and tool approval preferences under OMP's control.
+The Runebender source repository includes that command in `.mcp.json` and a matching `.codex/config.toml` adapter.
+Clients that do not read those files can register the same command in their own settings.
+The client owns model authentication, provider selection, and tool approval preferences.
+A hosted model may receive font data returned to the client.
 
 </DocSection>
 
-<DocSection title="Connect to the Right Document">
+<DocSection title="Connect Read Only First">
 
-Ask OMP:
+Ask the agent to list `editor_sessions`, connect with `editor_connect`, confirm the project and source, then inspect a named glyph without changing it.
+If more than one editor is open, identify the intended font before calling edit tools.
+A successful connection reports a document epoch, stable source identities, and the current document revision.
+A source's display index can change after reorder; use the returned source identity for guarded work.
+Opening another document replaces its endpoint, so list and connect again.
+A failed live connection never falls back to disk editing.
 
-> List the Runebender editor sessions, connect to my font, and confirm the
-> project, active master, and available masters. Do not change anything.
-
-The agent first calls `editor_sessions`, then passes a returned session path
-to `editor_connect`. A successful connection reports `live: true`, the
-project path, the active master index, and the master list. With several
-editors open, identify the font you want before requesting changes.
-
-In a family, font operations require an explicit master index. For example,
-a project might report `0` for Regular and `1` for Bold. Use the returned
-indices; do not assume that order for every font. Switching the active master
-in the editor does not change a tool call's explicit master argument.
-
-Opening another document or restarting the editor replaces its endpoint.
-Ask OMP to list sessions and reconnect. The `--live` configuration stays the
-same; no socket path needs to be pasted into it. A failed connection never
-falls back to editing files on disk.
+`editor_context` reports the active source, glyph, mode, selection identities, text settings, and busy-gesture state.
+These opaque identities are scoped to the document epoch and are not persistent IDs across save and reopen.
 
 </DocSection>
 
-<DocSection title="Inspect, Propose, Review">
+<DocSection title="Choose an Edit Contract">
 
-Start with a read:
-
-> Read n in Regular and Bold. Compare the advance widths and contour counts.
-> Do not make changes.
-
-Then try a small mechanical edit:
-
-> In Regular, read n and propose increasing its advance by 12 font units,
-> without moving its outline. Use a new proposal task name and leave it for
-> me to review.
-
-This is a connection test, not a spacing recommendation. `read_glyph`
-returns a revision of the glyph. `propose_edits` checks that revision before
-creating a proposal, so an intervening manual edit cannot silently be
-replaced by an older suggestion.
-
-The foreground stays unchanged until you install the proposal in the
-editor's Local AI panel. Review the proposed glyph, install it, and undo
-once to check recovery. Installation uses the editor's glyph undo history.
-You can discard a proposal instead. If you edit the glyph after a proposal
-was made, installation rejects that stale proposal; ask for a fresh read
-and proposal.
-
-For a comparison before installation:
-
-> Generate foreground and proposal proofs of n in master 0 at the same
-> scale. Explain what changed and leave the proposal uninstalled.
-
-MCP proofs return PNG image blocks and measurements. The client must pass
-those images to the model. Use `specimen` for the MVP basic Latin text proof. Judge spacing in real text as well as isolated glyphs.
-
-</DocSection>
-
-<DocSection title="Available Live Tools">
-
-| Tool | Purpose |
+| Contract | Behavior |
 | --- | --- |
-| `editor_sessions` | List local editor endpoints and this client's current connection. |
-| `editor_connect` | Connect to a listed endpoint and return its project information. |
-| `project_info` | Read the project, active master, master indices, and dirty state. |
-| `font_info` | Read a master's names, metrics, glyph count, and proposals. |
-| `read_glyph` | Read a named glyph's points, components, anchors, metrics, and revision. |
-| `proof` | Return a PNG image and metrics for 1–256 explicitly named glyphs, optionally from a proposal layer. |
-| `propose_edits` | Propose complete outlines, smooth flags, width, point, translation, and anchor edits as one validated batch. |
-| `proposal_list` | List waiting proposals in a master. |
-| `proposal_discard` | Remove a waiting proposal without installing it. |
-| `glyph_inventory` | Find live glyphs by mark label or Unicode scalar. |
-| `design_context` | Get the type-design workflow and official documentation links. |
-| `proposal_install` | Install a reviewed proposal with an explicit structure choice and per-glyph undo. |
-| `experiment_fork` | Fork a live master or an existing version without changing it. |
-| `experiment_list` | List versions, parents, changes, and recent design intent. |
-| `experiment_apply` | Apply selected glyphs and/or kerning after conflict checks. |
-| `experiment_undo_apply` | Undo the last application if affected data is unchanged. |
-| `read_kerning` | Read pairs, groups, and the kerning revision. |
-| `experiment_kern` | Set or remove kerning pairs in a branch only. |
-| `specimen` | Return a Designbot image of live basic Latin text at four sizes. |
-| `export_proof` | Export a live glyph or text proof to a new PNG/PDF file. |
+| `propose_edits` and `proposal_install` | Prepare a revision-checked proposal, review it, then explicitly install it. |
+| `agent_apply`, `agent_receipt`, and `agent_history` | Apply a bounded, authorized edit atomically, reconcile a lost response, and share ordinary Undo/Redo history. |
+| Experiment tools | Fork session-only versions, compare them, and explicitly apply selected results. |
 
-
-These tools do not save the document. Installation changes the unsaved foreground. File-based
-model jobs and node workflows are not part of the live tool list.
-`mcp --font` is a separate disk workflow and does not see unsaved edits.
+`agent_apply` requires an expected document epoch, exact glyph and layer identities, revisions from prior reads, an actor, and an operation key.
+Its current batch limit is one source, 64 target and dependency entries, and 256 operations.
+A request carrying `authorization: "user-approved"` is only valid when the user actually authorized that mutation.
+The actor string and operation key do not grant authority.
+After an uncertain apply response, inspect `agent_receipt` or retry the exact request; never invent a new key and assume the first call failed.
+Legacy proposal and experiment mutations do not have that idempotent receipt contract.
 
 </DocSection>
 
-<DocSection title="Can It Redraw a Unicode Character?">
+<DocSection title="Proof What the Agent Changed">
 
-Yes, for an existing glyph record. Use `glyph_inventory` to resolve a Unicode
-scalar, read the current revision, and propose `set_outline` with the new
-contours. An empty record can receive a complete drawing. Create entirely
-absent records in the editor first.
-
-See [Experiment versions](/docs/experiments.html) for independent A/B workflows.
-
-Read [Type design with agents](/docs/type-design.html) for reference selection,
-curve diagnostics, visual review, installation, and current limitations.
+The ordinary `proof` tool produces a source-geometry image.
+For an asynchronous proof from one captured compiled font, use `proof_start` and `proof_status`.
+The latter can return a PNG image and explicit captured epoch and revision, allowing the agent to see whether a proof is stale.
+Use `proof_cancel` for queued work and `proof_release` when a retained artifact is no longer needed.
+A successful image transport does not prove the model inspected it; verify that the client actually presents the image before making visual claims.
 
 </DocSection>
 
-<DocSection title="Connection Problems">
+<DocSection title="Saved Files and Limits">
 
-- **“session is required”:** the agent called `editor_connect` too early.
-  Ask it to call `editor_sessions` and pass a returned path. A later successful
-  connection means it recovered; the initial error did not edit the font.
-- **No sessions:** open a current native editor on the same machine and user
-  account. An older running build needs to be restarted after saving your work.
-- **Unknown `--live` option:** update the core executable that OMP is launching.
-- **Server missing in OMP:** check the config in OMP's working directory, then
-  use `/mcp reload` and `/mcp list` to inspect discovery.
-- **Connection closed:** list sessions again and reconnect explicitly. A crash
-  can leave a stale entry in the list.
-- **Stale revision:** read the glyph again and reconsider the edit against its
-  current drawing. Do not reuse an old revision to force acceptance.
-- **Timeout:** inspect `proposal_list` before retrying; a dispatched request
-  can have completed even if the response was lost. Existing task names cannot
-  be overwritten.
-
-The native transport uses a Unix socket in a private directory. Processes
-running as your user can access it. Requests are handled on the editor's UI
-thread; the socket worker does not mutate font data in the background.
-
-For the implementation and development roadmap, see core's
-[AI type-design documentation](https://github.com/eliheuer/runebender-xilem/blob/main/crates/runebender-core/docs/ai-type-design.md).
+`runebender mcp --font /absolute/path/Font.designspace` works on saved sources and cannot see an unsaved canvas edit.
+The browser editor does not host the native live endpoint.
+MCP tool schemas and availability are authoritative through `tools/list` in the current connection.
+For implementation details, inspect the current [automation source](https://github.com/eliheuer/runebender-xilem/tree/main/src/automation) and [application live adapter](https://github.com/eliheuer/runebender-xilem/tree/main/src/application/platform).
+The [known limitations](/docs/known-limitations.html) page records platform and validation boundaries.
 
 </DocSection>

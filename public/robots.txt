@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://runebender.org/sitemap-index.xml
-Sitemap: https://runebender.org/llms.txt

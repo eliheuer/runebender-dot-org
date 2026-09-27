@@ -45,6 +45,10 @@ paths="
 /docs/type-design.html
 /docs/experiments.html
 /docs/architecture.html
+/docs/design-principles.html
+/docs/known-limitations.html
+/docs/metaballs.html
+/docs/source-format-allowlist.html
 /docs/themes.html
 /docs/configuration.html
 /docs/faq.html

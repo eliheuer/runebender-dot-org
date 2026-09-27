@@ -6,7 +6,7 @@
   "packageManager": "pnpm@11.1.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "python3 scripts/build-llms-full.py && astro build",
     "build-cloud-editor": "scripts/build-cloud-editor.sh",
     "preview": "astro preview",
     "check": "astro check",

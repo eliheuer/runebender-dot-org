@@ -20,6 +20,7 @@ export const docGroups: DocGroup[] = [
     label: "Editing",
     links: [
       { slug: "tools" },
+      { slug: "metaballs" },
       { slug: "glyphs" },
       { slug: "paths" },
       { slug: "components" },
@@ -45,7 +46,7 @@ export const docGroups: DocGroup[] = [
   },
   {
     label: "Architecture and code",
-    links: [{ slug: "architecture" }, { slug: "code-layout" }, { slug: "development" }],
+    links: [{ slug: "architecture" }, { slug: "code-layout" }, { slug: "design-principles" }, { slug: "development" }],
   },
   {
     label: "Reference",
@@ -54,6 +55,8 @@ export const docGroups: DocGroup[] = [
       { slug: "configuration" },
       { slug: "themes" },
       { slug: "format" },
+      { slug: "source-format-allowlist" },
+      { slug: "known-limitations" },
       { slug: "exporting" },
       { slug: "scripting" },
       { slug: "troubleshooting" },

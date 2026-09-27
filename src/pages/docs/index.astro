@@ -11,9 +11,10 @@ const start = [
 ];
 
 const editing = [
-  { href: "/docs/tools.html", title: "Tools", description: "The eight edit modes and what each one does." },
+  { href: "/docs/tools.html", title: "Tools", description: "The editor's drawing and inspection tools." },
   { href: "/docs/glyphs.html", title: "Glyphs", description: "Add, rename, encode, group, and remove glyphs." },
   { href: "/docs/paths.html", title: "Paths and Filters", description: "Clean up, combine, and transform outlines." },
+  { href: "/docs/metaballs.html", title: "Metaballs", description: "Edit blending source shapes and convert them to cubics." },
   { href: "/docs/components.html", title: "Components and Anchors", description: "Build composites that follow their base." },
   { href: "/docs/masters.html", title: "Masters and Interpolation", description: "Work across a designspace." },
   { href: "/docs/spacing.html", title: "Spacing and Kerning", description: "Widths, metric keys, and kerning by dragging." },
@@ -39,16 +40,19 @@ const learn = [
 ];
 
 const code = [
-  { href: "/docs/architecture.html", title: "Architecture", description: "One headless core, several front-ends, and why." },
-  { href: "/docs/code-layout.html", title: "Code Layout", description: "Where each piece of code lives, the conventions, and what is still out of place." },
+  { href: "/docs/architecture.html", title: "Architecture", description: "The current source map and ownership boundaries." },
+  { href: "/docs/code-layout.html", title: "Code Layout", description: "A short guide to the current Rust source tree." },
+  { href: "/docs/design-principles.html", title: "Design Principles", description: "The UI rules used for editor changes." },
   { href: "/docs/development.html", title: "Development", description: "Build from source and work on core alongside." },
 ];
 
 const reference = [
   { href: "/docs/shortcuts.html", title: "Shortcuts", description: "Every keyboard command and menu item." },
   { href: "/docs/configuration.html", title: "Configuration", description: "The config file: theme, models, and the session journal." },
-  { href: "/docs/themes.html", title: "Themes", description: "The token file: greys, corners, rule weights, and marks." },
+  { href: "/docs/themes.html", title: "Themes", description: "Portable theme files, Base UI, and Glyph Grid colors." },
   { href: "/docs/format.html", title: "File Format", description: "What Runebender writes into a UFO." },
+  { href: "/docs/source-format-allowlist.html", title: "Source Preservation", description: "Accepted UFO and Designspace fields and explicit rejection boundaries." },
+  { href: "/docs/known-limitations.html", title: "Known Limitations", description: "Current platform, browser, format, and agent boundaries." },
   { href: "/docs/exporting.html", title: "Exporting", description: "Build a font file from your sources." },
   { href: "/docs/scripting.html", title: "Scripting", description: "Automating alongside the editor, and what is not there." },
   { href: "/docs/troubleshooting.html", title: "Troubleshooting", description: "What to check when something fails." },
@@ -60,7 +64,7 @@ const reference = [
 <DocLayout
   title="Overview"
   lede="Runebender edits UFO and designspace font sources. It also opens and edits Glyphs files and compiled fonts, converting them to UFO/Designspace on the way in. These pages cover what it does, how to install it, and how to use it."
-  status="Alpha documentation, approximately 80% unedited AI text"
+  status="Alpha documentation"
   stability="The editor changes quickly; verify against the source"
   currentSlug="index"
   description="Documentation map for the Runebender font editor."
@@ -76,6 +80,10 @@ const reference = [
       <p class="callout">
         These pages describe runebender-xilem, the Runebender desktop application.
         The <a href="/wasm-editor/">WASM editor</a> lets you edit a bundled font. Use the desktop application to open and save your own fonts.
+      </p>
+      <p>
+        If you are using an AI agent, start with <a href="/llms.txt">the short agent map</a> or <a href="/docs/agents.html">Agents</a>.
+        The connected editor's <code>tools/list</code> gives the exact live tool schemas.
       </p>
     </div>
   </section>

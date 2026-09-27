@@ -1,222 +1,79 @@
 ---
 title: "Agents"
-lede: "Keep the agent beside the editor. Live MCP tools expose unsaved font data and offer edits for you to review."
-status: "Live MCP tools, file watching, and a local chat pane are available"
-stability: "Experimental; live tools and client workflows are evolving"
+lede: "Give an agent the right Runebender context for the font and task at hand."
+status: "Native live MCP and saved-source workflows are available"
+stability: "Experimental; confirm exact tool schemas in a live session"
 order: 17
-description: "Directing an AI agent to do type design work alongside Runebender."
+description: "Start here when an AI agent is helping with Runebender or type design."
 ---
 
 import DocSection from "../../components/DocSection.astro";
-import Callout from "../../components/Callout.astro";
-import CommandList from "../../components/CommandList.astro";
 
-<DocSection title="Choose an Agent Surface">
+<DocSection title="If You Were Given Only runebender.org">
 
-For interactive type design, start with [MCP and OMP](/docs/mcp.html).
-The agent reads the live document, including unsaved edits, and proposes
-changes. You review and install those proposals in the editor, with undo.
-OMP is the recommended starting client; other local stdio MCP clients can
-use the same tools.
+Read [llms.txt](/llms.txt) for a short task map.
+It points to installation, the editor manual, the live MCP connection, theme creation, and the code architecture.
+Read the smallest page that matches the request.
+For complete text in one fetch, use [llms-full.txt](/llms-full.txt).
+The [capability map](/agent-capabilities.json) gives clients a machine-readable routing summary.
 
-File-based automation remains useful for builds and batch work. It reads
-saved sources, and the editor can reload external changes when they do not
-conflict with unsaved work. Use the live connection when the agent needs
-the drawing currently on your canvas.
-
-Use screen control only to judge visual output or operate a UI-only command.
-For geometry, metrics, and text data, the live tools are a more exact contract
-than pixels. For a saved build or a repeatable batch change, use the UFO and
-designspace files instead of a live session.
+For coding work, also read the checked-out repository's `AGENTS.md` and the relevant module header.
+For type design, read the font project's `DESIGN.md` and ask the designer for approved references and acceptance criteria.
+This website explains Runebender; it cannot supply the private design rules of an arbitrary font.
 
 </DocSection>
 
-<DocSection title="Model Access and Data">
+<DocSection title="Choose the Right Surface">
 
-Your external agent handles its own model login. Runebender does not need
-an API key for MCP. When the agent uses a hosted model, prompts and the
-font data returned to that model go to its provider.
+| Need | Start here |
+| --- | --- |
+| Install or run the application | [Install](/docs/install.html) |
+| Inspect unsaved work in the native editor | [MCP](/docs/mcp.html) |
+| Make a guarded live edit | [MCP](/docs/mcp.html), then inspect the connected tool schemas |
+| Compare a compiled specimen | [MCP proof workflow](/docs/mcp.html) |
+| Automate saved UFO or Designspace files | [Scripting](/docs/scripting.html) |
+| Work on UI or theme code | [Design principles](/docs/design-principles.html), [themes](/docs/themes.html), and [architecture](/docs/architecture.html) |
+| Check source preservation | [Source format preservation](/docs/source-format-allowlist.html) |
 
-The native Runebender chat pane can also run a local model through
-[font-ml](/docs/local-models.html). That is a separate inference choice
-from connecting OMP to the editor.
-
-</DocSection>
-
-<DocSection title="Give an Agent Minimum Context">
-
-An agent works better on a font repository than on a loose UFO. Give
-it the same things a new collaborator would need.
-
-1. Put the sources in a repository, so every edit is reviewable and
-   revertible.
-2. Write down the build and check commands where the agent will read
-   them.
-3. Say what the font's rules are: the grid, the metrics, the naming.
-4. Point it at the smallest relevant Runebender page first; use
-   `https://runebender.org/llms-full.txt` only when it needs the whole manual.
-
-<CommandList commands={[
-  "runebender sources/Font.designspace",
-  "curl -O https://runebender.org/llms-full.txt",
-]} />
-
-Agents read a repository's own instructions file, `AGENTS.md` or
-`CLAUDE.md`, before anything else. That file is where the font's
-rules belong. A compact `DESIGN.md` should name the approved reference glyphs,
-their mark meanings, the target masters, and the acceptance check. Do not make
-the agent infer those facts from the whole source tree.
+Use exact identities and revisions from live reads for geometry changes.
+Use saved files for repeatable batch work.
+Use visual inspection for design judgments and report when the client cannot receive proof images.
 
 </DocSection>
 
-<DocSection title="Start Every Font with a Small Context Bundle">
+<DocSection title="Connect to an Open Editor">
 
-Copy the public [design brief template](/design-brief-template.md) to a font
-repository as `DESIGN.md`, then fill in only the rules that matter to that
-family. It keeps the font's evidence—masters, metrics, references, proof
-strings, and acceptance criteria—close to the sources.
+The repository root `.mcp.json` declares the client-neutral `runebender mcp --live` command.
+The same command can be registered in a client's own settings.
+The repository's `.codex/config.toml` mirrors it for Codex in a trusted checkout.
+See [MCP](/docs/mcp.html) for setup, session selection, and a read-only first request.
 
-The [agent capability map](/agent-capabilities.json) is a compact,
-machine-readable routing and safety guide. It identifies the live MCP,
-saved-source, local-model, and screen-control surfaces without duplicating
-the live API. In a connected MCP session, `tools/list` remains authoritative
-for exact tool schemas and current availability.
-
-For a new task, an agent should read its repository instructions, `DESIGN.md`,
-the capability map, and one relevant documentation page. It should not load the
-full manual or inspect the entire source tree unless the task actually needs it.
+A live connection reads the unsaved canonical document through the native editor.
+The browser demo has an in-memory font and does not expose the native Unix endpoint.
+`mcp --font` is a separate saved-file workflow.
+Neither route grants permission to apply a change merely because a tool is available.
 
 </DocSection>
 
-<DocSection title="Preserve Font Invariants">
+<DocSection title="Preserve Font Intent">
 
-Type design has constraints that are invisible in a diff and
-expensive to undo. State them, because an agent will not infer them.
+Keep source files in version control.
+Confirm the font, source, glyph name, and any approved reference glyphs before editing.
+Across masters, check contour structure, point order and types, start points, component structure, and spacing before accepting a change.
+Proof the result at matching scale and in text, then report what was changed and what remains uncertain.
 
-<table>
-  <caption>The rules worth writing down</caption>
-  <tbody>
-    <tr><th>Point compatibility</th><td>Masters must keep the same contours, the same points, in the same order. Break it and the family stops interpolating.</td></tr>
-    <tr><th>Contour direction</th><td>Outer contours run one way and counters the other. A reversed contour fills a hole.</td></tr>
-    <tr><th>Start points</th><td>Rotating where a contour starts is invisible in one master and fatal across two.</td></tr>
-    <tr><th>The grid</th><td>If the family is drawn on a unit grid, say the number. Off-grid points survive every check and ruin the drawing.</td></tr>
-    <tr><th>Components</th><td>Decomposing is easy and rarely reversible. Say when it is allowed.</td></tr>
-    <tr><th>Sidebearings</th><td>Preserving an advance width is not the same as preserving spacing.</td></tr>
-  </tbody>
-</table>
-
-<Callout>
-  Ask for a check after every batch, not at the end. A compatibility
-  break found after fifty glyphs costs fifty glyphs.
-</Callout>
-
-</DocSection>
-
-<DocSection title="Separate Proposals from Accepted Work">
-
-An agent produces more drawings than you can review carefully, so
-separate what it made from what you have accepted.
-
-Mark colors do this. The glyph grid shows them, and the mark travels
-in the source, so the state survives a restart and a git clone. One
-workable protocol: the agent marks everything it touches with one
-color, and only you may set the color that means done.
-
-Runebender stores the meaning of a mark, not just its color, so a
-theme can draw it differently without changing the font. See
-[File format](/docs/format.html).
-
-</DocSection>
-
-<DocSection title="Use the Command Line for Saved Sources">
-
-`runebender` runs the editor's own operations without a window. Same
-code, no interface.
-
-<CommandList commands={[
-  "runebender bolden --from Light.ufo --to Bold.ufo",
-]} />
-
-Every command takes `--json`. The exit codes are 0 ok, 2 usage, 4
-failed, so a script can branch without reading text.
-
-</DocSection>
-
-<DocSection title="Use MCP for the Live Editor">
-
-The [MCP guide](/docs/mcp.html) covers OMP setup, finding the open editor,
-choosing a master, and reviewing proposals. Start with a read-only request,
-then a small proposed edit and an undo test.
-
-`runebender mcp --live` discovers native editor sessions. The separate
-`--font` mode works on saved sources and cannot see unsaved changes.
-
-</DocSection>
-
-<DocSection title="Build Purpose-Made Tools on Core">
-
-For a tool rather than a session, `runebender` is the editing
-model as a Rust library with no interface attached. It carries the
-operations the editor itself uses: point edits, components, curve
-analysis, measurement, shaping, kerning with group fallback.
-
-An agent writing Rust can build a tool on it that makes exactly the
-edit you want, instead of driving a general one. See
-[Development](/docs/development.html).
-
-</DocSection>
-
-<DocSection title="Run Local Models Deliberately">
-
-`font-ml` runs machine-learning models over font sources from the
-command line. Every command takes `--json`. The exit codes separate a
-usage mistake from an unimplemented job from a real failure, so an
-agent can tell what went wrong.
-
-<CommandList commands={[
-  "font-ml tasks",
-  "font-ml describe <model>",
-  "font-ml run bolden --model <model> --source Font.ufo --glyph eight",
-]} />
-
-Run `font-ml tasks` before trusting a job exists. Most are declared
-and not built. See [Local models](/docs/local-models.html).
-
-Models live in `~/.runebender/models`. A model is a folder holding
-`config.json`, so installing one is putting it there. The editor lists
-what it finds at startup. `RUNEBENDER_MODELS` overrides the location.
-
-For a one-shot assistant-guided installation, see
-[Set up local AI](/docs/local-ai-setup.html). It uses the same default root for
-chat and outline models, verifies the installed capabilities, and keeps the
-first smoke test away from a real font.
-
-</DocSection>
-
-<DocSection title="Use Screen Control Only for Visual Work">
-
-An agent that controls the screen can use Runebender the way a person
-does, because it is an ordinary desktop application.
-
-For precise font edits, prefer the live geometry tools and review their
-proposals. Screen coordinates are a less precise contract for an outline
-than points and measurements in font units.
-
-Reach for screen control only for what has no other path, such as
-judging how something looks.
+Glyph Grid mark names have semantic meaning and are stored as simple UFO compatibility colors; the active theme chooses how they appear.
+Do not infer a designer's review state from a display hue alone.
+See [themes](/docs/themes.html) and [file format](/docs/format.html).
 
 </DocSection>
 
 <DocSection title="Current Boundaries">
 
-No way for the application to call a model service. Runebender has no
-account system and stores no keys. The chat pane in the editor runs
-an open-weight model on your machine through font-ml, and its tools
-are the same proposal-only list an agent gets: it can read the font
-and propose, and a person installs.
-
-The current recommended workflow keeps hosted-model conversation in OMP
-and font editing in Runebender. Embedded hosted-model chat is not part of
-this workflow. See [MCP](/docs/mcp.html) for the current tool limits.
+Runebender is alpha software.
+Live receipts are in memory for one document lifetime, so they do not replace saving or version control.
+The native editor's live endpoint is Unix-only.
+The website's implementation pages may lag a new commit; for exact API names and parameters, use MCP `tools/list` in the connected session and inspect the current source.
+See [Known limitations](/docs/known-limitations.html).
 
 </DocSection>

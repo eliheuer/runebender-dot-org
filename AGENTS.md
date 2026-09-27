@@ -13,7 +13,7 @@ frontend comparison or separate library product listing.
 ## Technical shape
 
 - Astro static site, deployed to GitHub Pages via the workflow in `.github/workflows/deploy.yml`.
-- Page content lives in `src/content/docs/*.mdx` (collection) and `src/pages/*.astro` (routes).
+- Page content lives in `src/content/docs/*.md` and `*.mdx` (collection), with routes in `src/pages/*.astro`.
 - Shared layout and chrome live in `src/layouts/` and `src/components/` — there is one header, one footer, one sidebar, and one source of truth for each.
 - Global CSS in `src/styles/global.css`. The Swiss/brutalist visual direction is preserved.
 - Build output goes to `dist/`. URLs preserve the legacy `.html` suffix via `build.format: "preserve"` so existing external links continue to work.
@@ -46,11 +46,11 @@ Browser edits stay in memory; desktop work remains the priority.
 
 ## Adding or editing a docs page
 
-1. Create or edit `src/content/docs/<slug>.mdx`.
-2. Set the frontmatter: `title`, `navLabel`, `eyebrow`, `lede`, `status`, `audience`, `source`, `stability`, `order`, optional `description`.
+1. Create or edit `src/content/docs/<slug>.md` or `<slug>.mdx` (use MDX only when components are needed).
+2. Set `title`, `lede`, `status`, `stability`, and `order` in frontmatter; add other metadata when useful.
 3. Use the components in `src/components/` for repeated patterns: `DocSection`, `MiniIndex`, `Callout`, `CommandList`.
-4. The docs route regenerates from the collection; the sidebar uses explicit grouped navigation in `src/components/Sidebar.astro`, so add the page there if it should appear in the nav.
-5. Update `scripts/check-local-links.sh`, `public/llms.txt`, and `public/llms-full.txt` when the public docs map changes.
+4. The docs route regenerates from the collection; add public pages to the grouped navigation in `src/lib/doc-nav.ts`.
+5. Update `scripts/check-local-links.sh` and `public/llms.txt` when the public docs map changes. `public/llms-full.txt` is generated during the build.
 
 ## Documentation stance
 
@@ -60,7 +60,7 @@ Prefer:
 
 - orientation over exhaustive details,
 - current facts over promises,
-- source links over copied specifications,
+- one maintained explanation for each topic,
 - short command examples,
 - explicit alpha-status caveats,
 - clear separation between current behavior and future work.
@@ -68,26 +68,22 @@ Prefer:
 Avoid:
 
 - implying a stable public API,
-- duplicating long canonical specs from `runebender-xilem`,
+- importing dated work logs or screenshot evidence into the public manual,
 - over-documenting UI behavior that may change,
 - marketing language that makes the app sound finished.
 
 ## Source of truth
 
-When updating docs, verify durable facts against:
-
-- `/Users/eli/GH/repos/runebender-xilem/README.md`
-- `/Users/eli/GH/repos/runebender-xilem/docs/hyperbezier-ufo-extension.md`
-- relevant source files in `/Users/eli/GH/repos/runebender-xilem/src/`
-
-If local source is unavailable, use the GitHub repo as the canonical source.
+The pages in `src/content/docs/` are the maintained documentation.
+Verify implementation claims against the current `runebender-xilem` source and CLI help.
+If a local checkout is unavailable, use the source repository on GitHub.
 
 ## Agent-readable files
 
 Keep these files updated when documentation structure changes:
 
 - `public/llms.txt` — short AI-readable map.
-- `public/llms-full.txt` — consolidated Markdown context.
+- `public/llms-full.txt` — generated consolidated Markdown context; do not edit it by hand.
 - `public/robots.txt` — sitemap pointer.
 
 The sitemap (`/sitemap-index.xml` and `/sitemap-0.xml`) is generated automatically by `@astrojs/sitemap` from the routes that Astro builds.

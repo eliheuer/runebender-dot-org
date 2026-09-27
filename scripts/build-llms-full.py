@@ -107,7 +107,7 @@ def clean(s):
 
 
 pages = []
-for path in sorted(DOCS.glob("*.mdx")):
+for path in sorted([*DOCS.glob("*.md"), *DOCS.glob("*.mdx")]):
     data, body = frontmatter(path.read_text())
     pages.append((data["order"], path.stem, data, body))
 pages.sort(key=lambda p: float(p[0]))

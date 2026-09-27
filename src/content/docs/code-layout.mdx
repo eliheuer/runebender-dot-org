@@ -1,73 +1,45 @@
 ---
 title: "Code Layout"
-lede: "The application, font operations, and checks in the runebender-xilem workspace."
+lede: "Find the current implementation in runebender-xilem."
 status: "Alpha"
-stability: "Verify implementation details against the current source"
+stability: "Verify file paths against the current source"
 order: 27
-description: "The application, font operations, and checks in the runebender-xilem workspace."
+description: "A short map of Runebender's Rust source tree."
 ---
 
 import DocSection from "../../components/DocSection.astro";
 
-<DocSection title="One Workspace">
+<DocSection title="One Application Package">
 
-Work in [runebender-xilem](https://github.com/eliheuer/runebender-xilem).
-The root package, `runebender`, provides the editor and headless subcommands. Its font library is included under `crates/`;
-no separate library checkout is needed. The repository's `AGENTS.md` records
-build commands and conventions; `DESIGN.md` covers interface changes.
-
-</DocSection>
-
-<DocSection title="The Interface">
-
-<table>
-  <caption>Application source under src/</caption>
-  <tbody>
-    <tr><th><code>main.rs</code></th><td>Entry point and module list.</td></tr>
-    <tr><th><code>cli.rs</code></th><td>Argument parsing and headless font commands.</td></tr>
-    <tr><th><code>workspace.rs</code></th><td>Editor state.</td></tr>
-    <tr><th><code>actions.rs</code></th><td>Actions, native menus, and keyboard shortcuts.</td></tr>
-    <tr><th><code>launch.rs</code></th><td>Event loop, window setup, and first frame.</td></tr>
-    <tr><th><code>view/</code></th><td>Canvas, panels, chrome, themes, design tokens, and reusable view functions.</td></tr>
-    <tr><th><code>edit/</code></th><td>Commands, inspector edits, sessions, sidebar actions, and text editing.</td></tr>
-    <tr><th><code>platform/</code></th><td>Files, dialogs, exports, watching, live connections, and headless captures.</td></tr>
-    <tr><th><code>widgets/</code></th><td>Application-specific controls and input handling.</td></tr>
-  </tbody>
-</table>
-
-Xilem views read state. Commands describe complete user actions, shared by
-menu items and shortcuts. Reuse theme accessors and design tokens when
-changing a view.
+The root `runebender` Cargo package contains the native editor, headless commands, and reusable font engine.
+The browser host is a separate Cargo workspace under `web/` and reuses the editor sources.
+The complete [architecture guide](/docs/architecture.html) is the source map and change-routing guide.
 
 </DocSection>
 
-<DocSection title="Font Operations">
+<DocSection title="Where to Start">
 
-The workspace library groups source into six concerns:
+| Area | Source |
+| --- | --- |
+| Executable and CLI | `src/main.rs`, `src/application/cli.rs` |
+| Native application state and editing | `src/application/workspace.rs`, `src/application/editor/` |
+| Views, canvas, and controls | `src/application/view/`, `src/application/widgets/` |
+| Platform adapters | `src/application/platform/` |
+| Canonical document and persistence | `src/font/` |
+| Agent and live editing contracts | `src/automation/` |
+| Outline, text, formats, and analysis | `src/outline/`, `src/text/`, `src/formats/`, `src/analysis/` |
+| Toolkit-independent UI data and workflows | `src/ui/`, `src/workflows/` |
+| Browser host | `web/` |
 
-<table>
-  <caption>Font library modules</caption>
-  <tbody>
-    <tr><th><code>outline/</code></th><td>Shape editing and curve mathematics.</td></tr>
-    <tr><th><code>analysis/</code></th><td>Measurements, curve analysis, and search.</td></tr>
-    <tr><th><code>formats/</code></th><td>File formats, import, and metadata keys.</td></tr>
-    <tr><th><code>document/</code></th><td>Masters, projects, interpolation, and composites.</td></tr>
-    <tr><th><code>text/</code></th><td>Shaping, joining rules, and the text buffer.</td></tr>
-    <tr><th><code>ui/</code></th><td>Colors, themes, sidebar data, selection, undo, and viewport state.</td></tr>
-  </tbody>
-</table>
-
-Each directory's `mod.rs` explains its scope. Operations use norad types and
-kurbo geometry. Public items have doc comments; editing operations report
-whether or how much they changed.
+The in-memory document is `font::project::Project`.
+Babelfont owns canonical glyph geometry; UFO and Designspace adapters preserve values that are not represented there.
 
 </DocSection>
 
-<DocSection title="Validation">
+<DocSection title="Before Editing">
 
-Follow [Development](/docs/development.html) for workspace checks. Tests live
-beside the code they exercise. Set `RUNEBENDER_TEST_FONTS` for font fixtures.
-Check interface changes with matching-size screenshots and native interaction;
-headless captures alone cannot verify keyboard, pointer, or browser behavior.
+Read the repository's `AGENTS.md` for local working rules.
+For interface changes, read [interface design principles](/docs/design-principles.html) and [themes](/docs/themes.html).
+Use [Development](/docs/development.html) for build and validation commands.
 
 </DocSection>
