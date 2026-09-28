@@ -13,12 +13,12 @@ import DocSection from "../../components/DocSection.astro";
 
 `RUNEBENDER_THEME` selects a built-in or installed theme by ID.
 `RUNEBENDER_THEME_PATH` adds one theme file or a platform-separated list of files and directories.
-The native editor also discovers `.theme.json` files in `$XDG_CONFIG_HOME/runebender/themes/`, or `~/.config/runebender/themes/` when that variable is unset.
+The native editor also discovers `.theme.toml` and existing `.theme.json` files in `$XDG_CONFIG_HOME/runebender/themes/`, or `~/.config/runebender/themes/` when that variable is unset.
 An unknown theme ID falls back to Gray with a diagnostic.
 See [Themes](/docs/themes.html) for the format, installation, and sharing workflow.
 
 ```sh
-RUNEBENDER_THEME_PATH="$PWD/my-theme.theme.json" RUNEBENDER_THEME=my-theme runebender
+RUNEBENDER_THEME_PATH="$PWD/my-theme.theme.toml" RUNEBENDER_THEME=my-theme runebender
 ```
 
 </DocSection>

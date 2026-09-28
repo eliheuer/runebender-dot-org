@@ -13,7 +13,7 @@ Other editors are references to evaluate, not feature lists to copy.
 
 ## Use named roles
 
-Colors come from installed `.theme.json` files and are resolved through `src/application/view/theme.rs`.
+Colors come from installed `.theme.toml` files and are resolved through `src/application/view/theme.rs`.
 The [theme guide](/docs/themes.html) names the Base UI and Glyph Grid palettes.
 Spacing, sizes, radii, strokes, and type come from `src/application/view/design.rs`.
 Repeated controls belong in `src/application/view/recipes.rs`.

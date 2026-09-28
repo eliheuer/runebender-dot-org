@@ -48,7 +48,7 @@ Native and browser editing use the same canonical operations.
 | --- | --- |
 | Editor tool or shortcut | `src/application/editor/tools/`, `src/application/actions.rs` |
 | Canvas or panel | `src/application/view/canvas/`, `src/application/view/panels/` |
-| Theme or reusable control | `themes/builtin/`, `src/application/view/theme.rs`, `design.rs`, `recipes.rs` |
+| Theme or reusable control | `assets/themes/default/`, `src/application/view/theme.rs`, `design.rs`, `recipes.rs` |
 | Glyph outline or interpolation | `src/outline/`, `src/font/` |
 | UFO or Designspace preservation | `src/font/persistence/`, `src/formats/` |
 | Live agent tool | `src/automation/`, `src/application/platform/live*.rs` |
