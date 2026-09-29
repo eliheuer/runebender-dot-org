@@ -80,6 +80,15 @@ cargo run --release -- path/to/Font.designspace
 Cargo uses the repository's pinned toolchain. See
 [Development](/docs/development.html) for checks and the code layout.
 
+For an optimized local build that favors shorter rebuilds while working on the UI, use:
+
+```sh
+cargo run --profile fast --locked -- path/to/Font.designspace
+```
+
+Its first build fills a separate cache, and later builds reuse incremental compilation data.
+See [Development](/docs/development.html) for the profile's tradeoffs.
+
 ### In the Browser
 
 [Launch Application](/wasm-editor/) to try the real Runebender interface in your
@@ -2393,7 +2402,7 @@ part of the font build.
 ## Themes
 https://runebender.org/docs/themes.html
 
-Make, install, and share Runebender themes with the Base UI and Glyph Grid palettes.
+Make, install, and share Runebender themes with the Base UI and Rainbow palettes.
 
 A Runebender theme is one portable .theme.toml file.
 The bundled themes are in [assets/themes/default](https://github.com/eliheuer/runebender-xilem/tree/main/assets/themes/default).
@@ -2405,16 +2414,20 @@ Existing .theme.json files still load.
 
 | Name | TOML section | What to say when requesting a change |
 | --- | --- | --- |
-| **Base UI** | baseUi | “Make Base UI 20 warmer.” Numbered stops progress from darkest to lightest in the built-in themes. A custom theme can tint or replace each stop. |
-| **Glyph Grid** | glyphGrid | “Change Glyph Grid red.” Red, orange, yellow, green, blue, purple, and pink are stable mark categories; teal is also available for editor roles. Each hue has dim, base, bright, and deep steps. |
+| **Base UI** | baseUi | “Make Base UI 07 warmer.” Ten numbered stops, 00–09, progress from darkest to lightest in the built-in themes. A custom theme can tint or replace each stop. |
+| **Rainbow** | rainbow | “Change Rainbow red.” Red, orange, yellow, green, blue, purple, and pink are stable mark categories; teal is also available for editor roles. Each hue has dim, base, bright, and deep steps. |
 
 surfaces, text, and roles say where those palette colors are used.
-For example, gray.roles.pointSmooth is glyphGrid.blue.base, while gray.surfaces.panel is baseUi.20.
+For example, gray.roles.pointSmooth is rainbow.blue.base, while gray.surfaces.panel is baseUi.07.
+Each theme chooses its ten Base UI colors; Gray starts at dark gray rather than black.
+Built-in surfaces and text reference this scale instead of adding separate neutral colors.
+Existing custom themes with longer scales still load.
+The earlier glyphGrid section name and color references remain supported for existing themes.
 A role can also use an explicit color such as #AABBCC.
-The theme's markStep chooses which Glyph Grid step appears on glyph cells.
+The theme's markStep chooses which Rainbow step appears on glyph cells.
 
 Runebender writes simple canonical public.markColor values to UFO files (1,0,0,1 for red, for example).
-These values are compatibility tags, not display colors; each theme controls the visible Glyph Grid palette.
+These values are compatibility tags, not display colors; each theme controls the visible Rainbow palette.
 The editor still recognizes older values already saved in UFOs.
 
 ## Make and use a theme
@@ -2443,7 +2456,12 @@ Display names must contain 1–80 visible characters.
 
 ## Edit the file
 
-Each theme file owns its Base UI stops, Glyph Grid hues and steps, surface colors, text colors, semantic roles, point and mark styles, and geometry.
+Each theme file owns its Base UI stops, Rainbow hues and steps, surface colors, text colors, semantic roles, point and mark styles, and geometry.
+Base UI and Rainbow hues use oklch(lightness chroma hue) color strings.
+Lightness runs from 0 to 1, chroma describes color intensity from 0 upward with no fixed maximum, and hue runs around the color wheel from 0 to 360 degrees.
+Rainbow steps use the same notation for signed offsets rather than complete colors.
+For example, bright = "oklch(0.13 -0.03 0)" adds 0.13 lightness, subtracts 0.03 chroma, and leaves the hue unchanged.
+The original component-table form remains supported for existing themes.
 It does not depend on another theme file, so one file is enough to share a theme.
 Sections and keys work like Cargo.toml, and # starts a comment.
 
@@ -2453,23 +2471,26 @@ id = "my-theme"
 name = "My Theme"
 
 [baseUi]
-"20" = "#AABBCC"
+"07" = "#AABBCC"
 
 [surfaces]
-panel = "baseUi.20"
+panel = "baseUi.07"
 ```
 
 This excerpt shows the syntax; copy a bundled theme for all required values.
 The built-ins use oklch(L C H) values, with lightness L from 0 to 1 and hue H in degrees.
 You can also use #RRGGBB or #RRGGBBAA for a Base UI stop or a direct surface, text, or role value.
-References use baseUi.01 or glyphGrid.red.base syntax.
+References use baseUi.00 or rainbow.red.base syntax.
 The parser reports missing roles, bad references, unsupported format versions, and invalid colors by theme and key.
 Unknown fields are rejected so misspelled settings do not silently disappear.
 
 The shape fields in geometry are pixel measurements: radius, radiusControl, stroke, and strokeEmphasis.
+radius rounds glyph tiles and popup surfaces; radiusControl rounds buttons and fields.
+Set both to 0 for square geometry, or both to 4 for gently rounded geometry.
+Circular mark swatches and icons retain their own shapes.
 markStyle is fill or border; pointStyle is fill or ring.
 markOutline, markInk, and pointOutline are optional colors; pointHalo is a boolean.
-All seven named Glyph Grid marks must remain in glyphGrid.marks exactly once, because glyph mark names are saved font metadata.
+All seven named Rainbow marks must remain in rainbow.marks exactly once, because glyph mark names are saved font metadata.
 
 Start a color change at the use site under src/application/view/, then follow its named color in src/application/view/theme.rs to the file's surfaces, text, or roles section.
 src/ui/theme.rs is the toolkit-independent parser and resolver.
@@ -2538,6 +2559,8 @@ Headless file commands remain portable.
 ## Browser
 
 The browser build reuses the Xilem/Masonry interface and edits a bundled font in memory.
+The current source checkout's browser build is blocked by a missing serialization dependency and native live-agent startup references in shared application code.
+New native interface changes cannot yet be validated in a fresh browser build; the published browser artifact can lag the native editor.
 Reloading discards edits.
 Opening or saving arbitrary user sources, native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
 Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
@@ -2695,8 +2718,15 @@ Start with its AGENTS.md, then use [Code Layout](/docs/code-layout.html) and the
 ```sh
 git clone https://github.com/eliheuer/runebender-xilem
 cd runebender-xilem
-cargo run --release -- path/to/Font.designspace
+cargo run --profile fast --locked -- path/to/Font.designspace
 ```
+
+The fast profile is intended for local UI development.
+Cargo builds when needed, then launches the editor; the executable is target/fast/runebender.
+This profile keeps release's optimization level and disabled debug assertions, while disabling LTO and enabling incremental compilation with 16 code-generation units to favor shorter rebuilds.
+The first build fills a separate cache.
+Runtime performance may differ from release, so use cargo run --release --locked -- path/to/Font.designspace for release performance comparisons.
+The --locked flag keeps dependency versions fixed to the committed Cargo.lock.
 
 ### Checks
 
@@ -2855,7 +2885,7 @@ Other editors are references to evaluate, not feature lists to copy.
 ## Use named roles
 
 Colors come from installed .theme.toml files and are resolved through src/application/view/theme.rs.
-The [theme guide](/docs/themes.html) names the Base UI and Glyph Grid palettes.
+The [theme guide](/docs/themes.html) names the Base UI and Rainbow palettes.
 Spacing, sizes, radii, strokes, and type come from src/application/view/design.rs.
 Repeated controls belong in src/application/view/recipes.rs.
 A new color needs a named role in every built-in theme.
@@ -2871,7 +2901,8 @@ A new color needs a named role in every built-in theme.
 
 ## Check the actual result
 
-Inspect Gray and Light at the same size after an interface change.
+For ordinary interface changes, inspect only the default theme (currently Gray).
+Check other themes at the same size when working on themes or when explicitly requested.
 A headless capture shows the rendered widget tree but does not prove pointer, keyboard, IME, accessibility, or GPU behavior.
 Run a native interaction check when the change affects those paths.
 The repository's AGENTS.md and CI define the current code checks.

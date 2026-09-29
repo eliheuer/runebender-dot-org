@@ -14,7 +14,7 @@ Other editors are references to evaluate, not feature lists to copy.
 ## Use named roles
 
 Colors come from installed `.theme.toml` files and are resolved through `src/application/view/theme.rs`.
-The [theme guide](/docs/themes.html) names the Base UI and Glyph Grid palettes.
+The [theme guide](/docs/themes.html) names the Base UI and Rainbow palettes.
 Spacing, sizes, radii, strokes, and type come from `src/application/view/design.rs`.
 Repeated controls belong in `src/application/view/recipes.rs`.
 A new color needs a named role in every built-in theme.
@@ -30,7 +30,8 @@ A new color needs a named role in every built-in theme.
 
 ## Check the actual result
 
-Inspect Gray and Light at the same size after an interface change.
+For ordinary interface changes, inspect only the default theme (currently Gray).
+Check other themes at the same size when working on themes or when explicitly requested.
 A headless capture shows the rendered widget tree but does not prove pointer, keyboard, IME, accessibility, or GPU behavior.
 Run a native interaction check when the change affects those paths.
 The repository's `AGENTS.md` and CI define the current code checks.

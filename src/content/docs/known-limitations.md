@@ -21,6 +21,8 @@ Headless file commands remain portable.
 ## Browser
 
 The browser build reuses the Xilem/Masonry interface and edits a bundled font in memory.
+The current source checkout's browser build is blocked by a missing serialization dependency and native live-agent startup references in shared application code.
+New native interface changes cannot yet be validated in a fresh browser build; the published browser artifact can lag the native editor.
 Reloading discards edits.
 Opening or saving arbitrary user sources, native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
 Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.

@@ -18,8 +18,15 @@ Start with its `AGENTS.md`, then use [Code Layout](/docs/code-layout.html) and t
 ```sh
 git clone https://github.com/eliheuer/runebender-xilem
 cd runebender-xilem
-cargo run --release -- path/to/Font.designspace
+cargo run --profile fast --locked -- path/to/Font.designspace
 ```
+
+The `fast` profile is intended for local UI development.
+Cargo builds when needed, then launches the editor; the executable is `target/fast/runebender`.
+This profile keeps release's optimization level and disabled debug assertions, while disabling LTO and enabling incremental compilation with 16 code-generation units to favor shorter rebuilds.
+The first build fills a separate cache.
+Runtime performance may differ from release, so use `cargo run --release --locked -- path/to/Font.designspace` for release performance comparisons.
+The `--locked` flag keeps dependency versions fixed to the committed `Cargo.lock`.
 
 </DocSection>
 

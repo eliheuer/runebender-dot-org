@@ -72,6 +72,15 @@ cargo run --release -- path/to/Font.designspace
 Cargo uses the repository's pinned toolchain. See
 [Development](/docs/development.html) for checks and the code layout.
 
+For an optimized local build that favors shorter rebuilds while working on the UI, use:
+
+```sh
+cargo run --profile fast --locked -- path/to/Font.designspace
+```
+
+Its first build fills a separate cache, and later builds reuse incremental compilation data.
+See [Development](/docs/development.html) for the profile's tradeoffs.
+
 </DocSection>
 
 <DocSection title="In the Browser">

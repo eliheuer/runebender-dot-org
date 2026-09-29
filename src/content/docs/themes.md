@@ -1,10 +1,10 @@
 ---
 title: "Themes"
-lede: "Make, install, and share Runebender themes with the Base UI and Glyph Grid palettes."
+lede: "Make, install, and share Runebender themes with the Base UI and Rainbow palettes."
 status: "Alpha"
 stability: "Verify details against the current source"
 order: 23
-description: "Make, install, and share Runebender themes with the Base UI and Glyph Grid palettes."
+description: "Make, install, and share Runebender themes with the Base UI and Rainbow palettes."
 ---
 
 A Runebender theme is one portable `.theme.toml` file.
@@ -17,16 +17,20 @@ Existing `.theme.json` files still load.
 
 | Name | TOML section | What to say when requesting a change |
 | --- | --- | --- |
-| **Base UI** | `baseUi` | “Make Base UI 20 warmer.” Numbered stops progress from darkest to lightest in the built-in themes. A custom theme can tint or replace each stop. |
-| **Glyph Grid** | `glyphGrid` | “Change Glyph Grid red.” Red, orange, yellow, green, blue, purple, and pink are stable mark categories; teal is also available for editor roles. Each hue has `dim`, `base`, `bright`, and `deep` steps. |
+| **Base UI** | `baseUi` | “Make Base UI 07 warmer.” Ten numbered stops, 00–09, progress from darkest to lightest in the built-in themes. A custom theme can tint or replace each stop. |
+| **Rainbow** | `rainbow` | “Change Rainbow red.” Red, orange, yellow, green, blue, purple, and pink are stable mark categories; teal is also available for editor roles. Each hue has `dim`, `base`, `bright`, and `deep` steps. |
 
 `surfaces`, `text`, and `roles` say where those palette colors are used.
-For example, `gray.roles.pointSmooth` is `glyphGrid.blue.base`, while `gray.surfaces.panel` is `baseUi.20`.
+For example, `gray.roles.pointSmooth` is `rainbow.blue.base`, while `gray.surfaces.panel` is `baseUi.07`.
+Each theme chooses its ten Base UI colors; Gray starts at dark gray rather than black.
+Built-in surfaces and text reference this scale instead of adding separate neutral colors.
+Existing custom themes with longer scales still load.
+The earlier `glyphGrid` section name and color references remain supported for existing themes.
 A role can also use an explicit color such as `#AABBCC`.
-The theme's `markStep` chooses which Glyph Grid step appears on glyph cells.
+The theme's `markStep` chooses which Rainbow step appears on glyph cells.
 
 Runebender writes simple canonical `public.markColor` values to UFO files (`1,0,0,1` for red, for example).
-These values are compatibility tags, not display colors; each theme controls the visible Glyph Grid palette.
+These values are compatibility tags, not display colors; each theme controls the visible Rainbow palette.
 The editor still recognizes older values already saved in UFOs.
 
 ## Make and use a theme
@@ -55,7 +59,12 @@ Display names must contain 1–80 visible characters.
 
 ## Edit the file
 
-Each theme file owns its Base UI stops, Glyph Grid hues and steps, surface colors, text colors, semantic roles, point and mark styles, and geometry.
+Each theme file owns its Base UI stops, Rainbow hues and steps, surface colors, text colors, semantic roles, point and mark styles, and geometry.
+Base UI and Rainbow hues use `oklch(lightness chroma hue)` color strings.
+Lightness runs from 0 to 1, chroma describes color intensity from 0 upward with no fixed maximum, and hue runs around the color wheel from 0 to 360 degrees.
+Rainbow steps use the same notation for signed offsets rather than complete colors.
+For example, `bright = "oklch(0.13 -0.03 0)"` adds 0.13 lightness, subtracts 0.03 chroma, and leaves the hue unchanged.
+The original component-table form remains supported for existing themes.
 It does not depend on another theme file, so one file is enough to share a theme.
 Sections and keys work like `Cargo.toml`, and `#` starts a comment.
 
@@ -65,23 +74,26 @@ id = "my-theme"
 name = "My Theme"
 
 [baseUi]
-"20" = "#AABBCC"
+"07" = "#AABBCC"
 
 [surfaces]
-panel = "baseUi.20"
+panel = "baseUi.07"
 ```
 
 This excerpt shows the syntax; copy a bundled theme for all required values.
 The built-ins use `oklch(L C H)` values, with lightness `L` from 0 to 1 and hue `H` in degrees.
 You can also use `#RRGGBB` or `#RRGGBBAA` for a Base UI stop or a direct surface, text, or role value.
-References use `baseUi.01` or `glyphGrid.red.base` syntax.
+References use `baseUi.00` or `rainbow.red.base` syntax.
 The parser reports missing roles, bad references, unsupported format versions, and invalid colors by theme and key.
 Unknown fields are rejected so misspelled settings do not silently disappear.
 
 The shape fields in `geometry` are pixel measurements: `radius`, `radiusControl`, `stroke`, and `strokeEmphasis`.
+`radius` rounds glyph tiles and popup surfaces; `radiusControl` rounds buttons and fields.
+Set both to `0` for square geometry, or both to `4` for gently rounded geometry.
+Circular mark swatches and icons retain their own shapes.
 `markStyle` is `fill` or `border`; `pointStyle` is `fill` or `ring`.
 `markOutline`, `markInk`, and `pointOutline` are optional colors; `pointHalo` is a boolean.
-All seven named Glyph Grid marks must remain in `glyphGrid.marks` exactly once, because glyph mark names are saved font metadata.
+All seven named Rainbow marks must remain in `rainbow.marks` exactly once, because glyph mark names are saved font metadata.
 
 Start a color change at the use site under `src/application/view/`, then follow its named color in `src/application/view/theme.rs` to the file's `surfaces`, `text`, or `roles` section.
 `src/ui/theme.rs` is the toolkit-independent parser and resolver.
