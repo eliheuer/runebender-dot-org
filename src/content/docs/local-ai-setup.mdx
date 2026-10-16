@@ -37,7 +37,7 @@ The last three commands are alternatives. Check both programs answer:
   "font-ml tasks",
 ]} />
 
-`font-ml tasks` is authoritative: only tasks marked ready are usable. `bolden` and `train` are the two the demos use.
+`font-ml tasks` is authoritative: only tasks marked ready are usable. The demos use `draw`, `train-draw`, `bolden`, and `train`.
 
 </DocSection>
 
@@ -54,25 +54,28 @@ Work through the numbered folders in order. Each has a README.
 
 | Demo | What you do |
 | --- | --- |
-| `01-train-and-bolden` | Train a model on the Shapes font, then bolden a new shape in the editor |
-| `02-chat-model` | Download a small open chat model from Hugging Face and ask it about the font |
-| `03-nodes` | The same train and bolden steps as a node graph |
-| `04-real-font` | The bolden loop on Virtua Grotesk, a real typeface |
+| `01-draw-from-text` | Train a model on the Shapes font, then type "a circle 64 units wide" in the editor and it draws one |
+| `02-train-and-bolden` | Train a model on the Shapes font, then bolden a new shape in the editor |
+| `03-chat-model` | Download a small open chat model from Hugging Face and ask it about the font |
+| `04-nodes` | The same train and bolden steps as a node graph |
+| `05-real-font` | The bolden loop on Virtua Grotesk, a real typeface |
 
 </DocSection>
 
 <DocSection title="Train Your First Model">
 
 <CommandList commands={[
-  "./01-train-and-bolden/train.sh",
+  "./01-draw-from-text/train.sh",
   "RUNEBENDER_MODELS=$PWD/models runebender fonts/Shapes/Shapes.designspace",
 ]} />
 
-The script trains for about a minute on a laptop GPU and writes a folder of three files to `models/shapes-bolden`. The editor command opens the font with that folder as its model root. In the Local AI section of the left panel choose the model, open the glyph `octagon`, and click Bolden. Undo if you do not like it.
+The script trains a draw model on the 128 shapes in the Shapes font, about ten minutes on a laptop GPU, and writes a folder of three files to `models/shapes-draw`. The editor command opens the font with that folder as its model root. In the Local AI section of the left panel choose the model, open any glyph, type a sentence in the Shapes box, such as "a circle 64 units wide in the lower left", and click Draw. The drawing lands in the glyph as a proposal; Install keeps it, Discard drops it.
 
 <Callout>
-  Octagon is not in the training data. The result is rough, and that is the point: a model this small, trained on this little, moves edges outward but not evenly. You drew the data, you trained the model, and it runs inside the editor. Better models come from more drawings.
+  The model knows only the shapes in the font and the words for them. A glyph named `circle` taught it "circle"; "heart" is unknown until you draw one and train again. That is the whole lesson: your drawings in, a model out, the model used from the editor.
 </Callout>
+
+If you do not want to wait, `models/shapes-draw` is checked in.
 
 </DocSection>
 
@@ -94,7 +97,7 @@ The two kinds are different artifacts. A chat model does not bolden, and an outl
 - **No model in the editor:** the directory must sit directly under the model root, and the editor must be restarted after adding it. Check `RUNEBENDER_MODELS` if you set it.
 - **`font-ml` is missing:** Cargo's bin directory is not on `PATH`.
 - **A GPU request fails:** add `--device cpu`, or rebuild `font-ml` without the feature flag.
-- **Training fails:** use the checked-in `models/shapes-bolden` and carry on with the editor steps.
+- **Training fails:** use the checked-in `models/shapes-draw` or `models/shapes-bolden` and carry on with the editor steps.
 - **A download fails:** the script resumes where it stopped. Run it again.
 - **A chat answer is wrong:** expected at 0.6B. The script fetches 1.7B and 4B too; 4B is what the Chat panel was built with.
 
