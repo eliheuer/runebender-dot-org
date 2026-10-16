@@ -21,9 +21,9 @@ Set up a local Runebender environment with `runebender`, `font-ml`, and the demo
 3. Verify `runebender --help` and `font-ml tasks`. Treat only tasks marked ready as available.
 4. Clone the demo repo and read its README.
 5. Run `./01-draw-from-text/train.sh`. Report the training time, the device it used, and the final validation loss. If training fails, say so and use the checked-in `models/shapes-draw`.
-6. Run `font-ml run draw --model models/shapes-draw --source fonts/Shapes/Shapes-Regular.ufo --glyph octagon --prompt "a circle 200 units wide in the center"` and report the result. Do not pass `--write` unless asked.
+6. Run `font-ml run draw --model models/shapes-draw --source fonts/Shapes.ufo --glyph octagon --prompt "a circle 200 units wide in the center"` and report the result. Do not pass `--write` unless asked.
 7. Only if the user wants the chat demo: run `./03-chat-model/get-model.sh` (about 800 MB), then one `font-ml chat` prompt over the Shapes font, and report what the model did.
-8. Tell the user the command that opens the editor with the demo models: `RUNEBENDER_MODELS=$PWD/models runebender fonts/Shapes/Shapes.designspace`. Do not open the editor yourself unless asked.
+8. Tell the user the command that opens the editor with the demo models: `RUNEBENDER_MODELS=$PWD/models runebender fonts/Shapes.ufo`. Do not open the editor yourself unless asked.
 
 ## Finish condition
 

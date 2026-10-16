@@ -66,10 +66,10 @@ Work through the numbered folders in order. Each has a README.
 
 <CommandList commands={[
   "./01-draw-from-text/train.sh",
-  "RUNEBENDER_MODELS=$PWD/models runebender fonts/Shapes/Shapes.designspace",
+  "RUNEBENDER_MODELS=$PWD/models runebender fonts/Shapes.ufo",
 ]} />
 
-The script trains a draw model on the 128 shapes in the Shapes font, about ten minutes on a laptop GPU, and writes a folder of three files to `models/shapes-draw`. The editor command opens the font with that folder as its model root. In the Local AI section of the left panel choose the model, open any glyph, type a sentence in the Shapes box, such as "a circle 64 units wide in the lower left", and click Draw. The drawing lands in the glyph as a proposal; Install keeps it, Discard drops it.
+The script trains a draw model on the 16 shapes in `fonts/Shapes.ufo`, about ten minutes on a laptop GPU, and writes a folder of three files to `models/shapes-draw`. The editor command opens the font with that folder as its model root. In the Local AI section of the left panel choose the model, open any glyph, type a sentence in the Shapes box, such as "a circle 64 units wide in the lower left", and click Draw. The drawing lands in the glyph as a proposal; Install keeps it, Discard drops it.
 
 <Callout>
   The model knows only the shapes in the font and the words for them. A glyph named `circle` taught it "circle"; "heart" is unknown until you draw one and train again. That is the whole lesson: your drawings in, a model out, the model used from the editor.
