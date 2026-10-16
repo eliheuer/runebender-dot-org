@@ -28,18 +28,25 @@ no account is needed, and your drawings are not sent anywhere.
 
 <DocSection title="Getting a Model">
 
-You train one in the editor (a Train node in the Nodes tab, or
-`font-ml run train` from a shell), or you are given a directory by
-someone who did. The editor downloads nothing.
+You train one, or you are given a directory by someone who did. The
+editor downloads nothing.
 
-Put it in `~/.runebender/models` and the editor lists it at startup.
-Installing a model is dropping the folder there. Set
-`RUNEBENDER_MODELS` to keep them somewhere else, or list more
+The quickest way to have one is the
+[local AI demo repo](https://github.com/eliheuer/runebender-local-ai-demo):
+it holds a small font family made for training, a script that trains a
+model on it in about a minute, and a checked-in copy of that model.
+[Set up local AI](/docs/local-ai-setup.html) walks through it.
+
+Put a model in `~/.runebender/models` and the editor lists it at
+startup. Installing a model is dropping the folder there. Set
+`RUNEBENDER_MODELS` to read them from somewhere else, or list more
 directories, one per line, in `~/.runebender/model_paths`.
 
 Open-weight language models for the Chat tab are the same: a
 directory holding a `.gguf` file and its `tokenizer.json`, under the
-same roots. They are a few gigabytes; you download them yourself.
+same roots. They are a few hundred megabytes to a few gigabytes; you
+download them yourself, and the demo repo has a script that fetches
+Qwen3 from Hugging Face and checks the hash.
 
 A model is three files:
 
@@ -55,18 +62,14 @@ A model is three files:
 Nothing else is read, and the directory is inspectable: `cat` the
 config to see what you have.
 
-For a first local setup, use [Set up local AI](/docs/local-ai-setup.html).
-It defines the shared model root, separates chat and outline-model artifacts,
-and verifies a model bundle before an assistant touches a font.
-
 </DocSection>
 
 <DocSection title="Boldening">
 
-Open the Local AI section of the left panel, then click the model row
-and choose a model directory. The editor remembers it for the session.
+Open the Local AI section of the left panel and choose a model under
+Model. The editor remembers it for the session.
 
-Open a glyph in the lighter master and click Bolden this glyph. The
+Open a glyph in the lighter master and click Bolden under Tasks. The
 editor predicts a heavier version and installs it. The button stays
 inactive until a glyph is open.
 
