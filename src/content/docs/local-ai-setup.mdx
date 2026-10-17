@@ -68,12 +68,12 @@ Work through the numbered folders in order. Each has a README.
   "runebender fonts/Shapes.ufo",
 ]} />
 
-Open any glyph. In the toolbar, hold the shapes button and pick **Local AI Shapes**. The right panel shows the Local AI shapes tool: with no model yet it offers Quick or Thorough training and two buttons, Train from this font and Train from the sample shapes. Click the second. The panel shows the step, the time left, and what the model draws right now; a quick run takes about twelve minutes on a laptop GPU, a thorough one about thirty.
+Open any glyph. In the toolbar, hold the shapes button and pick **Local AI Shapes**. The right panel shows the Local AI Shapes section: with no model yet it offers Quick or Thorough training and two buttons, Train From This Font and Train From the Sample Shapes. Click the second. The panel shows the time left and what the model draws right now; a quick run takes about twelve minutes on a laptop GPU, a thorough one about thirty.
 
-When it finishes, drag a box on the glyph, type a word such as `star` in the field under the box, and press Enter. The model fills the box with a ghost. Enter keeps it as one undo step, Tab asks for another option, Esc drops it.
+When it finishes, the panel lists the shapes the model knows. Click one, then drag a box on the glyph. The model fills the box with a ghost. Enter keeps it as one undo step, Tab asks for another option, Esc drops it. Drag the box's handles to resize it and the shape is drawn again to fit.
 
 <Callout>
-  The model knows only the shapes in the font and the words for them. A glyph named `circle` taught it "circle"; "heart" is unknown until you draw one and click Train from this font, which adds the word to the model in about two minutes. That is the whole lesson: your drawings in, a model out, the model used from a tool.
+  The model knows only the shapes in the font and the words for them. A glyph named `circle` taught it "circle"; "heart" is not in the list until you draw one and click Add This Font's Shapes, which adds it to the model in about two minutes. That is the whole lesson: your drawings in, a model out, the model used from a tool.
 </Callout>
 
 The demo repo has the same run as a script, `01-draw-from-text/train.sh`, and `01-draw-from-text/get-base-model.sh`, which downloads a trained base from the repo's releases with a checksum, to skip the wait.
