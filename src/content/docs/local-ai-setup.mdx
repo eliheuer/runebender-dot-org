@@ -76,7 +76,7 @@ When it finishes, drag a box on the glyph, type a word such as `star` in the fie
   The model knows only the shapes in the font and the words for them. A glyph named `circle` taught it "circle"; "heart" is unknown until you draw one and click Train from this font, which adds the word to the model in about two minutes. That is the whole lesson: your drawings in, a model out, the model used from a tool.
 </Callout>
 
-The demo repo has the same run as a script, `01-draw-from-text/train.sh`, and a trained base you can copy into `~/Runebender/models/shapes/` to skip the wait.
+The demo repo has the same run as a script, `01-draw-from-text/train.sh`, and `01-draw-from-text/get-base-model.sh`, which downloads a trained base from the repo's releases with a checksum, to skip the wait.
 
 </DocSection>
 
@@ -99,7 +99,7 @@ The kinds are different artifacts. A chat model does not draw shapes, and a shap
 - **No model in the editor:** the directory must sit under `~/Runebender/models/<kind>/` or beside the font in `MyFont.models/<kind>/`. Check `RUNEBENDER_MODELS` if you set it.
 - **`font-ml` is missing:** Cargo's bin directory is not on `PATH`.
 - **A GPU request fails:** add `--device cpu`, or rebuild `font-ml` without the feature flag.
-- **Training fails:** copy the demo repo's `models/shapes-base` into `~/Runebender/models/shapes/` and carry on with the editor steps.
+- **Training fails:** run `./01-draw-from-text/get-base-model.sh` in the demo repo and carry on with the editor steps.
 - **A download fails:** the script resumes where it stopped. Run it again.
 - **A chat answer is wrong:** expected at 0.6B. The script fetches 1.7B and 4B too; 4B is what the Chat panel was built with.
 
