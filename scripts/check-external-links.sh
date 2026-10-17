@@ -5,11 +5,10 @@ urls="
 https://astro.build/
 https://github.com/eliheuer/runebender-comfy
 https://github.com/eliheuer/runebender-core
-https://github.com/eliheuer/runebender-xilem
-https://github.com/eliheuer/runebender-xilem.git
-https://github.com/eliheuer/runebender-xilem/blob/main/docs/hyperbezier-ufo-extension.md
-https://github.com/eliheuer/runebender-xilem/issues
-https://github.com/eliheuer/runebender-xilem/pulls
+https://github.com/fontgarden/runebender
+https://github.com/fontgarden/runebender.git
+https://github.com/fontgarden/runebender/issues
+https://github.com/fontgarden/runebender/pulls
 https://github.com/linebender/runebender
 https://runebender.app/
 https://rust-lang.org/

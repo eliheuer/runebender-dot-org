@@ -8,7 +8,7 @@ description: "Make, install, and share Runebender themes with the Base UI and Ra
 ---
 
 A Runebender theme is one portable `.theme.toml` file.
-The bundled themes are in [assets/themes/default](https://github.com/eliheuer/runebender-xilem/tree/main/assets/themes/default).
+The bundled themes are in [assets/themes/default](https://github.com/fontgarden/runebender/tree/main/assets/themes/default).
 The native editor reads installed files at startup; the browser bundles the three built-in themes.
 The format has `formatVersion = 1` so future versions can change without guessing how to read an older file.
 Existing `.theme.json` files still load.

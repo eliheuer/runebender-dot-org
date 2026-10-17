@@ -5,28 +5,28 @@ https://runebender.org/docs, generated from the same pages.
 
 Runebender is a free, open-source font editor for UFO and designspace
 sources, built with Xilem and the Linebender ecosystem of Rust crates.
-The desktop application is available from runebender-xilem. An interactive WebAssembly
+The desktop application is available from runebender. An interactive WebAssembly
 demo is available at https://runebender.org/wasm-editor/ with a bundled
 font. Browser edits stay in memory; use the desktop to open and save files.
 
 It is alpha software. Treat this as an orientation map, not a stable
 API contract, and verify behaviour against the source.
 
-Source: https://github.com/eliheuer/runebender-xilem
+Source: https://github.com/fontgarden/runebender
 License: Apache-2.0 or MIT
 
 
 ## Install
 https://runebender.org/docs/install.html
 
-Build and run runebender-xilem with Cargo.
+Build and run Runebender with Cargo.
 
 ### Install Runebender
 
 Install Rust with [rustup](https://rustup.rs), then install Runebender:
 
 ```sh
-cargo install --git https://github.com/eliheuer/runebender-xilem
+cargo install --git https://github.com/fontgarden/runebender
 runebender path/to/Font.designspace
 ```
 
@@ -39,7 +39,7 @@ Start without a path to open a font through File → Open.
 
 Runebender is alpha software. Keep your sources in version control.
 There is no packaged desktop release yet. Platform prerequisites and
-build instructions are in the [repository](https://github.com/eliheuer/runebender-xilem).
+build instructions are in the [repository](https://github.com/fontgarden/runebender).
 
 ### Windows Status
 
@@ -59,7 +59,7 @@ runebender 'C:\Fonts\Font-Regular.ufo'
 
 The Windows file picker currently selects files, so pass UFO, Glyphs Package,
 and Babelfont directory paths on the command line. The
-[Windows checks](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml)
+[Windows checks](https://github.com/fontgarden/runebender/actions/workflows/windows.yml)
 cover compilation, font inspection, SVG proof, editor rendering, and native
 window startup and shutdown; the native check is currently failing.
 Editing, dialogs, input methods, and graphics
@@ -72,8 +72,8 @@ Headless info and proof do not need those services.
 ### Build from Source
 
 ```sh
-git clone https://github.com/eliheuer/runebender-xilem
-cd runebender-xilem
+git clone https://github.com/fontgarden/runebender
+cd runebender
 cargo run --release -- path/to/Font.designspace
 ```
 
@@ -1457,7 +1457,7 @@ A successful image transport does not prove the model inspected it; verify that 
 runebender mcp --font /absolute/path/Font.designspace works on saved sources and cannot see an unsaved canvas edit.
 The browser editor does not host the native live endpoint.
 MCP tool schemas and availability are authoritative through tools/list in the current connection.
-For implementation details, inspect the current [automation source](https://github.com/eliheuer/runebender-xilem/tree/main/src/automation) and [application live adapter](https://github.com/eliheuer/runebender-xilem/tree/main/src/application/platform).
+For implementation details, inspect the current [automation source](https://github.com/fontgarden/runebender/tree/main/src/automation) and [application live adapter](https://github.com/fontgarden/runebender/tree/main/src/application/platform).
 The [known limitations](/docs/known-limitations.html) page records platform and validation boundaries.
 
 
@@ -1605,7 +1605,7 @@ https://runebender.org/docs/experiments.html
 
 Fork the live font, compare independent designs, and apply selected changes with undo.
 
-Runebender exposes experiment versions through MCP. The Nodes canvas does not
+Runebender exposes experiment versions through MCP. The Graph canvas does not
 yet provide live version controls or embedded experiment proofs. Use a connected
 MCP client for this workflow.
 
@@ -1698,18 +1698,25 @@ result as a suggestion to judge, never as an answer.
 
 ### Getting a Model
 
-You train one in the editor (a Train node in the Nodes tab, or
-font-ml run train from a shell), or you are given a directory by
-someone who did. The editor downloads nothing.
+You train one, or you are given a directory by someone who did. The
+editor downloads nothing.
 
-Put it in ~/.runebender/models and the editor lists it at startup.
-Installing a model is dropping the folder there. Set
-RUNEBENDER_MODELS to keep them somewhere else, or list more
+The quickest way to have one is the
+[local AI demo repo](https://github.com/eliheuer/runebender-local-ai-demo):
+it holds a small font family made for training, a script that trains a
+model on it in about a minute, and a checked-in copy of that model.
+[Set up local AI](/docs/local-ai-setup.html) walks through it.
+
+Put a model in ~/.runebender/models and the editor lists it at
+startup. Installing a model is dropping the folder there. Set
+RUNEBENDER_MODELS to read them from somewhere else, or list more
 directories, one per line, in ~/.runebender/model_paths.
 
 Open-weight language models for the Chat tab are the same: a
 directory holding a .gguf file and its tokenizer.json, under the
-same roots. They are a few gigabytes; you download them yourself.
+same roots. They are a few hundred megabytes to a few gigabytes; you
+download them yourself, and the demo repo has a script that fetches
+Qwen3 from Hugging Face and checks the hash.
 
 A model is three files:
 
@@ -1721,16 +1728,12 @@ What a model directory holds:
 Nothing else is read, and the directory is inspectable: cat the
 config to see what you have.
 
-For a first local setup, use [Set up local AI](/docs/local-ai-setup.html).
-It defines the shared model root, separates chat and outline-model artifacts,
-and verifies a model bundle before an assistant touches a font.
-
 ### Boldening
 
-Open the Local AI section of the left panel, then click the model row
-and choose a model directory. The editor remembers it for the session.
+Open the Local AI section of the left panel and choose a model under
+Model. The editor remembers it for the session.
 
-Open a glyph in the lighter master and click Bolden this glyph. The
+Open a glyph in the lighter master and click Bolden under Tasks. The
 editor predicts a heavier version and installs it. The button stays
 inactive until a glyph is open.
 
@@ -1828,74 +1831,81 @@ are named in font-ml and not built.
 ## Set up local AI
 https://runebender.org/docs/local-ai-setup.html
 
-A one-shot, local-first setup path for Runebender's chat and font models.
+Install two programs, clone one repo, and train your first model in five minutes.
 
-### Give Your Assistant One Starting URL
+### What You Need
 
-Tell a local or cloud assistant to read the [local-AI setup prompt](/local-ai-setup-prompt.md), then this page. It will inspect the machine, install only missing tools, use the common model location, and stop before an unknown download or a font mutation. The setup itself is local: a hosted assistant may see the commands and paths you show it, but Runebender does not send model weights or font sources to a service.
+A mid-range computer: an Apple Silicon laptop, a Linux PC with a gaming GPU, or a plain CPU with patience. Rust stable from [rustup.rs](https://rustup.rs). About 1 GB of disk for the chat model, more for the larger sizes.
 
-For an agent already connected to Runebender, the [capability map](/agent-capabilities.json) remains the compact routing guide.
+Everything runs on your machine. No account, no API key, and nothing is sent anywhere.
 
-### Use One Model Root
+### Install Two Programs
 
-The native editors, font-ml, the local Chat panel, and local outline-model workflows all use ~/.runebender/models by default. This is the workshop location: put each model in its own direct child directory and restart the editor after adding one.
+runebender is the editor. font-ml runs and trains the models. Build font-ml with metal on macOS, cuda on Linux with a working NVIDIA toolkit, and no feature flag otherwise.
 
-    mkdir -p ~/.runebender/models
-    font-ml models ~/.runebender/models --json
+    cargo install --git https://github.com/fontgarden/runebender
+    cargo install --git https://github.com/eliheuer/font-ml --features metal
+    cargo install --git https://github.com/eliheuer/font-ml --features cuda
+    cargo install --git https://github.com/eliheuer/font-ml
 
-Do not set a config file or environment variable for the workshop default. RUNEBENDER_MODELS is a per-run override, and models = \"/path\" in the Runebender config is a persistent override; use either only when a shared or external disk is intentional. Extra read-only locations can go in ~/.runebender/model_paths, one path per line.
+The last three commands are alternatives. Check both programs answer:
 
-### Install the Native Tools
+    runebender --help
+    font-ml tasks
 
-This workflow needs runebender and font-ml on the same machine. The browser editor cannot run local processes. Have the assistant first check whether each command exists and report its version or help output; then install only the missing or explicitly outdated tools.
+font-ml tasks is authoritative: only tasks marked ready are usable. The demos use draw, train-draw, bolden, and train.
 
-On macOS, build font-ml with Metal support. On Linux, CPU is the conservative default; use the CUDA build only on a machine with a working NVIDIA toolkit.
+### Clone the Demo Repo
 
-    cargo install --git https://github.com/eliheuer/runebender-xilem
-    cargo +stable install --git https://github.com/eliheuer/font-ml --features metal
-    cargo +stable install --git https://github.com/eliheuer/font-ml --features cuda
+[runebender-local-ai-demo](https://github.com/eliheuer/runebender-local-ai-demo) holds everything the demos need: a small font family made for training, scripts, node graphs, and a checked-in copy of the first model in case your training run fails. Large models are never in the repo; a script downloads them from a named URL and checks the hash.
 
-The last two commands are alternatives, not a pair: use metal on macOS, cuda only when its toolkit is available, or omit --features for CPU. --device auto chooses a supported GPU and otherwise uses CPU. Do not promise a particular speed before running a short test on the workshop machine.
+    git clone https://github.com/eliheuer/runebender-local-ai-demo
+    cd runebender-local-ai-demo
 
-### Install Only a Verified Model Bundle
+Work through the numbered folders in order. Each has a README.
 
-Runebender deliberately does not download arbitrary models. The workshop organizer supplies a model archive or directory plus a checksum. An assistant must verify that checksum before extracting it into the model root and must ask for the bundle location if it is not supplied. The current published workshop profile records that source when one is available; it is not safe to substitute a similarly named model from the internet.
+| Demo | What you do |
+| --- | --- |
+| 01-draw-from-text | Train a shapes model inside the editor, then drag a box, type "star", and the local AI shapes tool fills it |
+| 02-train-and-bolden | Train a model on the Shapes font, then bolden a new shape in the editor |
+| 03-chat-model | Download a small open chat model from Hugging Face and ask it about the font |
+| 04-nodes | The same train and bolden steps as a node graph |
+| 05-real-font | The bolden loop on Virtua Grotesk, a real typeface |
 
-Use these directory shapes:
+### Train Your First Model
 
-| Purpose | Directory under ~/.runebender/models | Required files |
+    runebender fonts/Shapes.ufo
+
+Open any glyph. In the toolbar, hold the shapes button and pick **Local AI Shapes**. The right panel shows the Local AI Shapes section: with no model yet it offers Quick or Thorough training and two buttons, Train From This Font and Train From the Sample Shapes. Click the second. The panel shows the time left and what the model draws right now; a quick run takes about twelve minutes on a laptop GPU, a thorough one about thirty.
+
+When it finishes, the panel lists the shapes the model knows. Click one, then drag a box on the glyph. The model fills the box with a ghost. Enter keeps it as one undo step, Tab asks for another option, Esc drops it. Drag the box's handles to resize it and the shape is drawn again to fit.
+
+The model knows only the shapes in the font and the words for them. A glyph named circle taught it "circle"; "heart" is not in the list until you draw one and click Add This Font's Shapes, which adds it to the model in about two minutes. That is the whole lesson: your drawings in, a model out, the model used from a tool.
+
+The demo repo has the same run as a script, 01-draw-from-text/train.sh, and 01-draw-from-text/get-base-model.sh, which downloads a trained base from the repo's releases with a checksum, to skip the wait.
+
+### Where Models Live
+
+A model is a directory. The editor reads them from ~/Runebender/models, a visible folder you can open in Finder and drop a model into, sorted by kind: shapes/, bolden/, chat/. A font's own models live beside it in MyFont.models/, so they travel with the font. RUNEBENDER_MODELS overrides the root for one run, and ~/Runebender/model_paths lists extra folders, one per line. The older ~/.runebender/models is still read.
+
+| Kind | Files | Comes from |
 | --- | --- | --- |
-| Local chat | runebender-workshop-4b | one .gguf file and tokenizer.json |
-| Outline model | runebender-workshop-bolden | config.json, weights.safetensors, vocab.txt |
+| Shapes model | config.json, weights.safetensors, vocab.txt, manifest.json | The Local AI shapes tool trains it from a UFO |
+| Bolden model | config.json, weights.safetensors, vocab.txt | font-ml run train from two masters |
+| Chat model | model.gguf, tokenizer.json | You download it; the demo script fetches Qwen3 from Hugging Face |
 
-The Chat panel prefers a directory whose name contains 4b, then falls back to the first compatible chat model. Names are not a quality claim; the workshop bundle, checksum, and a real smoke test are the source of truth.
+The kinds are different artifacts. A chat model does not draw shapes, and a shapes model does not talk.
 
-An outline model and a chat model are different artifacts. Installing a .gguf does not make the Bolden task available, and installing an outline model does not create a chat assistant.
+### Recover from Common Failures
 
-### Verify Before Editing a Real Font
+- **No model in the editor:** the directory must sit under ~/Runebender/models// or beside the font in MyFont.models//. Check RUNEBENDER_MODELS if you set it.
+- **font-ml is missing:** Cargo's bin directory is not on PATH.
+- **A GPU request fails:** add --device cpu, or rebuild font-ml without the feature flag.
+- **Training fails:** run ./01-draw-from-text/get-base-model.sh in the demo repo and carry on with the editor steps.
+- **A download fails:** the script resumes where it stopped. Run it again.
+- **A chat answer is wrong:** expected at 0.6B. The script fetches 1.7B and 4B too; 4B is what the Chat panel was built with.
 
-Use the supplied demo font or a disposable copy. First confirm what this build can actually do, then start the native editor. font-ml tasks is authoritative: only tasks with implemented: true are usable.
-
-    font-ml tasks --json
-    font-ml describe ~/.runebender/models/runebender-workshop-bolden --json
-    runebender path/to/WorkshopDemo.designspace
-
-For chat, open the same font, choose the runebender-workshop-4b model in the native Chat panel, and ask it to read one known glyph and produce a proof. It may read, proof, and propose, but it must not install or save unless asked. For an outline model, run one small proposal against the disposable source with --write; it writes a proposal layer and leaves the foreground alone.
-
-    font-ml run bolden --model runebender-workshop-bolden --source path/to/WorkshopDemo-Regular.ufo --glyph n --write --json
-
-Inspect the proof and proposal, then discard the copy. A successful process exit is not proof that the drawing is good.
-
-### Recover from Common Setup Failures
-
-- **No model in the editor:** confirm the directory is an immediate child of ~/.runebender/models, has the required files, and restart the native editor.
-- **font-ml is missing:** ensure Cargo's bin directory is on PATH, or set RUNEBENDER_FONT_ML to the installed executable for that run.
-- **An old MCP configuration fails:** change its command from runebender-core to runebender. The Chat panel uses the running application for its headless tools.
-- **A GPU request fails:** use --device auto or cpu; rebuild font-ml with the relevant feature only after checking the platform toolchain.
-- **A task is named but does not run:** inspect font-ml tasks --json; declared tasks with implemented: false are not workshop exercises.
-- **A model response is bad or slow:** record the model, device, prompt, and speed. Do not compensate by applying its proposal more aggressively.
-
-After setup, copy the [design brief template](/design-brief-template.md) into the font repository and continue with [Type design with agents](/docs/type-design.html).
+Continue with [Local Models](/docs/local-models.html) for what the editor does with a model, and [Type design with agents](/docs/type-design.html) for the working method.
 
 
 ## Tutorial: Draw a Glyph
@@ -2405,7 +2415,7 @@ https://runebender.org/docs/themes.html
 Make, install, and share Runebender themes with the Base UI and Rainbow palettes.
 
 A Runebender theme is one portable .theme.toml file.
-The bundled themes are in [assets/themes/default](https://github.com/eliheuer/runebender-xilem/tree/main/assets/themes/default).
+The bundled themes are in [assets/themes/default](https://github.com/fontgarden/runebender/tree/main/assets/themes/default).
 The native editor reads installed files at startup; the browser bundles the three built-in themes.
 The format has formatVersion = 1 so future versions can change without guessing how to read an older file.
 Existing .theme.json files still load.
@@ -2552,7 +2562,7 @@ Keep font sources in version control and work on copies when evaluating a new bu
 
 Native Linux and macOS compile, lint, document, and test in CI.
 Most hands-on interaction work has been on macOS; Linux pointer, IME, file-dialog, accessibility, and GPU combinations need more supervised checks.
-The Windows build and headless commands have passed basic checks, but native startup has failed in the [Windows workflow](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml).
+The Windows build and headless commands have passed basic checks, but native startup has failed in the [Windows workflow](https://github.com/fontgarden/runebender/actions/workflows/windows.yml).
 The live editor endpoint uses Unix sockets and is unavailable on Windows.
 Headless file commands remain portable.
 
@@ -2594,7 +2604,7 @@ Runebender requires Rust 1.96 or newer. Check the repository README for your
 platform's system libraries.
 
 ```sh
-cargo install --git https://github.com/eliheuer/runebender-xilem
+cargo install --git https://github.com/fontgarden/runebender
 ```
 
 If it still fails, include the first compiler error, Rust version, operating
@@ -2639,7 +2649,7 @@ See [Development](/docs/development.html) for the current browser milestone.
 ### Reporting a Problem
 
 Open an issue on
-[the repository](https://github.com/eliheuer/runebender-xilem/issues).
+[the repository](https://github.com/fontgarden/runebender/issues).
 
 A useful report says what you did, what happened, and what you
 expected. Name the file you had open and whether you were in the
@@ -2700,24 +2710,24 @@ Native and browser editing use the same canonical operations.
 | Live agent tool | src/automation/, src/application/platform/live*.rs |
 | Browser behavior | web/, then the shared application source |
 
-The full file tree is in the [source repository](https://github.com/eliheuer/runebender-xilem).
+The full file tree is in the [source repository](https://github.com/fontgarden/runebender).
 For build checks and interface work, see [Development](/docs/development.html) and [Design principles](/docs/design-principles.html).
 
 
 ## Development
 https://runebender.org/docs/development.html
 
-Build and contribute to runebender-xilem.
+Build and contribute to Runebender.
 
 ### Source and Build
 
-[runebender-xilem](https://github.com/eliheuer/runebender-xilem) contains the editor and its font engine in the root Cargo package.
+[runebender](https://github.com/fontgarden/runebender) contains the editor and its font engine in the root Cargo package.
 The repository pins its Rust toolchain.
 Start with its AGENTS.md, then use [Code Layout](/docs/code-layout.html) and the [architecture guide](/docs/architecture.html) to find the right module.
 
 ```sh
-git clone https://github.com/eliheuer/runebender-xilem
-cd runebender-xilem
+git clone https://github.com/fontgarden/runebender
+cd runebender
 cargo run --profile fast --locked -- path/to/Font.designspace
 ```
 
@@ -2763,7 +2773,7 @@ Apache-2.0 or MIT.
 ## Code Layout
 https://runebender.org/docs/code-layout.html
 
-Find the current implementation in runebender-xilem.
+Find the current implementation in the runebender repository.
 
 ### One Application Package
 
@@ -2822,7 +2832,7 @@ See [Local Models](/docs/local-models.html) for setup and current capabilities.
 
 Runebender currently does not read the ~/.config/runebender/config.toml settings previously described here.
 Use the documented environment variables and theme files.
-For exact available options, inspect the current [application source](https://github.com/eliheuer/runebender-xilem/tree/main/src/application) or run the executable's help command.
+For exact available options, inspect the current [application source](https://github.com/fontgarden/runebender/tree/main/src/application) or run the executable's help command.
 
 
 ## FAQ
@@ -2836,7 +2846,7 @@ What it is:
 - Is it ready for production work?: No. It is alpha. It writes to your sources in place, so keep them in version control and work on copies.
 - What does it cost?: Nothing. Apache-2.0 or MIT.
 - Is this an official Linebender project?: No. It is built on Linebender crates and aims at the Linebender stack, but the site and the editor are maintained independently.
-- Where is the source?: runebender-xilem contains the application.
+- Where is the source?: runebender contains the application.
 
 ### Files
 
@@ -2850,7 +2860,7 @@ Formats:
 ### Running It
 
 Install and launch:
-- Is there a download?: Not yet. Build runebender-xilem with cargo. See Install.
+- Is there a download?: Not yet. Build runebender with cargo. See Install.
 - Can I use it in a browser?: The WASM editor lets you edit a bundled font. Edits stay in the tab; use the desktop application to open and save your own fonts.
 - Windows and Linux?: The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.
 
@@ -2866,7 +2876,7 @@ Common confusions:
 ### Getting Help
 
 Open an issue on
-[the repository](https://github.com/eliheuer/runebender-xilem/issues).
+[the repository](https://github.com/fontgarden/runebender/issues).
 A useful report says what you did, what happened, and what you
 expected, and names the file and whether you were in the browser or
 the native application. If the editor wrote something wrong into a

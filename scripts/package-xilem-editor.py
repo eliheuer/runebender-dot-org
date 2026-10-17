@@ -29,7 +29,7 @@ bindings = bindings.replace("'runebender_browser_bg.wasm'", f"'runebender_browse
 (dest / 'app.js').write_text(app)
 (dest / 'pkg/runebender_browser.js').write_text(bindings)
 (dest / 'build-info.json').write_text(json.dumps({
-    'repository': 'https://github.com/eliheuer/runebender-xilem',
+    'repository': 'https://github.com/fontgarden/runebender',
     'commit': commit,
     'wasm_sha256': hashlib.sha256(wasm).hexdigest(),
     'release': release,

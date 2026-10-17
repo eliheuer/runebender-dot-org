@@ -54,5 +54,5 @@ Native and browser editing use the same canonical operations.
 | Live agent tool | `src/automation/`, `src/application/platform/live*.rs` |
 | Browser behavior | `web/`, then the shared application source |
 
-The full file tree is in the [source repository](https://github.com/eliheuer/runebender-xilem).
+The full file tree is in the [source repository](https://github.com/fontgarden/runebender).
 For build checks and interface work, see [Development](/docs/development.html) and [Design principles](/docs/design-principles.html).

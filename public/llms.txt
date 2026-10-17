@@ -3,7 +3,7 @@
 Runebender is an experimental open-source font editor for UFO and Designspace sources.
 The native editor runs on macOS and Linux; the browser demo edits a bundled font in memory.
 Documentation: https://runebender.org/docs
-Source: https://github.com/eliheuer/runebender-xilem
+Source: https://github.com/fontgarden/runebender
 
 ## If an agent was given only runebender.org
 

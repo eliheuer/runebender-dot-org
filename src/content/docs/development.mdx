@@ -1,6 +1,6 @@
 ---
 title: "Development"
-lede: "Build and contribute to runebender-xilem."
+lede: "Build and contribute to Runebender."
 status: "Alpha"
 stability: "Check the repository's AGENTS.md and CI for current requirements"
 order: 26
@@ -11,13 +11,13 @@ import DocSection from "../../components/DocSection.astro";
 
 <DocSection title="Source and Build">
 
-[runebender-xilem](https://github.com/eliheuer/runebender-xilem) contains the editor and its font engine in the root Cargo package.
+[runebender](https://github.com/fontgarden/runebender) contains the editor and its font engine in the root Cargo package.
 The repository pins its Rust toolchain.
 Start with its `AGENTS.md`, then use [Code Layout](/docs/code-layout.html) and the [architecture guide](/docs/architecture.html) to find the right module.
 
 ```sh
-git clone https://github.com/eliheuer/runebender-xilem
-cd runebender-xilem
+git clone https://github.com/fontgarden/runebender
+cd runebender
 cargo run --profile fast --locked -- path/to/Font.designspace
 ```
 

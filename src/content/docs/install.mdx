@@ -1,10 +1,10 @@
 ---
 title: "Install"
-lede: "Build and run runebender-xilem with Cargo."
+lede: "Build and run Runebender with Cargo."
 status: "Alpha"
 stability: "Verify implementation details against the current source"
 order: 2
-description: "Build and run runebender-xilem with Cargo."
+description: "Build and run Runebender with Cargo."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -14,7 +14,7 @@ import DocSection from "../../components/DocSection.astro";
 Install Rust with [rustup](https://rustup.rs), then install Runebender:
 
 ```sh
-cargo install --git https://github.com/eliheuer/runebender-xilem
+cargo install --git https://github.com/fontgarden/runebender
 runebender path/to/Font.designspace
 ```
 
@@ -27,7 +27,7 @@ Start without a path to open a font through File → Open.
 
 Runebender is alpha software. Keep your sources in version control.
 There is no packaged desktop release yet. Platform prerequisites and
-build instructions are in the [repository](https://github.com/eliheuer/runebender-xilem).
+build instructions are in the [repository](https://github.com/fontgarden/runebender).
 
 </DocSection>
 
@@ -49,7 +49,7 @@ runebender 'C:\Fonts\Font-Regular.ufo'
 
 The Windows file picker currently selects files, so pass UFO, Glyphs Package,
 and Babelfont directory paths on the command line. The
-[Windows checks](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml)
+[Windows checks](https://github.com/fontgarden/runebender/actions/workflows/windows.yml)
 cover compilation, font inspection, SVG proof, editor rendering, and native
 window startup and shutdown; the native check is currently failing.
 Editing, dialogs, input methods, and graphics
@@ -64,8 +64,8 @@ Headless `info` and `proof` do not need those services.
 <DocSection title="Build from Source">
 
 ```sh
-git clone https://github.com/eliheuer/runebender-xilem
-cd runebender-xilem
+git clone https://github.com/fontgarden/runebender
+cd runebender
 cargo run --release -- path/to/Font.designspace
 ```
 

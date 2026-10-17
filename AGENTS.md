@@ -6,7 +6,7 @@ Guidance for coding agents working on this repository.
 
 This repository is the website and documentation source for `runebender.org`.
 
-The application source is https://github.com/eliheuer/runebender-xilem.
+The application source is https://github.com/fontgarden/runebender.
 Public product copy describes one Runebender application. Do not restore a
 frontend comparison or separate library product listing.
 
@@ -39,8 +39,8 @@ The primary action is Launch Application, linking to `/wasm-editor/`.
 Keep the homepage compact: one launch button, a short install command, and the
 full GitHub URL. Keep the existing screenshot files and rotation.
 `/wasm-editor/` embeds the real Xilem WebAssembly editor from `public/app/`.
-Its source and interaction test live in runebender-xilem's `web/` directory.
-Use `scripts/build-xilem-editor.sh /path/to/runebender-xilem` to update these
+Its source and interaction test live in the runebender repository's `web/` directory.
+Use `scripts/build-xilem-editor.sh /path/to/runebender` to update these
 release artifacts. Verify actual browser interactions before publishing.
 Browser edits stay in memory; desktop work remains the priority.
 
@@ -75,7 +75,7 @@ Avoid:
 ## Source of truth
 
 The pages in `src/content/docs/` are the maintained documentation.
-Verify implementation claims against the current `runebender-xilem` source and CLI help.
+Verify implementation claims against the current `runebender` source and CLI help.
 If a local checkout is unavailable, use the source repository on GitHub.
 
 ## Agent-readable files

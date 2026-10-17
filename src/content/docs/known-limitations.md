@@ -14,7 +14,7 @@ Keep font sources in version control and work on copies when evaluating a new bu
 
 Native Linux and macOS compile, lint, document, and test in CI.
 Most hands-on interaction work has been on macOS; Linux pointer, IME, file-dialog, accessibility, and GPU combinations need more supervised checks.
-The Windows build and headless commands have passed basic checks, but native startup has failed in the [Windows workflow](https://github.com/eliheuer/runebender-xilem/actions/workflows/windows.yml).
+The Windows build and headless commands have passed basic checks, but native startup has failed in the [Windows workflow](https://github.com/fontgarden/runebender/actions/workflows/windows.yml).
 The live editor endpoint uses Unix sockets and is unavailable on Windows.
 Headless file commands remain portable.
 

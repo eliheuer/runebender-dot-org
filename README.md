@@ -62,13 +62,13 @@ After publishing, run `pnpm run check-published-site` to verify the live routes.
 ## Browser editor
 
 Launch Application at `/wasm-editor/` embeds the actual Xilem/Masonry interface,
-compiled to WebAssembly from runebender-xilem. The bundled font can be browsed
+compiled to WebAssembly from runebender. The bundled font can be browsed
 and edited in memory. Saving files and local AI execution require the desktop.
 
 Update the checked-in release artifacts in `public/app/` with:
 
 ```sh
-scripts/build-xilem-editor.sh /path/to/runebender-xilem
+scripts/build-xilem-editor.sh /path/to/runebender
 pnpm run build
 ```
 

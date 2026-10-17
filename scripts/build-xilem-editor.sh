@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # Build a committed snapshot so ongoing desktop edits cannot enter the release.
 set -eu
-app_checkout=${1:?Usage: scripts/build-xilem-editor.sh /path/to/runebender-xilem}
+app_checkout=${1:?Usage: scripts/build-xilem-editor.sh /path/to/runebender}
 app_checkout=$(cd "$app_checkout" && pwd)
 site_root=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
 source_commit=$(git -C "$app_checkout" rev-parse HEAD)
