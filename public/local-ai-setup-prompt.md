@@ -23,7 +23,7 @@ Set up a local Runebender environment with `runebender`, `font-ml`, and the demo
 5. Run `./01-draw-from-text/train.sh`. Report the training time, the device it used, and the final validation loss. If training fails, say so and run `./01-draw-from-text/get-base-model.sh`, which downloads the base from the repo's releases with a checksum.
 6. Run `font-ml run draw --model ~/Runebender/models/shapes/shapes-base --prompt star --box 100,100,400,400` and report the result. Do not pass `--write` unless asked.
 7. Only if the user wants the chat demo: run `./03-chat-model/get-model.sh` (about 800 MB), then one `font-ml chat` prompt over the Shapes font, and report what the model did.
-8. Tell the user the command that opens the editor: `runebender fonts/Shapes.ufo`, and that the Local AI shape tool is in the shapes dropdown. Do not open the editor yourself unless asked.
+8. Tell the user the command that opens the editor: `runebender fonts/Shapes.ufo`, and that the Local AI Shapes tool is in the shapes dropdown. Do not open the editor yourself unless asked.
 
 ## Finish condition
 
