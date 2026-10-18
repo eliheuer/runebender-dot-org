@@ -75,6 +75,8 @@ Legacy proposal and experiment mutations do not have that idempotent receipt con
 
 `analyze_glyph` returns one glyph's narrowest stem and bar, its ink spans, node continuity with kinks and G1 curve joins listed, how many points sit on the 8, 4 and 2 unit grids, its mark label, and for every other source whether the glyph interpolates and the first reason it does not.
 Use it before any claim about weight, smoothness or compatibility, and `read_glyph` when a finding needs the exact points.
+`analyze_font` runs the same review over a whole source and returns counts by mark label, the glyphs with the most points off the 8 unit grid, glyphs with kinks, stem medians per case with the farthest glyphs, and the glyphs missing or incompatible in every other source.
+Start a triage there, then follow the names it returns with `analyze_glyph`.
 
 </DocSection>
 
