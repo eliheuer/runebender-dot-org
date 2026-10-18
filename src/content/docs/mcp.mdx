@@ -12,7 +12,15 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="Set Up a Local Client">
 
 Install the current `runebender` binary and open a UFO or Designspace in the native editor.
-In the project where your agent runs, configure this stdio server:
+Then register it once:
+
+```sh
+runebender mcp --install
+```
+
+This writes the server, by the binary's absolute path, into Claude Code, Codex, Claude Desktop and Cursor settings, keeping every other entry.
+Name clients to limit it, as in `--install codex,cursor`, and add `--dry-run` to see the files first.
+Clients that read a project `.mcp.json` can use this entry instead:
 
 ```json
 {
