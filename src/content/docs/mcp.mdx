@@ -63,6 +63,22 @@ Legacy proposal and experiment mutations do not have that idempotent receipt con
 
 </DocSection>
 
+<DocSection title="Measure Before Judging">
+
+`analyze_glyph` returns one glyph's narrowest stem and bar, its ink spans, node continuity with kinks and G1 curve joins listed, how many points sit on the 8, 4 and 2 unit grids, its mark label, and for every other source whether the glyph interpolates and the first reason it does not.
+Use it before any claim about weight, smoothness or compatibility, and `read_glyph` when a finding needs the exact points.
+
+</DocSection>
+
+<DocSection title="Workflows">
+
+The live host serves named workflows as MCP prompts: `review-glyph`, `compatibility-check`, `spacing-pass`, `kerning-pass` and `draft-weight`.
+A client that supports prompts lists them with `prompts/list`; in Claude Code they appear as `/runebender:<name>`.
+The same text lives in the repository under `skills/runebender-<name>/SKILL.md`, so a client without prompt support can link a directory into its skills folder.
+Every workflow reads first, proofs the result, and leaves installing to the designer.
+
+</DocSection>
+
 <DocSection title="Proof What the Agent Changed">
 
 The ordinary `proof` tool produces a source-geometry image.
