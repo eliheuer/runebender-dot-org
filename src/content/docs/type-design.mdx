@@ -12,9 +12,13 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="Give the Agent a Small, Specific Design Brief">
 
 Connect OMP using the [MCP guide](/docs/mcp.html), then ask it to call
-`design_context`. This returns the official documentation entry points and
-a review workflow. Ask it to read this page and your font project's
-`DESIGN.md`. The documentation supplies technique; your brief supplies style.
+`design_context`. This returns three layers of context files: Runebender's
+default type design and font engineering principles, your own files from
+`~/.config/runebender/context/`, and your font's `*.context.md` files from
+the folder beside the designspace up to the repository root. A later layer
+wins where it disagrees, so put your font's grid, metrics, stem values and
+spacing rules in its own file (a symlink to an existing `DESIGN.md` works).
+The documentation supplies technique; your brief supplies style.
 A model name alone does not establish that a drawing is good.
 
 Record the font's grid, vertical metrics, stroke construction, terminals,
