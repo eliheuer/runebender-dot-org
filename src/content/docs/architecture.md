@@ -23,7 +23,8 @@ Sibling repositories are independent projects.
 | `src/automation/` | Agent and live-editor operation contracts. |
 | `src/workflows/`, `src/ui/` | Saved workflows and toolkit-independent editor data. |
 | `src/application/editor/` | User intent, commands, sessions, and tools. |
-| `src/application/view/` | Xilem views, panels, canvas, themes, and design tokens. |
+| `src/application/view/` | Xilem views, panels, and canvas. |
+| `src/application/design/` | Theme palette, design tokens, control states, and recipes. |
 | `src/application/platform/` | Files, dialogs, watching, live IPC, and screenshots. |
 | `web/` | Browser host for the shared widgets. |
 
@@ -48,7 +49,7 @@ Native and browser editing use the same canonical operations.
 | --- | --- |
 | Editor tool or shortcut | `src/application/editor/tools/`, `src/application/actions.rs` |
 | Canvas or panel | `src/application/view/canvas/`, `src/application/view/panels/` |
-| Theme or reusable control | `assets/themes/default/`, `src/application/view/theme.rs`, `design.rs`, `recipes.rs` |
+| Theme or reusable control | `assets/themes/default/`, `src/application/design/theme.rs`, `design/tokens.rs`, `design/recipes/` |
 | Glyph outline or interpolation | `src/outline/`, `src/font/` |
 | UFO or Designspace preservation | `src/font/persistence/`, `src/formats/` |
 | Live agent tool | `src/automation/`, `src/application/platform/live*.rs` |

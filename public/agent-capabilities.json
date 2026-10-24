@@ -13,7 +13,7 @@
   },
   "context_order": [
     "Read the smallest relevant Runebender page from llms.txt.",
-    "Read the font project's DESIGN.md for its design rules or the editor repository's AGENTS.md for coding rules.",
+    "Call design_context for the font's design rules (default, personal and font *.context.md files) or read the editor repository's AGENTS.md for coding rules.",
     "For live work, use editor_sessions and editor_connect to identify the intended native document.",
     "Use MCP tools/list in the connected session for exact names, schemas, and availability.",
     "Inspect visual proof images before making visual judgments."

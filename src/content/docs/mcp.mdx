@@ -77,12 +77,20 @@ Legacy proposal and experiment mutations do not have that idempotent receipt con
 Use it before any claim about weight, smoothness or compatibility, and `read_glyph` when a finding needs the exact points.
 `analyze_font` runs the same review over a whole source and returns counts by mark label, the glyphs with the most points off the 8 unit grid, glyphs with kinks, stem medians per case with the farthest glyphs, and the glyphs missing or incompatible in every other source.
 Start a triage there, then follow the names it returns with `analyze_glyph`.
+`analyze_glyph` also works on saved files through `runebender mcp --font`.
+
+`flag_glyph` marks one glyph pink with a dated note, so the designer looks at it.
+Give one reason with a number, such as a kink position or a stem width against the median.
+It refuses glyphs marked green, purple, or yellow, which only the designer grades, and it never clears a mark.
+
+`design_context` returns the font's design rules from three layers of `*.context.md` files: default, personal, and font.
+See [Type Design](/docs/type-design.html).
 
 </DocSection>
 
 <DocSection title="Workflows">
 
-The live host serves named workflows as MCP prompts: `review-glyph`, `compatibility-check`, `spacing-pass`, `kerning-pass` and `draft-weight`.
+The live host serves named workflows as MCP prompts: `review-glyph`, `triage-font`, `compatibility-check`, `spacing-pass`, `kerning-pass` and `draft-weight`.
 A client that supports prompts lists them with `prompts/list`; in Claude Code they appear as `/runebender:<name>`.
 The same text lives in the repository under `skills/runebender-<name>/SKILL.md`, so a client without prompt support can link a directory into its skills folder.
 Every workflow reads first, proofs the result, and leaves installing to the designer.

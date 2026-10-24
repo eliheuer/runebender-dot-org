@@ -13,10 +13,10 @@ import CommandList from "../../components/CommandList.astro";
 
 <DocSection title="Before You Start">
 
-You need Runebender installed and a font to work in. Press
-<code>Cmd+N</code> for a new one: an untitled UFO with Google Fonts
-metrics and the Latin Core set as empty encoded glyphs. Save it
-somewhere you can find it.
+You need Runebender installed and a font to work in. With a font open
+and saved, press <code>Cmd+N</code> for a new one. There is no dialog: Runebender
+writes `Untitled.ufo` in the same folder as the current font, with
+Google Fonts metrics and the Latin Core set as empty encoded glyphs.
 
 <Callout>
   Put the folder under version control first. It costs one command and
@@ -31,7 +31,7 @@ somewhere you can find it.
 
 <DocSection title="1. Open a Glyph">
 
-Type `H` in the search box at the top left. Double-click the cell.
+Type `H` in the Search glyphs field. Double-click the cell.
 
 The editor opens on an empty glyph with its metrics drawn around it:
 the baseline, the x-height, the cap height, and two vertical lines for
@@ -59,8 +59,9 @@ first.
 
 Rather than draw the second stem, copy the first: select all four
 points with <code>Cmd+A</code>, then <code>Cmd+D</code> to duplicate.
-The copy lands on top of the original. Drag it right, holding shift to
-keep it level.
+The copy lands 20 units up and to the right, and it is selected. Move
+it into place with the X and Y fields in the Coordinates section of
+the right panel, so it stays level.
 
 Draw the crossbar the same way, a rectangle between the two stems, a
 little above the middle. The optical centre of a letter sits above the
@@ -85,7 +86,8 @@ Three commands, in this order, before you go further.
 
 <DocSection title="5. Space It">
 
-The bottom bar holds the advance width and the two sidebearings. Set
+The Glyph section of the right panel holds the Width, LSB and RSB
+fields. Open the section, then set
 both sidebearings to the same number to start; something near 80 units
 for a capital H at 1000 UPM.
 
@@ -99,9 +101,9 @@ Take the text tool and type `HHH`. Then `HOH` if you have drawn an O,
 or leave it as three Hs.
 
 The rhythm should be even: the white inside the H and the white
-between two Hs want to look like the same amount of space. Drag the
-sidebearing edges until they do. Everything you change shows up in the
-line as you change it.
+between two Hs want to look like the same amount of space. Change LSB
+and RSB in the Glyph section until they do. Everything you change
+shows up in the line.
 
 <Callout>
   Space glyphs in company. A glyph on its own shows little.
@@ -112,7 +114,7 @@ line as you change it.
 <DocSection title="7. Check the Curves">
 
 An H needs no curve checking, but find the control now. Open the
-Curves section in the right panel and turn on the comb. It is flat on
+Curves section in the right panel and turn on Curvature Comb. It is flat on
 straight segments. On curves, a kink invisible at text size shows as a
 break.
 
@@ -120,7 +122,8 @@ break.
 
 <DocSection title="8. Save">
 
-<code>Cmd+S</code>. The header shows the time.
+<code>Cmd+S</code>. The middle of the footer changes from Not saved to
+Saved.
 
 Now look at what changed:
 

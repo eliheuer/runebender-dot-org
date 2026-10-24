@@ -12,8 +12,9 @@ import Callout from "../../components/Callout.astro";
 
 <DocSection title="Sources">
 
-Runebender opens `.designspace` files, `.ufo` directories, and folders
-that hold them. It saves in the same format, in place.
+Runebender opens `.designspace` files and `.ufo` directories. It
+treats any other directory as a UFO, so it does not open a folder
+that only holds sources. It saves in the same format, in place.
 
 It can also import Glyphs, Glyphs Package, compiled fonts, and basic
 single-master Babelfont packages into UFO. See
@@ -40,10 +41,10 @@ drawing the way you would any other change.
     <tr><th>Kerning</th><td><code>kerning.plist</code> and <code>groups.plist</code>, per master.</td></tr>
     <tr><th><code>public.kern</code></th><td>Group names follow the standard prefixes.</td></tr>
     <tr><th><code>public.background</code></th><td>The background layer, saved with the font.</td></tr>
-    <tr><th><code>public.postscriptNames</code></th><td>Production names, used on export.</td></tr>
+    <tr><th><code>public.postscriptNames</code></th><td>Production names. Export does not apply them: the exported font keeps the working glyph names.</td></tr>
     <tr><th>Features</th><td><code>features.fea</code>, one file per master, holding prefixes, classes, and features.</td></tr>
-    <tr><th>Layers</th><td>Backup and intermediate layers are ordinary UFO layers. Intermediate layers also add a sparse designspace source.</td></tr>
-    <tr><th>Designspace</th><td>Axes, sources, instances, <code>avar</code> mappings, and substitution rules for shape switches.</td></tr>
+    <tr><th>Layers</th><td>Named glyph layers from the Layers section are ordinary UFO layers.</td></tr>
+    <tr><th>Designspace</th><td>Axes and sources. The Masters section adds, renames, moves, reorders and removes sources.</td></tr>
     <tr><th><code>com.github.googlei18n.ufo2ft.colorPalettes</code></th><td>The CPAL palette for colour fonts.</td></tr>
   </tbody>
 </table>
@@ -78,8 +79,8 @@ source still reads correctly.
   <tbody>
     <tr><th><code>savedFilters</code></th><td>Filters saved in the left panel.</td></tr>
     <tr><th><code>annotations</code></th><td>Notes left on a glyph.</td></tr>
-    <tr><th><code>masks</code></th><td>Intermediate mask layers.</td></tr>
-    <tr><th><code>hoiIntermediate</code></th><td>Higher-order interpolation intermediates.</td></tr>
+    <tr><th><code>masks</code></th><td>The contours of a glyph that are masks.</td></tr>
+    <tr><th><code>hoiIntermediate</code></th><td>Per-point intermediate positions for higher-order interpolation.</td></tr>
     <tr><th><code>partSelection</code></th><td>Which part of a smart component is in use.</td></tr>
   </tbody>
 </table>
@@ -90,7 +91,8 @@ source still reads correctly.
 
 A hyperbezier contour is defined by its on-curve points, with the
 control points solved rather than placed. Runebender marks these
-contours in GLIF with `identifier="hyperbezier"`.
+contours in GLIF with an `identifier` that starts with
+`hyperbezier`.
 
 An editor that does not know the identifier reads the points as
 ordinary curve points, so the file stays valid. Use Path → Hyperbezier

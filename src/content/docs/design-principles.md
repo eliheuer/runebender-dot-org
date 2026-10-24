@@ -13,10 +13,10 @@ Other editors are references to evaluate, not feature lists to copy.
 
 ## Use named roles
 
-Colors come from installed `.theme.toml` files and are resolved through `src/application/view/theme.rs`.
+Colors come from installed `.theme.toml` files and are resolved through `src/application/design/theme.rs`.
 The [theme guide](/docs/themes.html) names the Base UI and Rainbow palettes.
-Spacing, sizes, radii, strokes, and type come from `src/application/view/design.rs`.
-Repeated controls belong in `src/application/view/recipes.rs`.
+Spacing, sizes, radii, strokes, and type come from `src/application/design/tokens.rs`.
+Repeated controls belong in `src/application/design/recipes/`.
 A new color needs a named role in every built-in theme.
 
 ## Keep the interface steady
@@ -25,7 +25,7 @@ A new color needs a named role in every built-in theme.
 - Do not make panels jump or reorder under the pointer as content changes.
 - Keep canvas marks thin and relevant to the active edit.
 - Let chrome describe application state without covering the drawing.
-- Use sentence case; commands are verbs and labels are nouns.
+- Use title case for titles and captions, never all caps. Commands are verbs and labels are nouns.
 - Error text says what failed and what the user can do next.
 
 ## Check the actual result

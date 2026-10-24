@@ -82,13 +82,13 @@ The demo repo has the same run as a script, `01-draw-from-text/train.sh`, and `0
 
 <DocSection title="Where Models Live">
 
-A model is a directory. The editor reads them from `~/Runebender/models`, a visible folder you can open in Finder and drop a model into, sorted by kind: `shapes/`, `bolden/`, `chat/`. A font's own models live beside it in `MyFont.models/`, so they travel with the font. `RUNEBENDER_MODELS` overrides the root for one run, and `~/Runebender/model_paths` lists extra folders, one per line. The older `~/.runebender/models` is still read.
+A model is a directory. The editor reads them from `~/Runebender/models`, a visible folder you can open in Finder and drop a model into, sorted by kind: `shapes/`, `bolden/`, `chat/`. A font's own models live beside it in `MyFont.models/`, so they travel with the font. `RUNEBENDER_MODELS` overrides the root for one run, and `~/.runebender/model_paths` or `RUNEBENDER_MODEL_PATHS` lists extra folders, one per line. The older `~/.runebender/models` is still read.
 
 | Kind | Files | Comes from |
 | --- | --- | --- |
 | Shapes model | `config.json`, `weights.safetensors`, `vocab.txt`, `manifest.json` | The Local AI shapes tool trains it from a UFO |
 | Bolden model | `config.json`, `weights.safetensors`, `vocab.txt` | `font-ml run train` from two masters |
-| Chat model | `model.gguf`, `tokenizer.json` | You download it; the demo script fetches Qwen3 from Hugging Face |
+| Chat model | one `.gguf`, optional `model.json` | You download it; the demo script fetches Qwen3 from Hugging Face |
 
 The kinds are different artifacts. A chat model does not draw shapes, and a shapes model does not talk.
 

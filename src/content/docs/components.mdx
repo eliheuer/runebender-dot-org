@@ -4,7 +4,7 @@ lede: "Build accented glyphs from other glyphs. Anchors hold the pieces together
 status: "Implemented"
 stability: "Stable"
 order: 10
-description: "Components, composites, anchors, and corner components in Runebender."
+description: "Components, composites, and anchors in Runebender."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -15,16 +15,21 @@ import Callout from "../../components/Callout.astro";
 A component places another glyph inside this one. Edit the base glyph
 and every glyph using it follows.
 
-Add one from the canvas context menu and type the base glyph name.
-Select and drag a component with the select tool, and double-click it
-to open the glyph it points at. Delete removes it.
+To add one, open the Shapes panel in the left rail. Type the base
+glyph name in the Base glyph field and click Add. Select and drag a
+component with the select tool. Delete removes it.
+
+Double-click a component to edit its base glyph in place, inside this
+glyph. Press Escape, or double-click on empty space, to go back. The
+context menu can also open the base glyph in its own tab. The footer
+toggle Edit components in place shows the points of every part.
 
 <table>
   <caption>Component commands</caption>
   <tbody>
-    <tr><th>Decompose Components</th><td><code>Cmd+Shift+D</code>. Replaces every component with its outlines.</td></tr>
-    <tr><th>Decompose One</th><td>Context menu. Only the component under the pointer.</td></tr>
-    <tr><th>Lock / Unlock</th><td>Context menu, or the toggle in the Coordinates panel.</td></tr>
+    <tr><th>Decompose Components</th><td>Glyph menu, or Decompose in the context menu. Replaces every component with its outlines.</td></tr>
+    <tr><th>Lock / Unlock</th><td>The Shapes panel, or Enable / Disable Automatic Alignment in the context menu.</td></tr>
+    <tr><th>Duplicate / Delete</th><td>The Shapes panel, with a component selected.</td></tr>
   </tbody>
 </table>
 
@@ -35,66 +40,31 @@ as components and every composite that uses it, one click away each.
 
 <DocSection title="Anchors and Auto-Alignment">
 
-An anchor is a named point that says where a mark attaches. Give the
-base glyph an anchor, give the mark a matching one, and the mark
-places itself.
+An anchor is a named point that says where a mark attaches. A mark
+glyph's anchor `_top` attaches to a base glyph's anchor `top`.
 
 Composites align live. Move the anchor on a base glyph and every
-accented glyph built from it follows immediately. A component locked
-to an anchor refuses to be dragged, because its position comes from
-the anchor rather than from you. Use the Lock and Free toggle in the
-Coordinates panel to override that.
+accented glyph built from it follows. A locked component follows its
+anchors. Click Unlock in the Shapes panel to move it by hand, and Lock
+to make it follow the anchors again.
 
-A component added from the context menu arrives anchor-locked, so
-marks snap to their anchor without extra work.
+Glyph → Compose from Anchors builds the composites selected in the
+overview, or every composite it knows when none is selected.
 
 </DocSection>
 
 <DocSection title="Editing Anchors">
 
-Add and delete anchors from the canvas context menu. Select one with the select tool and drag it. For exact coordinates, use
-the Coordinates panel: with an anchor selected, its X and Y fields
-address the anchor. Its name is a field in the same panel.
+Add Anchor in the canvas context menu adds an anchor at the pointer.
+The editor names it automatically: `anchor.0`, `anchor.1`, and so on.
+The editor has no field to rename an anchor, so set names in the
+source. Select an anchor with the select tool and drag it. Delete
+removes it.
 
 Anchor names drive generated feature code. Entry and exit anchors
 produce cursive attachment, anchor families produce mark and mark-to-
 mark positioning, and `caret_1`, `caret_2` and so on produce ligature
 caret positions. See [Feature Code](/docs/features.html).
-
-</DocSection>
-
-<DocSection title="Smart Components">
-
-A smart component carries its own axes, so one part glyph can hold a
-range of shapes. A single serif component can be short at one end of
-its range and long at the other, and each placement picks a value.
-
-To make one, use Smart Axis on a part glyph and give it an axis as
-`Width,0,100`. That writes the glyphsLib `smartComponentAxes` entry,
-marks the default drawing as the bottom pole, and seeds a `.top` layer
-as the other pole. Edit the poles through the swap arrows.
-
-Place the part in a glyph and set its value in the Coordinates panel.
-Interpolation across several axes uses the corner-delta model
-described in
-[Masters and Interpolation](/docs/masters.html).
-
-<Callout>
-  Smart components use the glyphsLib keys, so a source that came out
-  of Glyphs keeps working and a source that leaves Runebender takes
-  them along.
-</Callout>
-
-</DocSection>
-
-<DocSection title="Corner Components">
-
-A corner component reshapes a node rather than adding a shape: a
-chamfer, a flare, a spur applied consistently everywhere it belongs.
-
-Apply one from the context menu at a node, naming it `chamfer` or
-`_corner.chamfer`. It is applied in every master, because all masters
-must keep the same structure to interpolate.
 
 </DocSection>
 

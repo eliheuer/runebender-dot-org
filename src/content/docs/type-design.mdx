@@ -81,6 +81,11 @@ begin with `move`. `clear_components: true` explicitly removes components
 when replacing a composite with outlines. Width, anchors, encoding, and
 marks are preserved unless a separate supported operation changes them.
 
+The other operations are `set_point`, `set_smooth`, `set_width`,
+`adjust_width`, `transform_points`, `translate`, and `set_anchor`. Use
+`transform_points` to move or scale a chosen set of points, such as one
+stem, and `adjust_width` to change the advance by a delta.
+
 For interpolating masters, retain compatible contour order, starting points,
 point types, and component structure. The existing structure check is a
 foreground/proposal check, not a complete family compatibility audit. Compare

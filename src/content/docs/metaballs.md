@@ -9,11 +9,13 @@ description: "Using and converting Runebender metaballs."
 
 Metaballs remain editable source objects until explicit conversion.
 Previewing or saving them does not add ordinary contour points.
-Choose the paired-circle tool to place and move centers; use the inspector for position, Radius, Strength, and Threshold.
-Centers in a group blend together, while **Start a new group** prepares an independent group.
+Choose the Metaball tool in the Shapes button of the toolbar. Click to place a center, and drag a center to move it.
+The Metaballs section of the inspector has X, Y, Radius, and Threshold for the selected centers, and **Select all centers**.
+Centers in a group blend together.
 
-Use **Groups to cubic** or **Glyph to cubic** in the inspector or Path menu to create ordinary outlines.
-The overview can convert a font's current source as one undoable batch.
+Use **Convert to cubic** or **Convert to hyperbezier** in the inspector to create ordinary outlines.
+The Path menu has the same commands: **Metaballs to Cubic** and **Metaballs to Hyperbezier**.
+**Font to Cubic (Current Master, Overview)** converts the current master of the whole font as one undoable batch.
 Convert before using an external compiler that does not understand Runebender's metaball metadata.
 
 For a separate output UFO, run:

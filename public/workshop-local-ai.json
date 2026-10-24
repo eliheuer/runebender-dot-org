@@ -2,21 +2,29 @@
   "format": "runebender-workshop-local-ai-profile",
   "profile_version": 1,
   "status": "model bundle pending publication",
-  "model_root": "~/.runebender/models",
+  "model_root": "~/Runebender/models",
   "toolchain": {
-    "editor": "runebender-gpui",
-    "core": "runebender-core",
+    "editor": "runebender",
     "inference": "font-ml"
   },
   "model_directories": {
     "chat": {
       "name": "runebender-workshop-4b",
-      "required_files": ["*.gguf", "tokenizer.json"],
-      "purpose": "Local proposal-only chat in the native editor"
+      "required_files": [
+        "*.gguf"
+      ],
+      "purpose": "Local proposal-only chat in the native editor",
+      "optional_files": [
+        "model.json"
+      ]
     },
     "outline": {
       "name": "runebender-workshop-bolden",
-      "required_files": ["config.json", "weights.safetensors", "vocab.txt"],
+      "required_files": [
+        "config.json",
+        "weights.safetensors",
+        "vocab.txt"
+      ],
       "purpose": "Local outline proposals through font-ml"
     }
   },

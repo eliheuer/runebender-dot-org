@@ -19,7 +19,7 @@ import Callout from "../../components/Callout.astro";
     <tr><th><code>Cmd+O</code></th><td>Open</td></tr>
     <tr><th><code>Cmd+S</code></th><td>Save</td></tr>
     <tr><th><code>Cmd+Shift+S</code></th><td>Save as</td></tr>
-    <tr><th><code>Cmd+E</code></th><td>Export</td></tr>
+    <tr><th><code>Cmd+Alt+E</code></th><td>Export</td></tr>
     <tr><th><code>Cmd+Q</code></th><td>Quit</td></tr>
   </tbody>
 </table>
@@ -37,6 +37,7 @@ import Callout from "../../components/Callout.astro";
     <tr><th><code>Cmd+V</code></th><td>Paste</td></tr>
     <tr><th><code>Cmd+A</code></th><td>Select all points</td></tr>
     <tr><th><code>Cmd+Alt+A</code></th><td>Deselect all points</td></tr>
+    <tr><th><code>Cmd+Alt+Shift+I</code></th><td>Invert selection</td></tr>
     <tr><th>Tab / Shift+Tab</th><td>Step the point selection through the contour</td></tr>
   </tbody>
 </table>
@@ -45,14 +46,7 @@ import Callout from "../../components/Callout.astro";
 
 <DocSection title="Glyph">
 
-<table>
-  <caption>Glyph</caption>
-  <tbody>
-    <tr><th><code>Cmd+Alt+Shift+N</code></th><td>New glyph</td></tr>
-    <tr><th><code>Cmd+Shift+D</code></th><td>Decompose components</td></tr>
-    <tr><th><code>Cmd+Ctrl+M</code></th><td>Update metrics</td></tr>
-  </tbody>
-</table>
+The Glyph menu has no keys.
 
 </DocSection>
 
@@ -68,7 +62,7 @@ import Callout from "../../components/Callout.astro";
     <tr><th><code>Cmd+Shift+H</code></th><td>Flip horizontal</td></tr>
     <tr><th><code>Cmd+Shift+V</code></th><td>Flip vertical</td></tr>
     <tr><th><code>Cmd+D</code></th><td>Duplicate selection</td></tr>
-    <tr><th><code>Cmd+Alt+Shift+T</code></th><td>Duplicate and repeat</td></tr>
+    <tr><th><code>Cmd+Shift+D</code></th><td>Duplicate and repeat</td></tr>
   </tbody>
 </table>
 
@@ -80,12 +74,33 @@ import Callout from "../../components/Callout.astro";
   <caption>View</caption>
   <tbody>
     <tr><th><code>Cmd+0</code></th><td>Zoom to fit</td></tr>
+    <tr><th><code>Cmd+T</code></th><td>Cycle theme</td></tr>
+    <tr><th>Escape</th><td>Back to the overview</td></tr>
+    <tr><th>Hold Space</th><td>Pan, and preview the filled glyph without points or guides</td></tr>
   </tbody>
 </table>
 
-The rest of the View menu has no key: show all masters, sort glyphs by
-name, sort glyphs by Unicode, next master, previous master, and next
-sample string.
+The rest of the View menu has no key: masters, sorting, sample
+strings, grid, and the measure overlays.
+
+</DocSection>
+
+<DocSection title="Tools">
+
+<table>
+  <caption>Tools</caption>
+  <tbody>
+    <tr><th><code>V</code></th><td>Select</td></tr>
+    <tr><th><code>P</code></th><td>Pen</td></tr>
+    <tr><th><code>B</code></th><td>Hyperbezier Pen</td></tr>
+    <tr><th><code>U</code></th><td>Rectangle</td></tr>
+    <tr><th><code>O</code></th><td>Ellipse</td></tr>
+    <tr><th><code>E</code></th><td>Knife</td></tr>
+    <tr><th><code>M</code></th><td>Measure</td></tr>
+  </tbody>
+</table>
+
+The other tools have no key. Pick them in the toolbar.
 
 </DocSection>
 
@@ -109,8 +124,9 @@ sample string.
 <Callout>
   Everything in the menus works whether or not it has a key. The Path
   and Filter menus hold many operations that do not: booleans,
-  extremes, rounding, harmonize, balance, optimize, curve conversion,
-  offset, extrude, roughen, round corners, and slant.
+  extremes, rounding, rotation, harmonize, balance, optimize, curve
+  and metaball conversion, offset, extrude, roughen, round corners,
+  and slant.
 </Callout>
 
 </DocSection>

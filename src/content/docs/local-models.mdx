@@ -37,18 +37,22 @@ it holds a small font family made for training, a script that trains a
 model on it in about a minute, and a checked-in copy of that model.
 [Set up local AI](/docs/local-ai-setup.html) walks through it.
 
-Put a model in `~/.runebender/models` and the editor lists it at
-startup. Installing a model is dropping the folder there. Set
+Put a model in `~/Runebender/models` and the editor lists it at
+startup. Models sit there by kind: `shapes/`, `bolden/`, and `chat/`.
+Installing a model is dropping the folder there. Set
 `RUNEBENDER_MODELS` to read them from somewhere else, or list more
-directories, one per line, in `~/.runebender/model_paths`.
+directories, one per line, in `~/.runebender/model_paths` or
+`RUNEBENDER_MODEL_PATHS`. The old `~/.runebender/models` folder is
+still read, but nothing is written there.
 
-Open-weight language models for the Chat tab are the same: a
-directory holding a `.gguf` file and its `tokenizer.json`, under the
-same roots. They are a few hundred megabytes to a few gigabytes; you
-download them yourself, and the demo repo has a script that fetches
-Qwen3 from Hugging Face and checks the hash.
+Open-weight language models for the Chat panel are the same: a
+directory holding one `.gguf` file, under the same roots. An optional
+`model.json` beside it sets that model's server defaults. These models
+are a few hundred megabytes to a few gigabytes; you download them
+yourself, and the demo repo has a script that fetches Qwen3 from
+Hugging Face and checks the hash.
 
-A model is three files:
+A shape or bolden model is three files:
 
 <table>
   <caption>What a model directory holds</caption>
@@ -69,11 +73,13 @@ config to see what you have.
 Open the Local AI section of the left panel and choose a model under
 Model. The editor remembers it for the session.
 
-Open a glyph in the lighter master and click Bolden under Tasks. The
-editor predicts a heavier version and installs it. The button stays
-inactive until a glyph is open.
+Open a glyph in the lighter master and click Bolden This Glyph under
+Tasks, or Bolden Every Glyph for the whole master. The editor predicts
+a heavier version.
 
-The result is an ordinary edit. To reject it, undo.
+The result waits under Proposals. Compare shows it against the
+current drawing, Install writes it as an ordinary edit, and Discard
+drops it. After an install, Undo Install takes it back.
 
 Glyph → Bolden With Model… does the same thing from the menu.
 
@@ -81,7 +87,7 @@ Glyph → Bolden With Model… does the same thing from the menu.
   <caption>What you get</caption>
   <tbody>
     <tr><th>Status line</th><td>How many points moved, of how many, and the change in advance width.</td></tr>
-    <tr><th>The glyph</th><td>The proposal, in place, undoable.</td></tr>
+    <tr><th>Proposals</th><td>The prediction, ready to compare, install, or discard.</td></tr>
   </tbody>
 </table>
 
@@ -126,8 +132,8 @@ distance. That is a property of one model, not a general fix.
 
 <DocSection title="Scoring a Prediction">
 
-Click Score against the other master when both masters have the glyph
-drawn. The editor compares the prediction to the drawing you already
+The Score node in [Graph](/docs/workflows.html) does this when both
+masters have the glyph drawn. It compares the prediction to the drawing you already
 made. It reports two numbers: the model's average error per point, and
 the error from shifting every point by the average amount.
 
@@ -175,11 +181,33 @@ command takes `--json`.
 
 </DocSection>
 
+<DocSection title="Chat">
+
+The Chat panel in the left rail talks to a local language model about
+the open font. Pick a model from the list of rows. The editor serves
+it through a supervised `llama-server`: the copy bundled in the app,
+then `RUNEBENDER_LLAMA_SERVER`, then PATH and Homebrew
+(`brew install llama.cpp`). The server stops when the model changes,
+the panel closes, or the editor quits.
+
+The model reads and measures glyphs through the same tools as
+[MCP](/docs/mcp.html). Edits come back as proposals for you to judge.
+
+Talk records a spoken request and puts the words in the text field
+for you to check before sending. It needs whisper.cpp's
+`whisper-server` (`brew install whisper.cpp`, or set
+`RUNEBENDER_WHISPER_SERVER`) and a speech model saved as `model.bin`
+in a model folder whose name starts with `whisper`. The button is
+hidden until both are found.
+
+Chat needs the desktop application on macOS or Linux.
+
+</DocSection>
+
 <DocSection title="What Is Not Here">
 
-The native Runebender editor has a local chat pane through font-ml. For an
-external conversation connected to the live editor, start with
-[MCP and OMP](/docs/mcp.html). Neither workflow currently provides
+For an external conversation connected to the live editor, start with
+[MCP](/docs/mcp.html). Neither Chat nor MCP currently provides
 complete glyph generation from a description. Kerning and spacing models
 are named in font-ml and not built.
 

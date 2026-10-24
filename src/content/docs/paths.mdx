@@ -60,7 +60,7 @@ the rest combined.
     <tr><th>Flip Vertical</th><td><code>Cmd+Shift+V</code></td></tr>
     <tr><th>Rotate</th><td>90 degrees left, 90 degrees right, or 180 degrees.</td></tr>
     <tr><th>Duplicate Selection</th><td><code>Cmd+D</code>. Contours, components, and anchors.</td></tr>
-    <tr><th>Duplicate + Repeat</th><td><code>Cmd+Alt+Shift+T</code>. Duplicates and re-applies the last flip or rotation, so a repeated pattern takes one keystroke per step.</td></tr>
+    <tr><th>Duplicate + Repeat</th><td><code>Cmd+Shift+D</code>. Duplicates and re-applies the last transformation, so a repeated pattern takes one keystroke per step.</td></tr>
   </tbody>
 </table>
 
@@ -77,7 +77,6 @@ mouse. For an exact move or scale, use the Coordinates panel.
     <tr><th>Harmonize</th><td>Makes curvature continuous across an on-curve point.</td></tr>
     <tr><th>Balance</th><td>Evens out the handles of a segment.</td></tr>
     <tr><th>Optimize</th><td>Reduces the point count where the shape allows it.</td></tr>
-    <tr><th>Fit Curve</th><td>Sets the selected segments' handles to a percentage of their tangent-intersection maximum, so a run of curves takes one consistent tension.</td></tr>
   </tbody>
 </table>
 
@@ -92,6 +91,8 @@ continuity display, so you can see the result rather than guess at it.
   <caption>Curve type</caption>
   <tbody>
     <tr><th>Hyperbezier to Cubic</th><td>Hyperbezier contours become ordinary cubic segments.</td></tr>
+    <tr><th>Metaballs to Cubic</th><td>Metaballs become ordinary cubic contours. See <a href="/docs/metaballs.html">Metaballs</a>.</td></tr>
+    <tr><th>Metaballs to Hyperbezier</th><td>Metaballs become hyperbezier contours.</td></tr>
     <tr><th>Quadratic to Cubic</th><td>For sources that came from TrueType outlines.</td></tr>
     <tr><th>Cubic to Quadratic</th><td>For output that needs them.</td></tr>
   </tbody>
@@ -107,24 +108,30 @@ Filters reshape an outline rather than clean it up.
   <caption>Filter menu</caption>
   <tbody>
     <tr><th>Offset Curve</th><td>Grows or shrinks the outline by a distance.</td></tr>
-    <tr><th>Expand Stroke</th><td>Turns each contour into the outline of a stroke of the width you type, with round joins and caps.</td></tr>
     <tr><th>Extrude</th><td>Pushes the shape out along a direction.</td></tr>
     <tr><th>Roughen</th><td>Breaks smooth edges into a rougher line.</td></tr>
-    <tr><th>Round Corners</th><td>Fillets the selected corners. The size and handle ratio follow the corners already in the glyph.</td></tr>
     <tr><th>Slanter</th><td>Slants the outline, for oblique work.</td></tr>
+    <tr><th>Round Corners</th><td>Fillets the selected corners. The size and handle ratio follow the corners already in the glyph.</td></tr>
   </tbody>
 </table>
 
+The Filter menu also repeats Add Extremes and Remove Overlap.
+
+The Path Operations section of the right panel holds the values the
+filters use: Slant °, Offset ±, Extrude d,° and Roughen s,h,v. Type a
+value and press Enter to apply it.
+
 </DocSection>
 
-<DocSection title="The Monoline Workflow">
+<DocSection title="Expand Stroke">
 
-Expand Stroke is the second half of a way of working rather than a
-one-off effect.
+Expand Stroke is not in a menu. It is the Stroke width field in the
+Path Operations section. It turns each contour into the outline of a
+stroke of that width, with round joins and caps.
 
 1. Draw open skeleton paths with the pen tool.
 2. Select them, or select nothing to take the whole glyph.
-3. Run Expand Stroke and type a weight.
+3. Type a weight in Stroke width and press Enter.
 
 You get letterforms from a skeleton, and the skeleton is easy to
 redraw at a different weight.
@@ -133,16 +140,13 @@ redraw at a different weight.
 
 <DocSection title="Context Menu">
 
-Right-click the canvas for the operations that apply to what is under
-the pointer.
+Right-click the canvas for these operations: Add Anchor, Set Start
+Point, Round Corners, Reverse Contours, Remove Overlap, Flip
+Horizontal, Flip Vertical, Rotate 90, Duplicate, Harmonize, Balance,
+Optimize, and Decompose.
 
-<table>
-  <caption>Context menu</caption>
-  <tbody>
-    <tr><th>Components</th><td>Lock, unlock, decompose one or all, add a component, apply a corner component.</td></tr>
-    <tr><th>Contours</th><td>Set the start point, reverse, round corners, move up or down in the order.</td></tr>
-    <tr><th>Anchors</th><td>Add, delete.</td></tr>
-  </tbody>
-</table>
+Right-click a component for more rows at the top: Edit Component in
+Place, Open followed by the base glyph's name (it opens that glyph in
+its own tab), and Enable or Disable Automatic Alignment. Right-click a placed image to lock or remove it.
 
 </DocSection>

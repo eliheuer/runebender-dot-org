@@ -1,10 +1,10 @@
 ---
 title: "Font Info"
-lede: "Names, vertical metrics and hinting values, per master."
+lede: "Names and vertical metrics of the active master, shown in the grid view."
 status: "Implemented"
-stability: "Names and metrics are editable; more of Font Info comes later"
+stability: "Read-only in the editor"
 order: 16
-description: "Editing font names and vertical metrics in Runebender."
+description: "Viewing font names and vertical metrics in Runebender."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -12,22 +12,25 @@ import Callout from "../../components/Callout.astro";
 
 <DocSection title="Where It Is">
 
-The Font Info section appears in the right panel in the grid view. It
-edits the active master and writes to that master's
-`fontinfo.plist`.
+The Font info and Advanced sections appear in the right panel in the
+grid view. They show the values of the active master's
+`fontinfo.plist`. You cannot edit the values in Runebender.
 
-Switch masters in the Masters section to edit another one.
+Switch masters in the Masters section to see another one.
 
 </DocSection>
 
-<DocSection title="Names">
+<DocSection title="Font Info Section">
 
 <table>
-  <caption>Names</caption>
+  <caption>Font info</caption>
   <tbody>
-    <tr><th>Family Name</th><td>The family every style belongs to.</td></tr>
-    <tr><th>Style Name</th><td>This master's style.</td></tr>
+    <tr><th>Family name</th><td>The family every style belongs to.</td></tr>
+    <tr><th>Style name</th><td>This master's style.</td></tr>
     <tr><th>UPM</th><td>Units per em. The coordinate grid everything else is measured in.</td></tr>
+    <tr><th>Italic angle</th><td>The slant, in degrees.</td></tr>
+    <tr><th>Ascender, Descender</th><td>The UFO values, used by the editor and by tools reading the source.</td></tr>
+    <tr><th>x-height, Cap height</th><td>The height of the lowercase and of the capitals.</td></tr>
   </tbody>
 </table>
 
@@ -39,16 +42,13 @@ Switch masters in the Masters section to edit another one.
 
 </DocSection>
 
-<DocSection title="Vertical Metrics">
+<DocSection title="Advanced Section">
 
 <table>
-  <caption>Vertical metrics</caption>
+  <caption>Advanced</caption>
   <tbody>
-    <tr><th>Ascender, Descender</th><td>The UFO values, used by the editor and by tools reading the source.</td></tr>
-    <tr><th>Cap Height</th><td>The height of the capitals.</td></tr>
-    <tr><th>Italic Angle</th><td>The slant, in degrees.</td></tr>
-    <tr><th>typoAsc, typoDesc, typoGap</th><td>The OS/2 typographic values.</td></tr>
-    <tr><th>hheaAsc, hheaDesc, hheaGap</th><td>The hhea values.</td></tr>
+    <tr><th>typoAsc, typoDesc</th><td>The OS/2 typographic values.</td></tr>
+    <tr><th>hheaAsc, hheaDesc</th><td>The hhea values.</td></tr>
     <tr><th>winAsc, winDesc</th><td>The OS/2 Windows values, which govern clipping.</td></tr>
   </tbody>
 </table>
@@ -62,26 +62,17 @@ masters, which is the other way they go wrong.
 
 </DocSection>
 
-<DocSection title="Hinting Values">
+<DocSection title="Stems">
 
-<table>
-  <caption>PostScript values</caption>
-  <tbody>
-    <tr><th>Blue Values, Other Blues</th><td>The alignment zones: baseline, x-height, cap height, and the overshoots around them.</td></tr>
-    <tr><th>Stems V, Stems H</th><td>The dominant stem widths, vertical and horizontal.</td></tr>
-  </tbody>
-</table>
-
-The Dimensions section measures the stems actually present in your
-reference glyphs, per master. Use it to check that the values you
-typed here match what you drew.
+The Dimensions section measures the stems and bars in your reference
+glyphs, per master.
 
 </DocSection>
 
-<DocSection title="Axes and Instances">
+<DocSection title="Axes">
 
-Axes, instances, and axis mappings belong to the designspace rather
-than to one master, so they live in the Axes section. See
+Axes belong to the designspace rather than to one master, so they live
+in the Axes section of the editor. See
 [Masters and Interpolation](/docs/masters.html).
 
 </DocSection>

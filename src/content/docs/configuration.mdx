@@ -1,6 +1,6 @@
 ---
 title: "Configuration"
-lede: "Choose a theme and local model directory with environment variables."
+lede: "Choose a theme, local model directories, and helper programs with environment variables."
 status: "Alpha"
 stability: "Check current source for additional settings"
 order: 27
@@ -25,8 +25,22 @@ RUNEBENDER_THEME_PATH="$PWD/my-theme.theme.toml" RUNEBENDER_THEME=my-theme runeb
 
 <DocSection title="Local Models">
 
-`RUNEBENDER_MODELS` overrides the local model directory.
-Without it, the local model tools use `~/.runebender/models`.
+The default model directory is `~/Runebender/models`.
+`RUNEBENDER_MODELS` overrides it.
+Runebender still reads models from the older `~/.runebender/models`, but never writes there.
+
+To look for models in more directories, list them one per line in `~/.runebender/model_paths`, or set `RUNEBENDER_MODEL_PATHS` to a platform-separated list.
+
+<table>
+  <caption>Other variables</caption>
+  <tbody>
+    <tr><th><code>RUNEBENDER_LLAMA_SERVER</code></th><td>Path to a <code>llama-server</code> program, used when the application has no bundled copy.</td></tr>
+    <tr><th><code>RUNEBENDER_WHISPER_SERVER</code></th><td>Path to a <code>whisper-server</code> program, used when the application has no bundled copy.</td></tr>
+    <tr><th><code>RUNEBENDER_WHISPER_MODEL</code></th><td>Path to the Whisper model file for voice input.</td></tr>
+    <tr><th><code>RUNEBENDER_CONTEXT_PATH</code></th><td>More directories of personal design context files, after <code>~/.config/runebender/context/</code>.</td></tr>
+  </tbody>
+</table>
+
 See [Local Models](/docs/local-models.html) for setup and current capabilities.
 
 </DocSection>

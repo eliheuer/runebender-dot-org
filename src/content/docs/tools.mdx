@@ -1,7 +1,7 @@
 ---
 title: "Tools"
-lede: "Eight edit modes. Select and pen cover most work; the rest cut, measure, preview and type."
-status: "All eight modes implemented"
+lede: "Fourteen tools. Select and pen cover most work; the rest shape, cut, measure, label, sketch and type."
+status: "Implemented"
 stability: "Behaviour is settled; options are still being added"
 order: 7
 description: "The tools in the Runebender font editor."
@@ -16,7 +16,7 @@ import Callout from "../../components/Callout.astro";
   <caption>Selecting</caption>
   <tbody>
     <tr><th>Click</th><td>Select a point, a handle, a component, or an anchor.</td></tr>
-    <tr><th>Shift-click</th><td>Extend the selection.</td></tr>
+    <tr><th>Shift-click</th><td>Add a point to the selection, or remove it.</td></tr>
     <tr><th>Drag on empty canvas</th><td>Marquee.</td></tr>
     <tr><th><code>Cmd+A</code> / <code>Cmd+Alt+A</code></th><td>Select or deselect every point.</td></tr>
     <tr><th>Tab / Shift+Tab</th><td>Step the selection through the glyph's points in contour order.</td></tr>
@@ -28,15 +28,27 @@ import Callout from "../../components/Callout.astro";
   <tbody>
     <tr><th>Drag a point</th><td>Move it. A handle on a smooth point travels with it.</td></tr>
     <tr><th>Drag a handle</th><td>Reshape the segment.</td></tr>
-    <tr><th>Arrow keys</th><td>Nudge. Hold a modifier for the larger step.</td></tr>
+    <tr><th>Arrow keys</th><td>Nudge. Hold Shift for a larger step, Shift+Cmd for the largest.</td></tr>
     <tr><th>Drag a sidebearing edge</th><td>Change spacing without touching the outline.</td></tr>
-    <tr><th>Double-click a component</th><td>Open the glyph it points at.</td></tr>
+    <tr><th>Double-click a point</th><td>Switch an on-curve point between corner and smooth.</td></tr>
+    <tr><th>Alt-click a segment</th><td>Give the segment two curve handles.</td></tr>
+    <tr><th>Double-click a component</th><td>Edit its base glyph in place, inside this glyph. Escape, or a double-click on empty space, goes back.</td></tr>
   </tbody>
 </table>
 
 For an exact move or scale, use the Coordinates panel. Pick a reference
 point on the nine-point grid. X and Y move the selection so the
 reference lands there; W and H scale about it.
+
+The Lasso tool shares the Select button. Hold the button to pick it.
+Drag a free shape around the points to select them. Hold Shift to add
+to the selection.
+
+</DocSection>
+
+<DocSection title="Hand">
+
+Drag to move the view. The glyph and the selection do not change.
 
 </DocSection>
 
@@ -47,8 +59,8 @@ pull its outgoing handle out of it. Click the first point of the
 contour to close it.
 
 Leave a contour open and it stays open. That is the starting point for
-the monoline workflow: draw open skeletons, then use Expand Stroke to
-turn them into letterforms. See
+the monoline workflow: draw open skeletons, then type a width in the
+Stroke width field of the Path Operations section. See
 [Paths and Filters](/docs/paths.html).
 
 </DocSection>
@@ -58,6 +70,7 @@ turn them into letterforms. See
 Draws hyperbezier contours: curves defined by the points you place,
 with the control points solved rather than positioned by hand. Fewer
 things to hold, and the curvature stays continuous by construction.
+Alt-click places a corner.
 
 Path → Hyperbezier to Cubic converts a hyperbezier contour into
 ordinary cubic segments. With nothing selected it converts every
@@ -68,40 +81,44 @@ tool that expects plain cubics.
 
 <DocSection title="Shapes">
 
-Drag a rectangle or an ellipse. Hold shift to constrain it to a square
-or a circle.
+Rectangle and Ellipse: drag a box and the shape fills it. The Shapes
+button also holds Metaball and Local AI Shapes. Hold the button to
+pick one.
+
+Metaball: click to place blending centers. See
+[Metaballs](/docs/metaballs.html).
+
+Local AI Shapes: drag a box and type a word. A model trained on your
+own drawings fills the box.
 
 </DocSection>
 
 <DocSection title="Knife">
 
-Drag a line across the outline to cut it. Hold shift to lock the cut
-to an axis.
+Drag a line across the outline to cut it.
 
 </DocSection>
 
 <DocSection title="Measure">
 
-Drag a line to measure across the glyph. Hold shift to lock it to an
-axis.
+The measure tool draws labels over the glyph. Picking the tool turns
+on handle lengths, segment lengths, side bearings and popcount sums.
 
-The Measure section appears in the right panel while the tool is
-active.
+The Measure section of the right panel holds the toggles.
 
 <table>
-  <caption>Measure options</caption>
+  <caption>Measure toggles</caption>
   <tbody>
-    <tr><th>Colorize outline</th><td>Tints the outline by thickness, so uneven weight is visible rather than inferred.</td></tr>
-    <tr><th>Handle lengths</th><td>Labels every handle.</td></tr>
-    <tr><th>Segment lengths</th><td>Labels every segment.</td></tr>
-    <tr><th>Stems and counters</th><td>Measures the black and the white.</td></tr>
-    <tr><th>Side bearings</th><td>Shows them on the canvas.</td></tr>
-    <tr><th>Sums</th><td>Running totals across the measure line.</td></tr>
+    <tr><th>Color</th><td>Tints the outline by thickness, so uneven weight is visible rather than inferred.</td></tr>
+    <tr><th>Handles</th><td>Labels every handle.</td></tr>
+    <tr><th>Segments</th><td>Labels every segment.</td></tr>
+    <tr><th>Bearings</th><td>Shows the side bearings on the canvas.</td></tr>
+    <tr><th>Popcount sums</th><td>Writes each length as a sum of powers of two, so 96 reads as 64+32.</td></tr>
   </tbody>
 </table>
 
-Labels dodge each other rather than stacking, so a dense glyph stays
-readable.
+The View menu has the same overlays, and two more: Segment Sizes and
+Stems & Counters. All On and All Off set them all at once.
 
 </DocSection>
 
@@ -116,17 +133,19 @@ visually, so left means left on screen in Arabic and Hebrew. See
 
 </DocSection>
 
-<DocSection title="Preview">
+<DocSection title="Label and Sketch">
 
-Hides points, handles, and metric guides, so you see the shapes alone.
+Label: for neural fonts. Say which ink of a drawing belongs to each
+letter of its text.
+
+Sketch: draw temporary raster ink, separate from the glyph's outline.
 
 </DocSection>
 
-<DocSection title="Modifiers">
+<DocSection title="Preview">
 
-<Callout>
-  Shift constrains the shapes, knife, and measure tools. It does not
-  constrain point drags: there it extends the selection.
-</Callout>
+There is no preview tool. Hold Space with any tool to see the filled
+glyph without points, handles, or guides. Drag while you hold it to
+pan. Release Space to go back.
 
 </DocSection>

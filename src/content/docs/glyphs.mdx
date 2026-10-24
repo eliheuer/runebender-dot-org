@@ -15,23 +15,23 @@ import Callout from "../../components/Callout.astro";
 <table>
   <caption>Glyph menu</caption>
   <tbody>
-    <tr><th>New Glyph</th><td><code>Cmd+Alt+Shift+N</code>. Adds an empty glyph to every master.</td></tr>
+    <tr><th>New Glyph</th><td>Adds an empty glyph to every master.</td></tr>
     <tr><th>Duplicate Glyph</th><td>Copies the current glyph under a new name.</td></tr>
     <tr><th>Remove Glyph</th><td>Deletes it from every master.</td></tr>
+    <tr><th>Generate Missing Glyphs</th><td>Adds every glyph that the selected coverage filter in the left panel is missing, named and encoded, to every master.</td></tr>
   </tbody>
 </table>
 
-A language row in the left panel that is missing glyphs shows a plus.
-Pressing it adds every glyph that row names, encoded, to every master
-at once. That is the fast way to take a font from one script coverage
-target to another.
+Each coverage filter in the left panel shows how many of its glyphs
+the font has. Select a filter that is short, then run Glyph → Generate
+Missing Glyphs.
 
 </DocSection>
 
 <DocSection title="Name, Unicode, Groups">
 
 The Glyph section of the right panel holds the name, the Unicode
-value, the kerning groups, and the metric keys.
+value, the kerning groups, and the Width, LSB and RSB fields.
 
 Unicode values are accepted as `0041`, `U+0041`, or `0x41`.
 
@@ -48,9 +48,9 @@ Kerning groups and metric keys are covered in
 <DocSection title="Working in the Grid">
 
 Cmd-click toggles a cell, and shift-click selects a range in the order
-shown. Colour marks apply to the whole selection at once, and the
-footer copies the selection as text so you can paste a glyph set
-somewhere else.
+shown. Colour marks apply to the whole selection at once. Edit → Copy
+Selected Glyphs as Text copies the selection so you can paste a glyph
+set somewhere else.
 
 Sort the grid by name or by Unicode value from the View menu, and
 narrow it with the search box and filters in the left panel.
@@ -59,15 +59,14 @@ narrow it with the search box and filters in the left panel.
 
 <DocSection title="Related Glyphs">
 
-The Related section of the right panel lists four things, each one
-click away.
+The Related section of the right panel lists three groups. Click a
+name to open that glyph.
 
 <table>
   <caption>Related</caption>
   <tbody>
-    <tr><th>Base</th><td>The glyph this one is built from.</td></tr>
-    <tr><th>Siblings</th><td>Suffix variants, such as `a.alt` beside `a`.</td></tr>
-    <tr><th>Uses</th><td>The glyphs it places as components.</td></tr>
+    <tr><th>Components</th><td>The glyphs it places as components.</td></tr>
+    <tr><th>Siblings</th><td>Suffix variants, such as <code>a.alt</code> beside <code>a</code>.</td></tr>
     <tr><th>Used by</th><td>Every composite that places this one.</td></tr>
   </tbody>
 </table>
@@ -78,13 +77,18 @@ Use it to reach the rest of a family without searching for names.
 
 <DocSection title="Layers">
 
+The Layers section lists the other masters. Click a row to draw that
+master behind the current glyph as a reference.
+
+In the editor, the section also manages named glyph layers. Type a
+name in Glyph layer name, then use the buttons.
+
 <table>
-  <caption>Layers block</caption>
+  <caption>Layers section</caption>
   <tbody>
-    <tr><th>Backup</th><td>Copies the current drawing into a fresh layer, named <code>backup-1</code>, <code>backup-2</code> and so on. Try something without losing what you had.</td></tr>
-    <tr><th>Swap</th><td>Exchanges the drawing with a named layer's copy. Undoable.</td></tr>
-    <tr><th>Delete</th><td>Drops a layer's copy of this glyph. An emptied layer goes with it.</td></tr>
-    <tr><th>+ Intermediate</th><td>An intermediate layer for interpolation. See <a href="/docs/masters.html">Masters and Interpolation</a>.</td></tr>
+    <tr><th>Copy to layer</th><td>Copies the current master's drawing of this glyph into the named layer.</td></tr>
+    <tr><th>Remove layer</th><td>Removes the named layer from this glyph.</td></tr>
+    <tr><th>Undo layers, Redo</th><td>Undo or redo the last layer change.</td></tr>
   </tbody>
 </table>
 
@@ -106,16 +110,5 @@ behind the drawing, named by hand.
     <tr><th>Export Glyph as SVG</th><td>Writes the current glyph out beside the source.</td></tr>
   </tbody>
 </table>
-
-</DocSection>
-
-<DocSection title="Notes">
-
-An annotation is a note dropped at a point on a glyph. Use it to mark
-what is unfinished, or to leave a message for whoever opens the file
-next.
-
-Annotations are per master, and they are never exported. They live in
-the source for the people working on it.
 
 </DocSection>

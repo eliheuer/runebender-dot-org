@@ -44,34 +44,20 @@ correct while the text changes under them.
 
 </DocSection>
 
-<DocSection title="The Shaping Inspector">
+<DocSection title="The Shaping Section">
 
-The Shaping section of the right panel shows the buffer's characters
-in logical order beside the glyphs they shaped into, linked by
-cluster.
+The Shaping section of the right panel controls how the text is
+shaped.
 
-Click a chip to cross-highlight its cluster, so you can see which
-characters produced which glyphs. Double-click a glyph chip to open
-that glyph for editing inside the shaped run.
-
-<Callout>
-  This is the tool for the question "why did that come out wrong". It
-  shows you the mapping instead of leaving you to infer it from the
-  result.
-</Callout>
-
-</DocSection>
-
-<DocSection title="Script and Language">
-
-Shaping can be run under a chosen script and language rather than
-letting the engine infer them from the characters. Set them in the
-Shaping section.
-
-It matters wherever a language changes the expected forms: Turkish,
-Romanian, Dutch, Vietnamese, Farsi, Urdu, Sindhi, Kashmiri. It is also
-how you check that a `locl` rule fires for the language it was written
-for rather than assuming it does.
+<table>
+  <caption>Shaping section</caption>
+  <tbody>
+    <tr><th>Preview text</th><td>The text to shape.</td></tr>
+    <tr><th>LTR, RTL, Auto</th><td>The text direction. Auto takes it from the characters.</td></tr>
+    <tr><th>Feature chips</th><td><code>liga</code>, <code>rlig</code>, <code>kern</code>, <code>mark</code> and <code>mkmk</code>. Click a chip to turn that feature off or on.</td></tr>
+    <tr><th>Auto, Arabic, Urdu</th><td>The script and language. Auto lets the shaper infer them from the characters. Urdu shapes as Arabic script with the Urdu language, so you can check that a <code>locl</code> rule for Urdu fires.</td></tr>
+  </tbody>
+</table>
 
 </DocSection>
 
@@ -96,9 +82,9 @@ entry and exit anchors become cursive attachment. See
 
 <DocSection title="Kerning in Text">
 
-Drag the space between two glyphs to kern the pair. This is the
-working path, because you set the value while looking at the pair at
-size in a real word. See
+The line of text applies the font's kerning, so you see each pair at
+size in a real word. To set a value, use the First, Second and Value
+fields in the Kerning section of the grid view. See
 [Spacing and Kerning](/docs/spacing.html).
 
 </DocSection>

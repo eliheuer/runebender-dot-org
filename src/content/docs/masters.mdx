@@ -4,7 +4,7 @@ lede: "A designspace opens every master it names. Axis sliders move through the 
 status: "Implemented"
 stability: "Stable"
 order: 11
-description: "Masters, axes, interpolation, and intermediate layers in Runebender."
+description: "Masters, axes, and interpolation in Runebender."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -15,10 +15,15 @@ import Callout from "../../components/Callout.astro";
 Open a `.designspace` file and Runebender opens every master it names.
 Open a single `.ufo` and you get one master.
 
-The Masters section of the right panel lists them, and each row draws
-the current glyph as that master draws it, so you compare without
-switching. Click a row to switch. View → Next Master and View →
-Previous Master step through them.
+The Masters section of the right panel lists them by name. Click a
+row to switch. View → Next Master and View → Previous Master step
+through them.
+
+The same section edits the designspace sources. Add source adds an
+interpolated source at the axis slider position, with the name in
+Source name. Save writes its new UFO.
+Apply renames and moves the active source. Up, Down and Remove change
+the list, and Undo sources and Redo step back and forward.
 
 View → Show All Masters draws every master at once over the current
 glyph.
@@ -27,19 +32,13 @@ glyph.
 
 <DocSection title="Axes">
 
-Axis sliders sit above the master list, and in the Axes section in the
-grid view. Moving one shows the interpolated result as a ghost over
-the drawing, so you can see a weight between two masters while you
-edit either one.
+The Axes section sits below the Masters section in the editor. It has
+one slider per designspace axis. Moving a slider shows the
+interpolated result as a ghost over the drawing, so you can see a
+weight between two masters while you edit either one.
 
-<table>
-  <caption>Axes section</caption>
-  <tbody>
-    <tr><th>Sliders</th><td>One per designspace axis. The position they set is the preview location, which several commands below use.</td></tr>
-    <tr><th>Instances</th><td>Name a style at the preview location to add it, or rename the instance already there. The family name is inherited.</td></tr>
-    <tr><th>Mappings</th><td>An <code>avar</code> pair on the first axis: user-space input to design-space output, written into the designspace.</td></tr>
-  </tbody>
-</table>
+If the glyph does not interpolate at that position, the section shows
+a warning that says why.
 
 </DocSection>
 
@@ -80,63 +79,6 @@ designspace.
 
 </DocSection>
 
-<DocSection title="Intermediate Layers">
-
-Sometimes the straight interpolation between two masters is wrong in
-the middle, and adding a whole master is too much. An intermediate
-layer fixes one glyph at one point in the space.
-
-In the Layers block, **+ Intermediate** freezes the current
-interpolation of the open glyph at the preview location: a named UFO
-layer plus a sparse designspace source. Edit it through the swap
-arrows. The interpolation ghost and the master strip pick it up live.
-
-This is a standard designspace construct, so every compiler
-understands the result.
-
-</DocSection>
-
-<DocSection title="Interpolation Timing">
-
-An ease bakes timing into an intermediate layer. A positive ease means
-the change arrives late, so the lighter shape holds on longer; a
-negative ease means it arrives early.
-
-Only the selected points ease. The rest stay on the straight
-interpolation, which keeps the layer point-compatible with its
-neighbours.
-
-</DocSection>
-
-<DocSection title="Trajectories">
-
-Between two masters, a point normally travels in a straight line. A
-trajectory bends that line.
-
-Turn on Trajectories with the select tool and each node shows a knob
-at the middle of its path. Drag the knob and the node's interpolation curves through that point
-instead of running straight. Use it to stop a stem bowing, or a joint
-pinching, partway along an axis.
-
-The intermediate points are stored on the axis-minimum master so they
-stay editable. What compilers consume is the baked intermediate
-layer, so the result is standard designspace either way.
-
-</DocSection>
-
-<DocSection title="Shape Switches">
-
-A shape switch swaps one drawing for another partway along an axis:
-the classic case is a two-storey letter that becomes single-storey at
-heavy weights.
-
-Adding one creates an unencoded alternate, copied into every master,
-plus a designspace rule substituting it from a chosen axis position to
-the end of the axis. Design the alternate in the Regular master; the
-copies start marked so you can see which ones still need drawing.
-
-</DocSection>
-
 <DocSection title="Smart Components">
 
 A smart component carries its own axes, so one component holds a range
@@ -152,8 +94,10 @@ interpolate bilinearly.
 
 <DocSection title="Masks">
 
-A contour can be marked as a mask, subtracting from the shapes behind
-it while you draw. Glyph → Bake Masks makes the subtraction real in
-every master, so the exported outline matches what the preview showed.
+A source can mark contours as masks in the glyph lib. The editor
+subtracts a mask from the other contours in the preview. Glyph → Bake
+Masks makes the subtraction real in the outlines, so other tools see
+the same shape. The editor has no control to mark a contour as a
+mask.
 
 </DocSection>

@@ -9,7 +9,7 @@ description: "Make, install, and share Runebender themes with the Base UI and Ra
 
 A Runebender theme is one portable `.theme.toml` file.
 The bundled themes are in [assets/themes/default](https://github.com/fontgarden/runebender/tree/main/assets/themes/default).
-The native editor reads installed files at startup; the browser bundles the three built-in themes.
+The native editor reads installed files at startup; the browser bundles the seven built-in themes: Dark, Gray, Light, Dark Gray, Light Gray, Strawberry, and Campfire.
 The format has `formatVersion = 1` so future versions can change without guessing how to read an older file.
 Existing `.theme.json` files still load.
 
@@ -95,7 +95,7 @@ Circular mark swatches and icons retain their own shapes.
 `markOutline`, `markInk`, and `pointOutline` are optional colors; `pointHalo` is a boolean.
 All seven named Rainbow marks must remain in `rainbow.marks` exactly once, because glyph mark names are saved font metadata.
 
-Start a color change at the use site under `src/application/view/`, then follow its named color in `src/application/view/theme.rs` to the file's `surfaces`, `text`, or `roles` section.
+Start a color change at the use site under `src/application/view/`, then follow its named color in `src/application/design/theme.rs` to the file's `surfaces`, `text`, or `roles` section.
 `src/ui/theme.rs` is the toolkit-independent parser and resolver.
 `src/application/platform/themes.rs` discovers native files.
 Check Gray and Light captures at the same size after a built-in change.

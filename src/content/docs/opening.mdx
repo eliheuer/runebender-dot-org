@@ -18,7 +18,6 @@ import CommandList from "../../components/CommandList.astro";
   <tbody>
     <tr><th><code>.designspace</code></th><td>Opens every master it names. This is the normal way to work on a family.</td></tr>
     <tr><th><code>.ufo</code></th><td>Opens as a single master.</td></tr>
-    <tr><th>A directory</th><td>Opens the sources it holds.</td></tr>
     <tr><th><code>.glyphs</code>, <code>.glyphspackage</code></th><td>Converted to UFO and designspace files in a sibling directory, then opened. See below.</td></tr>
     <tr><th><code>.babelfont</code></th><td>Basic single-master packages open as an unsaved UFO copy. See below.</td></tr>
     <tr><th><code>.ttf</code>, <code>.otf</code></th><td>A compiled font opens as an editable UFO in memory. See below.</td></tr>
@@ -35,12 +34,14 @@ Use File → Open, or start the editor with a path.
   "runebender path/to/Font.designspace",
 ]} />
 
+To open a font in the browser editor, see <a href="/docs/install.html#in-the-browser">In the Browser</a>.
+
 </DocSection>
 
 <DocSection title="Glyphs Files">
 
 Opening a `.glyphs` file or a `.glyphspackage` converts it to UFO plus
-designspace files in a sibling directory and opens those. The original
+designspace files in a sibling directory named `<name>-ufo` and opens those. The original
 is left alone. Both forms hold the same data, so both convert the same
 way.
 
@@ -49,10 +50,12 @@ them, and exporting compiles them. Runebender is not a Glyphs editor
 that happens to read UFO. It is a UFO editor that can take a Glyphs
 file as a starting point.
 
+The conversion keeps outlines, components, anchors, widths, Unicode
+values, vertical metrics, kerning, and kerning groups.
+
 <Callout>
-  Smart components, metric keys, and the other Glyphs constructs
-  survive the conversion, because Runebender stores them in the same
-  glyphsLib keys. See <a href="/docs/format.html">File Format</a>.
+  Smart components, OpenType features, brace and bracket layers, color
+  labels, and hints are not converted.
 </Callout>
 
 </DocSection>
@@ -89,9 +92,11 @@ original file.
 
 <DocSection title="A New Font">
 
-<code>Cmd+N</code> creates an untitled UFO with Google Fonts metrics
-and the Latin Core glyph set as empty encoded glyphs, then asks where
-to save it.
+<code>Cmd+N</code> creates a UFO with Google Fonts metrics and the
+Latin Core glyph set as empty encoded glyphs. It writes the file as
+`Untitled.ufo` in the directory of the open font, or `Untitled-1.ufo`
+if that name is taken. There is no dialog. Save or discard your
+changes first.
 
 Starting from a real glyph set rather than an empty file means the
 grid, the language coverage rows, and the search all do something from
@@ -106,12 +111,12 @@ the first minute.
   <tbody>
     <tr><th>Save</th><td><code>Cmd+S</code>. Writes every changed master back to disk.</td></tr>
     <tr><th>Save As…</th><td><code>Cmd+Shift+S</code>. Choose a new location.</td></tr>
-    <tr><th>Export…</th><td><code>Cmd+E</code>. Builds a font file. See <a href="/docs/exporting.html">Exporting</a>.</td></tr>
+    <tr><th>Export…</th><td><code>Cmd+Alt+E</code>. Builds a font file. See <a href="/docs/exporting.html">Exporting</a>.</td></tr>
   </tbody>
 </table>
 
-The header shows the path of the open font and the time of the last
-save, so you can tell whether what is on screen is on disk.
+The footer shows the path of the open font and Saved or Not saved,
+so you can tell whether what is on screen is on disk.
 
 <Callout>
   Runebender writes your sources in place. Keep them in version
