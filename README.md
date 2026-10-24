@@ -33,13 +33,12 @@ src/
 public/           Raw static files copied verbatim into the build:
                     favicon, CNAME, .nojekyll,
                     robots.txt, llms.txt, llms-full.txt,
-                    cloud/editor/ (Vite build artifact, see below)
+                    app/ (browser editor build)
 scripts/
   check-local-links.sh         HTTP 200 sweep against built preview output
   check-external-links.sh      HTTP sweep for public off-site links
   check-published-site.sh      HTTP sweep for live runebender.org after deploy
-  build-cloud-editor.sh        Maintains a historical browser artifact; not the current product entry point
-  vite.comfy-standalone.config.mjs
+  build-xilem-editor.sh        Builds public/app/ from a runebender checkout
 .github/workflows/deploy.yml   Build and deploy to GitHub Pages
 AGENTS.md                      Agent guidance for editing this repo
 launch-checklist.md            Pre-publication checklist

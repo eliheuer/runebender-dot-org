@@ -28,8 +28,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => !new URL(page).pathname.startsWith("/editor"),
-      customPages: [`${site}/cloud/editor/index.html`],
+      filter: (page) => !["/editor", "/gpui", "/cloud/"].some((prefix) => new URL(page).pathname.startsWith(prefix)),
       serialize: htmlSitemapUrl,
     }),
   ],
