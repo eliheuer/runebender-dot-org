@@ -19,12 +19,13 @@ html = (web / 'index.html').read_text()
 app = (web / 'app.js').read_text()
 bindings = (web / 'pkg/runebender_browser.js').read_text()
 release = hashlib.sha256(wasm + html.encode() + app.encode() + bindings.encode()).hexdigest()[:16]
-for name in ('pkg', 'licenses'):
+for name in ('pkg', 'licenses', 'icons'):
     shutil.copytree(web / name, dest / name, dirs_exist_ok=True)
 # Version all three requests, so a cached loader cannot load an incompatible WASM ABI.
 html = html.replace('./app.js', f'./app.js?v={release}')
 app = app.replace('./pkg/runebender_browser.js', f'./pkg/runebender_browser.js?v={release}')
 bindings = bindings.replace("'runebender_browser_bg.wasm'", f"'runebender_browser_bg.wasm?v={release}'")
+shutil.copy(web / 'manifest.webmanifest', dest / 'manifest.webmanifest')
 (dest / 'index.html').write_text(html)
 (dest / 'app.js').write_text(app)
 (dest / 'pkg/runebender_browser.js').write_text(bindings)

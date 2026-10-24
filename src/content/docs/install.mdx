@@ -89,8 +89,52 @@ See [Development](/docs/development.html) for the profile's tradeoffs.
 browser. Explore the bundled Virtua Grotesk font, open a glyph, drag outline
 points, undo and redo edits, zoom, and resize the panels.
 
-Edits stay in this tab and are discarded on reload. Use the desktop application
-to open or save your own fonts and run local AI workflows.
+In Chrome and Edge, File → Open picks a folder on your computer: a UFO folder,
+or a folder that holds one designspace with its UFOs.
+Save writes the files back into that folder, and Save As writes into a new one.
+You can also drop a folder on the canvas.
+The editor keeps the package's own file names, so a saved UFO matches the opened one file for file.
+Other browsers keep the bundled font only, and edits there are discarded on reload.
+Local AI needs the desktop application.
+
+</DocSection>
+
+<DocSection title="Chromebook">
+
+Runebender runs on a Chromebook as an installed web app.
+Chrome gives it a window of its own, an icon in the launcher, and a place on the shelf.
+This works on every Chromebook, including managed school and work devices where Linux is turned off.
+
+1. Open [runebender.org/wasm-editor](/wasm-editor/) in Chrome.
+2. Click the install icon at the right end of the address bar.
+   If the icon is not there, open the Chrome menu, then choose **Cast, save, and share** → **Install page as app**.
+3. Click **Install**. Runebender opens in its own window and appears in the launcher.
+
+To remove it, right-click the icon in the launcher and choose **Uninstall**.
+
+The installed app is the browser editor.
+It opens the bundled Virtua Grotesk font first.
+To work on your own font, choose File → Open and pick the UFO folder, or the folder with your designspace, from the Files app.
+Chrome asks once for permission to read and write that folder.
+Save writes your changes back to the folder.
+An installed app keeps the permission, so the next start reopens the same folder.
+Local AI needs the desktop application.
+The app renders on the CPU and does not need a GPU, so it runs on low-cost ARM Chromebooks.
+It needs a network connection to start.
+
+If your Chromebook can run Linux, you can also build the desktop application.
+Turn on Linux in **Settings** → **About ChromeOS** → **Developers**, open the Terminal,
+then use the Cargo install command above.
+The Linux container is Debian, so install the build packages first:
+
+```sh
+sudo apt install build-essential pkg-config libfontconfig-dev libwayland-dev \
+  libxkbcommon-dev libx11-dev libxcb1-dev libvulkan1 libssl-dev
+```
+
+The build takes about an hour on a Chromebook and needs 8 GB of memory or more.
+Installed Linux applications appear in the ChromeOS launcher.
+This path is not tested on ChromeOS hardware yet.
 
 </DocSection>
 

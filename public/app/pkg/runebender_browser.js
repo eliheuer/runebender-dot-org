@@ -1,4 +1,6 @@
 /* @ts-self-types="./runebender_browser.d.ts" */
+import { download_font } from './snippets/runebender-browser-541e4ee795c8a352/inline0.js';
+
 
 export class BrowserEditor {
     __destroy_into_raw() {
@@ -43,6 +45,19 @@ export class BrowserEditor {
         return v1;
     }
     /**
+     * What became of an "open" or "save" request the page carried out.
+     * @param {string} kind
+     * @param {boolean} ok
+     * @param {string} message
+     */
+    host_result(kind, ok, message) {
+        const ptr0 = passStringToWasm0(kind, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(message, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        wasm.browsereditor_host_result(this.__wbg_ptr, ptr0, len0, ok, ptr1, len1);
+    }
+    /**
      * @param {boolean} down
      * @param {string} key
      * @param {string} code
@@ -68,6 +83,29 @@ export class BrowserEditor {
         return this;
     }
     /**
+     * Open a UFO or designspace folder the page read: `ufo_name` when the folder is the UFO.
+     * Returns an empty string, or the error.
+     * @param {string | null | undefined} ufo_name
+     * @param {Uint8Array} bundle
+     * @returns {string}
+     */
+    open_bundle(ufo_name, bundle) {
+        let deferred3_0;
+        let deferred3_1;
+        try {
+            var ptr0 = isLikeNone(ufo_name) ? 0 : passStringToWasm0(ufo_name, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            var len0 = WASM_VECTOR_LEN;
+            const ptr1 = passArray8ToWasm0(bundle, wasm.__wbindgen_malloc);
+            const len1 = WASM_VECTOR_LEN;
+            const ret = wasm.browsereditor_open_bundle(this.__wbg_ptr, ptr0, len0, ptr1, len1);
+            deferred3_0 = ret[0];
+            deferred3_1 = ret[1];
+            return getStringFromWasm0(ret[0], ret[1]);
+        } finally {
+            wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+        }
+    }
+    /**
      * @param {number} kind
      * @param {number} x
      * @param {number} y
@@ -88,6 +126,17 @@ export class BrowserEditor {
      */
     resize(width, height, scale) {
         wasm.browsereditor_resize(this.__wbg_ptr, width, height, scale);
+    }
+    /**
+     * The files the page must write to save the font; empty when nothing can be saved.
+     * @param {boolean} into_new_folder
+     * @returns {Uint8Array}
+     */
+    save_bundle(into_new_folder) {
+        const ret = wasm.browsereditor_save_bundle(this.__wbg_ptr, into_new_folder);
+        var v1 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
+        return v1;
     }
     /**
      * @returns {string}
@@ -121,6 +170,9 @@ function __wbg_get_imports() {
         __wbg___wbindgen_throw_bb96b2010945f0bc: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
+        __wbg_download_font_9503f42728afebdd: function(arg0, arg1, arg2, arg3) {
+            download_font(getStringFromWasm0(arg0, arg1), getArrayU8FromWasm0(arg2, arg3));
+        },
         __wbg_error_757e9472f8410341: function(arg0, arg1) {
             let deferred0_0;
             let deferred0_1;
@@ -135,6 +187,14 @@ function __wbg_get_imports() {
         __wbg_getRandomValues_2b907d0af5db96ee: function() { return handleError(function (arg0, arg1) {
             globalThis.crypto.getRandomValues(getArrayU8FromWasm0(arg0, arg1));
         }, arguments); },
+        __wbg_getTime_63fb0332e6c4ec17: function(arg0) {
+            const ret = arg0.getTime();
+            return ret;
+        },
+        __wbg_new_0_f117d868b403dc07: function() {
+            const ret = new Date();
+            return ret;
+        },
         __wbg_new_227d7c05414eb861: function() {
             const ret = new Error();
             return ret;
@@ -204,6 +264,17 @@ function handleError(f, args) {
         const idx = addToExternrefTable0(e);
         wasm.__wbindgen_exn_store(idx);
     }
+}
+
+function isLikeNone(x) {
+    return x === undefined || x === null;
+}
+
+function passArray8ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 1, 1) >>> 0;
+    getUint8ArrayMemory0().set(arg, ptr / 1);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
 }
 
 function passStringToWasm0(arg, malloc, realloc) {
@@ -355,7 +426,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('runebender_browser_bg.wasm?v=b7bc56cc04e9c62a', import.meta.url);
+        module_or_path = new URL('runebender_browser_bg.wasm?v=0e3910c0aa18816f', import.meta.url);
     }
     const imports = __wbg_get_imports();
 

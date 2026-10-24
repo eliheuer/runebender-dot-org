@@ -7,10 +7,13 @@ const { release } = build;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Runebender WASM editor</title>
+    <title>Runebender</title>
     <link rel="canonical" href="https://runebender.org/wasm-editor/" />
-    <meta name="description" content="Try Runebender in your browser. Explore and edit the bundled font with the real Xilem interface." />
+    <meta name="description" content="Runebender in your browser. Edit the bundled font, or open and save your own UFO and Designspace folders in Chrome and Edge." />
     <link rel="icon" href="/assets/favicon.png" />
+    <link rel="manifest" href="/wasm-editor/manifest.webmanifest" />
+    <meta name="theme-color" content="#15131a" />
+    <meta name="application-name" content="Runebender" />
   </head>
   <body>
     <iframe src={`/app/index.html?v=${release}`} title="Runebender font editor"></iframe>

@@ -1,0 +1,1 @@
+export function download_font(name, data) { const url = URL.createObjectURL(new Blob([data], {type:'font/ttf'})); const a = document.createElement('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }

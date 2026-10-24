@@ -20,11 +20,14 @@ Headless file commands remain portable.
 
 ## Browser
 
-The browser build reuses the Xilem/Masonry interface and edits a bundled font in memory.
-The current source checkout's browser build is blocked by a missing serialization dependency and native live-agent startup references in shared application code.
-New native interface changes cannot yet be validated in a fresh browser build; the published browser artifact can lag the native editor.
-Reloading discards edits.
-Opening or saving arbitrary user sources, native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
+The browser build reuses the Xilem/Masonry interface.
+It opens and saves UFO and designspace folders only in browsers with the File System Access API, such as Chrome and Edge.
+Other browsers edit the bundled font in memory.
+It has no microphone access, so Talk is unavailable, and local AI servers do not run in the browser.
+The browser workspace pins the same Xilem revision as the desktop build, and `web/prepare.py` moves that pin with it.
+The published browser build can still lag the native editor until the site is rebuilt.
+In other browsers, reloading discards edits.
+Native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
 Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
 
 ## Font formats
