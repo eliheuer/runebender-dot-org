@@ -219,11 +219,16 @@ original file.
 
 ### A New Font
 
-Cmd+N creates a UFO with Google Fonts metrics and the
-Latin Core glyph set as empty encoded glyphs. It writes the file as
-Untitled.ufo in the directory of the open font, or Untitled-1.ufo
-if that name is taken. There is no dialog. Save or discard your
-changes first.
+The native editor starts in its normal glyph grid with a new, untitled font.
+Cmd+N creates the same template: Google Fonts metrics and 324 empty Latin Core glyph slots.
+The font stays in memory until you save it.
+
+Use File → Open to replace the starter with an existing font.
+An untouched starter needs no save prompt; after an edit, opening another font or quitting offers Save, Discard, or Cancel.
+The first Save asks for a destination folder and writes Untitled.ufo there.
+Choose an empty folder if it already contains a file with that name; existing destinations are not overwritten.
+Cancelling the folder picker keeps the font and its edits open.
+Later saves write to the chosen location.
 
 Starting from a real glyph set rather than an empty file means the
 grid, the language coverage rows, and the search all do something from
