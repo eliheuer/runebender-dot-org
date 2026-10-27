@@ -2,6 +2,7 @@
 
 Runebender is an experimental open-source font editor for UFO and Designspace sources.
 The native editor runs on macOS and Linux; the browser editor opens a bundled font, and in Chrome and Edge it opens and saves UFO and Designspace folders.
+Downloads and release status: https://runebender.org/download.html
 Documentation: https://runebender.org/docs
 Source: https://github.com/fontgarden/runebender
 

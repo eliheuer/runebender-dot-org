@@ -9,6 +9,8 @@ const htmlSitemapUrl = (item) => {
   if (url.pathname !== "/") url.pathname = url.pathname.replace(/\/+$/, "");
   if (url.pathname === "/") {
     url.pathname = "/";
+  } else if (url.pathname === "/download") {
+    url.pathname = "/download.html";
   } else if (url.pathname === "/wasm-editor") {
     url.pathname = "/wasm-editor/";
   } else if (url.pathname === "/docs" || url.pathname === "/cloud" || url.pathname === "/editor") {

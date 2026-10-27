@@ -23,6 +23,10 @@ Build and run Runebender with Cargo.
 
 ### Install Runebender
 
+For the native macOS application and its release status, see [Downloads](/download.html).
+The packaged editor will include its runtime resources and does not require Rust or Homebrew.
+Follow the download page's platform requirements for the specific release.
+
 Install Rust with [rustup](https://rustup.rs), then install Runebender:
 
 ```sh
@@ -38,8 +42,8 @@ Use Rust 1.96 or newer. Runebender opens UFO and designspace sources.
 Start without a path to open a font through File → Open.
 
 Runebender is alpha software. Keep your sources in version control.
-There is no packaged desktop release yet. Platform prerequisites and
-build instructions are in the [repository](https://github.com/fontgarden/runebender).
+The [download page](/download.html) records whether a packaged alpha is available.
+Platform prerequisites and build instructions are in the [repository](https://github.com/fontgarden/runebender).
 
 ### Windows Status
 

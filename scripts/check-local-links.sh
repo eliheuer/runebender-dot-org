@@ -5,6 +5,8 @@ BASE_URL="${1:-http://127.0.0.1:4321}"
 
 paths="
 /
+/download.html
+/updates/alpha/appcast.xml
 /wasm-editor/
 /editor/index.html
 /app/index.html
