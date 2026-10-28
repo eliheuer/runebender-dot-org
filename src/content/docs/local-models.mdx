@@ -38,19 +38,23 @@ model on it in about a minute, and a checked-in copy of that model.
 [Set up local AI](/docs/local-ai-setup.html) walks through it.
 
 Put a model in `~/Runebender/models` and the editor lists it at
-startup. Models sit there by kind: `shapes/`, `bolden/`, and `chat/`.
-Installing a model is dropping the folder there. Set
+startup. Drawing models sit there by kind, `shapes/` and `bolden/`;
+each chat model is its own folder directly under the root, named as you
+want it listed. Installing a model is dropping the folder there. Set
 `RUNEBENDER_MODELS` to read them from somewhere else, or list more
 directories, one per line, in `~/.runebender/model_paths` or
 `RUNEBENDER_MODEL_PATHS`. The old `~/.runebender/models` folder is
 still read, but nothing is written there.
 
-Open-weight language models for the Chat panel are the same: a
-directory holding one `.gguf` file, under the same roots. An optional
-`model.json` beside it sets that model's server defaults. These models
-are a few hundred megabytes to a few gigabytes; you download them
-yourself, and the demo repo has a script that fetches Qwen3 from
-Hugging Face and checks the hash.
+Open-weight language models for the Chat panel are a directory holding
+one `.gguf` file, `model.gguf` by convention, under the same roots. An
+optional `model.json` beside it sets that model's server defaults; its
+keys are `context`, `thinking`, `temperature`, `top_p`, `top_k`,
+`min_p`, `presence_penalty` and `template_kwargs`. An optional
+`mmproj*.gguf` from the same model repository is the vision projector,
+which lets the model look at proof pictures. These models are 3 to 22
+gigabytes; you download them yourself from Hugging Face, and
+[Set up local AI](/docs/local-ai-setup.html) names the ones in use.
 
 A shape or bolden model is three files:
 
@@ -189,6 +193,14 @@ it through a supervised `llama-server`: the copy bundled in the app,
 then `RUNEBENDER_LLAMA_SERVER`, then PATH and Homebrew
 (`brew install llama.cpp`). The server stops when the model changes,
 the panel closes, or the editor quits.
+
+When a `llama-server` in router mode is already running on
+`127.0.0.1:8080` and lists the chosen model, Chat uses it instead of
+starting its own, so one copy of the model serves the editor and any
+coding agent on the machine. Start one with
+`llama-server --models-dir ~/Runebender/models --port 8080`; a
+`presets.ini` in the models folder gives each model its settings, one
+`[folder-name]` section per model with `llama-server` arguments as keys.
 
 The model reads and measures glyphs through the same tools as
 [MCP](/docs/mcp.html). Edits come back as proposals for you to judge.
