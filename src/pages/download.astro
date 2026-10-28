@@ -12,48 +12,96 @@ const artifacts = release.artifacts as Array<{
 ---
 
 <BaseLayout title="Download Runebender" description="Download the native Runebender font editor for macOS.">
-  <main>
-    <section class="section">
+  <main class="downloads">
+    <header class="download-heading">
       <h1>Download Runebender</h1>
-      <p>Runebender is alpha software. Work on copies of important fonts and keep your sources in version control.</p>
-      <h2>macOS</h2>
-      {release.available && artifacts.length > 0 ? (
-        <>
-          <p>Version {release.version} · Developer ID signed and Apple-notarized</p>
-          <p><a href={release.notes_url}>Release notes for {release.version}</a> · <a href="https://github.com/fontgarden/runebender/blob/main/docs/CHANGELOG.md">Changelog</a></p>
-          {artifacts.filter((artifact) => artifact.platform === "macos").map((artifact) => (
-            <div>
-              <p>
-                <a class="button primary" href={artifact.url}>
-                  Download macOS DMG for {artifact.architecture === "arm64" ? "Apple Silicon" : "Intel"}
-                </a>
-              </p>
-              <p>Requires macOS {artifact.minimum_os} or later. This alpha was launch-tested on Apple Silicon with macOS 26.6.2; older macOS versions have not been tested.</p>
-              <details><summary>SHA-256 checksum</summary><code class="checksum">{artifact.sha256}</code></details>
-            </div>
-          ))}
-        </>
-      ) : (
-        <p>The first downloadable alpha, {release.version}, is being prepared. A DMG will appear here after signing and installation checks pass.</p>
-      )}
-      <p>This download is for Apple Silicon Macs (M-series chips). There is no Intel Mac DMG in this release. Rust and Homebrew are not required.</p>
-      <ol>
-        <li>Open the downloaded DMG and drag Runebender into Applications.</li>
-        <li>Eject the disk image, then launch Runebender from Applications.</li>
-        <li>Choose File → Open to open a UFO or Designspace.</li>
-      </ol>
-      {release.available && <p>The app includes update checks at launch and in Runebender → Check for Updates…. Update installation and relaunch have not yet been validated end to end in this first alpha. You can also install newer DMGs manually.</p>}
-      <p><a href="https://github.com/fontgarden/runebender/releases">Release notes and previous downloads on GitHub</a></p>
-      <p>Finder launch was confirmed; the full manual editing/save/reopen regression is still outstanding. Local AI models, the model server, and Designbot are separate installations.</p>
-      <h2>Linux and source builds</h2>
-      <p>See the <a href="/docs/install.html">installation guide</a> for Rust and system-library prerequisites. Cargo and Homebrew registry packages are not available yet.</p>
-      <p><a href="/wasm-editor/">Try the browser editor</a> without installing the desktop app.</p>
-    </section>
+      <p>Alpha software. Work on copies of important fonts.</p>
+    </header>
+    <div class="download-columns">
+      <div class="download-column">
+        <section aria-labelledby="mac-title">
+          <h2 id="mac-title">macOS</h2>
+          {release.available && artifacts.some((artifact) => artifact.platform === "macos") ? (
+            <>
+              <p>Version {release.version} · Signed and Apple-notarized</p>
+              {artifacts.filter((artifact) => artifact.platform === "macos").map((artifact) => (
+                <div class="artifact">
+                  <p>{artifact.architecture === "arm64" ? "Apple Silicon (M-series)" : "Intel"} · macOS {artifact.minimum_os} or later</p>
+                  <a class="button" href={artifact.url}>Download macOS DMG</a>
+                  <details>
+                    <summary>SHA-256 checksum</summary>
+                    <code class="checksum">{artifact.sha256}</code>
+                  </details>
+                </div>
+              ))}
+              <p>No Intel DMG in this release. Rust and Homebrew are not required.</p>
+            </>
+          ) : (
+            <p>A downloadable build is not available yet.</p>
+          )}
+        </section>
+        <section aria-labelledby="install-title">
+          <h2 id="install-title">Install</h2>
+          <ol>
+            <li>Open the DMG and drag Runebender into Applications.</li>
+            <li>Eject the DMG, then open Runebender from Applications.</li>
+            <li>Choose File → Open to open your font.</li>
+          </ol>
+        </section>
+        <section aria-labelledby="notes-title">
+          <h2 id="notes-title">Release history</h2>
+          <ul class="link-list">
+            <li><a href={release.notes_url}>Release notes for {release.version}</a></li>
+            <li><a href="https://github.com/fontgarden/runebender/blob/main/docs/CHANGELOG.md">Changelog</a></li>
+            <li><a href="https://github.com/fontgarden/runebender/releases">All releases on GitHub</a></li>
+          </ul>
+        </section>
+      </div>
+      <div class="download-column">
+        <section aria-labelledby="updates-title">
+          <h2 id="updates-title">Updates</h2>
+          <p>The Mac app checks at launch, or choose Runebender → Check for Updates….</p>
+          <p>You can also install a newer DMG manually.</p>
+        </section>
+        <section aria-labelledby="other-title">
+          <h2 id="other-title">Other ways to use Runebender</h2>
+          <p><a href="/docs/install.html">Build from source on Linux or macOS</a>, or <a href="/wasm-editor/">try the browser editor</a>.</p>
+          <p>Cargo and Homebrew registry packages are not available yet.</p>
+          <p>For local AI, install models and tools separately. See <a href="/docs/local-ai-setup.html">local AI setup</a>.</p>
+        </section>
+        <section aria-labelledby="testing-title">
+          <h2 id="testing-title">First-alpha testing</h2>
+          <p>Installed and launched on Apple Silicon with macOS 26.6.2. Older macOS versions have not been tested.</p>
+          <p>Full editing/save/reopen checks and automatic update installation are still outstanding.</p>
+          <p>Keep backups and use version control for your font sources.</p>
+        </section>
+      </div>
+    </div>
   </main>
 </BaseLayout>
 
 <style>
-  h1, h2, p, ol, details { margin-bottom: 1rem; }
-  h2 { margin-top: 2rem; }
-  .checksum { overflow-wrap: anywhere; }
+  .downloads { --page-inset: 24px; --space: 16px; }
+  .download-heading { padding: var(--page-inset); border-bottom: 2px solid var(--g-25); }
+  h1, h2, p, ol, ul, details { margin: 0; }
+  h1, h2 { font-weight: 400; }
+  .download-heading p { margin-top: var(--space); }
+  .download-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .download-column { min-width: 0; padding: var(--page-inset); }
+  .download-column + .download-column { border-left: 2px solid var(--g-25); }
+  section, .artifact { display: grid; gap: var(--space); }
+  section + section { margin-top: calc(var(--space) * 2); padding-top: calc(var(--space) * 2); border-top: 2px solid var(--g-25); }
+  .button { justify-self: start; padding: 10px 18px; }
+  ol { padding-left: 1.5em; }
+  li + li { margin-top: calc(var(--space) / 2); }
+  .link-list { list-style: none; padding: 0; }
+  summary { cursor: pointer; }
+  .checksum { display: block; margin-top: var(--space); overflow-wrap: anywhere; }
+  :global(.footer-note) { padding-inline: 24px; }
+  @media (max-width: 800px) {
+    .downloads { --page-inset: 20px; }
+    .download-columns { grid-template-columns: 1fr; }
+    .download-column + .download-column { border-left: 0; border-top: 2px solid var(--g-25); }
+    :global(.footer-note) { padding-inline: 20px; }
+  }
 </style>
