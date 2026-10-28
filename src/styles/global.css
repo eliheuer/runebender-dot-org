@@ -169,6 +169,34 @@ code {
   overflow-wrap: anywhere;
 }
 
+/* Match Markdown code blocks to the existing command-list treatment. */
+.doc-page pre {
+  background: var(--g-25) !important;
+  color: var(--g-87) !important;
+  border: 2px solid var(--g-25);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: var(--text-mono);
+  line-height: 1.5;
+  padding: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.doc-page pre code {
+  display: block;
+  font-size: inherit;
+  line-height: inherit;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+  white-space: inherit;
+}
+
+/* Shiki emits inline token colors; keep these examples monochrome. */
+.doc-page pre span { color: inherit !important; }
+
 .site-header {
   align-items: stretch;
   background: color-mix(in oklab, var(--g-73) 94%, transparent);
