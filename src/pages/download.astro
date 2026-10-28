@@ -19,12 +19,13 @@ const artifacts = release.artifacts as Array<{
       <h2>macOS</h2>
       {release.available && artifacts.length > 0 ? (
         <>
-          <p>Version {release.version}</p>
+          <p>Version {release.version} · Developer ID signed and Apple-notarized</p>
+          <p><a href={release.notes_url}>Release notes for {release.version}</a> · <a href="https://github.com/fontgarden/runebender/blob/main/docs/CHANGELOG.md">Changelog</a></p>
           {artifacts.filter((artifact) => artifact.platform === "macos").map((artifact) => (
             <div>
               <p>
                 <a class="button primary" href={artifact.url}>
-                  Download for {artifact.architecture === "arm64" ? "Apple Silicon" : "Intel"}
+                  Download macOS DMG for {artifact.architecture === "arm64" ? "Apple Silicon" : "Intel"}
                 </a>
               </p>
               <p>Requires macOS {artifact.minimum_os} or later. This alpha was launch-tested on Apple Silicon with macOS 26.6.2; older macOS versions have not been tested.</p>
@@ -35,6 +36,7 @@ const artifacts = release.artifacts as Array<{
       ) : (
         <p>The first downloadable alpha, {release.version}, is being prepared. A DMG will appear here after signing and installation checks pass.</p>
       )}
+      <p>This download is for Apple Silicon Macs (M-series chips). There is no Intel Mac DMG in this release. Rust and Homebrew are not required.</p>
       <ol>
         <li>Open the downloaded DMG and drag Runebender into Applications.</li>
         <li>Eject the disk image, then launch Runebender from Applications.</li>
@@ -42,6 +44,7 @@ const artifacts = release.artifacts as Array<{
       </ol>
       {release.available && <p>The app includes update checks at launch and in Runebender → Check for Updates…. Update installation and relaunch have not yet been validated end to end in this first alpha. You can also install newer DMGs manually.</p>}
       <p><a href="https://github.com/fontgarden/runebender/releases">Release notes and previous downloads on GitHub</a></p>
+      <p>Finder launch was confirmed; the full manual editing/save/reopen regression is still outstanding. Local AI models, the model server, and Designbot are separate installations.</p>
       <h2>Linux and source builds</h2>
       <p>See the <a href="/docs/install.html">installation guide</a> for Rust and system-library prerequisites. Cargo and Homebrew registry packages are not available yet.</p>
       <p><a href="/wasm-editor/">Try the browser editor</a> without installing the desktop app.</p>

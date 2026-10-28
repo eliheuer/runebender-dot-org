@@ -18,15 +18,13 @@ const sourceInstall = `cargo +1.96 install --git https://github.com/fontgarden/r
           <a class="button primary" href={release.available && macRelease ? macRelease.url : "/download.html"}>Download macOS DMG</a>
           <a class="button" href="/wasm-editor/">Try in Browser</a>
         </div>
-        <p class="download-details">{release.version} · Apple Silicon<br /><a href="/download.html">Installation, requirements, and release notes</a></p>
+        <p class="download-details">{release.version} · Apple Silicon<br /><a href="/download.html">Installation and requirements</a> · <a href={release.notes_url}>Release notes</a></p>
         <div class="lede">
           <p>
             Runebender is a cross-platform, free and open-source font editor built on the
             <a href="https://linebender.org">Linebender</a> ecosystem of
-            <a href="https://www.rust-lang.org">Rust</a> crates. The desktop application
-            runs on Linux and macOS, and an experimental
-            <a href="/wasm-editor/">WebAssembly version is available in the browser</a>.
-            In Chrome and Edge it opens and saves your own UFO and Designspace folders.
+            <a href="https://www.rust-lang.org">Rust</a> crates. This first alpha ships as a signed, notarized macOS app for Apple Silicon.
+            Linux source builds and the <a href="/wasm-editor/">browser editor</a> are experimental.
           </p>
           <p>
             It is designed to be an extensible and flexible base to build custom
@@ -39,6 +37,7 @@ const sourceInstall = `cargo +1.96 install --git https://github.com/fontgarden/r
             and local AI, with built-in support for DesignBot, a Rust DrawBot
             alternative built on the Linebender ecosystem. A Chat panel talks to a
             local language model about the open font.
+            AI models, the local model server, and Designbot are installed separately.
           </p>
         </div>
       </div>
@@ -94,10 +93,11 @@ const sourceInstall = `cargo +1.96 install --git https://github.com/fontgarden/r
 
     <section class="section install-section" id="install" aria-labelledby="install-title">
       <div>
-        <h2 class="section-kicker" id="install-title">Quick Install</h2>
+        <h2 class="section-kicker" id="install-title">Installation</h2>
       </div>
       <div class="install-steps">
         <p><a href="/download.html">macOS downloads and installation</a></p>
+        <p>Experimental source build — <a href="/docs/install.html">prerequisites</a>:</p>
         <pre><code>{sourceInstall}</code></pre>
       </div>
     </section>
