@@ -21,17 +21,17 @@ Everything runs on your machine. No account, no API key, and nothing is sent any
 
 <DocSection title="Install the Editor and a Model Server">
 
-The [macOS DMG](/download.html) carries its own copy of `llama-server`, the program from [llama.cpp](https://github.com/ggml-org/llama.cpp) that runs the model. Nothing else to install.
-
-A native build from source needs `llama-server` installed separately. On a Mac, Homebrew is the simplest route; on Linux, unpack a [prebuilt release](https://github.com/ggml-org/llama.cpp/releases) and point the editor at it.
+Install the editor from the [macOS DMG](/download.html), or build it from source. Either way, the model runs in a second program, `llama-server` from [llama.cpp](https://github.com/ggml-org/llama.cpp), which 0.1.0-alpha.1 does not include. On a Mac, Homebrew is the simplest route; on Linux, unpack a [prebuilt release](https://github.com/ggml-org/llama.cpp/releases) and point the editor at it.
 
 <CommandList commands={[
-  "cargo install --git https://github.com/fontgarden/runebender",
   "brew install llama.cpp",
+  "cargo install --git https://github.com/fontgarden/runebender",
   "export RUNEBENDER_LLAMA_SERVER=/path/to/llama-server",
 ]} />
 
-The last command is for a server that is not on your `PATH`. The editor looks in its own bundle, then at `RUNEBENDER_LLAMA_SERVER`, then on `PATH` and in Homebrew's folders.
+The second command is the source build, for those not using the DMG. The third is for a server that is not on your `PATH`. The editor looks beside its own binary, then at `RUNEBENDER_LLAMA_SERVER`, then on `PATH` and in Homebrew's folders, so an app opened from the Finder finds a Homebrew install without any setting.
+
+Without `llama-server`, the editor runs and edits fonts as usual. The Chat tab lists your models but a question ends with the note "Neither llama-server nor font-ml found; install one or set RUNEBENDER_LLAMA_SERVER" in the status line.
 
 <Callout>
   Homebrew's `llama.cpp` and `whisper.cpp` share one library. Upgrade them together, `brew upgrade llama.cpp whisper.cpp`, never one alone, or the other stops loading models.
@@ -111,7 +111,7 @@ A chat model does not draw shapes, and a shapes model does not talk.
 <DocSection title="Recover from Common Failures">
 
 - **No model in the Chat picker:** the file must be named with a `.gguf` extension inside its own folder directly under `~/Runebender/models`. Check `RUNEBENDER_MODELS` if you set it.
-- **"llama-server not found":** install it, or set `RUNEBENDER_LLAMA_SERVER` to its path. The DMG build never needs this.
+- **"Neither llama-server nor font-ml found":** install `llama-server`, or set `RUNEBENDER_LLAMA_SERVER` to its path, then ask again.
 - **The model fails to load after a Homebrew upgrade:** `brew upgrade llama.cpp whisper.cpp` together, then try again.
 - **Port 8080 is taken:** another program holds it. Stop that program, or let the editor start its own private server by leaving port 8080 alone.
 - **The first answer is slow:** the model is loading. The second answer is fast.
