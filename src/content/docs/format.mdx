@@ -12,13 +12,10 @@ import Callout from "../../components/Callout.astro";
 
 <DocSection title="Sources">
 
-Runebender opens `.designspace` files and `.ufo` directories. It
-treats any other directory as a UFO, so it does not open a folder
-that only holds sources. It saves in the same format, in place.
-
-It can also import Glyphs, Glyphs Package, compiled fonts, and basic
-single-master Babelfont packages into UFO. See
-[Opening and Saving](/docs/opening.html) for the supported data and limitations.
+Runebender opens `.designspace` files and `.ufo` directories and saves these sources in place.
+It also opens Glyphs and Fontra sources through converted UFO working copies, with limited write-back to the original format.
+Python `.babelfont` directories and compiled TTF/OTF fonts are import-only formats.
+See [Opening and Saving](/docs/opening.html) for supported data and limitations.
 
 UFO is a directory of files, so a font source works with version
 control. Commit your sources and you can see, review, and undo a day's

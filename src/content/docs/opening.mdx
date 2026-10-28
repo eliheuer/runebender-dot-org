@@ -1,8 +1,8 @@
 ---
 title: "Opening and Saving"
-lede: "Runebender edits UFO and designspace sources in place. Glyphs, Babelfont, and compiled fonts are converted on the way in."
+lede: "Runebender edits UFO and designspace sources in place. Glyphs and Fontra use converted working copies; Babelfont and compiled fonts are import-only."
 status: "Implemented"
-stability: "Stable"
+stability: "Alpha format support; work on copies"
 order: 4
 description: "Opening, importing, and saving fonts in Runebender."
 ---
@@ -19,7 +19,8 @@ import CommandList from "../../components/CommandList.astro";
     <tr><th><code>.designspace</code></th><td>Opens every master it names. This is the normal way to work on a family.</td></tr>
     <tr><th><code>.ufo</code></th><td>Opens as a single master.</td></tr>
     <tr><th><code>.glyphs</code>, <code>.glyphspackage</code></th><td>Converted to UFO and designspace files in a sibling directory, then opened. See below.</td></tr>
-    <tr><th><code>.babelfont</code></th><td>Basic single-master packages open as an unsaved UFO copy. See below.</td></tr>
+    <tr><th><code>.fontra</code></th><td>Converted to UFO/Designspace working copies, with limited write-back. See below.</td></tr>
+    <tr><th><code>.babelfont</code></th><td>Python directory packages import into a UFO/Designspace project. See below.</td></tr>
     <tr><th><code>.ttf</code>, <code>.otf</code></th><td>A compiled font opens as an editable UFO in memory. See below.</td></tr>
   </tbody>
 </table>
@@ -40,41 +41,45 @@ To open a font in the browser editor, see <a href="/docs/install.html#in-the-bro
 
 <DocSection title="Glyphs Files">
 
-Opening a `.glyphs` file or a `.glyphspackage` converts it to UFO plus
-designspace files in a sibling directory named `<name>-ufo` and opens those. The original
-is left alone. Both forms hold the same data, so both convert the same
-way.
+Opening a `.glyphs` file or `.glyphspackage` folder converts it to UFO/Designspace files in a new sibling directory.
+Save writes the working copy and merges supported changes back into the original source.
+The first write-back keeps a backup named `<name> (before Runebender).<ext>`.
+Save As writes UFO/Designspace files instead.
 
-From then on you are working on the converted files: saving writes
-them, and exporting compiles them. Runebender is not a Glyphs editor
-that happens to read UFO. It is a UFO editor that can take a Glyphs
-file as a starting point.
+Outlines, components, anchors, widths, Unicode values and basic kerning are imported.
+This is basic alpha support: features, hints, smart-component behavior and some layers are not read into the working copy.
+Edited layers can lose unsupported data, including hints and node metadata.
+Font-info and feature edits are not written back; new masters cannot be written back either.
+Glyphs 2 files are written back as Glyphs 3.
+Written files have not yet been checked by reopening them in Glyphs itself.
+Work on copies of important sources.
 
-The conversion keeps outlines, components, anchors, widths, Unicode
-values, vertical metrics, kerning, and kerning groups.
+</DocSection>
 
-<Callout>
-  Smart components, OpenType features, brace and bracket layers, color
-  labels, and hints are not converted.
-</Callout>
+<DocSection title="Fontra Folders">
+
+The native editor opens `.fontra` folders, converts them to UFO/Designspace working copies, and merges supported edits back on Save.
+The backup and Save As behavior is the same as for Glyphs sources.
+It reads continuous axes, full sources, outlines, components, anchors, advance widths, basic kerning and feature text.
+
+Support is incomplete: sparse sources, glyph axes and variable-component locations are not editable; discrete axes open only at their default value.
+Cross-axis mappings are ignored, and most font-info or source-structure changes are not written back.
+The editor watches the converted working copy rather than changes made to the original by another app.
+Written folders have not yet been checked by reopening them in Fontra itself.
+These Glyphs and Fontra workflows have not been validated in the browser editor.
 
 </DocSection>
 
 <DocSection title="Babelfont Packages">
 
-Basic import supports single-master `.babelfont` directories in the native
-Babelfont package format. Open one with `runebender Font.babelfont`.
-No Python installation is needed.
+A `.babelfont` package here means the Python Babelfont directory format: `info.json`, `names.json`, `glyphs.json`, and per-glyph `.nfsglyph` files.
+It is not Rust Babelfont JSON, which is unsupported.
+No Python installation is needed to import it.
 
-Outlines, components, anchors, widths, Unicode, family/style names, basic
-metrics, kerning groups and pairs, export flags, and self-contained features
-are imported. Save writes a new sibling UFO, choosing an unused name if
-necessary. It leaves the original package untouched.
-
-This is import only. Multiple masters, axes, instances, extra or background
-layers, and external feature includes are not supported. Guides, hints,
-production names, and application-specific metadata are not imported.
-Runebender does not save back to Babelfont.
+The native project importer supports multiple masters, continuous axes, instances and extra layers within its checked conversion rules.
+It imports outlines, components, anchors, widths, Unicode values, names, metrics, kerning and self-contained feature text.
+Unsupported fields are rejected rather than silently discarded; external feature includes are not supported.
+Saving writes UFO/Designspace sources and never rewrites the original `.babelfont` package.
 
 </DocSection>
 

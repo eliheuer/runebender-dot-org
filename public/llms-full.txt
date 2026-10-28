@@ -155,7 +155,7 @@ These tools are optional; they are not needed to install the editor.
 ## Opening and Saving
 https://runebender.org/docs/opening.html
 
-Runebender edits UFO and designspace sources in place. Glyphs, Babelfont, and compiled fonts are converted on the way in.
+Runebender edits UFO and designspace sources in place. Glyphs and Fontra use converted working copies; Babelfont and compiled fonts are import-only.
 
 ### What Opens
 
@@ -163,7 +163,8 @@ Formats:
 - .designspace: Opens every master it names. This is the normal way to work on a family.
 - .ufo: Opens as a single master.
 - .glyphs, .glyphspackage: Converted to UFO and designspace files in a sibling directory, then opened. See below.
-- .babelfont: Basic single-master packages open as an unsaved UFO copy. See below.
+- .fontra: Converted to UFO/Designspace working copies, with limited write-back. See below.
+- .babelfont: Python directory packages import into a UFO/Designspace project. See below.
 - .ttf, .otf: A compiled font opens as an editable UFO in memory. See below.
 
 FontLab and FontForge sources are not read.
@@ -176,37 +177,41 @@ To open a font in the browser editor, see In the Browser.
 
 ### Glyphs Files
 
-Opening a .glyphs file or a .glyphspackage converts it to UFO plus
-designspace files in a sibling directory named -ufo and opens those. The original
-is left alone. Both forms hold the same data, so both convert the same
-way.
+Opening a .glyphs file or .glyphspackage folder converts it to UFO/Designspace files in a new sibling directory.
+Save writes the working copy and merges supported changes back into the original source.
+The first write-back keeps a backup named  (before Runebender)..
+Save As writes UFO/Designspace files instead.
 
-From then on you are working on the converted files: saving writes
-them, and exporting compiles them. Runebender is not a Glyphs editor
-that happens to read UFO. It is a UFO editor that can take a Glyphs
-file as a starting point.
+Outlines, components, anchors, widths, Unicode values and basic kerning are imported.
+This is basic alpha support: features, hints, smart-component behavior and some layers are not read into the working copy.
+Edited layers can lose unsupported data, including hints and node metadata.
+Font-info and feature edits are not written back; new masters cannot be written back either.
+Glyphs 2 files are written back as Glyphs 3.
+Written files have not yet been checked by reopening them in Glyphs itself.
+Work on copies of important sources.
 
-The conversion keeps outlines, components, anchors, widths, Unicode
-values, vertical metrics, kerning, and kerning groups.
+### Fontra Folders
 
-Smart components, OpenType features, brace and bracket layers, color
-labels, and hints are not converted.
+The native editor opens .fontra folders, converts them to UFO/Designspace working copies, and merges supported edits back on Save.
+The backup and Save As behavior is the same as for Glyphs sources.
+It reads continuous axes, full sources, outlines, components, anchors, advance widths, basic kerning and feature text.
+
+Support is incomplete: sparse sources, glyph axes and variable-component locations are not editable; discrete axes open only at their default value.
+Cross-axis mappings are ignored, and most font-info or source-structure changes are not written back.
+The editor watches the converted working copy rather than changes made to the original by another app.
+Written folders have not yet been checked by reopening them in Fontra itself.
+These Glyphs and Fontra workflows have not been validated in the browser editor.
 
 ### Babelfont Packages
 
-Basic import supports single-master .babelfont directories in the native
-Babelfont package format. Open one with runebender Font.babelfont.
-No Python installation is needed.
+A .babelfont package here means the Python Babelfont directory format: info.json, names.json, glyphs.json, and per-glyph .nfsglyph files.
+It is not Rust Babelfont JSON, which is unsupported.
+No Python installation is needed to import it.
 
-Outlines, components, anchors, widths, Unicode, family/style names, basic
-metrics, kerning groups and pairs, export flags, and self-contained features
-are imported. Save writes a new sibling UFO, choosing an unused name if
-necessary. It leaves the original package untouched.
-
-This is import only. Multiple masters, axes, instances, extra or background
-layers, and external feature includes are not supported. Guides, hints,
-production names, and application-specific metadata are not imported.
-Runebender does not save back to Babelfont.
+The native project importer supports multiple masters, continuous axes, instances and extra layers within its checked conversion rules.
+It imports outlines, components, anchors, widths, Unicode values, names, metrics, kerning and self-contained feature text.
+Unsupported fields are rejected rather than silently discarded; external feature includes are not supported.
+Saving writes UFO/Designspace sources and never rewrites the original .babelfont package.
 
 ### Compiled Fonts
 
@@ -2270,13 +2275,10 @@ Runebender edits UFO in place. It writes standard data where a standard exists, 
 
 ### Sources
 
-Runebender opens .designspace files and .ufo directories. It
-treats any other directory as a UFO, so it does not open a folder
-that only holds sources. It saves in the same format, in place.
-
-It can also import Glyphs, Glyphs Package, compiled fonts, and basic
-single-master Babelfont packages into UFO. See
-[Opening and Saving](/docs/opening.html) for the supported data and limitations.
+Runebender opens .designspace files and .ufo directories and saves these sources in place.
+It also opens Glyphs and Fontra sources through converted UFO working copies, with limited write-back to the original format.
+Python .babelfont directories and compiled TTF/OTF fonts are import-only formats.
+See [Opening and Saving](/docs/opening.html) for supported data and limitations.
 
 UFO is a directory of files, so a font source works with version
 control. Commit your sources and you can see, review, and undo a day's
