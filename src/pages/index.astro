@@ -4,7 +4,7 @@ import release from "../data/release.json";
 
 const macRelease = (release.artifacts as Array<{ platform: string; architecture: string; url: string }>)
   .find((artifact) => artifact.platform === "macos" && artifact.architecture === "arm64");
-const sourceInstall = `cargo +1.96 install --git https://github.com/fontgarden/runebender --tag v${release.version} --locked`;
+const sourceInstall = "cargo install --git https://github.com/fontgarden/runebender";
 ---
 
 <BaseLayout
@@ -93,7 +93,6 @@ const sourceInstall = `cargo +1.96 install --git https://github.com/fontgarden/r
       </div>
       <div class="install-steps">
         <p><a href="/download.html">macOS downloads and installation</a></p>
-        <p>Experimental source build — <a href="/docs/install.html">prerequisites</a>:</p>
         <pre><code>{sourceInstall}</code></pre>
       </div>
     </section>
