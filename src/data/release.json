@@ -1,7 +1,20 @@
 {
   "schema_version": 1,
-  "available": false,
+  "available": true,
   "version": "0.1.0-alpha.1",
+  "tag": "v0.1.0-alpha.1",
   "channel": "alpha",
-  "artifacts": []
+  "source_commit": "f4ad9e3a39be1f45f96615a7b729a8efb3d09248",
+  "build_number": 1,
+  "notes_url": "https://github.com/fontgarden/runebender/releases/tag/v0.1.0-alpha.1",
+  "artifacts": [
+    {
+      "platform": "macos",
+      "architecture": "arm64",
+      "url": "https://github.com/fontgarden/runebender/releases/download/v0.1.0-alpha.1/Runebender-0.1.0-alpha.1-macos-apple-silicon-notarized.dmg",
+      "sha256": "2818eb2d02e9ee920020510675ad43ca175608b3e09115ce9e1f3d4773a73622",
+      "size": 23434586,
+      "minimum_os": "12.0"
+    }
+  ]
 }

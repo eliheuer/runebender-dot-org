@@ -35,9 +35,10 @@ After building and starting preview, link-check the generated site:
 pnpm run check-links
 ```
 
-The primary action is Launch Application, linking to `/wasm-editor/`.
-Keep the homepage compact: one launch button, a short install command, and the
-full GitHub URL. Keep the existing screenshot files and rotation.
+The primary action is Download macOS DMG, using the Apple Silicon asset in `src/data/release.json`.
+Keep Try in Browser as a secondary action linking to `/wasm-editor/`.
+Keep the homepage compact: download actions, a short pinned install command, and the full GitHub URL.
+Keep the existing screenshot files and rotation.
 `/wasm-editor/` embeds the real Xilem WebAssembly editor from `public/app/`.
 Its source and interaction test live in the runebender repository's `web/` directory.
 Use `scripts/build-xilem-editor.sh /path/to/runebender` to update these

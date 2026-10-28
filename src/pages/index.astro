@@ -1,15 +1,24 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import release from "../data/release.json";
+
+const macRelease = (release.artifacts as Array<{ platform: string; architecture: string; url: string }>)
+  .find((artifact) => artifact.platform === "macos" && artifact.architecture === "arm64");
+const sourceInstall = `cargo +1.96 install --git https://github.com/fontgarden/runebender --tag v${release.version} --locked`;
 ---
 
 <BaseLayout
-  compact
   title="Runebender"
   description="Runebender is a free, open-source font editor built on the Linebender ecosystem of Rust crates."
 >
   <main id="top">
     <section class="hero" aria-label="Runebender font editor">
       <div class="hero-copy">
+        <div class="hero-actions" aria-label="Get Runebender">
+          <a class="button primary" href={release.available && macRelease ? macRelease.url : "/download.html"}>Download macOS DMG</a>
+          <a class="button" href="/wasm-editor/">Try in Browser</a>
+        </div>
+        <p class="download-details">{release.version} · Apple Silicon<br /><a href="/download.html">Installation, requirements, and release notes</a></p>
         <div class="lede">
           <p>
             Runebender is a cross-platform, free and open-source font editor built on the
@@ -31,9 +40,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             alternative built on the Linebender ecosystem. A Chat panel talks to a
             local language model about the open font.
           </p>
-        </div>
-        <div class="hero-actions" aria-label="Launch Runebender">
-          <a class="button primary" href="/wasm-editor/">Launch Application</a>
         </div>
       </div>
 
@@ -92,7 +98,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </div>
       <div class="install-steps">
         <p><a href="/download.html">macOS downloads and installation</a></p>
-        <pre><code>cargo install --git https://github.com/fontgarden/runebender</code></pre>
+        <pre><code>{sourceInstall}</code></pre>
       </div>
     </section>
 
@@ -113,7 +119,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .hero { grid-template-columns: minmax(260px, .7fr) minmax(0, 1.3fr); gap: 0; padding: 0; min-height: 0; }
   .hero-copy { min-height: 0; padding: 24px; justify-content: flex-start; gap: 20px; }
   .lede p { margin-bottom: 0; }
+  .hero-actions { gap: 8px; }
   .button { padding: 10px 18px; }
+  .button + .button { border: 2px solid var(--g-25); }
+  .download-details { margin: 0; font-size: 14px; }
   .screenshot-cycle { position: relative; display: grid; min-height: 0; margin: 0; padding: 0; }
   .screenshot-cycle :global(.frame) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 16px; border: 0; opacity: 0; transition: opacity .8s ease; }
   .screenshot-cycle :global(.frame.is-shown) { opacity: 1; }

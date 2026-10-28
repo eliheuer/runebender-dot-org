@@ -1,10 +1,10 @@
 ---
 title: "Install"
-lede: "Build and run Runebender with Cargo."
+lede: "Download the macOS alpha or build Runebender with Cargo."
 status: "Alpha"
 stability: "Verify implementation details against the current source"
 order: 2
-description: "Build and run Runebender with Cargo."
+description: "Download the macOS alpha or build Runebender with Cargo."
 ---
 
 import DocSection from "../../components/DocSection.astro";
@@ -12,13 +12,14 @@ import DocSection from "../../components/DocSection.astro";
 <DocSection title="Install Runebender">
 
 For the native macOS application and its release status, see [Downloads](/download.html).
-The packaged editor will include its runtime resources and does not require Rust or Homebrew.
+The Apple Silicon DMG includes its runtime resources and does not require Rust or Homebrew.
 Follow the download page's platform requirements for the specific release.
 
-Install Rust with [rustup](https://rustup.rs), then install Runebender:
+For an experimental source installation, install Rust with [rustup](https://rustup.rs), then install the tagged alpha:
 
 ```sh
-cargo install --git https://github.com/fontgarden/runebender
+rustup toolchain install 1.96
+cargo +1.96 install --git https://github.com/fontgarden/runebender --tag v0.1.0-alpha.1 --locked
 runebender path/to/Font.designspace
 ```
 

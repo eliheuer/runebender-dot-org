@@ -27,7 +27,7 @@ const artifacts = release.artifacts as Array<{
                   Download for {artifact.architecture === "arm64" ? "Apple Silicon" : "Intel"}
                 </a>
               </p>
-              <p>Requires macOS {artifact.minimum_os} or later.</p>
+              <p>Requires macOS {artifact.minimum_os} or later. This alpha was launch-tested on Apple Silicon with macOS 26.6.2; older macOS versions have not been tested.</p>
               <details><summary>SHA-256 checksum</summary><code class="checksum">{artifact.sha256}</code></details>
             </div>
           ))}
@@ -40,7 +40,7 @@ const artifacts = release.artifacts as Array<{
         <li>Eject the disk image, then launch Runebender from Applications.</li>
         <li>Choose File → Open to open a UFO or Designspace.</li>
       </ol>
-      {release.available && <p>The app checks for newer alpha releases at launch and asks before installing. Use Runebender → Check for Updates… to check manually. Save your work before restarting.</p>}
+      {release.available && <p>The app includes update checks at launch and in Runebender → Check for Updates…. Update installation and relaunch have not yet been validated end to end in this first alpha. You can also install newer DMGs manually.</p>}
       <p><a href="https://github.com/fontgarden/runebender/releases">Release notes and previous downloads on GitHub</a></p>
       <h2>Linux and source builds</h2>
       <p>See the <a href="/docs/install.html">installation guide</a> for Rust and system-library prerequisites. Cargo and Homebrew registry packages are not available yet.</p>
