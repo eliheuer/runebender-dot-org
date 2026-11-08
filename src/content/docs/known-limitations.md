@@ -29,6 +29,8 @@ The published browser build can still lag the native editor until the site is re
 In other browsers, reloading discards edits.
 Native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
 Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
+The local browser interaction suite has an unresolved splitter resize-cursor assertion failure.
+Until it is resolved, successful browser builds and font-save checks do not establish a complete interaction pass.
 
 ## Font formats
 
