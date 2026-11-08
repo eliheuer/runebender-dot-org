@@ -205,8 +205,17 @@ coding agent on the machine. Start one with
 The model reads and measures glyphs through the same tools as
 [MCP](/docs/mcp.html). Edits come back as proposals for you to judge.
 
-Talk records a spoken request and puts the words in the text field
-for you to check before sending. It needs whisper.cpp's
+After a proposal, the model can ask for proof pictures: the current
+drawing and the proposal side by side in their advance boxes, and a
+difference image with its pixel counts. It sees them when its model
+folder also holds the matching `mmproj*.gguf` projector. A vision model
+answers closed questions about such pictures well, which drawing is
+wider or which side moved, and cannot judge drawing quality; the editor
+states the counted difference beside the pictures so the model reports
+that rather than a guess.
+
+The microphone button records a spoken request and puts the words in
+the text field for you to check before sending. It needs whisper.cpp's
 `whisper-server` (`brew install whisper.cpp`, or set
 `RUNEBENDER_WHISPER_SERVER`) and a speech model saved as `model.bin`
 in a model folder whose name starts with `whisper`. The button is

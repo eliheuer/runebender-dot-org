@@ -51,6 +51,8 @@ A failed live connection never falls back to disk editing.
 
 `editor_context` reports the active source, glyph, mode, selection identities, text settings, and busy-gesture state.
 These opaque identities are scoped to the document epoch and are not persistent IDs across save and reopen.
+`editor_select_points` replaces the native point selection by the canonical point identities `read_glyph` returns, and `editor_review` drives the Proof page: pin a Before, choose a comparison, switch Compare and Toggle.
+Both need a fresh `editor_context` revision and refuse a stale one.
 
 </DocSection>
 
@@ -100,6 +102,7 @@ Every workflow reads first, proofs the result, and leaves installing to the desi
 <DocSection title="Proof What the Agent Changed">
 
 The ordinary `proof` tool produces a source-geometry image.
+`review_proof` returns the Proof page's own comparison as a PNG: the pinned Before or chosen proposal beside Working, with the project's reference fonts and any red correction ink, rendered through Designbot, which is installed separately.
 For an asynchronous proof from one captured compiled font, use `proof_start` and `proof_status`.
 The latter can return a PNG image and explicit captured epoch and revision, allowing the agent to see whether a proof is stale.
 Use `proof_cancel` for queued work and `proof_release` when a retained artifact is no longer needed.

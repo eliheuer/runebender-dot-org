@@ -390,8 +390,15 @@ rather than alone on a page.
 Double-click a cell to enter the editor. The panels stay in place; the
 sections inside them change.
 
-In the editor, the Proof view button in the footer shows the glyph and its
-proposal, as drawings and in text, in place of the canvas.
+In the editor, the Proof button in the footer replaces the canvas with a
+review page for the open glyph. Compare and Toggle show a pinned Before,
+the live Working drawing, or a waiting proposal, at one scale in their
+advance boxes; Waterfall and Text set the compiled font in running text
+at several sizes. Reference TTF or OTF fonts from the project's
+reference-fonts/ folder appear beside them. A red pencil marks
+corrections on the page for the session only; nothing drawn there is
+saved to the font. Apply and Discard act on the shown proposal, and the
+same footer button returns to the canvas.
 
 ### Sessions
 
@@ -1425,6 +1432,8 @@ A failed live connection never falls back to disk editing.
 
 editor_context reports the active source, glyph, mode, selection identities, text settings, and busy-gesture state.
 These opaque identities are scoped to the document epoch and are not persistent IDs across save and reopen.
+editor_select_points replaces the native point selection by the canonical point identities read_glyph returns, and editor_review drives the Proof page: pin a Before, choose a comparison, switch Compare and Toggle.
+Both need a fresh editor_context revision and refuse a stale one.
 
 ### Choose an Edit Contract
 
@@ -1466,6 +1475,7 @@ Every workflow reads first, proofs the result, and leaves installing to the desi
 ### Proof What the Agent Changed
 
 The ordinary proof tool produces a source-geometry image.
+review_proof returns the Proof page's own comparison as a PNG: the pinned Before or chosen proposal beside Working, with the project's reference fonts and any red correction ink, rendered through Designbot, which is installed separately.
 For an asynchronous proof from one captured compiled font, use proof_start and proof_status.
 The latter can return a PNG image and explicit captured epoch and revision, allowing the agent to see whether a proof is stale.
 Use proof_cancel for queued work and proof_release when a retained artifact is no longer needed.
@@ -1877,8 +1887,17 @@ presets.ini in the models folder gives each model its settings, one
 The model reads and measures glyphs through the same tools as
 [MCP](/docs/mcp.html). Edits come back as proposals for you to judge.
 
-Talk records a spoken request and puts the words in the text field
-for you to check before sending. It needs whisper.cpp's
+After a proposal, the model can ask for proof pictures: the current
+drawing and the proposal side by side in their advance boxes, and a
+difference image with its pixel counts. It sees them when its model
+folder also holds the matching mmproj*.gguf projector. A vision model
+answers closed questions about such pictures well, which drawing is
+wider or which side moved, and cannot judge drawing quality; the editor
+states the counted difference beside the pictures so the model reports
+that rather than a guess.
+
+The microphone button records a spoken request and puts the words in
+the text field for you to check before sending. It needs whisper.cpp's
 whisper-server (brew install whisper.cpp, or set
 RUNEBENDER_WHISPER_SERVER) and a speech model saved as model.bin
 in a model folder whose name starts with whisper. The button is
@@ -2666,6 +2685,8 @@ The published browser build can still lag the native editor until the site is re
 In other browsers, reloading discards edits.
 Native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
 Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
+The local browser interaction suite has an unresolved splitter resize-cursor assertion failure.
+Until it is resolved, successful browser builds and font-save checks do not establish a complete interaction pass.
 
 ## Font formats
 
