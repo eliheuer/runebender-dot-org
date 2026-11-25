@@ -21,16 +21,16 @@ Headless file commands remain portable.
 ## Browser
 
 The browser build reuses the Xilem/Masonry interface.
-It opens and saves UFO and designspace folders only in browsers with the File System Access API, such as Chrome and Edge.
-Other browsers edit the bundled font in memory.
+Direct folder writes require the File System Access API and browser permission.
+The portable workflow imports a source folder and downloads an editable ZIP.
 It has no microphone access, so Talk is unavailable, and local AI servers do not run in the browser.
 The browser workspace pins the same Xilem revision as the desktop build, and `web/prepare.py` moves that pin with it.
 The published browser build can still lag the native editor until the site is rebuilt.
-In other browsers, reloading discards edits.
+Recovery depends on a completed local checkpoint in the same browser profile.
+Clearing site data removes those checkpoints.
 Native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
-Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
-The local browser interaction suite has an unresolved splitter resize-cursor assertion failure.
-Until it is resolved, successful browser builds and font-save checks do not establish a complete interaction pass.
+Playwright checks portable source round trips in Chromium, Firefox, and WebKit.
+Shipping Safari, platform IMEs, and native assistive technology need separate hands-on checks.
 
 ## Font formats
 

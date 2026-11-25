@@ -63,8 +63,10 @@ the expected convention.
 
 <DocSection title="The Browser Build">
 
-The [WASM editor](/wasm-editor/) opens the bundled font, and in Chrome and Edge it opens and saves your own UFO or designspace folders.
-In other browsers, reloading resets the edits. Local AI needs the desktop application.
+If the [WASM editor](/wasm-editor/) cannot write to a connected folder, it downloads an editable ZIP and keeps your edits pending for a retry.
+Extract the ZIP and open the extracted folder to work from that copy.
+After an interruption, reopen the editor in the same browser profile and choose Recover if a checkpoint is offered.
+Local AI needs the desktop application.
 See [Development](/docs/development.html) for the current browser milestone.
 
 </DocSection>

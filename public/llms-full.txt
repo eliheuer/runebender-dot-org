@@ -100,12 +100,12 @@ See [Development](/docs/development.html) for the profile's tradeoffs.
 browser. Explore the bundled Virtua Grotesk font, open a glyph, drag outline
 points, undo and redo edits, zoom, and resize the panels.
 
-In Chrome and Edge, File → Open picks a folder on your computer: a UFO folder,
-or a folder that holds one designspace with its UFOs.
-Save writes the files back into that folder, and Save As writes into a new one.
-You can also drop a folder on the canvas.
-The editor keeps the package's own file names, so a saved UFO matches the opened one file for file.
-Other browsers keep the bundled font only, and edits there are discarded on reload.
+Use File → Open to select a UFO or a project folder containing one top-level designspace and its masters.
+When the browser grants folder access, Save writes changes back to that folder.
+In Firefox or Safari, select the project folder in the import dialog and use Save to download an editable ZIP.
+Extract the ZIP and open the extracted folder to continue editing.
+File → Download Editable Sources (.zip) also makes a portable copy of a connected folder.
+After an interrupted session, reopen the editor in the same browser profile and choose Recover to open the last local checkpoint.
 Local AI needs the desktop application.
 
 ### Chromebook
@@ -124,9 +124,8 @@ To remove it, right-click the icon in the launcher and choose **Uninstall**.
 The installed app is the browser editor.
 It opens the bundled Virtua Grotesk font first.
 To work on your own font, choose File → Open and pick the UFO folder, or the folder with your designspace, from the Files app.
-Chrome asks once for permission to read and write that folder.
-Save writes your changes back to the folder.
-An installed app keeps the permission, so the next start reopens the same folder.
+Chrome may ask for read access when opening and write access when saving.
+If the browser keeps the permission, Runebender can reopen the same folder on the next start.
 Local AI needs the desktop application.
 The app renders on the CPU and does not need a GPU, so it runs on low-cost ARM Chromebooks.
 It needs a network connection to start.
@@ -2677,16 +2676,16 @@ Headless file commands remain portable.
 ## Browser
 
 The browser build reuses the Xilem/Masonry interface.
-It opens and saves UFO and designspace folders only in browsers with the File System Access API, such as Chrome and Edge.
-Other browsers edit the bundled font in memory.
+Direct folder writes require the File System Access API and browser permission.
+The portable workflow imports a source folder and downloads an editable ZIP.
 It has no microphone access, so Talk is unavailable, and local AI servers do not run in the browser.
 The browser workspace pins the same Xilem revision as the desktop build, and web/prepare.py moves that pin with it.
 The published browser build can still lag the native editor until the site is rebuilt.
-In other browsers, reloading discards edits.
+Recovery depends on a completed local checkpoint in the same browser profile.
+Clearing site data removes those checkpoints.
 Native accessibility forwarding, local subprocesses, and native live-agent access require the desktop application.
-Chromium tests do not certify Safari, Firefox, platform IMEs, or native GPU behavior.
-The local browser interaction suite has an unresolved splitter resize-cursor assertion failure.
-Until it is resolved, successful browser builds and font-save checks do not establish a complete interaction pass.
+Playwright checks portable source round trips in Chromium, Firefox, and WebKit.
+Shipping Safari, platform IMEs, and native assistive technology need separate hands-on checks.
 
 ## Font formats
 
@@ -2754,8 +2753,10 @@ the expected convention.
 
 ### The Browser Build
 
-The [WASM editor](/wasm-editor/) opens the bundled font, and in Chrome and Edge it opens and saves your own UFO or designspace folders.
-In other browsers, reloading resets the edits. Local AI needs the desktop application.
+If the [WASM editor](/wasm-editor/) cannot write to a connected folder, it downloads an editable ZIP and keeps your edits pending for a retry.
+Extract the ZIP and open the extracted folder to work from that copy.
+After an interruption, reopen the editor in the same browser profile and choose Recover if a checkpoint is offered.
+Local AI needs the desktop application.
 See [Development](/docs/development.html) for the current browser milestone.
 
 ### Reporting a Problem
@@ -2984,7 +2985,7 @@ Formats:
 
 Install and launch:
 - Is there a download?: Not yet. Build runebender with cargo. See Install.
-- Can I use it in a browser?: Yes. The WASM editor opens with a bundled font. In Chrome and Edge, File → Open picks a UFO or designspace folder on your computer, and Save writes it back. Other browsers keep the bundled font only.
+- Can I use it in a browser?: Yes. The WASM editor opens UFO and designspace folders and downloads editable sources as a ZIP. In browsers with folder write permission, Save writes back to your original folder.
 - Windows and Linux?: The code is cross-platform and builds there, but macOS is where it is used daily and where problems get found first.
 
 ### Drawing

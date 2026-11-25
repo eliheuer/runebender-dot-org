@@ -61,8 +61,11 @@ After publishing, run `pnpm run check-published-site` to verify the live routes.
 ## Browser editor
 
 Launch Application at `/wasm-editor/` embeds the actual Xilem/Masonry interface,
-compiled to WebAssembly from runebender. The bundled font can be browsed
-and edited in memory. Saving files and local AI execution require the desktop.
+compiled to WebAssembly from runebender.
+The editor opens UFO and designspace folders and downloads editable sources as a ZIP.
+With directory write permission, Save updates the connected folder.
+Interrupted editing sessions can be recovered from a local browser checkpoint.
+Local AI runs in the desktop editor.
 
 Update the checked-in release artifacts in `public/app/` with:
 

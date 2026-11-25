@@ -43,7 +43,8 @@ Keep the existing screenshot files and rotation.
 Its source and interaction test live in the runebender repository's `web/` directory.
 Use `scripts/build-xilem-editor.sh /path/to/runebender` to update these
 release artifacts. Verify actual browser interactions before publishing.
-Browser edits stay in memory; desktop work remains the priority.
+Browser sources can be saved to a folder or an editable ZIP, and local checkpoints support session recovery.
+Desktop work remains the priority.
 
 ## Adding or editing a docs page
 

@@ -19,11 +19,23 @@ export class BrowserEditor {
      */
     open_bundle(ufo_name: string | null | undefined, bundle: Uint8Array): string;
     pointer(kind: number, x: number, y: number, button: number, buttons: number, count: number, mods: number, dx: number, dy: number): void;
+    /**
+     * Capture editable sources without acknowledging an explicit save or changing its destination.
+     */
+    recovery_bundle(): Uint8Array;
     resize(width: number, height: number, scale: number): void;
+    /**
+     * Restore the feature buffer and mark a reopened checkpoint as awaiting an explicit save.
+     */
+    restore_draft(master: number, features?: string | null): void;
     /**
      * The files the page must write to save the font; empty when nothing can be saved.
      */
     save_bundle(into_new_folder: boolean): Uint8Array;
+    /**
+     * Build a downloadable ZIP of the editable project, including unchanged files.
+     */
+    source_zip(): Uint8Array;
     state(): string;
     text(kind: number, text: string): void;
 }
@@ -41,8 +53,11 @@ export interface InitOutput {
     readonly browsereditor_new: (a: number, b: number, c: number) => number;
     readonly browsereditor_open_bundle: (a: number, b: number, c: number, d: number, e: number) => [number, number];
     readonly browsereditor_pointer: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => void;
+    readonly browsereditor_recovery_bundle: (a: number) => [number, number, number, number];
     readonly browsereditor_resize: (a: number, b: number, c: number, d: number) => void;
+    readonly browsereditor_restore_draft: (a: number, b: number, c: number, d: number) => void;
     readonly browsereditor_save_bundle: (a: number, b: number) => [number, number];
+    readonly browsereditor_source_zip: (a: number) => [number, number];
     readonly browsereditor_state: (a: number) => [number, number];
     readonly browsereditor_text: (a: number, b: number, c: number, d: number) => void;
     readonly __wbindgen_free: (a: number, b: number, c: number) => void;
@@ -51,6 +66,7 @@ export interface InitOutput {
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+    readonly __externref_table_dealloc: (a: number) => void;
     readonly __wbindgen_start: () => void;
 }
 

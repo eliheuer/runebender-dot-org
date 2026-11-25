@@ -120,6 +120,19 @@ export class BrowserEditor {
         wasm.browsereditor_pointer(this.__wbg_ptr, kind, x, y, button, buttons, count, mods, dx, dy);
     }
     /**
+     * Capture editable sources without acknowledging an explicit save or changing its destination.
+     * @returns {Uint8Array}
+     */
+    recovery_bundle() {
+        const ret = wasm.browsereditor_recovery_bundle(this.__wbg_ptr);
+        if (ret[3]) {
+            throw takeFromExternrefTable0(ret[2]);
+        }
+        var v1 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
+        return v1;
+    }
+    /**
      * @param {number} width
      * @param {number} height
      * @param {number} scale
@@ -128,12 +141,32 @@ export class BrowserEditor {
         wasm.browsereditor_resize(this.__wbg_ptr, width, height, scale);
     }
     /**
+     * Restore the feature buffer and mark a reopened checkpoint as awaiting an explicit save.
+     * @param {number} master
+     * @param {string | null} [features]
+     */
+    restore_draft(master, features) {
+        var ptr0 = isLikeNone(features) ? 0 : passStringToWasm0(features, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        var len0 = WASM_VECTOR_LEN;
+        wasm.browsereditor_restore_draft(this.__wbg_ptr, master, ptr0, len0);
+    }
+    /**
      * The files the page must write to save the font; empty when nothing can be saved.
      * @param {boolean} into_new_folder
      * @returns {Uint8Array}
      */
     save_bundle(into_new_folder) {
         const ret = wasm.browsereditor_save_bundle(this.__wbg_ptr, into_new_folder);
+        var v1 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
+        return v1;
+    }
+    /**
+     * Build a downloadable ZIP of the editable project, including unchanged files.
+     * @returns {Uint8Array}
+     */
+    source_zip() {
+        const ret = wasm.browsereditor_source_zip(this.__wbg_ptr);
         var v1 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
         wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
         return v1;
@@ -167,6 +200,10 @@ if (Symbol.dispose) BrowserEditor.prototype[Symbol.dispose] = BrowserEditor.prot
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
+        __wbg___wbindgen_is_undefined_6cff064c44e0d823: function(arg0) {
+            const ret = arg0 === undefined;
+            return ret;
+        },
         __wbg___wbindgen_throw_bb96b2010945f0bc: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
@@ -199,12 +236,41 @@ function __wbg_get_imports() {
             const ret = new Error();
             return ret;
         },
+        __wbg_now_e7c6795a7f81e10f: function(arg0) {
+            const ret = arg0.now();
+            return ret;
+        },
+        __wbg_performance_3fcf6e32a7e1ed0a: function(arg0) {
+            const ret = arg0.performance;
+            return ret;
+        },
         __wbg_stack_3b0d974bbf31e44f: function(arg0, arg1) {
             const ret = arg1.stack;
             const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
             const len1 = WASM_VECTOR_LEN;
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
+        },
+        __wbg_static_accessor_GLOBAL_THIS_466428f93b4eaa76: function() {
+            const ret = typeof globalThis === 'undefined' ? null : globalThis;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_static_accessor_GLOBAL_c7aea38d4de089bc: function() {
+            const ret = typeof global === 'undefined' ? null : global;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_static_accessor_SELF_42d4fae05e59267a: function() {
+            const ret = typeof self === 'undefined' ? null : self;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_static_accessor_WINDOW_e0db14a0eba6a812: function() {
+            const ret = typeof window === 'undefined' ? null : window;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbindgen_cast_0000000000000001: function(arg0, arg1) {
+            // Cast intrinsic for `Ref(String) -> Externref`.
+            const ret = getStringFromWasm0(arg0, arg1);
+            return ret;
         },
         __wbindgen_init_externref_table: function() {
             const table = wasm.__wbindgen_externrefs;
@@ -312,6 +378,12 @@ function passStringToWasm0(arg, malloc, realloc) {
 
     WASM_VECTOR_LEN = offset;
     return ptr;
+}
+
+function takeFromExternrefTable0(idx) {
+    const value = wasm.__wbindgen_externrefs.get(idx);
+    wasm.__externref_table_dealloc(idx);
+    return value;
 }
 
 let cachedTextDecoder = new TextDecoder('utf-8', { ignoreBOM: true, fatal: true });
@@ -426,7 +498,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('runebender_browser_bg.wasm?v=0e3910c0aa18816f', import.meta.url);
+        module_or_path = new URL('runebender_browser_bg.wasm?v=53577af459f42153', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
@@ -440,3 +512,5 @@ async function __wbg_init(module_or_path) {
 }
 
 export { initSync, __wbg_init as default };
+
+export { fontRecovery } from "./recovery.js?v=ef4af2b93e26585d";

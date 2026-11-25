@@ -94,12 +94,12 @@ See [Development](/docs/development.html) for the profile's tradeoffs.
 browser. Explore the bundled Virtua Grotesk font, open a glyph, drag outline
 points, undo and redo edits, zoom, and resize the panels.
 
-In Chrome and Edge, File → Open picks a folder on your computer: a UFO folder,
-or a folder that holds one designspace with its UFOs.
-Save writes the files back into that folder, and Save As writes into a new one.
-You can also drop a folder on the canvas.
-The editor keeps the package's own file names, so a saved UFO matches the opened one file for file.
-Other browsers keep the bundled font only, and edits there are discarded on reload.
+Use File → Open to select a UFO or a project folder containing one top-level designspace and its masters.
+When the browser grants folder access, Save writes changes back to that folder.
+In Firefox or Safari, select the project folder in the import dialog and use Save to download an editable ZIP.
+Extract the ZIP and open the extracted folder to continue editing.
+File → Download Editable Sources (.zip) also makes a portable copy of a connected folder.
+After an interrupted session, reopen the editor in the same browser profile and choose Recover to open the last local checkpoint.
 Local AI needs the desktop application.
 
 </DocSection>
@@ -120,9 +120,8 @@ To remove it, right-click the icon in the launcher and choose **Uninstall**.
 The installed app is the browser editor.
 It opens the bundled Virtua Grotesk font first.
 To work on your own font, choose File → Open and pick the UFO folder, or the folder with your designspace, from the Files app.
-Chrome asks once for permission to read and write that folder.
-Save writes your changes back to the folder.
-An installed app keeps the permission, so the next start reopens the same folder.
+Chrome may ask for read access when opening and write access when saving.
+If the browser keeps the permission, Runebender can reopen the same folder on the next start.
 Local AI needs the desktop application.
 The app renders on the CPU and does not need a GPU, so it runs on low-cost ARM Chromebooks.
 It needs a network connection to start.

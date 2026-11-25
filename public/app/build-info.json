@@ -1,6 +1,6 @@
 {
   "repository": "https://github.com/fontgarden/runebender",
-  "commit": "02df900387c4ca4cc2d2f01565d588d4e81acbaf",
-  "wasm_sha256": "2426cfa2914d4d0c32ab70ce86c79c84097d5871776f5f8028c5ae19a4edf9f0",
-  "release": "0e3910c0aa18816f"
+  "commit": "24c619280c4ff977d3755f81621815dbf0d4937c",
+  "wasm_sha256": "2d68ee3284ee6ae022d431ae11b3ee1c17e8043191f897a353f63eb782a38697",
+  "release": "53577af459f42153"
 }
